@@ -1,0 +1,41 @@
+	C1.barchart	C1.density	C1.gauss	S1.boxplot	S1.class	S1.distri	S1.label	S1.match	S2.arrow	S2.class	S2.corcircle	S2.density	S2.distri	S2.image	S2.label	S2.logo	S2.match	S2.traject	S2.value	T.cont	T.image	T.value	Tr.class	Tr.label	Tr.match
+ablineX																				1					
+ablineY																				1					
+addaxes																								1	
+addmean																								1	
+adjust																							1	1	1
+arrows																	1								
+axespar																								1	
+bandwidth		1										1													
+breaks																			1	1	1	1			
+center																			1	1		1			
+centerpar																			1	1		1			
+chullSize										1													1		
+col		1	1	1	1					1		1	1				1	1	1	1	1	1	1		
+contour												1		1											
+ellipseSize										1			1										1		
+fill		1	1																						
+fullcircle											1														
+gridsize		1										1		1											
+kernel		1																							
+max3d																							1	1	1
+maxsize																			1	1		1			
+meanpar																								1	
+meanX																				1					
+meanY																				1					
+method																			1	1		1			
+min3d																							1	1	1
+nclass												1							1	1	1	1			
+nrpoints												1													
+order																		1							
+outsideLimits														1											
+poslab					1		1																		
+rect																1									
+region												1		1											
+sdSize						1																			
+span														1											
+starSize										1			1										1		
+steps			1																						
+symbol																			1	1		1			
+threshold												1													
+yrank						1																			

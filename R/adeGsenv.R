@@ -1,0 +1,94 @@
+############################################################################
+## Alice Julien-Laferriere                                              ###
+## creation d'un environnement cache                                    ###
+## stockage les differentes liste dans les parametres                   ###
+## stockage de theme d'adeg                                             ###
+## stockage du graph cree precedemement                                 ###
+## creation environnement                                               ###
+
+.ADEgEnv <- new.env()
+
+
+.onLoad <- function(libname, pkgname) {
+  assign("padegraphic",
+    list(
+      p1d = list(horizontal = TRUE, reverse = FALSE, labpos = 0.5, rug = list(draw = TRUE, ticksize = 0.5, margin = unit(0.07, "npc"), line = TRUE)),
+      
+      parrows = list(angle = 15, ends = "last", length = 0.1),
+      
+      paxes = list(aspectratio = "iso", draw = FALSE, x = list(draw = TRUE, alternating = 1, tck = c(1, 0), at = NULL),
+        y = list(draw = TRUE, alternating = 1, tck = c(1, 0), at = NULL)),
+      
+      pbackground = list(col = "white", box = TRUE),
+      
+      pellipses = list(alpha = 0.5, axes = list(draw = TRUE, col = "black", lty = 4, lwd = 1), border = "black", col = "transparent", lty = 1, lwd = 1),
+      
+      pgrid = list(col = "grey", draw = TRUE, lty = 1, lwd = 1, nint = 5, text = list(cex = 1, col = "black", pos = "topright")),
+      
+      plabels = list(alpha = 1, cex = 1, col = "black", orientation = "horizontal", optim = FALSE, 
+        boxes = list(alpha = 1, border = "black", col = "white", draw = TRUE, lwd = 1, lty = 1)),
+      
+      plegend = list(addspace = 0.1, col = "white", draw = TRUE, rect = TRUE, border = "black", horizontal = TRUE, position = "bottomleft",
+        text = list(cex = 1, col = "black"), hspace = unit(0.006, "npc"), vspace = unit(0.004, "npc"), lty = 1, lwd = 1, alpha = 1),
+      
+      plines = list(col = "black", lty = 1, lwd = 1),
+      
+      pnb = list(edge = list(col = "black", lwd = 1, lty = 1), node = list(pch = 20, cex = 1, col = "black", alpha = 1)),
+      
+      porigin = list(alpha = 1, col = "black", draw = TRUE, include = TRUE, lty = 1, lwd = 1, origin = c(0, 0)),
+      
+      ppalette = list(quanti = colorRampPalette(c("white", "black")),
+        quali = function(n, name = "Set1") {
+          if(n > 12)
+            stop("more than 12 colors not allowed", call. = TRUE)
+          else if(n > 2)
+            return(brewer.pal(n, name))
+          else
+            return(colorRampPalette(c("black", "white"))(2))
+        }),  ## see http://colorbrewer2.org/
+      
+      ppoints = list(alpha = 1, cex = 1, col = "black", pch = 20, fill = "black"),
+      
+      ppolygons = list(border = "black", col = "transparent", lty = 1, lwd = 1, alpha = 0.4),
+      
+      pSp = list(col = "black", border = 1, lwd = 1, lty = 1, alpha = 0.8),
+      
+      psub = list(cex = 1, col = "black", position = "bottomleft", text = ""),
+      
+      ptable = list(x = list(srt = 90, pos = "top", tck = unit(8, "mm"), cstmargin = c(12, 5), adj = NA),
+        y = list(tck = unit(8, "mm"), srt = 0, pos = "right", cstmargin = c(12, 5), adj = NA))
+    
+    ),
+    envir = .ADEgEnv)
+  
+  lattice.options(default.theme = switch(EXPR = .Device,
+      modifyList(
+        get("lattice.theme", envir = lattice:::.LatticeEnv),
+        list(
+          layout.heights = list(top.padding = 0, main.key.padding = 0, key.axis.padding = 0, axis.xlab.padding = 0, xlab.key.padding = 0,	key.sub.padding = 0, bottom.padding = 0),
+          layout.widths = list(left.padding = 0, key.ylab.padding = 0, ylab.axis.padding = 0, axis.key.padding = 0, right.padding = 0),
+          background = list(col = "transparent", alpha = 1), regions = list(col = rev(grey.colors(255)), alpha = 0.88),
+          as.table = TRUE), keep.null = TRUE)))
+  
+
+  assign("adegtheme", list(
+      layout.heights = list(
+        top.padding = 0, main.key.padding = 0,
+        key.axis.padding = 0,	axis.xlab.padding = 0,
+        xlab.key.padding = 0,	key.sub.padding = 0,
+        bottom.padding = 0),
+      layout.widths = list(left.padding = 0, key.ylab.padding = 0, ylab.axis.padding = 0, axis.key.padding = 0, right.padding = 0),
+      background = list(col = "transparent", alpha = 1),
+      regions = list(col = rev(grey.colors(255)), alpha = 0.88),
+      plot.polygon = list(col = "#F2F2F2"),
+      plot.line = list(col = "#000000"),
+      add.line = list(col =  "#000000", lty = 2),    
+      ## clip = list(panel = "off", strip = "off"),
+      ## clipping allows drawing to go outside panel (i.e : drawings) limits
+      as.table = TRUE
+    ), envir = .ADEgEnv
+  )
+  
+  changelatticetheme(get("adegtheme", envir = .ADEgEnv))
+  assign("currentadeg", list(), envir = .ADEgEnv)
+}

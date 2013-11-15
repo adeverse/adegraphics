@@ -1,0 +1,83 @@
+\name{S2.label-class}
+\docType{class}
+
+\alias{S2.label}
+\alias{S2.label-class}
+\alias{prepare,S2.label-method}
+\alias{S2.panel,S2.label-method}
+
+\title{Class \code{S2.label}}
+
+\description{
+  A class for creating and drawing bi-dimensional plot with point label.
+}
+
+\section{Objects from the Class}{
+  \code{S2.label} objects can be created by calls of the form \code{new("S2.label", ...)}.
+  
+  The regular usage in this package is to use the \code{s.label} function.
+}
+
+\section{Slots}{
+  \describe{
+    \item{\code{data}}{a list containing data or data's name. \itemize{
+      \item{\code{dfxy}: the displayed values in the form of a data frame, a name or a matching call.}
+      \item{\code{labels}: a vector of character strings for the points' labels}
+      \item{\code{xax}: an integer or a vector indicating the columns of \code{dfxy} kept for the x-axes.}
+      \item{\code{yax}: an integer or a vector indicating the columns of \code{dfxy} kept for the y-axes.}
+      \item{\code{frame}: a positive or null integer. It is the number of the frame containing the data (used 
+        with \code{sys.frame(..., env = data$frame)}). Only if the data are not stored (i.e. \code{data$storeData = FALSE}).}
+      \item{\code{storeData}: a logical indicating if the data should be stored in the returned object.
+        If \code{FALSE}, only the names of the data arguments are stored.}
+    }}
+    
+    \item{\code{trellis.par}}{a list of parameters for \code{lattice} call. 
+      It will be passed directly to \code{par.settings} arguments of the \code{lattice} function.}
+  
+    \item{\code{adeg.par}}{a list of graphical parameters, corresponding to the ones 
+      given by \code{adegpar()} function.}
+      
+    \item{\code{lattice.call}}{a list to create the \code{trellis} object.}
+
+    \item{\code{g.args}}{a list containing some method parameters linked with the created object of \code{ADEg.S2} class.}
+    
+    \item{\code{stats}}{a list of internal preliminary calculations}
+    
+    \item{\code{s.misc}}{a list of some others internal parameters}
+    
+    \item{\code{Call}}{an object of class \code{call}}
+  }
+}
+
+\section{Extends}{
+  Class \code{\linkS4class{ADEg.S2}}, directly.\cr
+  Class \code{\linkS4class{ADEg}}, by class \code{ADEg.S2}, distance 2.\cr
+  Class \code{\linkS4class{ADEgORtrellis}}, by class \code{ADEg.S2}, distance 3.
+}
+
+\section{Methods}{
+  The methods of the father classes \code{"ADEg.S2"} and \code{"ADEg"} can be used by inheritance.
+  The specific methods for \code{S2.label} are: 
+  \describe{
+    \item{prepare}{\code{signature(object = "S2.label")}: 
+      calls the parent method (\code{prepare} for \code{ADEg.S2}) and modifies some graphical parameters used by default.}
+      
+    \item{S2.panel}{\code{signature(object = "S2.label")}: 
+      draws points and labels.}
+  }
+}
+
+\author{Alice Julien-Laferriere, Aurelie Siberchicot \email{aurelie.siberchicot@univ-lyon1.fr} and Stephane Dray
+}
+
+\seealso{
+  \code{\linkS4class{ADEg}}    
+  \code{\linkS4class{ADEg.S2}}
+  \code{\link{s.label}}
+}
+
+\examples{
+showClass("S2.label")
+}
+
+\keyword{classes}

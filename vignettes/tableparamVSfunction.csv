@@ -1,0 +1,25 @@
+	p1d	parrows	paxes	pbackground	pellipses	pgrid	plabels	plegend	plines	pnb	porigin	ppalette	ppoints	ppolygons	pSp	psub	ptable
+s.arrow		1	1	1		1	1		1	1	1				1	1	
+s.class			1	1	1	1	1		1	1	1	1	1	1	1	1	
+s.corcircle		1	1	1		1	1		1	1	1				1	1	
+s.density			1	1		1	1			1	1	1	1		1	1	
+s.distri			1	1	1	1	1		1	1	1	1	1		1	1	
+s.image			1	1		1	1			1	1	1			1	1	
+s.label			1	1		1	1			1	1		1		1	1	
+s.logo			1	1		1				1	1				1	1	
+s.match		1	1	1		1	1		1	1	1		1		1	1	
+s.traject		1	1	1		1	1		1	1	1		1		1	1	
+s.value			1	1		1		1		1	1	1	1		1	1	
+s1d.barchart	1		1	1		1	1				1			1		1	
+s1d.boxplot	1		1	1		1	1		1		1		1	1		1	
+s1d.class	1		1	1		1	1		1		1		1			1	
+s1d.density	1		1	1		1	1		1		1					1	
+s1d.distri	1		1	1		1	1		1		1		1			1	
+s1d.gauss	1		1	1		1	1		1		1					1	
+s1d.label	1		1	1		1	1		1		1		1			1	
+s1d.match	1		1	1		1	1		1		1		1			1	
+table.image				1		1		1					1			1	1
+table.value				1		1		1	1			1	1			1	1
+triangle.class			1	1	1	1	1		1			1	1	1		1	
+triangle.label			1	1		1	1						1			1	
+triangle.match		1	1	1		1	1		1				1			1	
