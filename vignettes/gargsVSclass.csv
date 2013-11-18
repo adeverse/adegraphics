@@ -1,4 +1,4 @@
-	C1.barchart	C1.density	C1.gauss	S1.boxplot	S1.class	S1.distri	S1.label	S1.match	S2.arrow	S2.class	S2.corcircle	S2.density	S2.distri	S2.image	S2.label	S2.logo	S2.match	S2.traject	S2.value	T.cont	T.image	T.value	Tr.class	Tr.label	Tr.match
+	s1d.barchart	s1d.density	s1d.gauss	s1d.boxplot	s1d.class	s1d.distri	s1d.label	s1d.match	s.arrow	s.class	s.corcircle	s.density	s.distri	s.image	s.label	s.logo	s.match	s.traject	s.value	table.value (T.cont)	table.image	table.value (T.value)	triangle.class	triangle.label	triangle.match
 ablineX																				1					
 ablineY																				1					
 addaxes																								1	

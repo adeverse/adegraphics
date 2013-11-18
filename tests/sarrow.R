@@ -17,7 +17,7 @@ g3 <- s.arrow(ade4::dudi.pca(data.frame(w), scan = F, nf = 2)$co)
 wtr <- data.frame(t(w))
 wmoy <- data.frame(matrix(apply(wtr, 1, mean), 1))
 dudi3 <- ade4::dudi.pca(w, scal = FALSE, scan = FALSE)
-wmoy <- ade4::suprow.default(dudi3, wmoy)$lisup
+wmoy <- ade4::suprow(dudi3, wmoy)$lisup
 
 g4 <- s.arrow(dudi3$c1, plabels.cex = 1.5)
 g4 <- s.distri(dudi3$c1, wtr, starSize = 0.33, ellipseSize = 0, add = TRUE, plabels.cex = 1)

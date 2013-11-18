@@ -730,7 +730,7 @@ s.label(pca2$li, facets = jv73$fac.riv, samelimits = FALSE)
 
 Several other \texttt{g.args} parameters can be updated according to the class of the created object (see Figure~\ref{fig:2} in \ref{arguments}).
 
-\subsection{Parameters applied on a ADEgS}
+\subsection{Parameters applied on a \texttt{ADEgS}}
 Users can either apply the changes to all graphs or to update only one graph. Of an \texttt{ADEgS}, to apply changes on all the graphs contained in an \texttt{ADEgS}, the syntax is similar to the one described for an \texttt{ADEg} object. For example, background color can be changed for all graphs in \texttt{g10} using the \texttt{pbackground.col} parameter.
 <<label=plot26, include = FALSE, fig = TRUE, echo = TRUE, keep.source = TRUE, width = 8, height = 8>>=
 g15 <- plot(coi1, pbackground.col = "steelblue")
