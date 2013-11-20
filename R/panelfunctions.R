@@ -207,7 +207,7 @@ adeg.panel.Spatial <- function(SpObject, sp.layout = NULL, col = 1, border = 1, 
       breaks <- pretty(values, n)
       if((length(breaks) - 1) != length(col))
         col <- rep(col, length.out = length(breaks) - 1)
-      colvalue <- col[cut(values, breaks)]
+      colvalue <- col[cut(values, breaks, include.lowest = TRUE)]
     }
   } else 
     colvalue <- col
@@ -265,7 +265,7 @@ adeg.panel.values <- function(x, y, z, method, symbol, ppoints, breaks, centerpa
          color = { ## col va du plus fonce au plus clair (correspond des classe supe au inf)
            sizes <- ppoints$cex[1]
            breaks <- sort(breaks) ## breaks remis dans l'ordre croissant (z inf a sup)
-           colorsymb <- ppoints$col[as.numeric(cut(zcenter, breaks))]
+           colorsymb <- ppoints$col[as.numeric(cut(zcenter, breaks, include.lowest = TRUE))]
            if(any(is.null(colorsymb)) | any(is.na(colorsymb)))
              stop("error while preparing color symbol", call. = FALSE)
            borduresymb <- "black"
