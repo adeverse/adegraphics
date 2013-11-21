@@ -61,13 +61,15 @@ s.label(dfxy, labels = rownames(dfxy), xax = 1, yax = 2,
 x0 <- runif(50, -2, 2)
 y0 <- runif(50, -2, 2)
 z <- x0 ^ 2 + y0 ^ 2
-g1 <- s.label(data.frame(x0, y0), label = as.character(z < 1), paxes.draw = TRUE, axis.text = list(col = "grey"))
+g1 <- s.label(data.frame(x0, y0), label = as.character(z < 1), paxes.draw = TRUE, 
+  axis.text = list(col = "grey"))
   
 data(mafragh, package = "ade4")
 g2 <- s.label(mafragh$xy, nb = mafragh$nb, paxes.draw = FALSE)
 
 data(irishdata, package = "ade4")
-g3 <- s.label(irishdata$xy.utm, Sp = irishdata$Spatial.contour)   ## update irishdata$xy.utm call to irishdata$xy
+g3 <- s.label(irishdata$xy.utm, Sp = irishdata$Spatial.contour)   
+  ## update irishdata$xy.utm call to irishdata$xy
 
 \dontrun{
 data(atlas, package = "ade4")

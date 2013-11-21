@@ -76,7 +76,8 @@ data(meau, package = "ade4")
 envpca <- ade4::dudi.pca(meau$env, scannf = FALSE)
 
 g1 <- s1d.class(envpca$li[, 1], meau$design$season, poslabel = "value", col = 1:4, plot = FALSE)
-g2 <- s1d.class(envpca$li[, 1], meau$design$season, poslabel = "regular", col = 1:6, p1d.reverse = TRUE, plot = FALSE)
+g2 <- s1d.class(envpca$li[, 1], meau$design$season, poslabel = "regular", col = 1:6, 
+  p1d.reverse = TRUE, plot = FALSE)
 ADEgS(c(g1, g2), layout = c(2, 1))
 }
 

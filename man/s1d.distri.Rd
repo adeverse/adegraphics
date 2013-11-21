@@ -77,12 +77,15 @@ G1 <- ADEgS(c(g11, g12), layout = c(1, 2))
 
 data(rpjdl, package = "ade4")
 coa1 <- ade4::dudi.coa(rpjdl$fau, scannf = FALSE)
-G2 <- s1d.distri(coa1$li[,1], rpjdl$fau, labels = rpjdl$frlab, plabels = list(cex = 0.8, boxes = list(draw = FALSE)))
+G2 <- s1d.distri(coa1$li[,1], rpjdl$fau, labels = rpjdl$frlab, 
+  plabels = list(cex = 0.8, boxes = list(draw = FALSE)))
 
 \dontrun{
-g31 <- s1d.distri(coa1$l1[,1], rpjdl$fau, plabels = list(cex = 0.8, boxes = list(draw = FALSE)), plot = FALSE)
+g31 <- s1d.distri(coa1$l1[,1], rpjdl$fau, plabels = list(cex = 0.8, boxes = list(draw = FALSE)), 
+  plot = FALSE)
 nsc1 <- ade4::dudi.nsc(rpjdl$fau, scannf = FALSE)
-g32 <- s1d.distri(nsc1$l1[,1], rpjdl$fau, plabels = list(cex = 0.8, boxes = list(draw = FALSE)), plot = FALSE)
+g32 <- s1d.distri(nsc1$l1[,1], rpjdl$fau, plabels = list(cex = 0.8, boxes = list(draw = FALSE)), 
+  plot = FALSE)
 g33 <- s.label(coa1$l1, plot = FALSE)
 g34 <- s.label(nsc1$l1, plot = FALSE)
 G3 <- ADEgS(c(g31, g32, g33, g34), layout = c(2, 2))

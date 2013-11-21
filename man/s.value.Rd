@@ -94,15 +94,18 @@ data(rpjdl, package = "ade4")
 fau.coa <- ade4::dudi.coa(rpjdl$fau, scan = FALSE, nf = 3)
 g1 <- s.value(fau.coa$li, fau.coa$li[,3], maxsize = 0.75, plegend.text.cex = 0.75)
 g2 <- s.value(fau.coa$li, fau.coa$li[,3], method = "color", maxsize = 0.8, plegend.text.cex = 0.8)
-g3 <- s.value(fau.coa$li, fau.coa$li[,3], plegend.text.cex = 0.8, maxsize = 0.8, symbol = "square", method = "color",
-  plegend.horizontal = FALSE, col = colorRampPalette(c("yellow", "blue"))(6))
+g3 <- s.value(fau.coa$li, fau.coa$li[,3], plegend.text.cex = 0.8, maxsize = 0.8, symbol = "square",
+   method = "color", plegend.horizontal = FALSE, col = colorRampPalette(c("yellow", "blue"))(6))
 g4 <- s.value(fau.coa$li, fau.coa$li[,3], plot = FALSE)
-g5 <- s.value(fau.coa$li, fau.coa$li[, 3], center = 0, method = "size", maxsize = 0.6, symbol = "circle", col = c("yellow", "red"), plot = FALSE)
-g6 <- ADEgS(c(g4, g5), positions = layout2position(matrix(c(1, 2), 1, 2)), add = matrix(0, ncol = 2, nrow = 2))  
+g5 <- s.value(fau.coa$li, fau.coa$li[, 3], center = 0, method = "size", maxsize = 0.6, 
+  symbol = "circle", col = c("yellow", "red"), plot = FALSE)
+g6 <- ADEgS(c(g4, g5), positions = layout2position(matrix(c(1, 2), 1, 2)), 
+  add = matrix(0, ncol = 2, nrow = 2))  
    
 data(irishdata, package = "ade4")
 irq0 <- data.frame(scale(irishdata$tab, scale = TRUE))
-g7 <- s.value(irishdata$xy.utm, irq0, Sp = irishdata$Spatial.contour, paxes.draw = FALSE, pgrid.draw = FALSE, pSp.alpha = 0.4)
+g7 <- s.value(irishdata$xy.utm, irq0, Sp = irishdata$Spatial.contour, paxes.draw = FALSE, 
+  pgrid.draw = FALSE, pSp.alpha = 0.4)
 }
 
 \keyword{aplot}

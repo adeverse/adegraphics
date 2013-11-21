@@ -3,8 +3,8 @@ Type: Package
 Title: An S4 lattice-based package for the representation of multivariate data
 Version: 0.9
 Date: 2013-07-08
-Author: Alice Julien-Laferriere, Aurelie Siberchicot and Stephane Dray
-Maintainer: Aurelie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
+Author: Alice Julien-Laferrière, Aurélie Siberchicot and Stéphane Dray
+Maintainer: Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
 Description: Graphical functionalities for the representation of multivariate data. It is a complete reimplementation of the functions available in the ade4 package.
 License: GPL (>=2)
 Imports: ade4, grDevices, grid, KernSmooth, lattice, methods, RColorBrewer, utils, sp
@@ -18,3 +18,4 @@ Collate: adeGsenv.R parameter.R utils.R utilsvalues.R
   ADEg.Tr.R Tr.class.R Tr.label.R Tr.match.R
   scatter.R plot.coinertia.R plot.foucart.R kplot.foucart.R kplot.R forade4.R s.hist.R multiplot.R s.Spatial.R
 URL: http://pbil.univ-lyon1.fr/ADE-4, Mailing list: http://listes.univ-lyon1.fr/wws/info/adelist
+Encoding: UTF-8

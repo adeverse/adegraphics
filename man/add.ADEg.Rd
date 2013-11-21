@@ -45,7 +45,8 @@ add.ADEg(g2)
 data(jv73, package = "ade4")
 pca1 <- ade4::dudi.pca(jv73$morpho, scannf = FALSE)
 g5 <- s.label(pca1$li, plabels.optim = TRUE)
-g6 <- s.class(pca1$li, jv73$fac.riv, starSize = 0, ellipseSize = 0, chullSize = 1, ppolygons.alpha = 0.4, col = rainbow(12), ppoints.cex = 0, plot = FALSE)
+g6 <- s.class(pca1$li, jv73$fac.riv, starSize = 0, ellipseSize = 0, chullSize = 1, 
+  ppolygons.alpha = 0.4, col = rainbow(12), ppoints.cex = 0, plot = FALSE)
 add.ADEg(g6)
 }
 

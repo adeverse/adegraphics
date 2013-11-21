@@ -95,9 +95,12 @@ data(olympic, package = "ade4")
 w <- olympic$tab
 w <- data.frame(scale(w))
 wpca <- ade4::dudi.pca(w, scann = FALSE)
-g1 <- table.value(w, maxsi = 0.5, axis.line = list(col = "darkblue"), axis.text = list(col = "darkgrey"))
-g2 <- table.value(w, y = rank(wpca$li[, 1]), maxsi = 0.5, axis.line = list(col = "darkblue"), axis.text = list(col = "darkgrey"))
-g3 <- table.value(w, y = wpca$li[, 1], x = wpca$co[, 1], maxsi = 0.5, axis.line = list(col = "darkblue"), axis.text = list(col = "darkgrey"))
+g1 <- table.value(w, maxsi = 0.5, axis.line = list(col = "darkblue"), 
+  axis.text = list(col = "darkgrey"))
+g2 <- table.value(w, y = rank(wpca$li[, 1]), maxsi = 0.5, axis.line = list(col = "darkblue"), 
+  axis.text = list(col = "darkgrey"))
+g3 <- table.value(w, y = wpca$li[, 1], x = wpca$co[, 1], maxsi = 0.5, 
+  axis.line = list(col = "darkblue"), axis.text = list(col = "darkgrey"))
 
 ## distance
 data(eurodist)
@@ -108,7 +111,8 @@ g5 <- table.value(eurodist, symbol = "circle")
 data(rpjdl, package = "ade4")
 w <- data.frame(t(rpjdl$fau))
 wcoa <- ade4::dudi.coa(w, scann = FALSE)
-g6 <- table.value(as.table(as.matrix(w)), meanY = TRUE, x = wcoa$c1[,1], y = rank(wcoa$l1[,1]), maxsize = 0.2, labelsx = "", col = "black")
+g6 <- table.value(as.table(as.matrix(w)), meanY = TRUE, x = wcoa$c1[,1], y = rank(wcoa$l1[,1]), 
+  maxsize = 0.2, labelsx = "", col = "black")
 }
 }
 

@@ -93,12 +93,17 @@ s.class(xy, fac = posi, facets = posi, ppoints.cex = 1.5, ellipseSize = 0, starS
 data(banque)
 dudi1 <- ade4::dudi.acm(banque, scannf = FALSE)
 col <- rainbow(length(levels(banque[, 20])))
-g1 <- s.label(dudi1$li, psub = list(text = "Factorial map from ACM", cex = 1.5, position = "topleft"), plot = FALSE)
-g2 <- s.class(dudi1$li, banque[, 20], psub = list(text = names(banque)[20], cex = 1.5, position = "bottomright"), ellipseSize = 0, starSize = 0.5, pgrid.text.cex = 0, plot = FALSE)
-g3 <- s.class(dudi1$li, banque[, 20], starSize = 0, ellipseSize = 2, pgrid.text.cex = 0, plabels.cex = 1.5, plot = FALSE)
-g4 <- s.class(dudi1$li, banque[, 20], psub = list(text = names(banque)[20], position = "topright"), pgrid.text.cex = 0, col = col, pellipses.lwd = 1.5, plot = FALSE)
+g1 <- s.label(dudi1$li, psub = list(text = "Factorial map from ACM", cex = 1.5, 
+  position = "topleft"), plot = FALSE)
+g2 <- s.class(dudi1$li, banque[, 20], psub = list(text = names(banque)[20], cex = 1.5, 
+  position = "bottomright"), ellipseSize = 0, starSize = 0.5, pgrid.text.cex = 0, plot = FALSE)
+g3 <- s.class(dudi1$li, banque[, 20], starSize = 0, ellipseSize = 2, pgrid.text.cex = 0, 
+  plabels.cex = 1.5, plot = FALSE)
+g4 <- s.class(dudi1$li, banque[, 20], psub = list(text = names(banque)[20], 
+  position = "topright"), pgrid.text.cex = 0, col = col, pellipses.lwd = 1.5, plot = FALSE)
 G1 <- ADEgS(c(g1, g2, g3, g4), layout = c(2, 2))
-G2 <- s.class(dudi1$li, banque, psub = list(position = "topleft"), pgrid.text.cex = 0, starSize = 0, ppoints.cex = 0)
+G2 <- s.class(dudi1$li, banque, psub = list(position = "topleft"), pgrid.text.cex = 0, 
+  starSize = 0, ppoints.cex = 0)
 }
 }
 

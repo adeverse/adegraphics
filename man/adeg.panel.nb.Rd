@@ -57,7 +57,8 @@ adeg.panel.edges(edges, coords, col.edge = "black", lwd = 1, lty = 1, pch = 20,
 }
 
 \examples{
-if(require(maptools, quiet = TRUE) & require(lattice, quiet = TRUE) & require(spdep, quiet = TRUE)) {
+if(require(maptools, quiet = TRUE) & require(lattice, quiet = TRUE) 
+  & require(spdep, quiet = TRUE)) {
 
 columbus <- readShapePoly(system.file("etc/shapes/columbus.shp", package = "spdep")[1])
 coords <- coordinates(columbus)

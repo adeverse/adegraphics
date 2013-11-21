@@ -76,28 +76,30 @@ names(df1) <- c("x", "y")
 z1 <- (1 / sqrt(2)) * exp(-(df1$x ^ 2 + df1$y ^ 2) / 2)
 g1 <- s.image(df1, z1)
 g2 <- s.image(df1, z1, gridsize = 50)
-g3 <- s.image(df1, z1, gridsize = 100)
-## g4 <- s.image(df1, z1, gridsize = 1000, plot = FALSE)  ## long time for calculating and displaying
 
-data(t3012, package = "ade4")
-if(require(splancs, quiet = TRUE)) {
-  g6 <- s.image(t3012$xy, ade4::scalewt(t3012$temp), porigin.include = FALSE)
-  g7 <- s.image(t3012$xy, ade4::scalewt(t3012$temp), outsideLimits = t3012$Spatial, Sp = t3012$Spatial)
-}
+g3 <- s.image(df1, z1, gridsize = 100)
+g4 <- s.image(df1, z1, gridsize = 1000, plot = FALSE)
 
 \dontrun{
-library(sp)
-Sr1 <- Polygon(cbind(c(0, 1, 2, 1, 2, 0, -2, -1, -2, -1, 0), 
-  c(2.5, 1.5, 2, 0, -2, -1, -2, 0, 2, 1.5, 2.5)))
-Sr2 <- Polygon(cbind(c(-0.5, 0.5, 0.5, -0.5, -0.5), c(0, 0, 1 ,1, 0)), hole = TRUE)
-Srs2 <- Polygons(list(Sr1, Sr2), ID = "star and hole")
-SPp <- SpatialPolygons(list(Srs2))
-df2 <- cbind(c(rnorm(2000, 1, 0.25), rnorm(3000, -1, 1.5)), c(rnorm(2000, 1, 0.5), 
-  rnorm(3000, -1, 3)))
-z2 <- c(rnorm(2000, 12, 1), rnorm(3000, 1, 2))
-g5 <- s.image(df2, z2, outsideLimits = SPp, grid = 200, xlim = c(-2.5, 2.5), 
-  ylim = c(-2, 3), ppalette.quanti = colorRampPalette(c(grey(0.1), grey(0.9))))
-}
+  data(t3012, package = "ade4")
+  if(require(splancs, quiet = TRUE)) {
+    g6 <- s.image(t3012$xy, ade4::scalewt(t3012$temp), porigin.include = FALSE)
+    g7 <- s.image(t3012$xy, ade4::scalewt(t3012$temp), outsideLimits = t3012$Spatial, 
+      Sp = t3012$Spatial)
+  }
+
+  library(sp)
+  Sr1 <- Polygon(cbind(c(0, 1, 2, 1, 2, 0, -2, -1, -2, -1, 0), 
+    c(2.5, 1.5, 2, 0, -2, -1, -2, 0, 2, 1.5, 2.5)))
+  Sr2 <- Polygon(cbind(c(-0.5, 0.5, 0.5, -0.5, -0.5), c(0, 0, 1 ,1, 0)), hole = TRUE)
+  Srs2 <- Polygons(list(Sr1, Sr2), ID = "star and hole")
+  SPp <- SpatialPolygons(list(Srs2))
+  df2 <- cbind(c(rnorm(2000, 1, 0.25), rnorm(3000, -1, 1.5)), c(rnorm(2000, 1, 0.5), 
+    rnorm(3000, -1, 3)))
+  z2 <- c(rnorm(2000, 12, 1), rnorm(3000, 1, 2))
+  g5 <- s.image(df2, z2, outsideLimits = SPp, grid = 200, xlim = c(-2.5, 2.5), 
+    ylim = c(-2, 3), ppalette.quanti = colorRampPalette(c(grey(0.1), grey(0.9))))
+  }
 }
 
 \keyword{aplot}

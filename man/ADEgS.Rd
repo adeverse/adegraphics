@@ -44,7 +44,8 @@ ADEgS(adeglist, positions, layout, add = NULL, plot = TRUE)
 \examples{
 xy <- matrix(rnorm(20), ncol = 2)
 g1 <- s.label(xy)
-g2 <- s.class(xy, fac = as.factor(rep(LETTERS[1:2], length.out = 10)), ppoints.cex = 0, col = c("blue", "red"))
+g2 <- s.class(xy, fac = as.factor(rep(LETTERS[1:2], length.out = 10)), ppoints.cex = 0,
+  col = c("blue", "red"))
 g3 <- ADEgS(list(g1, g2), rbind(c(0, 0, 0.5, 1), c(0.5, 0, 1, 1)))
 g4 <- ADEgS(list(g1, g2), layout = c(1, 2))
 g5 <- ADEgS(list(g1, g2), add = matrix(c(0, 1, 0, 0), byrow = TRUE, ncol = 2))

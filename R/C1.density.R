@@ -49,7 +49,7 @@ setMethod(
       if(is.null(object@g.args$xlab) & !adegtot$p1d$horizontal)
         object@g.args$xlab <- "density"
       if(is.null(object@g.args$ylab) & adegtot$p1d$horizontal)
-        g.args$ylab <- "density"
+        object@g.args$ylab <- "density"
     }
     
     if(is.logical(object@g.args$col)) {
