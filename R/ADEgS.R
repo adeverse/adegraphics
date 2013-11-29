@@ -186,7 +186,10 @@ setMethod(
   signature = c("ADEgS", "ADEg", "numeric", "logical"),
   definition = function(g1, g2, which, plot) {
     ## new ADEgS
-    ngraph <- which
+    ngraph <- length(g1)
+    if(which > ngraph)
+        stop("Values in 'which' should be lower than the length of g1")
+    
     if(!inherits(g1[[which]], "ADEg")) 
       stop("superposition is only available between two ADEg")
     addi <- cbind(rbind(g1@add, rep(0, ngraph)), rep(0, ngraph + 1))
@@ -194,7 +197,7 @@ setMethod(
     addi[which, ngraph + 1] <- 1  ## new graph superpose to which
     ADEgS <- new(Class = "ADEgS", ADEglist = c(g1@ADEglist, g2), positions = rbind(g1@positions, g1@positions[which,]), add = addi, Call = match.call())
     if(plot) 
-      printSuperpose(g1 = g2, refg = g1[[ngraph, drop = FALSE]], position = g1@positions[ngraph, ])
+      printSuperpose(g1 = g2, refg = g1[[which, drop = FALSE]], position = g1@positions[which, ])
     invisible(ADEgS)
   })
 
