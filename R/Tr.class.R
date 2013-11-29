@@ -64,6 +64,7 @@ setMethod(
     callNextMethod() ## prepare graph
     
     xyz <-.coordtotriangleM(df, mini3 = object@g.args$min3d, maxi3 = object@g.args$max3d)
+    object@stats$coords2d <- xyz[,2:3]
     ## compute means for the 3 variables (for getstats)
     object@stats$means <- matrix(meanfacwt(df, fac, wt), nrow = nlev)
     ## mean2d: columns: axes, row: levels

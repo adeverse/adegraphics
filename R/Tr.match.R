@@ -62,7 +62,8 @@ setMethod(
     maxi3 <- object@g.args$max3d
     xyz1 <- .coordtotriangleM(df1, mini3 = mini3, maxi3 = maxi3)
     xyz2 <- .coordtotriangleM(df2, mini3 = mini3, maxi3 = maxi3)
-
+    object@stats$coords2d1 <- xyz1[,2:3]
+    object@stats$coords2d2 <- xyz2[,2:3]
     ## draw points
     if(any(object@adeg.par$ppoints$cex > 0))
       do.call("panel.points", c(list(x = xyz1[, 2], y = xyz1[, 3]), object@adeg.par$ppoints))

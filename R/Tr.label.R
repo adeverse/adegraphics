@@ -103,7 +103,7 @@ setMethod(
     mini3 <- object@g.args$min3d
     maxi3 <- object@g.args$max3d
     xyz <- .coordtotriangleM(df, mini3 = mini3, maxi3 = maxi3)
-
+    object@stats$coords2d <- xyz[,2:3]
     ## draw points and labels
     if(any(object@adeg.par$ppoints$cex > 0))
       panel.points(xyz[, 2], xyz[, 3], pch = object@adeg.par$ppoints$pch, cex = object@adeg.par$ppoints$cex, col = object@adeg.par$ppoints$col, alpha = object@adeg.par$ppoints$alpha, fill = object@adeg.par$ppoints$fill)
