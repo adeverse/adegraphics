@@ -124,8 +124,7 @@ setMethod(
       	g1@g.args$xlim <- refg@g.args$xlim
       	g1@g.args$ylim <- refg@g.args$ylim
       	g1@adeg.par$paxes$draw <- refg@adeg.par$paxes$draw
-        
-      	g1@adeg.par$pbackground$col <- "transparent"	## usefull for S2.corcircle
+        g1@adeg.par$pbackground$col <- "transparent"	## useful for S2.corcircle
       	g1@adeg.par$porigin$draw <- FALSE
       	g1@s.misc$scales <- refg@s.misc$scales
         

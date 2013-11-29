@@ -64,14 +64,16 @@ g1 <- s.logo(ggtortoises$pop, ggtortoises$ico[as.character(ggtortoises$pop$carap
   pori.incl = FALSE)
 g1 <- s.label(ggtortoises$pop, add = TRUE, plabels.boxes.alpha = 0)
 
-g2 <- s.logo(ggtortoises$pop, ggtortoises$ico[as.character(ggtortoises$pop$carap)], 
-  Sp = ggtortoises$Spatial, pback.col = "lightblue", pSp.col = "white", pgrid.draw = FALSE)
-g2 <- s.label(ggtortoises$misc, pgrid.draw = FALSE, porigin.include = FALSE, paxes.draw = FALSE, 
-  add = TRUE)
+if(require(sp, quiet = TRUE)) {
+  g2 <- s.logo(ggtortoises$pop, ggtortoises$ico[as.character(ggtortoises$pop$carap)], 
+    Sp = ggtortoises$Spatial, pback.col = "lightblue", pSp.col = "white", pgrid.draw = FALSE)
+  g2 <- s.label(ggtortoises$misc, pgrid.draw = FALSE, porigin.include = FALSE, paxes.draw = FALSE, 
+    add = TRUE)
 
-data(capitales, package = "ade4")
-g3 <- s.logo(capitales$xy[sort(rownames(capitales$xy)), ], capitales$logo, Sp = capitales$Spatial, 
-  pback.col = "lightblue", pSp.col = "white", pgrid.draw = FALSE)
+  data(capitales, package = "ade4")
+  g3 <- s.logo(capitales$xy[sort(rownames(capitales$xy)), ], capitales$logo, 
+    Sp = capitales$Spatial, pback.col = "lightblue", pSp.col = "white", pgrid.draw = FALSE)
+}
 }
 \keyword{aplot}
 \keyword{hplot}

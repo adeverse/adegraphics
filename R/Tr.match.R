@@ -23,6 +23,12 @@ setMethod(
   definition = function(object) {
     name_obj <- deparse(substitute(object))
     
+    if(object@data$storeData) {
+      df <- object@data$dfxyz
+    } else {
+      df <- eval(object@data$dfxyz, envir = sys.frame(object@data$frame))
+    }
+    
     ## pre-management of graphics parameters      
     oldparamadeg <- adegpar()
     on.exit(adegpar(oldparamadeg))
@@ -31,6 +37,15 @@ setMethod(
     ## object modification before calling inherited method
     object@adeg.par <- adegtot
     callNextMethod() ## prepare graph
+    
+    ## calculate 2D coordinates
+    df <- sweep(df, 1, rowSums(df), "/")
+    n <- NROW(df) / 2
+    df1 <- df[1:n,]
+    df2 <- df[(1 + n):(2 * n), ]
+    object@stats$coords2d1 <- .coordtotriangleM(df1, mini3 = object@g.args$min3d, maxi3 = object@g.args$max3d)[, 2:3]
+    object@stats$coords2d2 <- .coordtotriangleM(df2, mini3 = object@g.args$min3d, maxi3 = object@g.args$max3d)[, 2:3]
+    
     assign(name_obj, object, envir = parent.frame())
   })
 
@@ -50,33 +65,19 @@ setMethod(
     if(NROW(df) %% 2)
       stop("error in Tr.panel method : unable to split the two datasets")
     
-    df <- sweep(df, 1, rowSums(df), "/")
-    
-    mini3 <- object@g.args$min3d
-    maxi3 <- object@g.args$max3d
-        
-    n <- NROW(df) / 2
-    df1 <- df[1:n,]
-    df2 <- df[(1 + n):(2 * n), ]
-    mini3 <- object@g.args$min3d
-    maxi3 <- object@g.args$max3d
-    xyz1 <- .coordtotriangleM(df1, mini3 = mini3, maxi3 = maxi3)
-    xyz2 <- .coordtotriangleM(df2, mini3 = mini3, maxi3 = maxi3)
-    object@stats$coords2d1 <- xyz1[,2:3]
-    object@stats$coords2d2 <- xyz2[,2:3]
     ## draw points
     if(any(object@adeg.par$ppoints$cex > 0))
-      do.call("panel.points", c(list(x = xyz1[, 2], y = xyz1[, 3]), object@adeg.par$ppoints))
+      do.call("panel.points", c(list(x = object@stats$coords2d1[, 1], y = object@stats$coords2d1[, 2]), object@adeg.par$ppoints))
 
     ## draw arrows
-    panel.arrows(x0 = xyz1[, 2], y0 = xyz1[, 3] , y1 = xyz2[, 3], x1 = xyz2[, 2],
+    panel.arrows(x0 = object@stats$coords2d1[, 1], y0 = object@stats$coords2d1[, 2] , y1 = object@stats$coords2d2[, 2], x1 = object@stats$coords2d2[, 1],
                  angle = object@adeg.par$parrows$angle, length = object@adeg.par$parrows$length,
                  ends = object@adeg.par$parrows$end, lwd = object@adeg.par$plines$lwd, col = object@adeg.par$plines$col,
                  lty = object@adeg.par$plines$lty)
     
     if(any(object@adeg.par$plabels$cex > 0)) {
-      xlab <- (xyz1[, 2] + xyz2[, 2]) / 2
-      ylab <- (xyz1[, 3] + xyz2[, 3]) / 2
+      xlab <- (object@stats$coords2d1[, 1] + object@stats$coords2d2[, 1]) / 2
+      ylab <- (object@stats$coords2d1[, 2] + object@stats$coords2d2[, 2]) / 2
       object@adeg.par$plabels$optim <- FALSE
       adeg.panel.label(xlab, ylab, labels = labels, object@adeg.par$plabels)
     }

@@ -104,8 +104,10 @@ g6 <- ADEgS(c(g4, g5), positions = layout2position(matrix(c(1, 2), 1, 2)),
    
 data(irishdata, package = "ade4")
 irq0 <- data.frame(scale(irishdata$tab, scale = TRUE))
-g7 <- s.value(irishdata$xy.utm, irq0, Sp = irishdata$Spatial.contour, paxes.draw = FALSE, 
-  pgrid.draw = FALSE, pSp.alpha = 0.4)
+if(require(sp, quiet = TRUE)) {
+  g7 <- s.value(irishdata$xy.utm, irq0, Sp = irishdata$Spatial.contour, paxes.draw = FALSE, 
+    pgrid.draw = FALSE, pSp.alpha = 0.4)
+}
 }
 
 \keyword{aplot}

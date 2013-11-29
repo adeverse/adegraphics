@@ -24,12 +24,12 @@ triangle.class(dfxyz, fac, wt = rep(1, NROW(fac)), labels = levels(fac),
   
   \item{col}{a logical, a color or a colors vector to color points, ellipses, labels, lines and polygons}
   
-  \item{ellipseSize}{\code{NULL} or number between 0 and 1 for ellipse size}
+  \item{ellipseSize}{a positive number for ellipse size}
   
-  \item{starSize}{\code{NULL} or number between 0 and 1 for the size of the stars segments joining the stars' center 
+  \item{starSize}{a number between 0 and 1 for the size of the stars segments joining the stars' center 
     (centroids) and the matching points}
     
-  \item{chullSize}{\code{NULL} or vector of numbers between 0 and 1 for the fraction of points included in the convex hull}
+  \item{chullSize}{\code{NULL} or a vector of numbers between 0 and 1 for the fraction of points included in the convex hull}
   
   \item{adjust}{a logical to adjust the device with the limits of the smaller equilateral triangle containing the values}
   

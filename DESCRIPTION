@@ -6,8 +6,9 @@ Date: 2013-07-08
 Author: Alice Julien-Laferrière, Aurélie Siberchicot and Stéphane Dray
 Maintainer: Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
 Description: Graphical functionalities for the representation of multivariate data. It is a complete reimplementation of the functions available in the ade4 package.
+Depends: R (>= 3.0.2)
 License: GPL (>=2)
-Imports: ade4, grDevices, grid, KernSmooth, lattice, methods, RColorBrewer, utils, sp
+Imports: ade4, grid, KernSmooth, lattice, methods, RColorBrewer, sp
 Suggests: Guerry, maptools, pixmap, spdep, splancs
 Collate: adeGsenv.R parameter.R utils.R utilsvalues.R 
   utilstriangle.R genericMethod.R utilsclass.R panelfunctions.R ADEg.R ADEgS.R utilsADEgS.R 

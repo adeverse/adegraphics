@@ -29,8 +29,10 @@ setMethod(
     
     if(object@data$storeData) {
       labels <- object@data$labels
+      df <- object@data$dfxyz
     } else {
       labels <- eval(object@data$labels, envir = sys.frame(object@data$frame))
+      df <- eval(object@data$dfxyz, envir = sys.frame(object@data$frame))
     }
     
     ## pre-management of graphics parameters      
@@ -81,6 +83,11 @@ setMethod(
     ## object modification before calling inherited method
     object@adeg.par <- adegtot
     callNextMethod() ## prepare graph
+    
+    ## calculate 2D coordinates
+    df <- sweep(df, 1, rowSums(df), "/")
+    object@stats$coords2d <- .coordtotriangleM(df, mini3 = object@g.args$min3d, maxi3 = object@g.args$max3d)[, 2:3]
+    
     assign(name_obj, object, envir = parent.frame())
   })
 
@@ -97,29 +104,27 @@ setMethod(
       labels <- eval(object@data$labels, envir = sys.frame(object@data$frame))
       df <- eval(object@data$dfxyz, envir = sys.frame(object@data$frame))
     }
-
-    df <- sweep(df, 1, rowSums(df), "/")
     
-    mini3 <- object@g.args$min3d
-    maxi3 <- object@g.args$max3d
-    xyz <- .coordtotriangleM(df, mini3 = mini3, maxi3 = maxi3)
-    object@stats$coords2d <- xyz[,2:3]
     ## draw points and labels
     if(any(object@adeg.par$ppoints$cex > 0))
-      panel.points(xyz[, 2], xyz[, 3], pch = object@adeg.par$ppoints$pch, cex = object@adeg.par$ppoints$cex, col = object@adeg.par$ppoints$col, alpha = object@adeg.par$ppoints$alpha, fill = object@adeg.par$ppoints$fill)
+      panel.points(object@stats$coords2d[, 1], object@stats$coords2d[, 2], pch = object@adeg.par$ppoints$pch, cex = object@adeg.par$ppoints$cex, col = object@adeg.par$ppoints$col, alpha = object@adeg.par$ppoints$alpha, fill = object@adeg.par$ppoints$fill)
     if(any(object@adeg.par$plabels$cex > 0))
-      adeg.panel.label(xyz[, 2], xyz[, 3], labels, object@adeg.par$plabels)
+      adeg.panel.label(object@stats$coords2d[, 1], object@stats$coords2d[, 2], labels, object@adeg.par$plabels)
     
     ## addmean or addaxes
     if(object@g.args$addmean | object@g.args$addaxes) {
+      df <- sweep(df, 1, rowSums(df), "/")
+      mini3 <- object@g.args$min3d
+      maxi3 <- object@g.args$max3d
+      
       m3 <- colMeans(df)
-      mxy <- .coordtotriangleM(t(as.matrix(m3)), mini3 = mini3, maxi3)[-1]
+      mxy <- .coordtotriangleM(t(as.matrix(m3)), mini3 = mini3, maxi3 = maxi3)[-1]
       if(object@g.args$addmean) {
         ## axis points: putting means on the axis A
         axp3 <- rbind(c(m3[1], mini3[2], 1 - m3[1] - mini3[2]),
                       c(1 - m3[2] -mini3[3], m3[2], mini3[3]),
                       c(mini3[1], 1 - m3[3] - mini3[1], m3[3]))
-        axpxyz <- .coordtotriangleM(axp3, mini3 = mini3, maxi3)
+        axpxyz <- .coordtotriangleM(axp3, mini3 = mini3, maxi3 = maxi3)
         
         ## drawing lines for means
         apply(axpxyz, 1, FUN = function(x) {

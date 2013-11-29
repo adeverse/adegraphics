@@ -4,7 +4,6 @@ import(lattice)
 import(grid)
 import(sp)
 importFrom(ade4, covfacwt, covwt, meanfacwt, varfacwt, varwt)
-
 importFrom(graphics, plot)
 importFrom(KernSmooth, bkde2D, bkde)
 importFrom(methods, show)

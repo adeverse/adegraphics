@@ -43,9 +43,9 @@
 
     \item{\code{g.args}}{a list containing some method parameters linked with the created object of \code{ADEg.S2} class.
       The specific slots for \code{S2.class} objects are: \itemize{
-        \item{\code{ellipseSize}: \code{NULL} or number between 0 and 1 for ellipse size.}
-        \item{\code{starSize}: \code{NULL} or number between 0 and 1 for star size.}
-        \item{\code{chullSize}: \code{NULL} or vector of numbers between 0 and 1 for the convex hulls.}
+        \item{\code{ellipseSize}: a positive number for ellipse size.}
+        \item{\code{starSize}: a number between 0 and 1 for star size.}
+        \item{\code{chullSize}: \code{NULL} or a vector of numbers between 0 and 1 for the convex hulls.}
         \item{\code{col}: a \code{NULL} value, a color or a colors vector to color points, ellipses, labels, lines and polygons.}
     }}
     

@@ -41,9 +41,9 @@
 
     \item{\code{g.args}}{a list containing some method parameters linked with the created object of \code{ADEg.Tr} class.
       The specific slots for \code{Tr.class} objects are: \itemize{
-        \item{\code{ellipseSize}: \code{NULL} or number between 0 and 1 for ellipse size.}
-        \item{\code{starSize}: \code{NULL} or number between 0 and 1 for star size.}
-        \item{\code{chullSize}: \code{NULL} or vector of numbers between 0 and 1 for the convex hulls.}
+        \item{\code{ellipseSize}: a positive number for ellipse size.}
+        \item{\code{starSize}: a number between 0 and 1 for star size.}
+        \item{\code{chullSize}: \code{NULL} or a vector of numbers between 0 and 1 for the convex hulls.}
         \item{\code{col}: a \code{NULL} value, a color or a colors vector to color points, ellipses, labels, lines and polygons.}
         \item{\code{max3d} and \code{min3d}: vectors of three values for triangular maximal and minimal limits.}
         \item{\code{adjust}: a logical to adjust the device with the limits of the smaller equilateral triangle containing the values.}

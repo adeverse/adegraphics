@@ -150,8 +150,9 @@
   params <- list()
   params$g.args <- list(starSize = 0)
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+  print(sortparameters)
   
-  object <- do.call("s.class", c(list(dfxy = substitute(x$li), fac = oritab, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args))
+  object <- do.call("s.class", c(list(dfxy = substitute(x$li), fac = oritab, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args, sortparameters$rest))
   object@Call <- match.call()
   if(plot)
     print(object)

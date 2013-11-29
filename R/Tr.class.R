@@ -63,19 +63,20 @@ setMethod(
     object@adeg.par <- adegtot
     callNextMethod() ## prepare graph
     
-    xyz <-.coordtotriangleM(df, mini3 = object@g.args$min3d, maxi3 = object@g.args$max3d)
-    object@stats$coords2d <- xyz[,2:3]
+    ## calculate 2D coordinates
+    object@stats$coords2d <- .coordtotriangleM(sweep(df, 1, rowSums(df), "/"), mini3 = object@g.args$min3d, maxi3 = object@g.args$max3d)[, 2:3]
+    
     ## compute means for the 3 variables (for getstats)
     object@stats$means <- matrix(meanfacwt(df, fac, wt), nrow = nlev)
     ## mean2d: columns: axes, row: levels
-    object@stats$mean2d <- matrix(meanfacwt(xyz[, c(2, 3)], fac, wt), nrow = nlev)
+    object@stats$mean2d <- matrix(meanfacwt(object@stats$coords2d, fac, wt), nrow = nlev)
     mean.x <- object@stats$mean2d[, 1] ## all means rows as levels, columns as variables
     mean.y <- object@stats$mean2d[, 2]
     
     ## ellipses
     if(object@g.args$ellipseSize > 0) {
       object@stats$covvar <- covfacwt(df, fac, wt)
-      object@stats$covvar2d <- covfacwt(xyz[, c(2, 3)], fac, wt)
+      object@stats$covvar2d <- covfacwt(object@stats$coords2d, fac, wt)
       covvartotal <- object@stats$covvar2d
       
       object@s.misc$ellipses <- lapply(1:nlev,
@@ -88,7 +89,7 @@ setMethod(
     ## convex hull
     if(!is.null(object@g.args$chullSize))
       if(any(object@g.args$chullSize > 0))
-        object@s.misc$chullcoord  <- .util.chull(xyz[, 2],xyz[, 3] , mean.x, mean.y, fac = fac, chullSize =  object@g.args$chullSize)
+        object@s.misc$chullcoord  <- .util.chull(object@stats$coords2d[, 1], object@stats$coords2d[, 2], mean.x, mean.y, fac = fac, chullSize =  object@g.args$chullSize)
     
     object@adeg.par$plabels$optim <- FALSE
     assign(name_obj, object, envir = parent.frame())
@@ -110,10 +111,8 @@ setMethod(
       labels <- eval(object@data$labels, envir = sys.frame(object@data$frame))
     }
 
-    df <- sweep(df, 1, rowSums(df), "/")
     fac <- as.factor(fac)
     nlev <- nlevels(fac)
-    xyz <- .coordtotriangleM(df, mini3 = object@g.args$min3d, maxi3 = object@g.args$max3d)
     
     ## draw convex hulls
     if(any(object@g.args$chullSize > 0)) {
@@ -149,8 +148,8 @@ setMethod(
     ## draw stars
     if(object@g.args$starSize > 0) {
       plines <- lapply(object@adeg.par$plines, FUN = function(x) {rep(x, length.out = nlev)})
-      xlx <- split(xyz[, 2], fac)
-      ylx <- split(xyz[, 3], fac)
+      xlx <- split(object@stats$coords2d[, 1], fac)
+      ylx <- split(object@stats$coords2d[, 2], fac)
       for(level in 1:nlev) {
         xbase <- object@stats$mean2d[level, 1]
         ybase <- object@stats$mean2d[level, 2]
@@ -165,7 +164,7 @@ setMethod(
     }
     
     ## draw points
-    npoints <- nrow(xyz)
+    npoints <- nrow(object@stats$coords2d)
     ppoints <- object@adeg.par$ppoints
     if(length(fac) > 1) {
       ppoints <- lapply(object@adeg.par$ppoints, function(x, fac) {
@@ -178,7 +177,7 @@ setMethod(
       }, fac = fac)
     }
     
-    panel.points(x = xyz[, 2], y = xyz[, 3], type = "p", pch = ppoints$pch, cex = ppoints$cex, col = ppoints$col, alpha = ppoints$alpha, fill = ppoints$fill)
+    panel.points(x = object@stats$coords2d[, 1], y = object@stats$coords2d[, 2], type = "p", pch = ppoints$pch, cex = ppoints$cex, col = ppoints$col, alpha = ppoints$alpha, fill = ppoints$fill)
     
     ## draw labels
     if(any(object@adeg.par$plabels$cex > 0)) {
