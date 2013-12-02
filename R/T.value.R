@@ -40,10 +40,10 @@ setMethod(
       adegtot$ppoints$alpha <- 1
     
     if(inherits(dftab, "dist")) {
-      if(is.null(attr(dftab, "Labels")))
+      if(is.null(attr(dftab, "Labels")) && is.null(labelsx))
         adegtot$ptable$x$tck <- 0
-      if(is.null(attr(dftab, "Labels")))
-        adegtot$ptable$x$tck <- 0
+      if(is.null(attr(dftab, "Labels")) && is.null(labelsy))
+        adegtot$ptable$y$tck <- 0
       ## by default, no legend
       if(is.null(object@adeg.par$plegend$draw))
         adegtot$plegend$draw <- FALSE
@@ -107,7 +107,7 @@ setMethod(
   })
 
 
-table.value <- function(dftab, x = 1:ncol(as.matrix(dftab)), y = nrow(as.matrix(dftab)):1, labelsx, labelsy, maxsize = 0.4, breaks = NULL, method = c("size", "color"),
+table.value <- function(dftab, coordsx = 1:ncol(as.matrix(dftab)), coordsy = nrow(as.matrix(dftab)):1, labelsx, labelsy, maxsize = 0.4, breaks = NULL, method = c("size", "color"),
                         symbol = c("square", "circle"), col = NULL, nclass = 3, center = 0, centerpar = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
                         
   ## 4 different types can be used as tab :
@@ -128,9 +128,9 @@ table.value <- function(dftab, x = 1:ncol(as.matrix(dftab)), y = nrow(as.matrix(
     if(missing(labelsy))
       if(!is.null(attr(dftab, "Labels")))
         thecall$labelsy <- call("attr", thecall$dftab, "Labels")
-    ## x and y should be identical for dist objects (symmetric)
-    thecall$x <- call(":", 1, call("attr", thecall$dftab, "Size"))
-    thecall$y <- call(":", call("attr", thecall$dftab, "Size"), 1)
+    ## coordsx and coordsy should be identical for dist objects (symmetric)
+    thecall$coordsx <- call(":", 1, call("attr", thecall$dftab, "Size"))
+    thecall$coordsy <- call(":", call("attr", thecall$dftab, "Size"), 1)
     
   } else { ## data.frame, matrix, table
     if(missing(labelsy))
@@ -145,7 +145,7 @@ table.value <- function(dftab, x = 1:ncol(as.matrix(dftab)), y = nrow(as.matrix(
   sortparameters <- .specificpar(...)
   ## creation of the ADEg object
   g.args <- c(sortparameters$g.args, list(breaks = breaks, method = thecall$method, symbol = thecall$symbol, center = thecall$center, maxsize = maxsize, col = col, nclass = nclass, centerpar = centerpar))
-  tmp_data <- list(dftab = thecall$dftab, x = thecall$x, y = thecall$y, labelsx = thecall$labelsx, labelsy = thecall$labelsy, frame = sys.nframe() + pos, storeData = storeData)
+  tmp_data <- list(dftab = thecall$dftab, coordsx = thecall$coordsx, coordsy = thecall$coordsy, labelsx = thecall$labelsx, labelsy = thecall$labelsy, frame = sys.nframe() + pos, storeData = storeData)
   
   if(inherits(dftab, "table")) {
     condres <- pmatch(c("ablineX", "ablineY", "meanX", "meanY"), names(sortparameters$rest))

@@ -16,13 +16,13 @@ setMethod(
     adegtot <- adegpar(object@adeg.par)
     
     if(object@data$storeData) {
-      x <- object@data$x
-      y <- object@data$y
+      coordsx <- object@data$coordsx
+      coordsy <- object@data$coordsy
       z <- as.vector(as.matrix(object@data$dftab))
       dftab <- object@data$dftab
     } else {
-      x <- eval(object@data$x, envir = sys.frame(object@data$frame))
-      y <- eval(object@data$y, envir = sys.frame(object@data$frame))
+      coordsx <- eval(object@data$coordsx, envir = sys.frame(object@data$frame))
+      coordsy <- eval(object@data$coordsy, envir = sys.frame(object@data$frame))
       z <- as.vector(as.matrix(eval(object@data$dftab, envir = sys.frame(object@data$frame))))
       dftab <- eval(object@data$dftab, envir = sys.frame(object@data$frame))
     }
@@ -75,10 +75,10 @@ setMethod(
     callNextMethod() ## prepare graph
     
     ## TODO:  improve the code to avoid some repetition with the parent function
-    wx <- range(x)
-    dx <- (diff(wx) + 1) / length(x)
-    wy <- range(y)
-    dy <- (diff(wy) + 1) / length(y)
+    wx <- range(coordsx)
+    dx <- (diff(wx) + 1) / length(coordsx)
+    wy <- range(coordsy)
+    dy <- (diff(wy) + 1) / length(coordsy)
     ## add an half cell at both sides
     object@g.args$xlim <- wx + c(-0.5, 0.5) * dx
     object@g.args$ylim <- wy + c(-0.5, 0.5) * dy 
@@ -90,7 +90,7 @@ setMethod(
   f = "T.panel",
   signature = "T.image",
   definition = function(object, x, y) {
-    ## x is data$x and y is data$y
+    ## x is data$coordsx and y is data$coordsy
     if(object@data$storeData)
       dftab <- as.matrix(object@data$dftab)
     else
@@ -118,10 +118,10 @@ setMethod(
 
 
 ## TODO: decider quelle classe on prend en compte
-## a faire: verifier espacement correct de x et y
+## a faire: verifier espacement correct de coordsx et coordsy
 ## que faire de la sous grille?
-## attention, x et y ne serve qu'a donner l'ordre de trace, ils seront considere comme egalement espace, sinon fonction a revoir
-table.image <- function(dftab, x = 1:ncol(as.matrix(dftab)), y = nrow(as.matrix(dftab)):1, labelsx, labelsy, nclass = 3, breaks = NULL, col = NULL, plot = TRUE, 
+## attention, coordsx et coordsy ne serve qu'a donner l'ordre de trace, ils seront considere comme egalement espace, sinon fonction a revoir
+table.image <- function(dftab, coordsx = 1:ncol(as.matrix(dftab)), coordsy = nrow(as.matrix(dftab)):1, labelsx, labelsy, nclass = 3, breaks = NULL, col = NULL, plot = TRUE, 
   storeData = FALSE, add = FALSE, pos = -1, ...) {
   
   ## 4 different types can be used as tab :
@@ -129,9 +129,9 @@ table.image <- function(dftab, x = 1:ncol(as.matrix(dftab)), y = nrow(as.matrix(
   thecall <- .expand.call(match.call())
   dftab <- eval(thecall$dftab, envir = sys.frame(sys.nframe() + pos))
   
-  ## modify x/y positions (we use only the order not the values)
-  thecall$x <- call("rank", thecall$x, ties.method = "first")
-  thecall$y <- call("rank", thecall$y, ties.method = "first")
+  ## modify coordsx/coordsy positions (we use only the order not the values)
+  thecall$coordsx <- call("rank", thecall$coordsx, ties.method = "first")
+  thecall$coordsy <- call("rank", thecall$coordsy, ties.method = "first")
   
   if(inherits(dftab, "dist")) {
     if(missing(labelsx))
@@ -140,9 +140,9 @@ table.image <- function(dftab, x = 1:ncol(as.matrix(dftab)), y = nrow(as.matrix(
     if(missing(labelsy))
       if(!is.null(attr(dftab, "Labels")))
         thecall$labelsy <- call("attr", thecall$dftab, "Labels")
-    ## x and y should be identical for dist objects (symmetric)
-    thecall$x <- call(":", 1, call("attr", thecall$dftab, "Size"))
-    thecall$y <- call(":", call("attr", thecall$dftab, "Size"), 1)
+    ## coordsx and coordsy should be identical for dist objects (symmetric)
+    thecall$coordsx <- call(":", 1, call("attr", thecall$dftab, "Size"))
+    thecall$coordsy <- call(":", call("attr", thecall$dftab, "Size"), 1)
     
   } else { ## data.frame, matrix, table
     if(missing(labelsy))
@@ -161,7 +161,7 @@ table.image <- function(dftab, x = 1:ncol(as.matrix(dftab)), y = nrow(as.matrix(
     warning(c("Unused parameters: ", paste(unique(names(sortparameters$rest)), " ", sep = "")), call. = FALSE)
   
   g.args <- c(sortparameters$g.args, list(breaks = breaks, nclass = nclass, col = col))
-  tmp_data <- list(dftab = thecall$dftab, x = thecall$x, y = thecall$y, labelsx = thecall$labelsx, labelsy = thecall$labelsy, frame = sys.nframe() + pos, storeData = storeData)
+  tmp_data <- list(dftab = thecall$dftab, coordsx = thecall$coordsx, coordsy = thecall$coordsy, labelsx = thecall$labelsx, labelsy = thecall$labelsy, frame = sys.nframe() + pos, storeData = storeData)
   object <- new(Class = "T.image", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = g.args, Call = match.call())
 
   ## preparation of the graph

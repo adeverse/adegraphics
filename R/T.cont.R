@@ -12,12 +12,12 @@ setMethod(
     callNextMethod(object, x, y)
     if(object@data$storeData) {
       dftab <- object@data$dftab
-      x <- object@data$x
-      y <- object@data$y
+      coordsx <- object@data$coordsx
+      coordsy <- object@data$coordsy
     } else {
       dftab <- eval(object@data$dftab, envir = sys.frame(object@data$frame))
-      x <- eval(object@data$x, envir = sys.frame(object@data$frame))
-      y <- eval(object@data$y, envir = sys.frame(object@data$frame))
+      coordsx <- eval(object@data$coordsx, envir = sys.frame(object@data$frame))
+      coordsy <- eval(object@data$coordsy, envir = sys.frame(object@data$frame))
     }
     
     dftab <- dftab / sum(dftab)
@@ -30,24 +30,23 @@ setMethod(
     }
     
     if(object@g.args$meanX) {
-      val <- y
-      w <- t(apply(dftab, 2, f1, w = val))
-      panel.points(x = x, y = w[, 1], pch = 20, cex = 1.5, col = "black")
-      panel.segments(x, w[, 1] - w[, 2] , x, w[, 1] + w[, 2], col = object@adeg.par$plines$col, lty = object@adeg.par$plines$lty, lwd = object@adeg.par$plines$lwd)
+      w <- t(apply(dftab, 2, f1, w = coordsy))
+      panel.points(x = coordsx, y = w[, 1], pch = 20, cex = 1.5, col = "black")
+      panel.segments(coordsx, w[, 1] - w[, 2] , coordsx, w[, 1] + w[, 2], col = object@adeg.par$plines$col, lty = object@adeg.par$plines$lty, lwd = object@adeg.par$plines$lwd)
     }
     
     if(object@g.args$meanY) {
-      w <- t(apply(dftab, 1, f1, w = x))
-      panel.points(x = w[, 1], y, pch = 20, cex = 1.5, col = "black")
-      panel.segments(w[, 1] - w[, 2], y, w[, 1] + w[, 2], y, col = object@adeg.par$plines$col, lty = object@adeg.par$plines$lty, lwd = object@adeg.par$plines$lwd)
+      w <- t(apply(dftab, 1, f1, w = coordsx))
+      panel.points(x = w[, 1], coordsy, pch = 20, cex = 1.5, col = "black")
+      panel.segments(w[, 1] - w[, 2], coordsy, w[, 1] + w[, 2], coordsy, col = object@adeg.par$plines$col, lty = object@adeg.par$plines$lty, lwd = object@adeg.par$plines$lwd)
     }
     
-    x <- x[col(as.matrix(dftab))]
-    y <- y[row(as.matrix(dftab))]
+    coordsx <- coordsx[col(as.matrix(dftab))]
+    coordsy <- coordsy[row(as.matrix(dftab))]
     if(object@g.args$ablineX)
-      panel.abline(reg = lm(x ~ y, weights = as.vector(as.matrix(dftab))), col = object@adeg.par$plines$col, lty = object@adeg.par$plines$lty, lwd = object@adeg.par$plines$lwd)
+      panel.abline(reg = lm(coordsx ~ coordsy, weights = as.vector(as.matrix(dftab))), col = object@adeg.par$plines$col, lty = object@adeg.par$plines$lty, lwd = object@adeg.par$plines$lwd)
     if(object@g.args$ablineY) {
-      w <- coefficients(lm(x ~ y, weights = as.vector(as.matrix(dftab))))
+      w <- coefficients(lm(coordsx ~ coordsy, weights = as.vector(as.matrix(dftab))))
       if(w[2] == 0)
         panel.abline(h = w[1], col = object@adeg.par$plines$col, lty = object@adeg.par$plines$lty, lwd = object@adeg.par$plines$lwd)
       else

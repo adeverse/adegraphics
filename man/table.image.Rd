@@ -8,7 +8,7 @@
 }
 
 \usage{
-table.image(dftab, x = 1:ncol(as.matrix(dftab)), y =
+table.image(dftab, coordsx = 1:ncol(as.matrix(dftab)), coordsy =
   nrow(as.matrix(dftab)):1, labelsx, labelsy, nclass = 3,
   breaks = NULL, col = NULL, plot = TRUE, storeData =
   FALSE, add = FALSE, pos = -1, ...)
@@ -17,9 +17,9 @@ table.image(dftab, x = 1:ncol(as.matrix(dftab)), y =
 \arguments{
   \item{dftab}{a data frame, matrix, contingency table or distance matrix used to produce the plot}
   
-  \item{x}{an integer or a vector indicating the columns of \code{dftab} kept}
+  \item{coordsx}{an integer or a vector indicating the columns of \code{dftab} kept}
   
-  \item{y}{an integer or a vector indicating the rows of \code{dftab} kept}
+  \item{coordsy}{an integer or a vector indicating the rows of \code{dftab} kept}
   
   \item{labelsx}{columns labels}
   
@@ -65,13 +65,13 @@ table.image(dftab, x = 1:ncol(as.matrix(dftab)), y =
 \examples{
 tab <- as.table(matrix(rnorm(900), ncol = 30))
 g1 <- table.image(tab)
-g2 <- table.image(tab, n = 100, x = c(30, 1:29), plegend.draw = FALSE)
+g2 <- table.image(tab, n = 100, coordsx = c(30, 1:29), plegend.draw = FALSE)
 
 data(rpjdl, package = "ade4")
 X <- data.frame(t(rpjdl$fau))
 Y <- data.frame(t(rpjdl$mil))
 coa1 <- ade4::dudi.coa(X, scannf = FALSE)
-g3 <- table.image(Y, x = rank(coa1$co[, 1]), y = 1:8, nclas = 5, labelsx = "", plegend.draw = FALSE)
+g3 <- table.image(Y, coordsx = rank(coa1$co[, 1]), coordsy = 1:8, nclas = 5, labelsx = "", plegend.draw = FALSE)
 }
 
 \keyword{aplot}

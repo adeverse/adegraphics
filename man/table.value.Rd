@@ -8,7 +8,7 @@
 }
 
 \usage{
-table.value(dftab, x = 1:ncol(as.matrix(dftab)), y = nrow(as.matrix(dftab)):1, labelsx, 
+table.value(dftab, coordsx = 1:ncol(as.matrix(dftab)), coordsy = nrow(as.matrix(dftab)):1, labelsx, 
   labelsy, maxsize = 0.4, breaks = NULL, method = c("size", "color"),
   symbol = c("square", "circle"), col = NULL, nclass = 3, center = 0, centerpar = NULL,
   plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...)
@@ -17,9 +17,9 @@ table.value(dftab, x = 1:ncol(as.matrix(dftab)), y = nrow(as.matrix(dftab)):1, l
 \arguments{
   \item{dftab}{a data frame, matrix, contingency table or distance matrix used to produce the plot}
   
-  \item{x}{an integer or a vector indicating the columns of \code{dftab} kept}
+  \item{coordsx}{an integer or a vector indicating the columns of \code{dftab} kept}
   
-  \item{y}{an integer or a vector indicating the rows of \code{dftab} kept}
+  \item{coordsy}{an integer or a vector indicating the rows of \code{dftab} kept}
 
   \item{labelsx}{columns labels}
   
@@ -97,9 +97,9 @@ w <- data.frame(scale(w))
 wpca <- ade4::dudi.pca(w, scann = FALSE)
 g1 <- table.value(w, maxsi = 0.5, axis.line = list(col = "darkblue"), 
   axis.text = list(col = "darkgrey"))
-g2 <- table.value(w, y = rank(wpca$li[, 1]), maxsi = 0.5, axis.line = list(col = "darkblue"), 
+g2 <- table.value(w, coordsy = rank(wpca$li[, 1]), maxsi = 0.5, axis.line = list(col = "darkblue"), 
   axis.text = list(col = "darkgrey"))
-g3 <- table.value(w, y = wpca$li[, 1], x = wpca$co[, 1], maxsi = 0.5, 
+g3 <- table.value(w, coordsy = wpca$li[, 1], coordsx = wpca$co[, 1], maxsi = 0.5, 
   axis.line = list(col = "darkblue"), axis.text = list(col = "darkgrey"))
 
 ## distance
@@ -111,7 +111,7 @@ g5 <- table.value(eurodist, symbol = "circle")
 data(rpjdl, package = "ade4")
 w <- data.frame(t(rpjdl$fau))
 wcoa <- ade4::dudi.coa(w, scann = FALSE)
-g6 <- table.value(as.table(as.matrix(w)), meanY = TRUE, x = wcoa$c1[,1], y = rank(wcoa$l1[,1]), 
+g6 <- table.value(as.table(as.matrix(w)), meanY = TRUE, coordsx = wcoa$c1[,1], coordsy = rank(wcoa$l1[,1]), 
   maxsize = 0.2, labelsx = "", col = "black")
 }
 }

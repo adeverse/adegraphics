@@ -12,13 +12,13 @@ setClass(
 setMethod(
   f = "initialize",
   signature  = "ADEg.T",
-  definition = function(.Object, data = list(dftab = NULL, x = NULL, y = NULL, labelsx = NULL, labelsy = NULL, frame = 0, storeData = TRUE), ...) {
+  definition = function(.Object, data = list(dftab = NULL, coordsx = NULL, coordsy = NULL, labelsx = NULL, labelsy = NULL, frame = 0, storeData = TRUE), ...) {
     ## import the data in @data if storeData = TRUE
     .Object <- callNextMethod(.Object, ...) ## ADEg initialize
     if(data$storeData){
       data$dftab <- eval(data$dftab, envir = sys.frame(data$frame))
-      data$x <- eval(data$x, envir = sys.frame(data$frame))
-      data$y <- eval(data$y, envir = sys.frame(data$frame))
+      data$coordsx <- eval(data$coordsx, envir = sys.frame(data$frame))
+      data$coordsy <- eval(data$coordsy, envir = sys.frame(data$frame))
       data$labelsx <- eval(data$labelsx, envir = sys.frame(data$frame))
       data$labelsy <- eval(data$labelsy, envir = sys.frame(data$frame))
     }
@@ -34,16 +34,16 @@ setMethod(
   definition = function(object) {
     name_obj <- deparse(substitute(object))
     if(object@data$storeData){
-      x <- object@data$x
-      y <- object@data$y
+      coordsx <- object@data$coordsx
+      coordsy <- object@data$coordsy
     } else {
-      x <- eval(object@data$x, envir = sys.frame(object@data$frame))
-      y <- eval(object@data$y, envir = sys.frame(object@data$frame))
+      coordsx <- eval(object@data$coordsx, envir = sys.frame(object@data$frame))
+      coordsy <- eval(object@data$coordsy, envir = sys.frame(object@data$frame))
     }
 
     ## cell size
-    object@s.misc$axes$dx <- diff(range(x)) / length(x)
-    object@s.misc$axes$dy <- diff(range(y)) / length(y)
+    object@s.misc$axes$dx <- ifelse(length(coordsx) == 1, 1, diff(range(coordsx)) / length(coordsx))
+    object@s.misc$axes$dy <- ifelse(length(coordsy) == 1, 1, diff(range(coordsy)) / length(coordsy))
     
     ## ll, rr, tt, bb: right, left, top, bottom margins
     ll <- rr <- rep(object@adeg.par$ptable$y$cstmargin, length.out = 2)[2]
@@ -52,12 +52,12 @@ setMethod(
       ll <- object@adeg.par$ptable$y$cstmargin[1]
     else if(object@adeg.par$ptable$y$pos == "right")
       rr <- object@adeg.par$ptable$y$cstmargin[1] 
-    object@g.args$xlim <- range(x) + c(-1, 1) * object@s.misc$axes$dx
+    object@g.args$xlim <- range(coordsx) + c(-1, 1) * object@s.misc$axes$dx
     if(object@adeg.par$ptable$x$pos == "top")
       tt <- object@adeg.par$ptable$x$cstmargin[1]
     else if(object@adeg.par$ptable$x$pos == "bottom")
       bb <- object@adeg.par$ptable$x$cstmargin[1]
-    object@g.args$ylim <- range(y) + c(-1, 1) * object@s.misc$axes$dy
+    object@g.args$ylim <- range(coordsy) + c(-1, 1) * object@s.misc$axes$dy
     
     object@trellis.par <- c(object@trellis.par, list(clip = list(panel = "off"),
                                                      layout.heights = list(top.padding = tt, bottom.padding = bb),
@@ -75,13 +75,13 @@ setMethod(
     grid <- object@adeg.par$pgrid
     ## draw grid
     if(object@data$storeData) {
-      xpos <- object@data$x
-      ypos <- object@data$y
+      xpos <- object@data$coordsx
+      ypos <- object@data$coordsy
       labelsx <- object@data$labelsx
       labelsy <- object@data$labelsy
     } else {
-      xpos <- eval(object@data$x, envir = sys.frame(object@data$frame))
-      ypos <- eval(object@data$y, envir = sys.frame(object@data$frame))
+      xpos <- eval(object@data$coordsx, envir = sys.frame(object@data$frame))
+      ypos <- eval(object@data$coordsy, envir = sys.frame(object@data$frame))
       labelsx <- eval(object@data$labelsx, envir = sys.frame(object@data$frame))
       labelsy <- eval(object@data$labelsy, envir = sys.frame(object@data$frame))
     }
@@ -240,11 +240,11 @@ setMethod(
   signature = "ADEg.T",
   definition = function(object) {
     if(object@data$storeData) {
-      xdata <- object@data$x
-      ydata <- object@data$y
+      xdata <- object@data$coordsx
+      ydata <- object@data$coordsy
     } else {
-      xdata <- eval(object@data$x, envir = sys.frame(object@data$frame))
-      ydata <- eval(object@data$y, envir = sys.frame(object@data$frame))
+      xdata <- eval(object@data$coordsx, envir = sys.frame(object@data$frame))
+      ydata <- eval(object@data$coordsy, envir = sys.frame(object@data$frame))
     }
     
     tmptrellis <- do.call(what = object@lattice.call$graphictype, args = c(formula(ydata ~ xdata), object@lattice.call$arguments, environment()))

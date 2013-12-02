@@ -28,8 +28,8 @@
     \item{\code{data}:}{a list containing data or data's name. \itemize{
       \item{\code{dftab}: the displayed values which can be \code{table}, \code{dist} or \code{matrix}
         in the form of a data frame, a name or a matching call}
-      \item{\code{x}: an integer or a vector indicating the columns of \code{dftab} kept}
-      \item{\code{y}: an integer or a vector indicating the rows of \code{dftab} kept}
+      \item{\code{coordsx}: an integer or a vector indicating the columns of \code{dftab} kept}
+      \item{\code{coordsy}: an integer or a vector indicating the rows of \code{dftab} kept}
       \item{\code{labelsx}: the columns' labels}
       \item{\code{labelsy}: the rows' labels}
       \item{"\code{frame}: a positive or null integer. It is the number of the frame containing the data (used 
