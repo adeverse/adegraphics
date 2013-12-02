@@ -122,7 +122,7 @@
   }
 	
   ## ADEgS creation
-  names(obj) <- object$tab.names
+  names(obj) <- object$tab.names[which.tab]
   obj@Call <- match.call()
   if(plot) 
     print(obj)
@@ -249,7 +249,7 @@
   }
   
   ## ADEgS creation
-  names(obj) <- object$tab.names
+  names(obj) <- object$tab.names[which.tab]
   obj@Call <- match.call()
   if(plot) 
     print(obj)
@@ -312,7 +312,7 @@
   }
   
   ## ADEgS creation
-  names(obj) <- object$tab.names
+  names(obj) <- object$tab.names[which.tab]
   obj@Call <- match.call()
   if(plot) 
     print(obj)
@@ -368,7 +368,7 @@
   }
 	
   ## ADEgS creation
-  names(obj) <- object$tab.names
+  names(obj) <- object$tab.names[which.tab]
   obj@Call <- match.call()
   if(plot) 
     print(obj)

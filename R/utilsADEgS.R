@@ -1,32 +1,35 @@
 .add.scatter.eig <- function(eigvalue, nf, xax = 1, yax = 2, col.plot = "black", col.kept = "grey", col = "white", facets = NULL, storeData = FALSE, plot = TRUE, pos = -1, ...) {
-  ##prepare
+  ## prepare
   col <- rep(col, length(eigvalue))
   col[nf] <- col.kept
   col[c(xax, yax)] <- col.plot
  
-  ##parameters management
+  ## parameters management
   sortparameters <- .specificpar(...)
   params <- list()
   params$adepar <- list(ppolygons = list(col = col), p1d = list(horizontal = FALSE), psub = list(position = "topright"), pgrid = list(draw = FALSE), pbackground = list(box = FALSE))
   sortparameters$adepar <- modifyList(params$adepar, sortparameters$adepar, keep.null = TRUE)
   
-  lim <- c(0, ifelse(is.null(facets), length(eigvalue), max(table(facets)))) + 0.5
-  if(isTRUE(sortparameters$adepar$p1d$horizontal))
-  	params$g.args <- list(ylim = lim)
-  else
-    params$g.args <- list(xlim = lim)
-  
-  lim.val <- range(eigvalue)
-  if(lim.val[1] >= 0) {
-    lim.val <- c(0, lim.val[2] + diff(c(lim.val[1], lim.val[2])) / 10)
+  if(is.null(facets) || isTRUE(sortparameters$g.args$samelimits)) {
+    lim <- c(0, ifelse(is.null(facets), length(eigvalue), max(table(facets)))) + 0.5
     if(isTRUE(sortparameters$adepar$p1d$horizontal))
-  	  params$g.args <- list(xlim = lim.val, ylim = params$g.args$ylim)
+    	params$g.args <- list(ylim = lim)
     else
-      params$g.args <- list(xlim = params$g.args$xlim, ylim = lim.val)
+      params$g.args <- list(xlim = lim)
+    
+  	lim.val <- range(eigvalue)
+  	if(lim.val[1] >= 0) {
+	    lim.val <- c(0, lim.val[2] + diff(c(lim.val[1], lim.val[2])) / 10)
+    	if(isTRUE(sortparameters$adepar$p1d$horizontal))
+	  	  params$g.args <- list(xlim = lim.val, ylim = params$g.args$ylim)
+    	else
+	      params$g.args <- list(xlim = params$g.args$xlim, ylim = lim.val)
+	  }
+  } else {
+    params$g.args <- list(xlim = NULL, ylim = NULL)
   }
   
   sortparameters$g.args <- modifyList(params$g.args, sortparameters$g.args, keep.null = TRUE)
-  
   do.call("s1d.barchart", c(list(score = substitute(eigvalue), pos = pos - 2, plot = plot, facets = facets, storeData = storeData), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args, sortparameters$stats, sortparameters$s.misc, sortparameters$rest))
 }
 
