@@ -171,6 +171,7 @@ adeg.panel.nb <- function(nbobject, coords, col.edge = "black", lwd = 1, lty = 1
   if(length(nbobject) != nrow(coords))
     stop("error for nb object, not the same numbers of nodes and coordinates", call. = FALSE)
   edges <- cbind(rep(1:length(nbobject), lapply(nbobject, length)), unlist(nbobject))
+  edges <- edges[edges[,2] != 0, ]
   
   ## ici faire rep des parametres pour pouvoir ensuite modifier couleur
   adeg.panel.edges(edges, coords, col.edge, lwd, lty, pch, cex, col.node, alpha)
