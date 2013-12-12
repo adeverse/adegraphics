@@ -12,7 +12,7 @@
     stop("Non convenient yax")
   
   ## sort parameters for each graph
-  graphsnames <- c("Xax", "Yax", "eig", "XYmatch", "Xloadings", "Yloadings")
+  graphsnames <- c("Xax", "Yax", "eig", "XYmatch", "Yloadings", "Xloadings")
   sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
   
   ## parameters management
@@ -21,8 +21,8 @@
   params[[2]] <- list(psub = list(text = "Y axes"), pbackground = list(box = FALSE))
   params[[3]] <- list(psub = list(text = "Eigenvalues"))
   params[[4]] <- list(psub = list(text = "X -> Y"))
-  params[[5]] <- list(psub = list(text = "X loadings"))
-  params[[6]] <- list(psub = list(text = "Y loadings"))
+  params[[5]] <- list(psub = list(text = "Y loadings"))
+  params[[6]] <- list(psub = list(text = "X loadings"))
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
