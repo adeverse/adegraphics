@@ -12,6 +12,8 @@
   if(yax > x$nf)
     stop("Non convenient yax")  
   
+  position <- match.arg(posieig[1], choices = c("bottomleft", "bottomright", "topleft", "topright", "none"), several.ok = FALSE)
+  
   ## sort parameters for each graph
   graphsnames <- c("row", "col", "eig")
   sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
@@ -58,9 +60,9 @@
   ## create the final ADEgS
   object <- do.call("superpose", list(g1, g2))
   object@Call <- call("superpose", g1@Call, g2@Call)
-  if(!any(posieig == "none")) {
+  if(position != "none") {
     g3 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters$eig))
-    object <- do.call("insert", list(g3@Call, object@Call, posi = posieig, plot = FALSE, ratio = 0.25))
+    object <- do.call("insert", list(g3@Call, object@Call, posi = position, plot = FALSE, ratio = 0.25))
   }
   
   names(object) <- graphsnames[1:length(object)]
@@ -86,6 +88,8 @@
     stop("Non convenient xax")
   if(yax > x$nf)
     stop("Non convenient yax")
+  
+  position <- match.arg(posieig[1], choices = c("bottomleft", "bottomright", "topleft", "topright", "none"), several.ok = FALSE)
   
   ## sort parameters for each graph
   graphsnames <- c("row", "col", "eig")
@@ -113,9 +117,9 @@
   }  
   object <- do.call("superpose", list(g1, g2))
   object@Call <- call("superpose", g1@Call, g2@Call)
-  if(!any(posieig == "none")) {
+  if(position != "none") {
     g3 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters$eig))
-    object <- do.call("insert", list(g3@Call, object@Call, posi = posieig, plot = FALSE, ratio = 0.25))
+    object <- do.call("insert", list(g3@Call, object@Call, posi = position, plot = FALSE, ratio = 0.25))
   }
   
   object@Call <- match.call()
@@ -150,7 +154,6 @@
   params <- list()
   params$g.args <- list(starSize = 0)
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
-  print(sortparameters)
   
   object <- do.call("s.class", c(list(dfxy = substitute(x$li), fac = oritab, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args, sortparameters$rest))
   object@Call <- match.call()
@@ -219,6 +222,8 @@
   if(yax > x$nf)
     stop("Non convenient yax")
   
+  position <- match.arg(posieig[1], choices = c("bottomleft", "bottomright", "topleft", "topright", "none"), several.ok = FALSE)
+  
   ## sort parameters for each graph
   graphsnames <- c("row", "eig")
   sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
@@ -232,9 +237,9 @@
   
   ## creation of each individual ADEg and of the final ADEgS
   object <- do.call("s.label", c(list(dfxy = substitute(x$li), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$row))
-  if(!any(posieig == "none")) {
+  if(position != "none") {
     g2 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters$eig))
-    object <- do.call("insert", list(g2@Call, object@Call, posi = posieig, plot = FALSE, ratio = 0.25))
+    object <- do.call("insert", list(g2@Call, object@Call, posi = position, plot = FALSE, ratio = 0.25))
     names(object) <- graphsnames[1:length(object)]
   }
   
@@ -258,6 +263,8 @@
     stop("Non convenient xax")
   if(yax > x$nf)
     stop("Non convenient yax")
+  
+  position <- match.arg(posieig[1], choices = c("bottomleft", "bottomright", "topleft", "topright", "none"), several.ok = FALSE)
   
   ## sort parameters for each graph
   graphsnames <- c("row", "col", "eig")
@@ -283,9 +290,9 @@
   ## creation of each individual ADEg and of the final ADEgS
   object <- do.call("superpose", list(g1, g2))
   object@Call <- call("superpose", g1@Call, g2@Call)
-  if(!any(posieig == "none")) {
+  if(position != "none") {
     g3 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters$eig))
-    object <- do.call("insert", list(g3@Call, object@Call, posi = posieig, plot = FALSE, ratio = 0.25))
+    object <- do.call("insert", list(g3@Call, object@Call, posi = position, plot = FALSE, ratio = 0.25))
   }
   
   names(object) <- graphsnames[1:length(object)]
