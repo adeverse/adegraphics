@@ -71,7 +71,8 @@ data(rpjdl, package = "ade4")
 X <- data.frame(t(rpjdl$fau))
 Y <- data.frame(t(rpjdl$mil))
 coa1 <- ade4::dudi.coa(X, scannf = FALSE)
-g3 <- table.image(Y, coordsx = rank(coa1$co[, 1]), coordsy = 1:8, nclas = 5, labelsx = "", plegend.draw = FALSE)
+g3 <- table.image(Y, coordsx = rank(coa1$co[, 1]), coordsy = 1:8, nclas = 5, 
+  labelsx = "", plegend.draw = FALSE)
 }
 
 \keyword{aplot}

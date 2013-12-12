@@ -39,12 +39,12 @@
       
       ppalette = list(quanti = colorRampPalette(c("white", "black")),
         quali = function(n, name = "Set1") {
-          if(n > 12)
-            stop("more than 12 colors not allowed", call. = TRUE)
+          if(n > 9)
+          	return(rainbow(n))
           else if(n > 2)
             return(brewer.pal(n, name))
           else
-            return(colorRampPalette(c("black", "white"))(2))
+            return(brewer.pal(n + 1, name)[1:2])
         }),  ## see http://colorbrewer2.org/
       
       ppoints = list(alpha = 1, cex = 1, col = "black", pch = 20, fill = "black"),

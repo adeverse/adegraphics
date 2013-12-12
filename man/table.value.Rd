@@ -8,8 +8,8 @@
 }
 
 \usage{
-table.value(dftab, coordsx = 1:ncol(as.matrix(dftab)), coordsy = nrow(as.matrix(dftab)):1, labelsx, 
-  labelsy, maxsize = 0.4, breaks = NULL, method = c("size", "color"),
+table.value(dftab, coordsx = 1:ncol(as.matrix(dftab)), coordsy = nrow(as.matrix(dftab)):1, 
+  labelsx, labelsy, maxsize = 0.4, breaks = NULL, method = c("size", "color"),
   symbol = c("square", "circle"), col = NULL, nclass = 3, center = 0, centerpar = NULL,
   plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...)
 }
@@ -97,8 +97,8 @@ w <- data.frame(scale(w))
 wpca <- ade4::dudi.pca(w, scann = FALSE)
 g1 <- table.value(w, maxsi = 0.5, axis.line = list(col = "darkblue"), 
   axis.text = list(col = "darkgrey"))
-g2 <- table.value(w, coordsy = rank(wpca$li[, 1]), maxsi = 0.5, axis.line = list(col = "darkblue"), 
-  axis.text = list(col = "darkgrey"))
+g2 <- table.value(w, coordsy = rank(wpca$li[, 1]), maxsi = 0.5, 
+  axis.line = list(col = "darkblue"), axis.text = list(col = "darkgrey"))
 g3 <- table.value(w, coordsy = wpca$li[, 1], coordsx = wpca$co[, 1], maxsi = 0.5, 
   axis.line = list(col = "darkblue"), axis.text = list(col = "darkgrey"))
 
@@ -111,8 +111,8 @@ g5 <- table.value(eurodist, symbol = "circle")
 data(rpjdl, package = "ade4")
 w <- data.frame(t(rpjdl$fau))
 wcoa <- ade4::dudi.coa(w, scann = FALSE)
-g6 <- table.value(as.table(as.matrix(w)), meanY = TRUE, coordsx = wcoa$c1[,1], coordsy = rank(wcoa$l1[,1]), 
-  maxsize = 0.2, labelsx = "", col = "black")
+g6 <- table.value(as.table(as.matrix(w)), meanY = TRUE, coordsx = wcoa$c1[,1], 
+  coordsy = rank(wcoa$l1[,1]), maxsize = 0.2, labelsx = "", col = "black")
 }
 }
 
