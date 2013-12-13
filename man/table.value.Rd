@@ -8,10 +8,11 @@
 }
 
 \usage{
-table.value(dftab, coordsx = 1:ncol(as.matrix(dftab)), coordsy = nrow(as.matrix(dftab)):1, 
-  labelsx, labelsy, maxsize = 0.4, breaks = NULL, method = c("size", "color"),
-  symbol = c("square", "circle"), col = NULL, nclass = 3, center = 0, centerpar = NULL,
-  plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...)
+table.value(dftab, coordsx = 1:ncol(as.matrix(dftab)), coordsy = 
+  nrow(as.matrix(dftab)):1, labelsx, labelsy, maxsize = 0.4, breaks = NULL, 
+  method = c("size", "color"), symbol = c("square", "circle"), col = NULL, 
+  nclass = 3, center = 0, centerpar = NULL, plot = TRUE, storeData = FALSE, 
+  add = FALSE, pos = -1, ...)
 }
 
 \arguments{

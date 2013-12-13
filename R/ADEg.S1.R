@@ -35,6 +35,8 @@ setMethod(
     else
       score <- eval(object@data$score, envir = sys.frame(object@data$frame))
     
+    score <- as.matrix(score)[, 1]  ## to manage 'score' when it is a data.frame with only one column
+    
     ## limits and scale
     minX <- min(score)
     maxX <- max(score)
@@ -244,7 +246,9 @@ setMethod(
       score <- object@data$score
     else
       score <- eval(object@data$score, envir = sys.frame(object@data$frame))
-         
+    
+    score <- as.matrix(score)[, 1]  ## to manage 'score' when it is a data.frame with only one column
+    
     xdata <- rep(1, length(score))
     fml <- as.formula(score ~ xdata)
     tmptrellis <- do.call(what = object@lattice.call$graphictype, args = c(fml, object@lattice.call$arguments, environment()))

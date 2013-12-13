@@ -155,6 +155,10 @@ s1d.match <- function(score1, score2, labels = 1:NROW(score1), facets = NULL, pl
   if(NCOL(score1) != NCOL(score2))
     stop("score1 and score2 should have the same number of columns")
   
+  if((is.data.frame(score1) & NCOL(score1) == 1) | (is.data.frame(score2) & NCOL(score2) == 1)) 
+    stop("Not yet implemented for data.frame with only one column, please convert into vector")
+    
+    
   ## parameters sorted
   sortparameters <- .specificpar(...)
   

@@ -42,6 +42,7 @@ setMethod(
       fac <- eval(object@data$fac, envir = sys.frame(object@data$frame))
       score <- eval(object@data$score, envir = sys.frame(object@data$frame))
     }
+    score <- as.matrix(score)[, 1]  ## to manage 'score' when it is a data.frame with only one column
     nlev <- nlevels(as.factor(fac))
     
     ## If axes are plotted, put a label for axis

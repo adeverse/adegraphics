@@ -45,6 +45,8 @@ setMethod(
       labels <- eval(object@data$labels, envir = sys.frame(object@data$frame))
     }
     
+    score <- as.matrix(score)[, 1]  ## to manage 'score' when it is a data.frame with only one column
+    
     ## change default for some parameters
     if(adegtot$p1d$horizontal & is.null(object@adeg.par$plabels$orientation))
       adegtot$plabels$orientation <- 0
