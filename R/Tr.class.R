@@ -42,7 +42,6 @@ setMethod(
       df <- eval(object@data$dfxyz, envir = sys.frame(object@data$frame))
       wt <- eval(object@data$wt, envir = sys.frame(object@data$frame))
     }
-    df <- sweep(df, 1, rowSums(df), "/")
     nlev <- nlevels(fac)
     
     ## pre-management of graphics parameters      
@@ -64,7 +63,8 @@ setMethod(
     callNextMethod() ## prepare graph
     
     ## calculate 2D coordinates
-    object@stats$coords2d <- .coordtotriangleM(sweep(df, 1, rowSums(df), "/"), mini3 = object@g.args$min3d, maxi3 = object@g.args$max3d)[, 2:3]
+    df <- sweep(df, 1, rowSums(df), "/")
+    object@stats$coords2d <- .coordtotriangleM(df, mini3 = object@g.args$min3d, maxi3 = object@g.args$max3d)[, 2:3]
     
     ## compute means for the 3 variables (for getstats)
     object@stats$means <- matrix(meanfacwt(df, fac, wt), nrow = nlev)

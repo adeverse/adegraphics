@@ -13,7 +13,6 @@ importFrom(stats, update)
 
 
 export(
-  modifyList,
   adegpar,
   adeg.panel.label,
   adeg.panel.edges,
@@ -43,6 +42,7 @@ export(
   triangle.label,
   triangle.match,
   triangle.class,
+  triangle.traject,
   s1d.label,
   s1d.class,
   s1d.density,
@@ -143,6 +143,7 @@ exportClasses(
   "Tr.label",
   "Tr.match",
   "Tr.class",
+  "Tr.traject",
   "S1.label",
   "S1.class",
   "S1.match",
