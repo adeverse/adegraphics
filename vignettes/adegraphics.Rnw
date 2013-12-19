@@ -124,7 +124,8 @@ Several user functions are available to create a simple graph (stored as an \tex
       \hline 
       \texttt{triangle.class} & \texttt{Tr.class} & Ternary plot with a partition in classes\\
       \texttt{triangle.label} & \texttt{Tr.label} & Ternary plot with labels\\
-      \texttt{triangle.match} & \texttt{Tr.match} & Ternary plot of the matching between two sets of coordinates \\ \hline
+      \texttt{triangle.match} & \texttt{Tr.match} & Ternary plot of the matching between two sets of coordinates \\
+      \texttt{triangle.traject} & \texttt{Tr.match} & Ternary plot with trajectories \\ \hline
    \end{longtable}
 
 

@@ -93,6 +93,7 @@
   \code{\linkS4class{Tr.class}}
   \code{\linkS4class{Tr.label}}
   \code{\linkS4class{Tr.match}}
+  \code{\linkS4class{Tr.traject}}
   \code{\linkS4class{ADEg}}  
 }
 
