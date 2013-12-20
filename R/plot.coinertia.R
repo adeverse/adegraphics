@@ -17,12 +17,12 @@
   
   ## parameters management
   params <- list()
-  params[[1]] <- list(psub = list(text = "X axes"), pbackground = list(box = FALSE))
-  params[[2]] <- list(psub = list(text = "Y axes"), pbackground = list(box = FALSE))
+  params[[1]] <- list(psub = list(text = "X axes"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
+  params[[2]] <- list(psub = list(text = "Y axes"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
   params[[3]] <- list(psub = list(text = "Eigenvalues"))
   params[[4]] <- list(psub = list(text = "X -> Y"))
-  params[[5]] <- list(psub = list(text = "Y loadings"))
-  params[[6]] <- list(psub = list(text = "X loadings"))
+  params[[5]] <- list(psub = list(text = "Y loadings"), plabels = list(cex = 1.25))
+  params[[6]] <- list(psub = list(text = "X loadings"), plabels = list(cex = 1.25))
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
@@ -63,12 +63,12 @@
   
   ## parameters management
   params <- list()
-  params[[1]] <- list(psub = list(text = "X loadings"))
-  params[[2]] <- list(psub = list(text = "X correlation"), pbackground = list(box = FALSE))
+  params[[1]] <- list(psub = list(text = "X loadings"), plabels = list(cex = 1.25))
+  params[[2]] <- list(psub = list(text = "X correlation"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
   params[[3]] <- list(psub = list(text = "Eigenvalues"))
   params[[4]] <- list(psub = list(text = "Predictions (X) -> Scores (Y)"))
-  params[[5]] <- list(psub = list(text = "Y axes"), pbackground = list(box = FALSE))
-  params[[6]] <- list(psub = list(text = "Y variables"))
+  params[[5]] <- list(psub = list(text = "Y axes"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
+  params[[6]] <- list(psub = list(text = "Y variables"), plabels = list(cex = 1.25))
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   

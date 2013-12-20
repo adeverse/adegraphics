@@ -189,7 +189,7 @@
   graphsnames <- as.character(levels(indica))
   sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
   params <- list()
-  params <- lapply(1:length(graphsnames), function(i) {params[[i]] <- list(starSize = 0.5, ellipseSize = 0, psub = list(text = graphsnames[i]))})
+  params <- lapply(1:length(graphsnames), function(i) {params[[i]] <- list(starSize = 0.5, ellipseSize = 0, plabels = list(cex = 1.25), psub = list(text = graphsnames[i]))})
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
@@ -337,7 +337,7 @@
       
   } else if(type == "points") {
     ## parameter management
-    params$adepar <- list(ppoints = list(pch = "|"), porigin = list(draw = FALSE), pgrid = list(draw = FALSE), psub = list(position = "topleft"), paxes = list(draw = TRUE))
+    params$adepar <- list(ppoints = list(pch = "|"), porigin = list(draw = FALSE), pgrid = list(draw = FALSE), psub = list(position = "topleft"), paxes = list(draw = TRUE), plabels = list(cex = 1.25))
     sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
     
     ## creation of each individual ADEg

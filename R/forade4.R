@@ -64,15 +64,15 @@ repList <- function(x, times) {
   
   ## parameters management
   params <- list()
-  params[[1]] <- list(psub = list(text = "X axes"))
-  params[[2]] <- list(psub = list(text = "Y axes"))
+  params[[1]] <- list(psub = list(text = "X axes"), plabels = list(cex = 1.25))
+  params[[2]] <- list(psub = list(text = "Y axes"), plabels = list(cex = 1.25))
   params[[3]] <- list(psub = list(text = "Eigenvalues"))
   params[[4]] <- list()
   params[[4]]$l1 <- list(psub = list(text = "X -> Y"), xlim = limdefault$xlim, ylim = limdefault$ylim, chullSize = 1, ppoints = list(pch = 16, cex = 0.5), plines = list(lwd = 1), plabels = list(alpha = 0, boxes = list(draw = FALSE)), ppolygon = list(lwd = 0.5, alpha = 0.2), pellipses = list(alpha = 0, axes = list(draw = FALSE)), col = adegpar()$ppalette$quali(nlevels(fac)))
   params[[4]]$l2 <- list(xlim = limdefault$xlim, ylim = limdefault$ylim, chullSize = 1, ppoints = list(pch = 15, cex = 0.5), plines = list(lwd = 1), plabels = list(alpha = 0, boxes = list(draw = FALSE)), ppolygon = list(lwd = 0.5, alpha = 0.2), pellipses = list(alpha = 0.0, axes = list(draw = FALSE)), col = adegpar()$ppalette$quali(nlevels(fac)))
-  params[[4]]$l3 <- list(xlim = limdefault$xlim, ylim = limdefault$ylim, ppoints = list(cex = 0.7), plines = list(lwd = 2), plabels = list(alpha = 1, boxes = list(draw = TRUE)))
-  params[[5]] <- list(psub = list(text = "Y Canonical weights"))
-  params[[6]] <- list(psub = list(text = "X Canonical weights"))
+  params[[4]]$l3 <- list(xlim = limdefault$xlim, ylim = limdefault$ylim, ppoints = list(cex = 0.7), plines = list(lwd = 2), plabels = list(alpha = 1, boxes = list(draw = TRUE), cex = 1.25))
+  params[[5]] <- list(psub = list(text = "Y Canonical weights"), plabels = list(cex = 1.25))
+  params[[6]] <- list(psub = list(text = "X Canonical weights"), plabels = list(cex = 1.25))
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
@@ -122,12 +122,12 @@ repList <- function(x, times) {
   
   ## parameters management
   params <- list()
-  params[[1]] <- list(psub = list(text = "R row scores and classes"))
-  params[[2]] <- list(psub = list(text = "Q row scores"))
-  params[[3]] <- list(psub = list(text = "R axes"), pbackground = list(box = FALSE))
-  params[[4]] <- list(psub = list(text = "R loadings"))
-  params[[5]] <- list(psub = list(text = "Q axes"), pbackground = list(box = FALSE))
-  params[[6]] <- list(psub = list(text = "Q loadings"))
+  params[[1]] <- list(psub = list(text = "R row scores and classes"), plabels = list(cex = 1.25))
+  params[[2]] <- list(psub = list(text = "Q row scores"), plabels = list(cex = 1.25))
+  params[[3]] <- list(psub = list(text = "R axes"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
+  params[[4]] <- list(psub = list(text = "R loadings"), plabels = list(cex = 1.25))
+  params[[5]] <- list(psub = list(text = "Q axes"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
+  params[[6]] <- list(psub = list(text = "Q loadings"), plabels = list(cex = 1.25))
   params[[7]] <- list(psub = list(text = "Eigenvalues"))
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
@@ -173,12 +173,12 @@ repList <- function(x, times) {
   
   ## parameters management
   params <- list()
-  params[[1]] <- list(psub = list(text = "Canonical weights"))
-  params[[2]] <- list(psub = list(text = "Variables"))
+  params[[1]] <- list(psub = list(text = "Canonical weights"), plabels = list(cex = 1.25))
+  params[[2]] <- list(psub = list(text = "Variables"), plabels = list(cex = 1.25))
   params[[3]] <- list(psub = list(text = "Eigenvalues"))
-  params[[4]] <- list(psub = list(text = "Scores and classes"))
-  params[[5]] <- list(psub = list(text = "Inertia axes"), pbackground = list(box = FALSE))
-  params[[6]] <- list(psub = list(text = "Classes"))
+  params[[4]] <- list(psub = list(text = "Scores and classes"), plabels = list(cex = 1.25))
+  params[[5]] <- list(psub = list(text = "Inertia axes"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
+  params[[6]] <- list(psub = list(text = "Classes"), plabels = list(cex = 1.25))
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
@@ -222,12 +222,12 @@ repList <- function(x, times) {
   
   ## parameters management
   params <- list()
-  params[[1]] <- list(psub = list(text = "Canonical weights"))
-  params[[2]] <- list(psub = list(text = "Cos(variates,canonical variates)"), pbackground = list(box = FALSE))
+  params[[1]] <- list(psub = list(text = "Canonical weights"), plabels = list(cex = 1.25))
+  params[[2]] <- list(psub = list(text = "Cos(variates,canonical variates)"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
   params[[3]] <- list(psub = list(text = "Eigenvalues"))
-  params[[4]] <- list(psub = list(text = "Scores and classes"))
-  params[[5]] <- list(psub = list(text = "Cos(components,canonical variates)"), pbackground = list(box = FALSE))
-  params[[6]] <- list(psub = list(text = "Classes scores"))
+  params[[4]] <- list(psub = list(text = "Scores and classes"), plabels = list(cex = 1.25))
+  params[[5]] <- list(psub = list(text = "Cos(components,canonical variates)"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
+  params[[6]] <- list(psub = list(text = "Classes scores"), plabels = list(cex = 1.25))
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
@@ -271,12 +271,12 @@ repList <- function(x, times) {
   
   ## parameters management
   params <- list()
-  params[[1]] <- list(psub = list(text = "Canonical weights"))
-  params[[2]] <- list(psub = list(text = "Variables"))
+  params[[1]] <- list(psub = list(text = "Canonical weights"), plabels = list(cex = 1.25))
+  params[[2]] <- list(psub = list(text = "Variables"), plabels = list(cex = 1.25))
   params[[3]] <- list(psub = list(text = "Eigenvalues"))
-  params[[4]] <- list(psub = list(text = "Scores and classes"))
-  params[[5]] <- list(psub = list(text = "Inertia axes"), pbackground = list(box = FALSE))
-  params[[6]] <- list(psub = list(text = "Common centring"), pellipses = list(axes = list(draw = FALSE)), plines = list(lwd = 0), plabels = list(alpha = 0, boxes = list(draw = FALSE)))
+  params[[4]] <- list(psub = list(text = "Scores and classes"), plabels = list(cex = 1.25))
+  params[[5]] <- list(psub = list(text = "Inertia axes"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
+  params[[6]] <- list(psub = list(text = "Common centring"), pellipses = list(axes = list(draw = FALSE)), plines = list(lwd = 0), plabels = list(alpha = 0, boxes = list(draw = FALSE), cex = 1.25))
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
@@ -327,15 +327,15 @@ repList <- function(x, times) {
   
   ## parameters management
   params <- list()
-  params[[1]] <- list(psub = list(text = "X axes"))
-  params[[2]] <- list(psub = list(text = "Y axes"))
+  params[[1]] <- list(psub = list(text = "X axes"), plabels = list(cex = 1.25))
+  params[[2]] <- list(psub = list(text = "Y axes"), plabels = list(cex = 1.25))
   params[[3]] <- list(psub = list(text = "Eigenvalues"))
   params[[4]] <- list()
   params[[4]]$l1 <- list(psub = list(text = "X -> Y"), xlim = limdefault$xlim, ylim = limdefault$ylim, chullSize = 1, ppoints = list(pch = 16, cex = 0.5), plabels = list(alpha = 0, boxes = list(draw = FALSE)), ppolygon = list(lwd = 0.5, alpha = 0.2), pellipses = list(alpha = 0.0, axes = list(draw = FALSE)), col = adegpar()$ppalette$quali(nlevels(fac)))
   params[[4]]$l2 <- list(xlim = limdefault$xlim, ylim = limdefault$ylim, chullSize = 1, ppoints = list(pch = 15, cex = 0.5), plabels = list(alpha = 0, boxes = list(draw = FALSE)), ppolygon = list(lwd = 0.5, alpha = 0.2), pellipses = list(alpha = 0.0, axes = list(draw = FALSE)), col = adegpar()$ppalette$quali(nlevels(fac)))
-  params[[4]]$l3 <- list(xlim = limdefault$xlim, ylim = limdefault$ylim, ppoints = list(cex = 0.7), plines = list(lwd = 2), plabels = list(alpha = 1, boxes = list(draw = TRUE)), col = "black")
-  params[[5]] <- list(psub = list(text = "Y Canonical weights"))
-  params[[6]] <- list(psub = list(text = "X Canonical weights"))
+  params[[4]]$l3 <- list(xlim = limdefault$xlim, ylim = limdefault$ylim, ppoints = list(cex = 0.7), plines = list(lwd = 2), plabels = list(alpha = 1, boxes = list(draw = TRUE), cex = 1.25), col = "black")
+  params[[5]] <- list(psub = list(text = "Y Canonical weights"), plabels = list(cex = 1.25))
+  params[[6]] <- list(psub = list(text = "X Canonical weights"), plabels = list(cex = 1.25))
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
@@ -385,12 +385,12 @@ repList <- function(x, times) {
   
   ## parameters management
   params <- list()
-  params[[1]] <- list(psub = list(text = "R row scores and classes"))
-  params[[2]] <- list(psub = list(text = "Q row scores"))
-  params[[3]] <- list(psub = list(text = "R axes"), pbackground = list(box = FALSE))
-  params[[4]] <- list(psub = list(text = "R loadings"))
-  params[[5]] <- list(psub = list(text = "Q axes"), pbackground = list(box = FALSE))
-  params[[6]] <- list(psub = list(text = "Q loadings"))
+  params[[1]] <- list(psub = list(text = "R row scores and classes"), plabels = list(cex = 1.25))
+  params[[2]] <- list(psub = list(text = "Q row scores"), plabels = list(cex = 1.25))
+  params[[3]] <- list(psub = list(text = "R axes"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
+  params[[4]] <- list(psub = list(text = "R loadings"), plabels = list(cex = 1.25))
+  params[[5]] <- list(psub = list(text = "Q axes"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
+  params[[6]] <- list(psub = list(text = "Q loadings"), plabels = list(cex = 1.25))
   params[[7]] <- list(psub = list(text = "Eigenvalues"))
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
@@ -435,10 +435,10 @@ repList <- function(x, times) {
 	## parameters management
   params <- list()
   params[[1]] <- list()
-  params[[1]]$l1 <- list(psub = list(text = "Base", position = "topleft"), pbackground = list(box = FALSE))
+  params[[1]]$l1 <- list(psub = list(text = "Base", position = "topleft"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
   params[[1]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
-  params[[2]] <- list(psub = list(text = ""))
-  params[[3]] <- list(psub = list(text = ""), ppoints = list(pch = 16, cex = 2), plines = list(col = "transparent"), pellipses = list(axes = list(draw = FALSE)), ellipseSize = 1)
+  params[[2]] <- list(psub = list(text = ""), plabels = list(cex = 1.25))
+  params[[3]] <- list(psub = list(text = ""), ppoints = list(pch = 16, cex = 2), plines = list(col = "transparent"), pellipses = list(axes = list(draw = FALSE)), ellipseSize = 1, plabels = list(cex = 1.25))
   params[[4]] <- list(psub = list(text = "Rao Divcs", position = "topleft"))
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
@@ -486,12 +486,12 @@ repList <- function(x, times) {
   params <- list()
   params[[1]] <- list()
   params[[1]]$l1 <- list(psub = list(text = "Row projection"), parrows = list(angle = 0), plabels = list(alpha = 0, boxes = list(draw = FALSE)))
-  params[[1]]$l2 <- list()
+  params[[1]]$l2 <- list(plabels = list(cex = 1.25))
   params[[2]] <- list()
-  params[[2]]$l1 <- list(psub = list(text = "First axis projection", position = "topleft"), pbackground = list(box = FALSE), fullcircle = FALSE)
+  params[[2]]$l1 <- list(psub = list(text = "First axis projection", position = "topleft"), pbackground = list(box = FALSE), fullcircle = FALSE, plabels = list(cex = 1.25))
   params[[2]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
-  params[[3]] <- list(psub = list(text = "Col projection"))
-  params[[4]] <- list(porigin = list(include = FALSE), paxes = list(aspectratio = "fill", draw = TRUE), main = "Pseudo-eigen values", xlab = "cov21", ylab = "cov22")
+  params[[3]] <- list(psub = list(text = "Col projection"), plabels = list(cex = 1.25))
+  params[[4]] <- list(porigin = list(include = FALSE), paxes = list(aspectratio = "fill", draw = TRUE), main = "Pseudo-eigen values", xlab = "cov21", ylab = "cov22", plabels = list(cex = 1.25))
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
@@ -537,15 +537,15 @@ repList <- function(x, times) {
   ## parameters management
   params <- list()
   params[[1]] <- list()
-  params[[1]]$l1 <- list(psub = list(text = "Row projection"), pellipses = list(alpha = 0, axes = list(draw = FALSE)), label = row.names(x$li))
+  params[[1]]$l1 <- list(psub = list(text = "Row projection"), pellipses = list(alpha = 0, axes = list(draw = FALSE)), label = row.names(x$li), plabels = list(cex = 1.25))
   params[[1]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
   params[[2]] <- list()
-  params[[2]]$l1 <- list(psub = list(text = "Component projection", position = "topleft"), pbackground = list(box = FALSE), fullcircle = FALSE)
+  params[[2]]$l1 <- list(psub = list(text = "Component projection", position = "topleft"), pbackground = list(box = FALSE), fullcircle = FALSE, plabels = list(cex = 1.25))
   params[[2]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
   params[[3]] <- list()
-  params[[3]]$l1 <- list(psub = list(text = "Col projection"))
+  params[[3]]$l1 <- list(psub = list(text = "Col projection"), plabels = list(cex = 1.25))
   params[[3]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
-  params[[4]] <- list(porigin = list(include = FALSE), paxes = list(aspectratio = "fill", draw = TRUE), main = "Link", xlab = "Comp1", ylab = "Comp2")
+  params[[4]] <- list(porigin = list(include = FALSE), paxes = list(aspectratio = "fill", draw = TRUE), main = "Link", xlab = "Comp1", ylab = "Comp2", plabels = list(cex = 1.25))
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
@@ -593,7 +593,7 @@ repList <- function(x, times) {
   params[[1]] <- list(psub = list(text = "Scores and lag scores"))
   params[[2]] <- list(psub = list(text = "Eigenvalues"), paxes = list(draw = TRUE, x = list(draw = FALSE), y = list(draw = TRUE)))
   params[[3]] <- list(psub = list(text = "Canonical weights"))
-  params[[4]] <- list(psub = list(text = "X axes"), pbackground = list(box = FALSE))
+  params[[4]] <- list(psub = list(text = "X axes"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
@@ -633,12 +633,12 @@ repList <- function(x, times) {
   
   ## parameters management
   params <- list()
-  params[[1]] <- list(psub = list(text = "Axis"), pbackground = list(box = FALSE))
-  params[[2]] <- list(psub = list(text = "Variables"))
+  params[[1]] <- list(psub = list(text = "Axis"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
+  params[[2]] <- list(psub = list(text = "Variables"), plabels = list(cex = 1.25))
   params[[3]] <- list(psub = list(text = "Eigenvalues"))
   params[[4]] <- list()
   params[[4]]$l1 <- list(psub = list(text = "Samples and Species"), plabels = list(alpha = 0, boxes = list(draw = FALSE)))
-  params[[4]]$l2 <- list()
+  params[[4]]$l2 <- list(plabels = list(cex = 1.25))
   params[[5]] <- list(psub = list(text = "Samples"))
   params[[6]] <- list(psub = list(text = "Niches"), plines = list(col = "transparent"), pellipses = list(axes = list(draw = FALSE)), ellipseSize = 1, plabels = list(alpha = 0, boxes = list(draw = FALSE)))
   names(params) <- graphsnames
@@ -684,8 +684,8 @@ repList <- function(x, times) {
   
   ## parameters management
   params <- list()
-  params[[1]] <- list(psub = list(text = "Loadings 1"))
-  params[[2]] <- list(psub = list(text = "Loadings 2"))
+  params[[1]] <- list(psub = list(text = "Loadings 1"), plabels = list(cex = 1.25))
+  params[[2]] <- list(psub = list(text = "Loadings 2"), plabels = list(cex = 1.25))
   params[[3]] <- list(psub = list(text = "Eigenvalues"))
   params[[4]] <- list(psub = list(text = "Common projection"))
   params[[5]] <- list(psub = list(text = "Array 1"))
@@ -733,11 +733,11 @@ repList <- function(x, times) {
   
   ## parameters management
   params <- list()
-  params[[1]] <- list(psub = list(text = "R row scores"))
-  params[[2]] <- list(psub = list(text = "Q row scores"))
-  params[[3]] <- list(psub = list(text = "R axes"), pbackground = list(box = FALSE))
+  params[[1]] <- list(psub = list(text = "R row scores"), plabels = list(cex = 1.25))
+  params[[2]] <- list(psub = list(text = "Q row scores"), plabels = list(cex = 1.25))
+  params[[3]] <- list(psub = list(text = "R axes"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
   params[[4]] <- list(psub = list(text = "R Canonical weights"))
-  params[[5]] <- list(psub = list(text = "Q axes"), pbackground = list(box = FALSE))
+  params[[5]] <- list(psub = list(text = "Q axes"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
   params[[6]] <- list(psub = list(text = "Q Canonical weights"))
   params[[7]] <- list(psub = list(text = "Eigenvalues"))
   names(params) <- graphsnames
@@ -786,13 +786,13 @@ repList <- function(x, times) {
   ## parameters management
   params <- list()
   params[[1]] <- list()
-  params[[1]]$l1 <- list(psub = list(text = "Interstructure", position = "topleft"), pbackground = list(box = FALSE))
+  params[[1]]$l1 <- list(psub = list(text = "Interstructure", position = "topleft"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
   params[[1]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE), p1d = list(horizontal = FALSE))
-  params[[2]] <- list(psub = list(text = "Compromise", position = "topleft"))
+  params[[2]] <- list(psub = list(text = "Compromise", position = "topleft"), plabels = list(cex = 1.25))
   params[[3]] <- list()
-  params[[3]]$l1 <- list(psub = list(text = "Compromise", position = "topleft"))
+  params[[3]]$l1 <- list(psub = list(text = "Compromise", position = "topleft"), plabels = list(cex = 1.25))
   params[[3]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE), p1d = list(horizontal = FALSE))
-  params[[4]] <- list(porigin = list(include = FALSE), paxes = list(aspectratio = "fill", draw = TRUE), main = "Typological value", xlab = "Tables weights", ylab = "Cos 2")
+  params[[4]] <- list(porigin = list(include = FALSE), paxes = list(aspectratio = "fill", draw = TRUE), main = "Typological value", xlab = "Tables weights", ylab = "Cos 2", plabels = list(cex = 1.25))
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
@@ -866,14 +866,14 @@ repList <- function(x, times) {
   ## parameters management
   params <- list()
   params[[1]] <- list()
-  params[[1]]$l1 <- list(psub = list(text = "Interstructure", position = "topleft"), pbackground = list(box = FALSE))
+  params[[1]]$l1 <- list(psub = list(text = "Interstructure", position = "topleft"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
   params[[1]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
-  params[[2]] <- list(porigin = list(include = FALSE), paxes = list(aspectratio = "fill", draw = TRUE), main = "Typological Value", xlab = "Tables Weights", ylab = "Cos 2")
+  params[[2]] <- list(porigin = list(include = FALSE), paxes = list(aspectratio = "fill", draw = TRUE), main = "Typological Value", xlab = "Tables Weights", ylab = "Cos 2", plabels = list(cex = 1.25))
   params[[3]] <- list()
-  params[[3]]$l1 <- list(psub = list(text = "Compromise", position = "topleft"))
+  params[[3]]$l1 <- list(psub = list(text = "Compromise", position = "topleft"), plabels = list(cex = 1.25))
   params[[3]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
   params[[4]] <- list()
-  params[[4]]$l1 <- list(psub = list(text = "Component projection", position = "topleft"), pbackground = list(box = FALSE))
+  params[[4]]$l1 <- list(psub = list(text = "Component projection", position = "topleft"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
   params[[4]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)

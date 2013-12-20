@@ -22,10 +22,10 @@
   
   ## parameters management
   params <- list()
-  params[[1]] <- list(psub = list(text = "Rows - Base"), xlim = lim.global$xlim, ylim = lim.global$ylim)
-  params[[2]] <- list(psub = list(text = "Columns - Base"), xlim = lim.global$xlim, ylim = lim.global$ylim)
+  params[[1]] <- list(psub = list(text = "Rows - Base"), xlim = lim.global$xlim, ylim = lim.global$ylim, plabels = list(cex = 1.25))
+  params[[2]] <- list(psub = list(text = "Columns - Base"), xlim = lim.global$xlim, ylim = lim.global$ylim, plabels = list(cex = 1.25))
   params[[3]] <- list(psub = list(text = "Rows"), xlim = lim.global$xlim, ylim = lim.global$ylim, pellipses = list(axes = list(draw = FALSE)))
-  params[[4]] <- list(psub = list(text = "Columns"), xlim = lim.global$xlim, ylim = lim.global$ylim, pellipses = list(axes = list(draw = FALSE)))
+  params[[4]] <- list(psub = list(text = "Columns"), xlim = lim.global$xlim, ylim = lim.global$ylim, pellipses = list(axes = list(draw = FALSE)), plabels = list(cex = 1.25))
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   

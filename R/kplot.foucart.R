@@ -29,8 +29,8 @@
   
   ## parameters management
   params <- list()
-  params$row <- list(plabels = list(cex = 1), xlim = lim.global$xlim, ylim = lim.global$ylim)
-  params$col <- list(plabels = list(cex = 1.25), psub = list(text = ""), xlim = lim.global$xlim, ylim = lim.global$ylim)
+  params$row <- list(plabels = list(cex = 1), xlim = lim.global$xlim, ylim = lim.global$ylim, plabels = list(cex = 1.25))
+  params$col <- list(plabels = list(cex = 1.25), psub = list(text = ""), xlim = lim.global$xlim, ylim = lim.global$ylim, plabels = list(cex = 1.25))
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   

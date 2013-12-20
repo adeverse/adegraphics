@@ -18,7 +18,7 @@
   
   if(option == "points") {
     params1 <- list()
-    params1$adepar <- list(psub = list(text = "Reference"))
+    params1$adepar <- list(psub = list(text = "Reference"), plabels = list(cex = 1.25))
     sortparameters1 <- modifyList(params1, sortparameters, keep.null = TRUE)
     ref <- do.call("s.label", c(list(dfxy = substitute(object$SynVar), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters1$adepar, sortparameters1$trellis, sortparameters1$g.args))
       
@@ -41,7 +41,7 @@
     
   } else if(option == "axis") {
     params <- list()
-    params$adepar <- list(pbackground = list(box = FALSE))
+    params$adepar <- list(pbackground = list(box = FALSE), plabels = list(cex = 1.25))
     sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
     
     facets2 <- substitute(object$T4[, 1])
@@ -49,6 +49,7 @@
     
   } else if(option == "columns") {
     params <- list()
+    params$adepar <- list(plabels = list(cex = 1.25))
     params$g.args <- list(samelimits = FALSE)
     sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
     
@@ -83,7 +84,7 @@
   ## parameters management
   params <- list()
   params$row <- list(plabels = list(cex = 0), ppoints = list(cex = 1.5), samelimits = FALSE)
-  params$col <- list(psub = list(cex = 0))
+  params$col <- list(psub = list(cex = 0), plabels = list(cex = 1.25))
   params$traj <- list(plabels = list(cex = 0), psub = list(cex = 0))
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
@@ -149,10 +150,10 @@
   
   ## parameters management
   params <- list()
-  params$axis <- list(pbackground = list(box = FALSE), plabels = list(alpha = 1))
-  params$rows <- list(plabels = list(alpha = 1))
-  params$columns <- list()
-  params$components <- list(pbackground = list(box = FALSE))
+  params$axis <- list(pbackground = list(box = FALSE), plabels = list(alpha = 1, cex = 1.25))
+  params$rows <- list(plabels = list(alpha = 1, cex = 1.25))
+  params$columns <- list(plabels = list(cex = 1.25))
+  params$components <- list(pbackground = list(box = FALSE), plabels = list(cex = 1.25))
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
   ## creation of each individual ADEg
@@ -339,7 +340,7 @@
   
   ## parameters management
   params <- list()
-  params$col <- list()
+  params$col <- list(plabels = list(cex = 1.25))
   params$traj <- list(plabels = list(cex = 0), psub = list(cex = 0))
   params$class <- list(plabels = list(cex = 1.5), ppoints = list(cex = 2), pellipses = list(alpha = 0, axes = list(draw = FALSE)), psub = list(cex = 0))
   names(params) <- graphsnames
