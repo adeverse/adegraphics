@@ -50,51 +50,51 @@ setMethod(
 
 
 setMethod(
-  f = "S2.panel",
-  signature = "S2.density",
-  definition = function(object, x, y) {
-    densit <- object@stats$densit
-    if(is.null(object@g.args$col))
-      col <- object@adeg.par$ppalette$quanti(255)
-    else
-      col <- object@g.args$col
-    
-    transformation <- function(x) x
-    densityy <- array(transformation(densit$fhat), dim = dim(densit$fhat))            
-    if(object@g.args$region)
-      panel.levelplot(x = rep(densit$x1, length(densit$x2)),
-                      y = rep(densit$x2, each = length(densit$x1)),
-                      z = densityy,
-                      at = c(-.Machine$double.eps, max(densit$fhat) * object@g.args$threshold + .Machine$double.eps,
-                        		 seq(from = max(densit$fhat) * object@g.args$threshold + 2 * .Machine$double.eps, to = 1.01 * max(densit$fhat), length = length(col))),
-                      col.regions = c("transparent", col),
-                      subscripts = TRUE)
-    if(object@g.args$contour)
-      panel.levelplot(x = rep(densit$x1, length(densit$x2)), 
-        							y = rep(densit$x2, each = length(densit$x1)), 
-                      z = densityy,
-                      labels = object@adeg.par$plabels, 
-                      label.style = if(object@adeg.par$plabels$orientation == "horizontal") "flat" else "align",  ## also exist "mixed" not used here
-                      at = c(-.Machine$double.eps, max(densit$fhat) * object@g.args$threshold, seq(from = max(densit$fhat) * object@g.args$threshold + .Machine$double.eps, 
-                          	 to = 1.01 * max(densit$fhat), length = object@g.args$nclass)), 
-                      col.regions = c("transparent", col), 
-                      subscripts = TRUE, 
-                      region = FALSE, 
-                      contour = TRUE)
-
-    
-    ## show nrpoints outilers
-    if(object@g.args$nrpoints > 0) {
-      ## copy of panel.smoothScatter
-      ixm <- round((x - densit$x1[1]) / (densit$x1[length(densit$x1)] - densit$x1[1]) * (length(densit$x1) - 1))
-      iym <- round((y - densit$x2[1]) / (densit$x2[length(densit$x2)] - densit$x2[1]) * (length(densit$x2) - 1))
-      idens <- densityy[1 + iym * length(densit$x1) + ixm]
-      nrpoints <- min(nrow(x), ceiling(object@g.args$nrpoints))
-      sel <- order(idens, decreasing = FALSE)[1:nrpoints]
-      
-      panel.points(x[sel], y[sel], pch = object@adeg.par$ppoints$pch, cex = object@adeg.par$ppoints$cex, col = object@adeg.par$ppoints$col, fill = object@adeg.par$ppoints$fill)
-    }
-  })
+    f = "S2.panel",
+    signature = "S2.density",
+    definition = function(object, x, y) {
+        densit <- object@stats$densit
+        if(is.null(object@g.args$col))
+            col <- object@adeg.par$ppalette$quanti(255)
+        else
+            col <- object@g.args$col
+        
+        transformation <- function(x) x
+        densityy <- array(transformation(densit$fhat), dim = dim(densit$fhat))            
+        if(object@g.args$region)
+            panel.levelplot(x = rep(densit$x1, length(densit$x2)),
+                            y = rep(densit$x2, each = length(densit$x1)),
+                            z = densityy,
+                            at = c(-.Machine$double.eps, seq(from = max(densit$fhat) * object@g.args$threshold + .Machine$double.eps,
+                                to = 1.01 * max(densit$fhat), length = length(col) + 2)),
+                            col.regions = c("transparent", col),
+                            subscripts = TRUE)
+        if(object@g.args$contour)
+            panel.levelplot(x = rep(densit$x1, length(densit$x2)), 
+                            y = rep(densit$x2, each = length(densit$x1)), 
+                            z = densityy,
+                            labels = object@adeg.par$plabels, 
+                            label.style = if(object@adeg.par$plabels$orientation == "horizontal") "flat" else "align",  ## also exist "mixed" not used here
+                            at = c(-.Machine$double.eps, seq(from = max(densit$fhat) * object@g.args$threshold + .Machine$double.eps, 
+                                to = 1.01 * max(densit$fhat), length = object@g.args$nclass + 1)), 
+                            col.regions = c("transparent", col), 
+                            subscripts = TRUE, 
+                            region = FALSE, 
+                            contour = TRUE)
+        
+        
+        ## show nrpoints outilers
+        if(object@g.args$nrpoints > 0) {
+            ## copy of panel.smoothScatter
+            ixm <- round((x - densit$x1[1]) / (densit$x1[length(densit$x1)] - densit$x1[1]) * (length(densit$x1) - 1))
+            iym <- round((y - densit$x2[1]) / (densit$x2[length(densit$x2)] - densit$x2[1]) * (length(densit$x2) - 1))
+            idens <- densityy[1 + iym * length(densit$x1) + ixm]
+            nrpoints <- min(nrow(x), ceiling(object@g.args$nrpoints))
+            sel <- order(idens, decreasing = FALSE)[1:nrpoints]
+            
+            panel.points(x[sel], y[sel], pch = object@adeg.par$ppoints$pch, cex = object@adeg.par$ppoints$cex, col = object@adeg.par$ppoints$col, fill = object@adeg.par$ppoints$fill)
+        }
+    })
 
 
 s.density <- function(dfxy, xax = 1, yax = 2, bandwidth = NULL, gridsize = c(450L, 450L), nrpoints = 300, threshold = 0.1, col = NULL, 
