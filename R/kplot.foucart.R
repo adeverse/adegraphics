@@ -23,9 +23,9 @@
   ## prepare subs (should be in ade4 : TC should contains tab.names instead of numbers)
   ## levels(object$TL[, 1]) <- levels(object$TC[, 1]) <- object$tab.names
   TL <- object$TL[, 1]
-  levels(TL) <- object$tab.names
+  #levels(TL) <- object$tab.names
   TC <- object$TC[, 1]
-  levels(TC) <- object$tab.names
+  #levels(TC) <- object$tab.names
   
   ## parameters management
   params <- list()

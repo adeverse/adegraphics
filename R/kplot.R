@@ -162,11 +162,11 @@
   names(g1) <- paste(graphsnames[1], "_", object$tab.names, sep = "")
   
   facets2 <- substitute(object$TL[, 1])
-  g2 <- do.call("s.label", c(list(dfxy = substitute(object$Tli), labels = substitute(adegraphics:::extractlabels(rownames(object$Tli))), facets = facets2, xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$rows))[which.tab]
+  g2 <- do.call("s.label", c(list(dfxy = substitute(object$Tli), labels = substitute(object$TL[,2]), facets = facets2, xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$rows))[which.tab]
   names(g2) <- paste(graphsnames[2], "_", object$tab.names, sep = "")
   
   facets3 <- substitute(object$TC[, 1])
-  g3 <- do.call("s.arrow", c(list(dfxy = substitute(object$Tco), labels = substitute(adegraphics:::extractlabels(rownames(object$Tco))), facets = facets3, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$columns))[which.tab]
+  g3 <- do.call("s.arrow", c(list(dfxy = substitute(object$Tco), labels = substitute(object$TC[,2]), facets = facets3, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$columns))[which.tab]
   names(g3) <- paste(graphsnames[3], "_", object$tab.names, sep = "")
   
   facets4 <- substitute(object$T4[, 1])
@@ -200,15 +200,19 @@
   if(permute) {
     dfxy_row <- substitute(object$Co)
     dfxy_col <- substitute(object$Li)
-    names_row <- substitute(adegraphics:::extractlabels(rownames(object$Co)))
-    names_col <- substitute(adegraphics:::extractlabels(rownames(object$Li)))
+#    names_row <- substitute(adegraphics:::extractlabels(rownames(object$Co)))
+#    names_col <- substitute(adegraphics:::extractlabels(rownames(object$Li)))
+    names_row <- substitute(object$TC[,2])
+    names_col <- substitute(object$TL[,2])
     facets_row <- substitute(object$TC[,1])
     facets_col <- substitute(object$TL[,1])
   } else {
     dfxy_row <- substitute(object$Li)
     dfxy_col <- substitute(object$Co)
-    names_row <- substitute(adegraphics:::extractlabels(rownames(object$Li)))
-    names_col <- substitute(adegraphics:::extractlabels(rownames(object$Co)))
+#    names_row <- substitute(adegraphics:::extractlabels(rownames(object$Li)))
+#    names_col <- substitute(adegraphics:::extractlabels(rownames(object$Co)))
+    names_row <- substitute(object$TL[,2])
+    names_col <- substitute(object$TC[,2])
     facets_row <- substitute(object$TL[,1])
     facets_col <- substitute(object$TC[,1])
   }
@@ -229,7 +233,7 @@
   if(!traject) 
   	g1 <- do.call("s.label", c(list(dfxy = dfxy_row, labels = names_row, facets = facets_row, xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$row))[which.tab]
   else 
-    g1 <- do.call("s.traject", c(list(dfxy = dfxy_row, labels = names_row, facets = facets_row, xax = xax, yax = yax, plot = FALSE, storeData = FALSE, pos = pos - 2), sortparameters$traj))[which.tab]
+    g1 <- do.call("s.traject", c(list(dfxy = dfxy_row, facets = facets_row, xax = xax, yax = yax, plot = FALSE, storeData = FALSE, pos = pos - 2), sortparameters$traj))[which.tab]
   
   ## prepare and create g2
   if(permute)
@@ -275,15 +279,19 @@
   if(permute) {
     dfxy_row <- substitute(object$C1)
     dfxy_col <- substitute(object$Li)
-    names_row <- substitute(adegraphics:::extractlabels(rownames(object$C1)))
-    names_col <- substitute(adegraphics:::extractlabels(rownames(object$Li)))
+#    names_row <- substitute(adegraphics:::extractlabels(rownames(object$C1)))
+#    names_col <- substitute(adegraphics:::extractlabels(rownames(object$Li)))
+    names_row <- substitute(object$TC[,2])
+    names_col <- substitute(object$TL[,2])
     facets_row <- substitute(object$TC[,1])
     facets_col <- substitute(object$TL[,1])
   } else {
     dfxy_row <- substitute(object$Li)
     dfxy_col <- substitute(object$C1)
-    names_row <- substitute(adegraphics:::extractlabels(rownames(object$Li)))
-    names_col <- substitute(adegraphics:::extractlabels(rownames(object$C1)))
+#    names_row <- substitute(adegraphics:::extractlabels(rownames(object$Li)))
+#    names_col <- substitute(adegraphics:::extractlabels(rownames(object$C1)))
+    names_row <- substitute(object$TL[,2])
+    names_col <- substitute(object$TC[,2])
     facets_row <- substitute(object$TL[,1])
     facets_col <- substitute(object$TC[,1])
   }
