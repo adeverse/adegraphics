@@ -23,7 +23,6 @@ setMethod(
       data$labelsy <- eval(data$labelsy, envir = sys.frame(data$frame))
     }
     .Object@data <- data
-    validObject(.Object)
     return(.Object)
   })
 

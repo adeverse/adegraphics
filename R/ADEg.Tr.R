@@ -14,7 +14,6 @@ setMethod(
     if(data$storeData)
       data$dfxyz <- eval(data$dfxyz, envir = sys.frame(data$frame))
     .Object@data <- data
-    validObject(.Object)
     return(.Object)
   })
 

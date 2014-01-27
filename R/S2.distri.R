@@ -15,7 +15,6 @@ setMethod(
     if(data$storeData)
       data$dfdistri <- eval(data$dfdistri, envir = sys.frame(data$frame))
     .Object@data$dfdistri <- data$dfdistri
-    validObject(.Object)
     return(.Object)
   })
 

@@ -17,7 +17,6 @@ setMethod(
     if(data$storeData)
       data$score <- eval(data$score, envir = sys.frame(data$frame))
     .Object@data <- data
-    validObject(.Object)
     return(.Object)
   })
 

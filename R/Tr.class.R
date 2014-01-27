@@ -22,7 +22,6 @@ setMethod(
     .Object@data$fac <- data$fac
     .Object@data$wt <- data$wt
     .Object@data$labels <- data$labels
-    validObject(.Object)
     return(.Object)
   })
 

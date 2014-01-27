@@ -12,7 +12,6 @@ setMethod(
     if(data$storeData)
       data$labels <- eval(data$labels, envir = sys.frame(data$frame))
     .Object@data$labels <- data$labels
-    validObject(.Object)
     return(.Object)
   })
 

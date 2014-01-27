@@ -19,7 +19,6 @@ setMethod(
     }
     .Object@data$dfdistri <- data$dfdistri
     .Object@data$labels <- data$labels
-    validObject(.Object)
     return(.Object)
   })
 

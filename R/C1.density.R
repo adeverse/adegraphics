@@ -18,7 +18,6 @@ setMethod(
     if(data$storeData)
       data$fac <- eval(data$fac, envir = sys.frame(data$frame))
     .Object@data$fac <- data$fac
-    validObject(.Object)
     return(.Object)
   })
 

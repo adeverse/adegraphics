@@ -2,20 +2,6 @@ setClass(
   Class = "ADEg.S2",
   contains = c("ADEg", "VIRTUAL"),
   slots = c(data = "list")
-  ##   , validity = function(object){
-  ##   ## TODO: regarder si les NA fonctionnent.
-  ##   if(object@data$storeData)
-  ##     df <- object@data$dfxy
-  ##   else
-  ##     df <- as.data.frame(eval(object@data$dfxy, envir = sys.frame(object@data$frame)))
-  ##   xax <- object@data$xax
-  ##   yax <- object@data$yax
-  ##   if((any(xax < 1)) || (any(xax > ncol(df))))
-  ##     stop('not convenient selection for xax', call. = FALSE)
-  
-  ##   if((any(yax < 1)) || (any(yax > ncol(df))))
-  ##     stop('not convenient selection for yax', call. = FALSE)   
-  ## }
   )
 
   
@@ -28,7 +14,6 @@ setMethod(
     if(data$storeData)
       data$dfxy <- as.data.frame(eval(data$dfxy, envir = sys.frame(data$frame)))
     .Object@data <- data
-    validObject(.Object)
     return(.Object)
   })
 
