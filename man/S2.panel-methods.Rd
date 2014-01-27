@@ -6,7 +6,7 @@
 \alias{S2.panel}
 \alias{S2.panelbase}
 \alias{S2.panelbase-methods}
-\alias{S2.panelbase, ADEg.S2-methods}
+\alias{S2.panelbase,ADEg.S2-methods}
 
 \title{Methods \code{S2.panel} and \code{S2.panelbase}}
 

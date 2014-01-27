@@ -5,7 +5,7 @@
 \alias{T.panel}
 \alias{T.panelbase}
 \alias{T.panelbase-methods}
-\alias{T.panelbase, ADEg.T-methods}
+\alias{T.panelbase,ADEg.T-methods}
 
 \title{Methods \code{T.panel} and \code{T.panelbase}}
 

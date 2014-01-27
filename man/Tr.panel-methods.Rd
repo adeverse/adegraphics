@@ -6,7 +6,7 @@
 \alias{Tr.panel-methods}
 \alias{Tr.panelbase}
 \alias{Tr.panelbase-methods}
-\alias{Tr.panelbase, ADEg.Tr-methods} 
+\alias{Tr.panelbase,ADEg.Tr-methods} 
 
 \title{Methods \code{Tr.panel} and \code{Tr.panelbase}}
 

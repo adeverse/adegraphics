@@ -3,14 +3,11 @@ import(grDevices)
 import(lattice)
 import(grid)
 import(sp)
-importFrom(ade4, covfacwt, covwt, meanfacwt, varfacwt, varwt)
 importFrom(graphics, plot)
+importFrom(ade4, covfacwt, covwt, meanfacwt, varfacwt, varwt)
 importFrom(KernSmooth, bkde2D, bkde)
 importFrom(methods, show)
 importFrom(RColorBrewer, brewer.pal)
-importFrom(stats, update)
-
-
 
 export(
   adegpar,
@@ -91,8 +88,6 @@ export(
   )
 
 exportMethods(
-  "add.ADEg",
-  "printSuperpose",
   "[",
   "[[",
   "[[<-",
@@ -101,6 +96,7 @@ exportMethods(
   "length",
   "names",
   "names<-",
+  "add.ADEg",
   "addhist",
   "getcall",
   "getparameters",
@@ -113,9 +109,23 @@ exportMethods(
   "print",
   "show",
   "superpose",
+  "printSuperpose", 
   "insert",
   "update",
-  "zoom"
+  "zoom",
+  "panelbase",
+  "prepare",
+  "setlatticecall",
+  "C1.panel",
+  "C1.panelbase",
+  "S1.panel",
+  "S1.panelbase",
+  "S2.panel",
+  "S2.panelbase",
+  "T.panel",
+  "T.panelbase",
+  "Tr.panel",
+  "Tr.panelbase"
   )
 
 exportClasses(

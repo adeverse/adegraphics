@@ -16,6 +16,9 @@
 \alias{gettrellis}
 \alias{gettrellis-methods}
 \alias{gettrellis,ADEg-method}
+\alias{panelbase}
+\alias{panelbase-methods}
+\alias{panelbase,ADEg-method}
 \alias{printSuperpose,ADEgORtrellis,ADEgORtrellis,numeric-method}
 \alias{plot,ADEg-method}
 \alias{plot,ADEg,ANY-method}
