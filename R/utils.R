@@ -125,7 +125,7 @@
 ## if aspect.ratio == "iso", we must have identical limits range in x and y
 .setlimits<- function(minX, maxX, minY, maxY, origin = c(0, 0), aspect.ratio = "iso", includeOr) {
   origin <- rep(origin, length.out = 2)
-  if(includeOr) { ## modif pour prendre en compte origin
+  if(includeOr) { ## to include origin
     newvalu <- list(.includeorigin(origin[1], minX, maxX), .includeorigin(origin[2], minY, maxY))
     minX <- newvalu[[1L]][1L]
     minY <- newvalu[[2L]][1L]
@@ -231,8 +231,8 @@
   ## limits would have been setted before (in ADEg.S2 prepare)
   ## width and height de rectangle en 'npc' (fig in original code__maptools package)
   ## labels <- graphicsAnnot(labels)
-  ## a faire avant
-  ## TODO ! revoir
+  ## to do before
+  ## TODO redo
   boundary <- c(limits$xlim, limits$ylim)
   
   toUnityCoords <- function(xy) {
@@ -259,7 +259,6 @@
     h <- pmin(Im(xy1 + offset1 / 2), Im(xy2 + offset2 / 2)) - pmax(Im(xy1 - offset1 / 2), Im(xy2 - offset2 / 2))
     w[w <= 0] <- 0
     h[h <= 0] <- 0
-    ## print(any(is.na(w)) ||any(is.na(h)))
     w * h
   }
   
@@ -287,7 +286,7 @@
       area <- 0
     n_outside <- sum(Re(xy + offset - rectv / 2) < 0 | Re(xy + offset + rectv / 2) > xyAspect | Im(xy + offset - rectv / 2) < 0 | Im(xy + offset + rectv / 2) > 1 / xyAspect)
     if(is.na(n_outside))
-      n_outside <- 0 ## TODO: bug a corriger, n_outside sometimes NA
+      n_outside <- 0 ## TODO: to correct, n_outside sometimes NA
     res <- 1000 * area + n_outside
     res
   }
@@ -314,12 +313,11 @@
   ## simulated annealing
   SANN <- function() {
     ## initialisation
-    gene <- rep(8, n_labels) ## pour commencer au centre, mieux vaut rep
-    score <- objective(gene) ## score initial
+    gene <- rep(8, n_labels) ## 'rep' is best to begin at center
+    score <- objective(gene) ## initial score 
     bestgene <- gene
     bestscore <- score
-    T <- 2.5 ## pseudo temperature initiales
-    ## print("debut for")
+    T <- 2.5 ## pseudo initial temperature
     for (i in 1:50) {
       k <- 1
       for (j in 1:50) {
@@ -328,7 +326,7 @@
         newscore <- objective(newgene)  ## score
         
         if(newscore <= score || runif(1) < exp((score - newscore) / T)) {
-          ## loi empirique d'acceptation des differences: si newscore meilleur, ou accepte avec une proba exp(Dscorce/T)
+          ## empirical law to accept differences: if 'newscore' is better or with a proba exp(Dscorce/T)
           k <- k + 1
           score <- newscore
           gene <- newgene
@@ -342,9 +340,9 @@
       }
       if(bestscore == 0) ## no variation
         break
-      if(trace) ## print user
+      if(trace)
         cat("overlap area =", bestscore, "\n")
-      T <- 0.9 * T ## diminutaion de la temperature par palier pour atteindre equilibre
+      T <- 0.9 * T ## the temperature regularly decreases to become stable
     }
     
     if(trace) 
@@ -361,9 +359,9 @@
 
 ##### Not used, to remove ###
 .justsrt <- function(x, y , labels, srt, pos) {
-  ## pour tout labels on transfrome srt
-	## calcul de hauteur et largeur prise en prenant en compte la rotation
-  ## tan + cos ou sinus a ameliorer probleme de calcul vont forcement apparaitre
+  ## for all labels, srt conversion
+	## the rotation is included in height and width calculuation
+  ## tan + cos or sinus : to improve, problems in calculations must appear
   nblab <- length(labels)
   w1 <- convertWidth(stringWidth(labels), unitTo = "native", valueOnly = TRUE)
   h1 <- convertHeight(stringHeight(labels), unitTo = "native", valueOnly = TRUE)
@@ -401,8 +399,8 @@
 }
 
 
-## verifier que z inclus totalement dans breaks donne/ou a calculer
-## aucune valeur par defaut,
+## check if z is included in breaks
+## no default value
 breakstest <- function(breaki, zi, n) {
   breaki <- sort(breaki, decreasing = TRUE)
   if(max(breaki) < max(zi) | min(breaki) > min(zi)) {

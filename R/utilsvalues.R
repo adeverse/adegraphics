@@ -1,5 +1,3 @@
-## TODO: Attention a revoir, multiple unit conversion
-## Refaire en partie
 ## All inches!
 getpositionleg <- function(labels, plegend, sizes, type) {
   ## this function computes and returns position and width/height for all legend elements (text, symbols, etc)
@@ -50,28 +48,27 @@ getpositionleg <- function(labels, plegend, sizes, type) {
   spaceX <- spaceX[[1]]
   spaceY <- spaceY[[1]]
   
-  ## get positions of the first tag of the legend (the leftmost and the lowermost)
-  xtext <- convertX(default.npc(positionLegend[1]), unitTo = "inches", valueOnly = TRUE) + max(widthtexts) + spaceX
-  ytext <- convertY(default.npc(positionLegend[2]), unitTo = "inches", valueOnly = TRUE) + max(heightsymbs) / 2 + spaceY
+  ## get positions of the first symbol of the legend (the leftmost and the lowermost)
+  xsymb <- convertX(default.npc(positionLegend[1]), unitTo = "inches", valueOnly = TRUE) + widthsymbs[1] / 2 + spaceX
+  ysymb <- convertY(default.npc(positionLegend[2]), unitTo = "inches", valueOnly = TRUE) + heightsymbs[1] / 2 + spaceY
   
   ## get positions of each text and each symbols - in inches
   if(plegend$horizontal) {
-    xsymb <- c()
+    xtext <- c()
     for(i in 2:n) {
-      xtext <- c(xtext, xtext[i - 1] + widthtexts[i] + widthsymbs[i - 1] + spaceX) 
-      xsymb <- c(xsymb, xtext[i - 1] + widthsymbs[i - 1] / 2 + spaceX / 2)
+      xtext <- c(xtext, xsymb[i - 1] + widthtexts[i - 1] + widthsymbs[i - 1] / 2 + spaceX / 2)
+      xsymb <- c(xsymb, xtext[i - 1] + widthsymbs[i] / 2 + spaceX / 2)
     }
-    xsymb <- c(xsymb, xtext[n] + (spaceX + widthsymbs[n]) / 2)
-    ytext <- rep(ytext, length.out = n)
-    ysymb <- ytext
-  }
-  else {
-    xsymb <- rep(xtext + (max(widthsymbs) + spaceX) / 2, length.out = n)  ## same center (x) for every symbols
-    xtext <- rep(xtext, length.out = n)  ## same center (x) for every text
+    xtext <- c(xtext, xsymb[n] + (widthsymbs[n]) / 2 + widthtexts[n])
+    ysymb <- rep(ysymb, length.out = n)
+    ytext <- ysymb
+  } else {
+    xsymb <- rep(xsymb, length.out = n)  ## same center (x) for every symbols
+    xtext <- xsymb + (max(widthsymbs) + spaceX) / 2 + widthtexts
     for(i in 2:n)
-      ytext <- c(ytext, ytext[i - 1] + max(heightsymbs[2 - i + n], heighttexts[2 - i + n]) / 2 + max(heightsymbs[1 - i + n], heighttexts[1 - i + n]) / 2 + spaceY)
-    ytext <- rev(ytext)
-  	ysymb <- ytext
+      ysymb <- c(ysymb, ysymb[i - 1] + max(heightsymbs[2 - i + n], heighttexts[2 - i + n]) / 2 + max(heightsymbs[1 - i + n], heighttexts[1 - i + n]) / 2 + spaceY)
+    ysymb <- rev(ysymb)
+    ytext <- ysymb
   }
   
   return(list(xsymb = xsymb, ysymb = ysymb, maxSW = max(widthsymbs), maxSH = max(heightsymbs), xtext = xtext, ytext = ytext, maxTW = max(widthtexts), maxTH = max(heighttexts), spaceX = spaceX, spaceY = spaceY))
@@ -79,10 +76,9 @@ getpositionleg <- function(labels, plegend, sizes, type) {
 
 
 
-## trace possible selon la fenetre, hors S2.panel si on veut en utilisant quand meme les axes de references de lattice
 setvalueskey <- function(method, breaks, ppoints, plegend, symbol, center, type = c("S", "T")) {
-  ## Legend parameters: size, color, text
-  maxsize <- max(abs(breaks))  ## la reference est toujours faite sur le max de breaks
+  ## legend parameters: size, color, text
+  maxsize <- max(abs(breaks))  ## the higher breaks is always consider as the reference
   l0 <- length(breaks)
   switch(method,
     size = {
@@ -93,9 +89,9 @@ setvalueskey <- function(method, breaks, ppoints, plegend, symbol, center, type 
       l0 <- length(breaks)
       ## from original adeg
       breaks <- (breaks[1:(l0 - 1)] + breaks[2:l0]) / 2
-      inter <- c(paste(breaks, ":", sep = ""))
+      inter <- breaks
       sizes <- breaks - center
-      ## calcul de la taille et couleur des symboles
+      ## size and color of symbols
       sizes <- .proportional_map(sizes, maxsize) * ppoints$cex[1]
       colorsymb <- ppoints$col[ifelse(breaks < center, 1, 2)]
       bordersymb <- ppoints$col[ifelse(breaks < center, 2, 1)]
@@ -123,9 +119,9 @@ setvalueskey <- function(method, breaks, ppoints, plegend, symbol, center, type 
   posslegend <- getpositionleg(labels = okleg$textL, plegend = plegend, sizes = sizes, type = type)
   
   if(plegend$rect) {
-    xleft <- min(posslegend$xtext) - posslegend$maxTW - abs(posslegend$spaceX) / 2
+    xleft <- min(posslegend$xsymb) - posslegend$maxSW / 2 - abs(posslegend$spaceX) / 2
     ybottom <- posslegend$ytext[n] - max(posslegend$maxTH, posslegend$maxSH) / 2 - abs(posslegend$spaceY) / 2
-    xright <- posslegend$xsymb[n] + posslegend$maxSW / 2 + abs(posslegend$spaceX) / 2
+    xright <- max(posslegend$xtext) + abs(posslegend$spaceX)
     ytop <- posslegend$ytext[1] + max(posslegend$maxTH, posslegend$maxSH) / 2 + abs(posslegend$spaceY) / 2
     
     grid.rect(x = (xleft + xright) / 2,
@@ -140,7 +136,7 @@ setvalueskey <- function(method, breaks, ppoints, plegend, symbol, center, type 
   ## draw labels
   grid.text(label = okleg$textL, x = posslegend$xtext, y = posslegend$ytext, hjust = 1, default.units = "inches", gp = gpar(cex = plegend$text$cex, col = plegend$text$col))
   ## draw symbols  
-  panel.symbols.grid(xx = posslegend$xsymb, yy = posslegend$ytext, sizes = sizes, symbol = symbol, native = FALSE, col = okleg$col, border = okleg$border, alpha = ppoints$alpha) 
+  panel.symbols.grid(xx = posslegend$xsymb, yy = posslegend$ysymb, sizes = sizes, symbol = symbol, native = FALSE, col = okleg$col, border = okleg$border, alpha = ppoints$alpha) 
 }
 
 
@@ -158,7 +154,7 @@ poslegend <- function(pos = "bottomleft", type = c("S", "T"), w, h, horizontal) 
       if(classpos == "S") pos <- unit(c(0, 0), "npc")
       else pos <- unit(c(0, -0.01 - h), "npc")
     else if(pos == "bottomright")
-      if(classpos == "S") pos <- unit(c(1 - w, 0), "npc")   ## a reprendre avec taille legendre
+      if(classpos == "S") pos <- unit(c(1 - w, 0), "npc")   ## redo with the legend size
       else pos <- unit(c(1 - w, -0.01 - h), "npc")       
     else if(pos == "topleft")
       if(classpos == "S") pos <- unit(c(0, 1 - h), "npc")
