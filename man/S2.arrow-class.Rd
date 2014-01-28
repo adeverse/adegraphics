@@ -4,7 +4,7 @@
 \alias{S2.arrow}
 \alias{S2.arrow-class}
 \alias{prepare,S2.arrow-method}
-\alias{S2.panel,S2.arrow-method}
+\alias{panel,S2.arrow-method}
 
 \title{Class \code{S2.arrow}}
 
@@ -68,7 +68,7 @@
     \item{prepare}{\code{signature(object = "S2.arrow")}: 
       calls the parent method (\code{prepare} for \code{ADEg.S2}), modifies some graphical parameters used by default and calculates limits.}
       
-    \item{S2.panel}{\code{signature(object = "S2.arrow")}: 
+    \item{panel}{\code{signature(object = "S2.arrow")}: 
       draws points, arrows and labels .}
   }
 }

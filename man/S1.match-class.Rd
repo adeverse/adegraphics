@@ -4,7 +4,7 @@
 \alias{S1.match}
 \alias{S1.match-class}
 \alias{prepare,S1.match-method}
-\alias{S1.panel,S1.match-method}
+\alias{panel,S1.match-method}
 
 \title{Class \code{S1.match}}
 
@@ -60,7 +60,7 @@
     \item{prepare}{\code{signature(object = "S1.label")}: 
       calls the parent method (\code{prepare} for \code{ADEg.S1}) and modifies some graphical parameters used by default.}
     
-    \item{S1.panel}{\code{signature(object = "S1.label")}: 
+    \item{panel}{\code{signature(object = "S1.label")}: 
       draws score points and matching segments and labels.}
   }
 }

@@ -76,7 +76,7 @@ setMethod(
 
 
 setMethod(
-  f = "S2.panel",
+  f = "panel",
   signature = "S2.distri",
   definition = function(object, x, y) {
     

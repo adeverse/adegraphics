@@ -4,7 +4,7 @@
 \alias{C1.barchart}
 \alias{C1.barchart-class}
 \alias{prepare,C1.barchart-method}
-\alias{C1.panel,C1.barchart-method}
+\alias{panel,C1.barchart-method}
 
 \title{Class \code{C1.barchart}}
 
@@ -60,7 +60,7 @@
     \item{prepare}{\code{signature(object = "C1.barchart")}: 
       calls the parent method (\code{prepare} for \code{ADEg.C1}) and modifies some graphical parameters used by default.}
       
-    \item{C1.panel}{\code{signature(object = "C1.barchart")}: 
+    \item{panel}{\code{signature(object = "C1.barchart")}: 
       draws bar charts and labels.}
   }
 }

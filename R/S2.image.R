@@ -87,7 +87,7 @@ setMethod(
 
 
 setMethod(
-  f = "S2.panel",
+  f = "panel",
   signature = "S2.image",
   definition = function(object, x, y) {
     zvalue <- object@stats$value

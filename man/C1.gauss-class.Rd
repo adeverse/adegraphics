@@ -4,7 +4,7 @@
 \alias{C1.gauss}
 \alias{C1.gauss-class}
 \alias{prepare,C1.gauss-method}
-\alias{C1.panel,C1.gauss-method}
+\alias{panel,C1.gauss-method}
 
 \title{Class \code{C1.gauss}}
 
@@ -72,7 +72,7 @@
       calls the parent method (\code{prepare} for \code{ADEg.C1}), modifies some graphical parameters used by default and 
       calculates the Gauss curves according to the numeric score and the values' categories (using weighted mean and standard deviation).}
       
-    \item{C1.panel}{\code{signature(object = "C1.gauss")}: 
+    \item{panel}{\code{signature(object = "C1.gauss")}: 
       draws Gauss curves and level names of each curve.}
   }
 }

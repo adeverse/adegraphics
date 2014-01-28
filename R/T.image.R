@@ -87,7 +87,7 @@ setMethod(
 
   
 setMethod(
-  f = "T.panel",
+  f = "panel",
   signature = "T.image",
   definition = function(object, x, y) {
     ## x is data$coordsx and y is data$coordsy

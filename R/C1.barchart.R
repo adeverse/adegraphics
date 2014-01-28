@@ -64,7 +64,7 @@ setMethod(
 
 
 setMethod(
-  f = "C1.panel",
+  f = "panel",
   signature = "C1.barchart",
   definition = function(object, x, y) {
     ## Drawing barchart

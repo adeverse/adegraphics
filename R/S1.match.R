@@ -48,7 +48,7 @@ setMethod(
 
 
 setMethod(
-  f= "S1.panel",
+  f= "panel",
   signature = "S1.match",
   definition = function(object, x, y) {
     

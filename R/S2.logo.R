@@ -42,7 +42,7 @@ setMethod(
 
 
 setMethod(
-  f = "S2.panel",
+  f = "panel",
   signature = "S2.logo",
   definition = function(object, x, y) {
     ## list of pixmap object :logos

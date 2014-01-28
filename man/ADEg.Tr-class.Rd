@@ -7,7 +7,7 @@
 \alias{gettrellis,ADEg.Tr-method}
 \alias{prepare,ADEg.Tr-method}
 \alias{setlatticecall,ADEg.Tr-method}
-\alias{Tr.panelbase,ADEg.Tr-method}
+\alias{panelbase,ADEg.Tr-method}
 
 \title{Class \code{"ADEg.Tr"}}
 
@@ -78,7 +78,7 @@
     \item{setlatticecall}{\code{signature(object = "ADEg.Tr")}: 
       prepares the \code{lattice.call} slot}
       
-    \item{Tr.panelbase}{\code{signature(object = "ADEg.Tr")}: 
+    \item{panelbase}{\code{signature(object = "ADEg.Tr")}: 
       defines the graphical background (e.g. triangle and grid)}
       
     \item{gettrellis}{\code{signature(object = "ADEg.Tr")}: 

@@ -89,7 +89,7 @@ setMethod(
 
 ## a changer: dessin level par level, 
 setMethod(
-  f = "S2.panel",
+  f = "panel",
   signature = "S2.class",
   definition = function(object, x, y) {
     if(object@data$storeData) {

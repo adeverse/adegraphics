@@ -70,9 +70,10 @@ setMethod(
 
 
 setMethod(
-  f = "Tr.panelbase",
+  f = "panelbase",
   signature = "ADEg.Tr",
   definition = function(object, x, y) {
+    callNextMethod()
     ## draw triangle (A -> B , B -> C,  C -> A)
     ## small triangle: points distribution
     
@@ -152,9 +153,8 @@ setMethod(
       scales = if(!is.null(object@s.misc$scales)) object@s.misc$scales else list(draw = FALSE),
       aspect = object@adeg.par$paxes$aspectratio,
       panel = function(...) {
-        panelbase(object,...)
-        Tr.panelbase(object,...)
-        Tr.panel(object,...)
+        panelbase(object, ...)
+        panel(object, ...)
       })
     object@lattice.call$arguments <- arguments
     object@lattice.call$graphictype <- "xyplot" 

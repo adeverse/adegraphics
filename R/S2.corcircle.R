@@ -54,7 +54,7 @@ setMethod(
 
 
 setMethod(
-  f = "S2.panel",
+  f = "panel",
   signature = "S2.corcircle",
   definition = function(object, x, y) {
     panel.arrows(x0 = 0, y0 = 0, y1 = y, x1 = x, angle = object@adeg.par$parrows$angle,

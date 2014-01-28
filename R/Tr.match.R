@@ -50,7 +50,7 @@ setMethod(
 
 
 setMethod(
-  f = "Tr.panel",
+  f = "panel",
   signature = "Tr.match",
   definition = function(object, x, y) {
     if(object@data$storeData) {
@@ -62,7 +62,7 @@ setMethod(
     }
     
     if(NROW(df) %% 2)
-      stop("error in Tr.panel method : unable to split the two datasets")
+      stop("error in panel method : unable to split the two datasets")
     
     ## draw points
     if(any(object@adeg.par$ppoints$cex > 0))

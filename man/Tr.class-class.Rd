@@ -4,7 +4,7 @@
 \alias{Tr.class}
 \alias{Tr.class-class}
 \alias{prepare,Tr.class-method}
-\alias{Tr.panel,Tr.class-method}
+\alias{panel,Tr.class-method}
 
 \title{Class \code{Tr.class}}
 
@@ -81,7 +81,7 @@
       calls the parent method (\code{prepare} for \code{ADEg.Tr}), modifies some graphical parameters used by 
       default and calculates ellipses, convex hulls and centroids.}
       
-    \item{Tr.panel}{\code{signature(object = "Tr.class")}: 
+    \item{panel}{\code{signature(object = "Tr.class")}: 
       draws arrows, labels and points.}
   }
 }

@@ -141,7 +141,7 @@ setMethod(
 
 ## Draw symbols according to the different methods
 setMethod(
-  f = "S2.panel",
+  f = "panel",
   signature = "S2.value",
   definition = function(object, x, y) {
     if(object@data$storeData)

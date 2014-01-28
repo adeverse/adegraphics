@@ -4,7 +4,7 @@
 \alias{S1.distri}
 \alias{S1.distri-class}
 \alias{prepare,S1.distri-method}
-\alias{S1.panel,S1.distri-method}
+\alias{panel,S1.distri-method}
 
 \title{Class \code{S1.distri}}
 
@@ -69,7 +69,7 @@
     \item{prepare}{\code{signature(object = "S1.class")}: 
       calls the parent method (\code{prepare} for \code{ADEg.S1}), modifies some graphical parameters used by default and calculates weighted mean and standard deviation.}
     
-    \item{S1.panel}{\code{signature(object = "S1.class")}: 
+    \item{panel}{\code{signature(object = "S1.class")}: 
       draws mean points and segments with matching labels.}
   }
 }

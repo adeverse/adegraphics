@@ -52,7 +52,7 @@ setMethod(
 
 
 setMethod(
-  f = "S2.panel",
+  f = "panel",
   signature = "S2.match",
   definition = function(object, x, y) {
     n <- length(x) / 2

@@ -4,7 +4,7 @@
 \alias{S2.density}
 \alias{S2.density-class}
 \alias{prepare,S2.density-method}
-\alias{S2.panel,S2.density-method}
+\alias{panel,S2.density-method}
 
 \title{Class \code{S2.density}}
 
@@ -74,7 +74,7 @@
     \item{prepare}{\code{signature(object = "S2.density")}: 
       calls the parent method (\code{prepare} for \code{ADEg.S2}), modifies some graphical parameters used by default and calculates densities.}
       
-    \item{S2.panel}{\code{signature(object = "S2.density")}: 
+    \item{panel}{\code{signature(object = "S2.density")}: 
       draws densities and external points.}
   }
 }  

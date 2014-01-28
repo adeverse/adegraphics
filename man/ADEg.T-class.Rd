@@ -7,7 +7,7 @@
 \alias{gettrellis,ADEg.T-method}
 \alias{prepare,ADEg.T-method}
 \alias{setlatticecall,ADEg.T-method}
-\alias{T.panelbase,ADEg.T-method}
+\alias{panelbase,ADEg.T-method}
 
 \title{Class \code{ADEg.T}}
 
@@ -81,7 +81,7 @@
     \item{setlatticecall}{\code{signature(object = "ADEg.T")}: 
       prepares the \code{lattice.call} slot}
     
-    \item{T.panelbase}{\code{signature(object = "ADEg.T")}: 
+    \item{panelbase}{\code{signature(object = "ADEg.T")}: 
       defines the graphical background (e.g. axes, labels, ticks, box and grid)}
     
     \item{gettrellis}{\code{signature(object = "ADEg.T")}: 

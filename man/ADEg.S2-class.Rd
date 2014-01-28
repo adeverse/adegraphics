@@ -7,7 +7,7 @@
 \alias{prepare,ADEg.S2-method}
 \alias{setlatticecall,ADEg.S2-method}
 \alias{gettrellis,ADEg.S2-method}
-\alias{S2.panelbase,ADEg.S2-method}
+\alias{panelbase,ADEg.S2-method}
 
 \title{Class \code{ADEg.S2}}
 
@@ -84,7 +84,7 @@
     \item{setlatticecall}{\code{signature(object = "ADEg.S2")}: 
       prepares the \code{lattice.call} slot}
     
-    \item{S2.panelbase}{\code{signature(object = "ADEg.S2")}: 
+    \item{panelbase}{\code{signature(object = "ADEg.S2")}: 
       defines the graphical background (e.g. grid and box)}
   
     \item{gettrellis}{\code{signature(object = "ADEg.S2")}: 

@@ -102,7 +102,7 @@ setMethod(
 
 
 setMethod(
-  f = "C1.panel",
+  f = "panel",
   signature = "C1.gauss",
   definition = function(object, x, y) {
     ## Drawing gauss curves as polygons (filled or not)

@@ -58,7 +58,7 @@ setMethod(
 
 
 setMethod(
-  f = "S2.panel",
+  f = "panel",
   signature = "S2.traject",
   definition = function(object, x, y) {
     if(object@data$storeData) {

@@ -4,7 +4,7 @@
 \alias{ADEg.C1}
 \alias{ADEg.C1-class}
 
-\alias{C1.panelbase,ADEg.C1-method}
+\alias{panelbase,ADEg.C1-method}
 \alias{gettrellis,ADEg.C1-method}
 \alias{prepare,ADEg.C1-method}
 \alias{setlatticecall,ADEg.C1-method}
@@ -75,7 +75,7 @@
     \item{setlatticecall}{\code{signature(object = "ADEg.C1")}: 
       prepares the \code{lattice.call} slot}
     
-    \item{C1.panelbase}{\code{signature(object = "ADEg.C1")}: 
+    \item{panelbase}{\code{signature(object = "ADEg.C1")}: 
       defines the graphical background (e.g. grid, rugs and box)}
     
     \item{gettrellis}{\code{signature(object = "ADEg.C1")}: 

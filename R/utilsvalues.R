@@ -48,12 +48,12 @@ getpositionleg <- function(labels, plegend, sizes, type) {
   spaceX <- spaceX[[1]]
   spaceY <- spaceY[[1]]
   
-  ## get positions of the first symbol of the legend (the leftmost and the lowermost)
-  xsymb <- convertX(default.npc(positionLegend[1]), unitTo = "inches", valueOnly = TRUE) + widthsymbs[1] / 2 + spaceX
-  ysymb <- convertY(default.npc(positionLegend[2]), unitTo = "inches", valueOnly = TRUE) + heightsymbs[1] / 2 + spaceY
-  
   ## get positions of each text and each symbols - in inches
   if(plegend$horizontal) {
+    ## get positions of the first symbol of the legend (the leftmost and the lowermost)
+    xsymb <- convertX(default.npc(positionLegend[1]), unitTo = "inches", valueOnly = TRUE) + widthsymbs[1] / 2 + spaceX
+    ysymb <- convertY(default.npc(positionLegend[2]), unitTo = "inches", valueOnly = TRUE) + max(heightsymbs) / 2 + spaceY
+    
     xtext <- c()
     for(i in 2:n) {
       xtext <- c(xtext, xsymb[i - 1] + widthtexts[i - 1] + widthsymbs[i - 1] / 2 + spaceX / 2)
@@ -63,6 +63,10 @@ getpositionleg <- function(labels, plegend, sizes, type) {
     ysymb <- rep(ysymb, length.out = n)
     ytext <- ysymb
   } else {
+    ## get positions of the first symbol of the legend (the leftmost and the lowermost)
+    xsymb <- convertX(default.npc(positionLegend[1]), unitTo = "inches", valueOnly = TRUE) + max(widthsymbs) / 2 + spaceX
+    ysymb <- convertY(default.npc(positionLegend[2]), unitTo = "inches", valueOnly = TRUE) + heightsymbs[n] / 2 + spaceY
+    
     xsymb <- rep(xsymb, length.out = n)  ## same center (x) for every symbols
     xtext <- xsymb + (max(widthsymbs) + spaceX) / 2 + widthtexts
     for(i in 2:n)
@@ -120,9 +124,9 @@ setvalueskey <- function(method, breaks, ppoints, plegend, symbol, center, type 
   
   if(plegend$rect) {
     xleft <- min(posslegend$xsymb) - posslegend$maxSW / 2 - abs(posslegend$spaceX) / 2
-    ybottom <- posslegend$ytext[n] - max(posslegend$maxTH, posslegend$maxSH) / 2 - abs(posslegend$spaceY) / 2
+    ybottom <- min(posslegend$ytext) - max(posslegend$maxTH, posslegend$maxSH) / 2 - abs(posslegend$spaceY) / 2
     xright <- max(posslegend$xtext) + abs(posslegend$spaceX)
-    ytop <- posslegend$ytext[1] + max(posslegend$maxTH, posslegend$maxSH) / 2 + abs(posslegend$spaceY) / 2
+    ytop <- max(posslegend$ytext) + max(posslegend$maxTH, posslegend$maxSH) / 2 + abs(posslegend$spaceY) / 2
     
     grid.rect(x = (xleft + xright) / 2,
       y = (ybottom + ytop) / 2,

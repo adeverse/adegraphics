@@ -4,7 +4,7 @@
 \alias{S2.label}
 \alias{S2.label-class}
 \alias{prepare,S2.label-method}
-\alias{S2.panel,S2.label-method}
+\alias{panel,S2.label-method}
 
 \title{Class \code{S2.label}}
 
@@ -62,7 +62,7 @@
     \item{prepare}{\code{signature(object = "S2.label")}: 
       calls the parent method (\code{prepare} for \code{ADEg.S2}) and modifies some graphical parameters used by default.}
       
-    \item{S2.panel}{\code{signature(object = "S2.label")}: 
+    \item{panel}{\code{signature(object = "S2.label")}: 
       draws points and labels.}
   }
 }

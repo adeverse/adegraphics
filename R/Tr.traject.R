@@ -65,7 +65,7 @@ setMethod(
 
 
 setMethod(
-  f = "Tr.panel",
+  f = "panel",
   signature = "Tr.traject",
   definition = function(object, x, y) {
     

@@ -63,7 +63,7 @@ setMethod(
 
 ## TODO: label orientation (works only for horizontal / vertical labels)
 setMethod(
-  f= "S1.panel",
+  f= "panel",
   signature = "S1.class",
   definition = function(object, x, y) {
     

@@ -110,7 +110,7 @@ setMethod(
 
 
 setMethod(
-  f = "C1.panelbase",
+  f = "panelbase",
   signature = "ADEg.C1",
   definition = function(object, x, y) {
     ## Formula defined in gettrellis
@@ -202,6 +202,8 @@ setMethod(
       grid.rect(x = text.pos$posi[1], y = text.pos$posi[2], width = grobWidth(textgrid), height = grobHeight(textgrid), gp = gpar(fill= object@adeg.par$pbackground$col, alpha = 0.8, col = "transparent"))
       grid.draw(textgrid)
     }
+    
+    callNextMethod()
   })
 
 
@@ -223,9 +225,8 @@ setMethod(
                    ## skipt aspect ratio 
                    axis = axis.L, ## see utils.R
                    panel = function(...) {
-                     C1.panelbase(object, ...) ## grid,
-                     panelbase(object, ...) ## code in ADEg.R, nbobject, Sp, sub
-                     C1.panel(object, ...) ## call to C1.panel function, for slabel and ADEg.C1 class of graphs
+                     panelbase(object, ...) ## grid,
+                     panel(object, ...) ## call to C1.panel function, for slabel and ADEg.C1 class of graphs
                    })
     
     object@lattice.call$arguments <- arguments          

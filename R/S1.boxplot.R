@@ -59,7 +59,7 @@ setMethod(
 
 
 setMethod(
-  f = "S1.panel",
+  f = "panel",
   signature = "S1.boxplot",
   definition = function(object, x, y) {
 

@@ -4,7 +4,7 @@
 \alias{C1.density}
 \alias{C1.density-class}
 \alias{prepare,C1.density-method}
-\alias{C1.panel,C1.density-method}
+\alias{panel,C1.density-method}
 
 \title{Class \code{C1.density}}
 
@@ -71,7 +71,7 @@
       calls the parent method (\code{prepare} for \code{ADEg.C1}), modifies some graphical parameters used by default and 
       calculates the density curves according to the numeric score and the values' categories.}
       
-    \item{C1.panel}{\code{signature(object = "C1.density")}: 
+    \item{panel}{\code{signature(object = "C1.density")}: 
       draws density curves}
   }
 }

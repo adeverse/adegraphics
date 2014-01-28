@@ -4,7 +4,7 @@
 \alias{T.image}
 \alias{T.image-class}
 \alias{prepare,T.image-method}
-\alias{T.panel,T.image-method}
+\alias{panel,T.image-method}
 
 \title{Class \code{T.image}}
 
@@ -72,7 +72,7 @@
     \item{prepare}{\code{signature(object = "T.image")}: 
       calls the parent method (\code{prepare} for \code{ADEg.T}) and modifies some graphical parameters used by default and calculates limits and grid.}
     
-    \item{T.panel}{\code{signature(object = "T.image")}: 
+    \item{panel}{\code{signature(object = "T.image")}: 
       draws raster image.}
   }
 }

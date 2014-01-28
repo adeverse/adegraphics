@@ -4,7 +4,7 @@
 \alias{S2.class-class}
 \alias{S2.class}
 \alias{prepare,S2.class-method}
-\alias{S2.panel,S2.class-method}
+\alias{panel,S2.class-method}
 
 \title{Class \code{S2.class}}
 
@@ -79,7 +79,7 @@
       calls the parent method (\code{prepare} for \code{ADEg.S2}), modifies some graphical parameters used by 
       default and calculates ellipses, convex hulls and centroids.}
       
-    \item{S2.panel}{\code{signature(object = "S2.class")}: 
+    \item{panel}{\code{signature(object = "S2.class")}: 
       draws ellipses, convex hulls, stars, labels and points.}
   }
 }

@@ -4,7 +4,7 @@
 \alias{S2.traject}
 \alias{S2.traject-class}
 \alias{prepare,S2.traject-method}
-\alias{S2.panel,S2.traject-method}
+\alias{panel,S2.traject-method}
 
 \title{Class \code{S2.traject}}
 
@@ -67,7 +67,7 @@
     \item{prepare}{\code{signature(object = "S2.traject")}: 
       calls the parent method (\code{prepare} for \code{ADEg.S2}) and modifies some graphical parameters used by default.}
       
-    \item{S2.panel}{\code{signature(object = "S2.traject")}: 
+    \item{panel}{\code{signature(object = "S2.traject")}: 
       draws points, arrows and labels.}
   }
 }

@@ -94,7 +94,7 @@ setMethod(
 
 
 setMethod(
-  f = "C1.panel",
+  f = "panel",
   signature = "C1.density",
   definition = function(object, x, y) {
     ## Drawing densities as polygons (filled or not)

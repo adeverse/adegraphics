@@ -50,7 +50,7 @@ setMethod(
 
 
 setMethod(
-    f = "S2.panel",
+    f = "panel",
     signature = "S2.density",
     definition = function(object, x, y) {
         densit <- object@stats$densit

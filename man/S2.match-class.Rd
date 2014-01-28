@@ -4,7 +4,7 @@
 \alias{S2.match}
 \alias{S2.match-class}
 \alias{prepare,S2.match-method}
-\alias{S2.panel,S2.match-method}
+\alias{panel,S2.match-method}
 
 \title{Class \code{S2.match}}
 
@@ -65,7 +65,7 @@
     \item{prepare}{\code{signature(object = "S2.match")}: 
       calls the parent method (\code{prepare} for \code{ADEg.S2}) and modifies some graphical parameters used by default.}
       
-    \item{S2.panel}{\code{signature(object = "S2.match")}: 
+    \item{panel}{\code{signature(object = "S2.match")}: 
       draws arrows and labels.}
   }
 }

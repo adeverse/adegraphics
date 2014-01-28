@@ -113,19 +113,10 @@ exportMethods(
   "insert",
   "update",
   "zoom",
+  "panel",
   "panelbase",
   "prepare",
-  "setlatticecall",
-  "C1.panel",
-  "C1.panelbase",
-  "S1.panel",
-  "S1.panelbase",
-  "S2.panel",
-  "S2.panelbase",
-  "T.panel",
-  "T.panelbase",
-  "Tr.panel",
-  "Tr.panelbase"
+  "setlatticecall"
   )
 
 exportClasses(
@@ -163,4 +154,3 @@ exportClasses(
   "C1.gauss",
   "C1.barchart"
   )
-

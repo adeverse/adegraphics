@@ -4,7 +4,7 @@
 \alias{S2.corcircle}
 \alias{S2.corcircle-class}
 \alias{prepare,S2.corcircle-method}
-\alias{S2.panel,S2.corcircle-method}
+\alias{panel,S2.corcircle-method}
 
 \title{Class \code{S2.corcircle}}
 
@@ -68,7 +68,7 @@
     \item{prepare}{\code{signature(object = "S2.corcircle")}: 
       calls the parent method (\code{prepare} for \code{ADEg.S2}), modifies some graphical parameters used by default and prepares the drawn grid.}
       
-    \item{S2.panel}{\code{signature(object = "S2.corcircle")}: 
+    \item{panel}{\code{signature(object = "S2.corcircle")}: 
       draws arrows, labels and axes.}
   }
 }

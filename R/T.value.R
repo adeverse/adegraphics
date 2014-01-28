@@ -95,7 +95,7 @@ setMethod(
 
 
 setMethod(
-  f = "T.panel",
+  f = "panel",
   signature = "T.value",
   definition = function(object, x, y) {
     if(object@data$storeData)

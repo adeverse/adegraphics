@@ -4,7 +4,7 @@
 \alias{Tr.label}
 \alias{Tr.label-class}
 \alias{prepare,Tr.label-method}
-\alias{Tr.panel,Tr.label-method}
+\alias{panel,Tr.label-method}
 
 \title{Class \code{Tr.label}}
 
@@ -72,7 +72,7 @@
       calls the parent method (\code{prepare} for \code{ADEg.Tr}), modifies some graphical parameters used 
       by default and defines the mean point and the axes.}
       
-    \item{Tr.panel}{\code{signature(object = "Tr.label")}: 
+    \item{panel}{\code{signature(object = "Tr.label")}: 
       draws lines, labels and points.}
   }
 }

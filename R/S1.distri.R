@@ -66,7 +66,7 @@ setMethod(
 
 
 setMethod(
-  f = "S1.panel",
+  f = "panel",
   signature = "S1.distri",
   definition = function(object, x, y) {
     if(object@data$storeData)

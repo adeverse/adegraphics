@@ -4,7 +4,7 @@
 \alias{T.value}
 \alias{T.value-class}
 \alias{prepare,T.value-method}
-\alias{T.panel,T.value-method}
+\alias{panel,T.value-method}
 
 \title{Class \code{T.value}}
 
@@ -78,7 +78,7 @@
     \item{prepare}{\code{signature(object = "T.value")}: 
       calls the parent method (\code{prepare} for \code{ADEg.T}) and modifies some graphical parameters used by default and calculates limits and grid.}
     
-    \item{T.panel}{\code{signature(object = "T.value")}: 
+    \item{panel}{\code{signature(object = "T.value")}: 
       draws symbols.}
   }
 }

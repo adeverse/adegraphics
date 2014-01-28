@@ -5,10 +5,10 @@ setClass(
 
 
 setMethod(
-  f = "T.panel",
+  f = "panel",
   signature = "T.cont",
   definition = function(object, x, y) {
-    ## call T.panel for T.value object
+    ## call panel for T.value object
     callNextMethod(object, x, y)
     if(object@data$storeData) {
       dftab <- object@data$dftab

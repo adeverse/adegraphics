@@ -4,7 +4,7 @@
 \alias{S2.value}
 \alias{S2.value-class}
 \alias{prepare,S2.value-method}
-\alias{S2.panel,S2.value-method}
+\alias{panel,S2.value-method}
 
 \title{Class \code{S2.value}}
 
@@ -78,7 +78,7 @@
     \item{prepare}{\code{signature(object = "S2.value")}: 
       calls the parent method (\code{prepare} for \code{ADEg.S2}), modifies some graphical parameters used by default and calculates limits.}
       
-    \item{S2.panel}{\code{signature(object = "S2.value")}: 
+    \item{panel}{\code{signature(object = "S2.value")}: 
       draws symbols.}
   }
 }

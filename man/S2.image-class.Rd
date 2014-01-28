@@ -4,7 +4,7 @@
 \alias{S2.image}
 \alias{S2.image-class}
 \alias{prepare,S2.image-method}
-\alias{S2.panel,S2.image-method}
+\alias{panel,S2.image-method}
 
 \title{Class \code{S2.image}}
 
@@ -76,8 +76,8 @@
     \item{prepare}{\code{signature(object = "S2.image")}: 
       calls the parent method (\code{prepare} for \code{ADEg.S2}), modifies some graphical parameters used by default and calculates grid expansion and limits.}
       
-    \item{S2.panel}{\code{signature(object = "S2.image")}: 
-      draws the surface.}
+    \item{panel}{\code{signature(object = "S2.image")}: 
+      draws raster image.}
   }
 }
 

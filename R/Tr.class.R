@@ -96,7 +96,7 @@ setMethod(
 
 
 setMethod(
-  f = "Tr.panel",
+  f = "panel",
   signature = "Tr.class",
   definition = function(object, x, y) {
 

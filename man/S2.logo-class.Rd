@@ -4,7 +4,7 @@
 \alias{S2.logo}
 \alias{S2.logo-class}
 \alias{prepare,S2.logo-method}
-\alias{S2.panel,S2.logo-method}
+\alias{panel,S2.logo-method}
 
 \title{Class \code{S2.logo}}
 
@@ -65,7 +65,7 @@
     \item{prepare}{\code{signature(object = "S2.class")}: 
       calls the parent method (\code{prepare} for \code{ADEg.S2}) and modifies some graphical parameters used by default.}
       
-    \item{S2.panel}{\code{signature(object = "S2.class")}: 
+    \item{panel}{\code{signature(object = "S2.class")}: 
       displays the logos.}
   }
 }

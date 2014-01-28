@@ -3,7 +3,7 @@
 
 \alias{T.cont}
 \alias{T.cont-class}
-\alias{T.panel,T.cont-method}
+\alias{panel,T.cont-method}
 
 \title{Class \code{T.cont}}
 
@@ -66,8 +66,8 @@
   The methods of the father classes \code{"T.value"}, \code{"ADEg.T"} and \code{"ADEg"} can be used by inheritance.
   The specific methods for \code{T.cont} are: 
   \describe{
-    \item{T.panel}{\code{signature(object = "T.cont")}: 
-      draws means points and regression lines.}
+    \item{panel}{\code{signature(object = "T.cont")}: 
+      draws mean points and regression lines.}
   }
 }
 

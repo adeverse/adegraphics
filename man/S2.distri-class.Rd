@@ -4,7 +4,7 @@
 \alias{S2.distri}
 \alias{S2.distri-class}
 \alias{prepare,S2.distri-method}
-\alias{S2.panel,S2.distri-method}
+\alias{panel,S2.distri-method}
 
 \title{Class \code{S2.distri}}
 
@@ -74,7 +74,7 @@
     \item{prepare}{\code{signature(object = "S2.distri")}: 
       calls the parent method (\code{prepare} for \code{ADEg.S2}), modifies some graphical parameters used by default and calculates ellipses and centroids.}
       
-    \item{S2.panel}{\code{signature(object = "S2.distri")}: 
+    \item{panel}{\code{signature(object = "S2.distri")}: 
       draws ellipses, stars, labels and points.}
   }
 }

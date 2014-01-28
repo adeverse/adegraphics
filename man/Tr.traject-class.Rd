@@ -4,7 +4,7 @@
 \alias{Tr.traject}
 \alias{Tr.traject-class}
 \alias{prepare,Tr.traject-method}
-\alias{Tr.panel,Tr.traject-method}
+\alias{panel,Tr.traject-method}
 
 \title{Class \code{Tr.traject}}
 
@@ -68,7 +68,7 @@
     \item{prepare}{\code{signature(object = "Tr.traject")}: 
       calls the parent method (\code{prepare} for \code{ADEg.Tr}) and modifies some graphical parameters used by default.}
       
-    \item{Tr.panel}{\code{signature(object = "Tr.traject")}: 
+    \item{panel}{\code{signature(object = "Tr.traject")}: 
       draws arrows, labels and points.}
   }
 }

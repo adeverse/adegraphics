@@ -4,7 +4,7 @@
 \alias{Tr.match}
 \alias{Tr.match-class}
 \alias{prepare,Tr.match-method}
-\alias{Tr.panel,Tr.match-method}
+\alias{panel,Tr.match-method}
 
 \title{Class \code{Tr.match}}
 
@@ -64,7 +64,7 @@
     \item{prepare}{\code{signature(object = "Tr.match")}: 
       calls the parent method (\code{prepare} for \code{ADEg.Tr}) and modifies some graphical parameters used by default.}
       
-    \item{Tr.panel}{\code{signature(object = "Tr.match")}: 
+    \item{panel}{\code{signature(object = "Tr.match")}: 
       draws arrows, labels and points.}
   }
 }

@@ -66,11 +66,12 @@ setMethod(
 
 
 setMethod(
-  f = "T.panelbase",
+  f = "panelbase",
   signature = "ADEg.T",
   definition = function(object, x, y) {
+    callNextMethod()
+    
     ## draw the box and the segments
-
     grid <- object@adeg.par$pgrid
     ## draw grid
     if(object@data$storeData) {
@@ -203,9 +204,8 @@ setMethod(
       par.settings = object@trellis.par,
       scales = list(draw = FALSE),
       panel = function(...) {
-        panelbase(object, ...)
-        T.panelbase(object,...)
-        T.panel(object,...)
+        panelbase(object,...)
+        panel(object,...)
         
         if(object@adeg.par$plegend$draw)
           setvalueskey(

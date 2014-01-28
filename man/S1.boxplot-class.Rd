@@ -4,7 +4,7 @@
 \alias{S1.boxplot}
 \alias{S1.boxplot-class}
 \alias{prepare,S1.boxplot-method}
-\alias{S1.panel,S1.boxplot-method}
+\alias{panel,S1.boxplot-method}
 \alias{setlatticecall,S1.boxplot-method}
 
 \title{Class \code{S1.boxplot}}
@@ -64,7 +64,7 @@
     \item{prepare}{\code{signature(object = "S1.boxplot")}: 
       calls the parent method (\code{prepare} for \code{ADEg.S1}) and modifies some graphical parameters used by default.}
     
-    \item{S1.panel}{\code{signature(object = "S1.boxplot")}: 
+    \item{panel}{\code{signature(object = "S1.boxplot")}: 
       draws box-and-wiskers diagrams, mean points and labels.}
       
     \item{setlatticecall}{\code{signature(object = "S1.boxplot")}: 

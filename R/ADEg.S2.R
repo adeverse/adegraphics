@@ -137,9 +137,8 @@ setMethod(
   })
 
   
-## S2.panelbase is called for every s.* graphics. It draws the grid, information, spatial object if asked
 setMethod(
-  f = "S2.panelbase",
+  f = "panelbase",
   signature = "ADEg.S2",
   definition = function(object, x, y) {
 		## draw grid
@@ -195,6 +194,7 @@ setMethod(
       pnb <- object@adeg.par$pnb
       do.call("adeg.panel.nb", args = list(nbobject = nbobj, coords = cbind(x, y), col.edge = pnb$edge$col, lwd = pnb$edge$lwd, lty = pnb$edge$lty, pch = pnb$node$pch, cex = pnb$node$cex, col.node = pnb$node$col, alpha = pnb$node$alpha))
     }
+    callNextMethod()
   })
 
 
@@ -217,9 +217,8 @@ setMethod(
                    aspect = object@adeg.par$paxes$aspectratio,
                    axis = axis.L, ## see utils.R
                    panel = function(...) {
-                     S2.panelbase(object,...) ## grid,
-                     panelbase(object, ...) ## code in ADEg.R, nb, Sp, sub
-                     S2.panel(object,...) ## call to S2.panel function, for slabel and ADEg.S2 class of graphs
+                     panelbase(object,...) ## grid,
+                     panel(object,...) ## call to S2.panel function, for slabel and ADEg.S2 class of graphs
                      if(inherits(object, "S2.value"))
                        if(object@adeg.par$plegend$draw)
                          setvalueskey(method = object@g.args$method, breaks = object@s.misc$breaks.update, ppoints = object@adeg.par$ppoints, plegend = object@adeg.par$plegend, symbol = object@g.args$symbol, center = object@g.args$center, type = "S")
