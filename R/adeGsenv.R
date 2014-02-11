@@ -61,16 +61,6 @@
     ),
     envir = .ADEgEnv)
   
-  lattice.options(default.theme = switch(EXPR = .Device,
-      modifyList(
-        get("lattice.theme", envir = lattice:::.LatticeEnv),
-        list(
-          layout.heights = list(top.padding = 0, main.key.padding = 0, key.axis.padding = 0, axis.xlab.padding = 0, xlab.key.padding = 0,	key.sub.padding = 0, bottom.padding = 0),
-          layout.widths = list(left.padding = 0, key.ylab.padding = 0, ylab.axis.padding = 0, axis.key.padding = 0, right.padding = 0),
-          background = list(col = "transparent", alpha = 1), regions = list(col = rev(grey.colors(255)), alpha = 0.88),
-          as.table = TRUE), keep.null = TRUE)))
-  
-
   assign("adegtheme", list(
       layout.heights = list(
         top.padding = 0, main.key.padding = 0,
@@ -79,11 +69,9 @@
         bottom.padding = 0),
       layout.widths = list(left.padding = 0, key.ylab.padding = 0, ylab.axis.padding = 0, axis.key.padding = 0, right.padding = 0),
       background = list(col = "transparent", alpha = 1),
-      regions = list(col = rev(grey.colors(255)), alpha = 0.88),
       plot.polygon = list(col = "#F2F2F2"),
       plot.line = list(col = "#000000"),
       add.line = list(col =  "#000000", lty = 2),    
-      ## clip = list(panel = "off", strip = "off"),
       ## clipping allows drawing to go outside panel (i.e : drawings) limits
       as.table = TRUE
     ), envir = .ADEgEnv
