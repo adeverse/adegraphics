@@ -54,15 +54,17 @@ s.Spatial(spObj, col = TRUE, nclass = 5, plot = TRUE,
 \examples{
 data(elec88, package = "ade4")
 
-## mapping whithout data
-g1 <- s.Spatial(elec88$Spatial)
+if(require(sp, quiet = TRUE)) {
+  ## mapping whithout data
+  g1 <- s.Spatial(elec88$Spatial)
 
-\dontrun{
-  ## mapping whith data
-  obj <- sp::SpatialPolygonsDataFrame(Sr = elec88$Spatial, data = elec88$tab)
-  g2 <- s.Spatial(obj)
-  g3 <- s.Spatial(obj, nclass = 2, col = c("red", "blue"))
-}
+  \dontrun{
+    ## mapping whith data
+    obj <- sp::SpatialPolygonsDataFrame(Sr = elec88$Spatial, data = elec88$tab)
+    g2 <- s.Spatial(obj)
+    g3 <- s.Spatial(obj, nclass = 2, col = c("red", "blue"))
+  }
+ }
 }
 
 \keyword{hplot}

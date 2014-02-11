@@ -9,45 +9,57 @@ s.Spatial <- function(spObj, col = TRUE, nclass = 5, plot = TRUE, storeData = FA
   sortparameters$adepar <- modifyList(defaultpar, sortparameters$adepar, keep.null = TRUE)
   if(is.logical(col))
     if(!col)
-      col <- "transparent"	## col == FALSE
+      colnew <- "transparent"	## col == FALSE
   
   nvar <- 0
   if(length(grep("DataFrame", class(spObj))) > 0)
     nvar <- ncol(spObj)
-  
+
   if(nvar < 2) {
     if(nvar == 1) {
       ## Spatial*DataFrame object -> ADEg
       sortparameters$adepar$psub$text <- names(spObj)[1]
-      if(is.logical(col))
+      if(is.logical(col)) {
         if(col) {
-          if(is.numeric(spObj@data[, 1]))
-            col <- adegtot$ppalette$quanti(nclass)
-          else
-            col <- adegtot$ppalette$quali(nlevels(as.factor(spObj@data[, 1])))
+          if(is.numeric(spObj@data[, 1])) {
+            nclasspretty <- length(pretty(spObj@data[, 1], nclass)) - 1
+            nclasspretty <- length(pretty(spObj@data[, 1], nclasspretty)) - 1 ## repeated in order to have always the same number of class
+            colnew <- adegtot$ppalette$quanti(nclasspretty)
+          } else
+            colnew <- adegtot$ppalette$quali(nlevels(as.factor(spObj@data[, 1])))
         }
+      } else {
+        colnew <- col
+      }
     } else {
       ## Spatial object (no data)
-      col <- adegtot$pSp$col
+      colnew <- adegtot$pSp$col
     }
-    
-    sortparameters$adepar$pSp$col <- col
-    ## create map 
+
+    sortparameters$adepar$pSp$col <- colnew
+    ## create map
     object <- do.call("s.label", c(list(dfxy = substitute(sp::coordinates(spObj)), Sp = substitute(spObj), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args))
+    
   } else {
     ## Spatial*DataFrame object with several variables -> ADEgS
     listGraph <- list()
     for(i in 1:nvar) {
-      if(is.logical(col))
+      if(is.logical(col)) {
         if(col) {
-          if(is.numeric(spObj@data[, i]))
-            col <- adegtot$ppalette$quanti(nclass)
-          else
-            col <- adegtot$ppalette$quali(nlevels(as.factor(spObj@data[, i])))
+          if(is.numeric(spObj@data[, i])) {
+            nclasspretty <- length(pretty(spObj@data[, i], nclass)) - 1
+            nclasspretty <- length(pretty(spObj@data[, i], nclasspretty)) - 1 ## repeated in order to have always the same number of class
+            colnew <- adegtot$ppalette$quanti(nclasspretty)
+          } else
+            colnew <- adegtot$ppalette$quali(nlevels(as.factor(spObj@data[, i])))
         }
-      sortparameters$adepar$pSp$col <- col
-      sortparameters$adepar$psub$text <- names(spObj)[i]
+      } else {
+        colnew <- col
+      }
       
+      sortparameters$adepar$pSp$col <- colnew
+      sortparameters$adepar$psub$text <- names(spObj)[i]
+      ## create map
       listGraph <- c(listGraph, do.call("s.label", c(list(dfxy = substitute(sp::coordinates(spObj)), Sp = substitute(spObj[, i]), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args)))
     }
     names(listGraph) <- names(spObj)

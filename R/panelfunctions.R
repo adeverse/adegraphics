@@ -192,26 +192,35 @@ adeg.panel.edges <- function(edges, coords, col.edge = "black", lwd = 1, lty = 1
 ## n : nombre intervales si data 
 ## TODO: spObject pourrait etre une liste
 adeg.panel.Spatial <- function(SpObject, sp.layout = NULL, col = 1, border = 1, lwd = 1, lty = 1, alpha = 0.8, n = length(col), spIndex = 1, ...) {
-  if(length(grep("DataFrame", class(SpObject))) > 0)
-    mapSp <- try(SpObject[names(SpObject)[spIndex]], silent = TRUE) ## seulement premiere carte prise
-  else
-    mapSp <- SpObject
-  
-  xy <- coordinates(mapSp)
-  values <- try(mapSp@data[, 1], silent = TRUE)
-  
-  if((class(values) != "try-error") & ((length(col) != 1) & length(col) <= length(values))) { ## colors according values
-    if(is.factor(values)) {
-      col <- rep(col, length.out = nlevels(values))
-      colvalue <- col[values]
-    } else {
-      breaks <- pretty(values, n)
-      if((length(breaks) - 1) != length(col))
-        col <- rep(col, length.out = length(breaks) - 1)
+
+  if(length(grep("DataFrame", class(SpObject))) > 0) { ## there is data in 'SpObject' (it is a SpatialPolygonsDataFrame).
+    mapSp <- try(SpObject[names(SpObject)[spIndex]], silent = TRUE) ## only the first map (spIndex = 1)
+    values <- try(mapSp@data[, 1], silent = TRUE)
+    
+    if(is.factor(values)) { ## qualitative values
+      if(length(col) != nlevels(values)) {
+        if(length(col) == 1)  ## all values have the same color
+          col <- rep(col, length.out = nlevels(values))
+        else 
+        	col <- adegpar()$ppalette$quali(nlevels(values))
+      	colvalue <- col[values]
+      } else
+        colvalue <- col
+    
+    } else {  ## quantitative values
+      breaks <- pretty(values, length(col))
+      if((length(breaks) - 1) != length(col)) {
+        if(length(col) == 1)  ## 'col' is not modified by the user
+        	col <- adegpar()$ppalette$quanti(length(breaks) - 1)
+        else  ## 'col' is modified but there is not enough color values
+          col <- colorRampPalette(col)(length(breaks) - 1)
+      }
       colvalue <- col[cut(values, breaks, include.lowest = TRUE)]
     }
-  } else 
+  } else {  ## there is no data in 'SpObject'
+    mapSp <- SpObject
     colvalue <- col
+  }
   
   if(inherits(SpObject, what = "SpatialPoints")) {
     ## insert ppoints.parameters for pch and cex
