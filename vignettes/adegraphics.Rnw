@@ -14,6 +14,7 @@
 \usepackage{multirow}
 \usepackage{lscape}
 \parindent=0pt \parskip=0pt
+%\VignetteIndexEntry{Using the adegraphics package}
 
 \title{The \texttt{adegraphics} package}
 \author{Alice Julien-Laferrière, Aurélie Siberchicot and Stéphane Dray}
