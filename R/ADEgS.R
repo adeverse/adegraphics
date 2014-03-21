@@ -56,8 +56,12 @@ setMethod(
     .Object@Call <- Call
     ## checking validations
     validObject(.Object)
-    return(.Object)            
+    return(.Object)
   })
+
+
+setClassUnion(name = "ADEgORADEgSORtrellis", members = c("ADEg", "ADEgS", "trellis"))
+
 
 ##############################################          
 ##      Get elements/information            ##
@@ -183,7 +187,7 @@ setMethod(
 
 setMethod(
   f = "superpose",
-  signature = c("ADEgS", "ADEg", "numeric", "logical"),
+  signature = c("ADEgS", "ADEgORtrellis", "numeric", "logical"),
   definition = function(g1, g2, which, plot) {
     ## new ADEgS
     ngraph <- length(g1)
@@ -204,7 +208,7 @@ setMethod(
 
 setMethod(
   f = "superpose",
-  signature = c("ADEgS", "ADEg", "numeric", "ANY"),
+  signature = c("ADEgS", "ADEgORtrellis", "numeric", "ANY"),
   definition = function(g1, g2, which, plot) {
     objectnew <- superpose(g1, g2, which = which, plot = FALSE)
     objectnew@Call <- match.call()
@@ -216,7 +220,7 @@ setMethod(
 
 setMethod(
   f = "superpose",
-  signature = c("ADEgS", "ADEg", "missing", "ANY"),
+  signature = c("ADEgS", "ADEgORtrellis", "missing", "ANY"),
   definition = function(g1, g2, which, plot) {
     if(!inherits(g1[[length(g1)]], "ADEg"))
       stop("superposition is only available between two ADEg")
@@ -296,6 +300,72 @@ setMethod(
     return(newobj)
   })
 
+
+setMethod(
+  f = "cbindADEg", 
+  signature = c("ADEgORADEgSORtrellis", "ADEgORADEgSORtrellis"),
+  definition = function(g1, g2, ..., plot = TRUE) {
+  	if(try(is.list(...), silent = TRUE) == TRUE)
+      glist <- as.list(c(g1, g2, ...))
+   
+	  else
+	    glist <- list(g1, g2, ...)
+    
+    Posi <- as.null()
+    nbg <- length(glist)
+    for(g in 1:nbg) {
+      
+      ## reduce graph size
+      posi <- cbind(0, 0, 1, 1)
+      posi[, 1] <- posi[, 1] / nbg
+      posi[, 3] <- posi[, 3] / nbg
+      
+      ## shift graph
+      if(g != 1) {
+        posi[, 1] <- posi[, 1] + Posi[nrow(Posi), 3]
+        posi[, 3] <- posi[, 3] + Posi[nrow(Posi), 3]
+      }
+      
+      Posi <- rbind(Posi, posi)
+    }
+    
+    obj <- new(Class = "ADEgS", ADEglist = glist, positions = Posi, add = matrix(0, ncol = nbg, nrow = nbg), Call = match.call())
+    if(plot)
+      print(obj)
+    invisible(obj)
+  })
+
+
+setMethod(
+  f = "rbindADEg", 
+  signature = c("ADEgORADEgSORtrellis", "ADEgORADEgSORtrellis"),
+  definition = function(g1, g2, ..., plot = TRUE) {
+  	if(try(is.list(...), silent = TRUE) == TRUE)
+      glist <- as.list(c(g1, g2, ...))
+	  else
+	    glist <- list(g1, g2, ...)
+    
+    Posi <- as.null()
+    nbg <- length(glist)
+    for(g in 1:nbg) {
+      
+      ## reduce graph size
+      posi <- cbind(0, 0, 1, 1)
+      posi[, 2] <- posi[, 2] / nbg
+      posi[, 4] <- posi[, 4] / nbg
+      
+      ## shift graph
+      posi[, 2] <- posi[, 2] + (nbg - g) / nbg
+      posi[, 4] <- posi[, 4] + (nbg - g) / nbg
+      
+      Posi <- rbind(Posi, posi)
+    }
+    
+    obj <- new(Class = "ADEgS", ADEglist = glist, positions = Posi, add = matrix(0, ncol = nbg, nrow = nbg), Call = match.call())
+    if(plot)
+      print(obj)
+    invisible(obj)
+  })
 
 ##############################################          
 ##                   insertion              ##

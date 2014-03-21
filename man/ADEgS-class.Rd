@@ -131,6 +131,12 @@
     \item{+}{\code{signature(e1 = "ADEgS", e2 = "ADEg")}:
       creates a new \code{"ADEgS"} object performing a superposition of \code{e2} on \code{e1}.}
       
+    \item{cbindADEg}{\code{signature(g1 = "ADEgORADEgS", g2 = "ADEgORADEgS")}:
+      creates a new \code{"ADEgS"} object combining \code{g1} on \code{g2} by columns.}      
+      
+    \item{rbindADEg}{\code{signature(g1 = "ADEgORADEgS", g2 = "ADEgORADEgS")}:
+      creates a new \code{"ADEgS"} object combining \code{g1} on \code{g2} by rows.}
+      
     \item{update}{\code{signature(object = "ADEgS")}: 
       modifies the graphical parameters of each sub-graphics listed in \code{object@ADEglist} and/or the object's names 
       (with the key word \code{names}) and/or the \code{object@positions} slot (with the key word \code{positions}), after creation of the \code{object}.

@@ -16,7 +16,7 @@
   
   The \code{ADEg.Tr} class is a virtual class, i.e. a class which is not possible to create objects but which have heirs.
   This class inherits from \code{ADEg} class and 
-  has three son classes : \code{Tr.class}, \code{Tr.label} and \code{T.match}.  
+  has three son classes : \code{Tr.class}, \code{Tr.label}, \code{T.match} and \code{T.traject}.  
 }
 
 \section{Objects from the Class}{

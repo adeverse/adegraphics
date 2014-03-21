@@ -59,7 +59,7 @@ options(width = 90)
 
 
 \section{An overview of object classes}
-In \texttt{adegraphics}, a user-level function produces a plot that is stored (and returned) as an object. The class architecture of the objects created by \texttt{adegraphics} functions is described in Figure~\ref{fig:1}. 
+In \texttt{adegraphics}, a user-level function produces a plot that is stored (and returned) as an object. The class architecture of the objects created by \texttt{adegraphics} functions is described in Figure \ref{fig:1}. 
 
 \begin{figure}[H]
   \centering
@@ -91,7 +91,7 @@ In the \texttt{adegraphics} package, a graph is created by a call to a user func
 
 \subsection{User functions}
 \label{user-functions}
-Several user functions are available to create a simple graph (stored as an \texttt{ADEg} object in R). Each function creates an object of a given class (see Figure \ref{fig:1}). Table~\ref{functionsADEg} lists the different functions, their corresponding classes and a short description. The \texttt{ade4} users would not be lost: many functions have kept their names in \texttt{adegraphics}. The main changes are listed in Table~\ref{functionsADEgchanged}.
+Several user functions are available to create a simple graph (stored as an \texttt{ADEg} object in R). Each function creates an object of a given class (see Figure \ref{fig:1}). Table \ref{functionsADEg} lists the different functions, their corresponding classes and a short description. The \texttt{ade4} users would not be lost: many functions have kept their names in \texttt{adegraphics}. The main changes are listed in Table \ref{functionsADEgchanged}.
 
 \begin{longtable}{|a|p{3cm}|p{8cm}|}
   \caption{\label{functionsADEg} Graphical functions available in \texttt{adegraphics}}\\
@@ -172,7 +172,7 @@ Some arguments are very general and present in all user functions:
   \item \texttt{\dots}: additional graphical parameters (see below)
 \end{itemize}
 
-Some other arguments influence the graphical outputs and they are thus specific to the type of produced graph. Figure~\ref{fig:2} summarizes some of these graphical parameters available for the different functions. We only reported the parameters stored in the \texttt{g.args} slot of the returned object (see \ref{gargs}). 
+Some other arguments influence the graphical outputs and they are thus specific to the type of produced graph. Figure \ref{fig:2} summarizes some of these graphical parameters available for the different functions. We only reported the parameters stored in the \texttt{g.args} slot of the returned object (see \ref{gargs}). 
 <<label=gargsVSclass, include=FALSE, fig=TRUE, echo=FALSE, width=5.5, height=6.5>>=
 source("gargsVSclass.R")
 @
@@ -223,7 +223,7 @@ These slots are defined for each \texttt{ADEg} object and contain different type
   \item \texttt{trellis.par}: a list of graphical parameters that are directly passed to the \texttt{lattice} functions using the \texttt{par.settings} argument (see \ref{trellispar}).
   \item \texttt{adeg.par}: a list of graphical parameters defined in \texttt{adegraphics}. The list of parameters can be obtained using the \texttt{adegpar} function (see \ref{adegpar}).
   \item \texttt{lattice.call}: a list of two elements containing the information required to create the \texttt{trellis} object: \texttt{graphictype} (the name of the \texttt{lattice} functions that should be used) and \texttt{arguments} (the list of parameter values required to obtain the \texttt{trellis} object).
-  \item \texttt{g.args}: a list containing at least the different values of the graphical arguments described in Figure~\ref{fig:2} (see \ref{gargs}).
+  \item \texttt{g.args}: a list containing at least the different values of the graphical arguments described in Figure \ref{fig:2} (see \ref{gargs}).
   \item \texttt{stats}: a list of internal preliminary computations performed to display the graph.
   \item \texttt{s.misc}: a list of other internal parameters.
   \item \texttt{Call}: an object of class \texttt{call} containing the matched call.
@@ -273,6 +273,7 @@ Several other methods have been defined for the \texttt{ADEg} class allowing to 
   \item \texttt{gettrellis}: this method returns the \texttt{ADEg} object as a \texttt{trellis} object. It can then be exploited using the \texttt{lattice} and \texttt{latticeExtra} packages. 
   \item \texttt{superpose}, \texttt{+} and \texttt{add.ADEg}: these methods superpose two \texttt{ADEg} graphs. It returns a multiple graph object of class \texttt{ADEgS} (see \ref{superpose}).
   \item \texttt{insert}: this method inserts an \texttt{ADEg} graph in an existing one or in the current device. It returns an \texttt{ADEgS} object (see \ref{superpose}).
+  \item \texttt{cbindADEg}, \texttt{rbindADEg}: these methods combine several \texttt{ADEg} graphs. It returns an \texttt{ADEgS} object (see \ref{superpose}).
   \item \texttt{update}: this method modifies the graphical parameters after the \texttt{ADEg} creation. It updates the current display and returns the modified \texttt{ADEg} (see \ref{update}).
 \end{itemize}
 
@@ -327,6 +328,7 @@ Several methods have been implemented to obtain information, edit or modify \tex
   \item \texttt{show}, \texttt{plot} and \texttt{print}: these methods display the \texttt{ADEgS} object in the current device or in a new one.
   \item \texttt{superpose} and \texttt{+}: these methods superpose two graphs. It returns a multiple graph object of class \texttt{ADEgS} (see \ref{superpose}).
   \item \texttt{insert}: this method inserts a graph in an existing one or in the current device. It returns a multiple graph object of class \texttt{ADEgS} (see \ref{superpose}).
+  \item \texttt{cbindADEg}, \texttt{rbindADEg}: these methods combine several graphs. It returns an \texttt{ADEgS} object (see \ref{superpose}).
   \item \texttt{update}: this method modifies the names and/or the \texttt{positions} of the graphs contained in an \texttt{ADEgS} object. It updates the current display and returns the modified \texttt{ADEgS}.
 \end{itemize}
 
@@ -373,8 +375,20 @@ g5
 s.label(pca1$li, add = TRUE)
 @
 
-The function \texttt{insert} allows the insertion of a graphical object on another one (\texttt{ADEg} or \texttt{ADEgS}). It takes the position of the inserted graph as an argument:
+The functions \texttt{cbindADEg} and \texttt{rbindADEg} allows to combine several graphical objects (\texttt{ADEg}, \texttt{ADEgS} or \texttt{trellis}) by rows or by columns. The new created \texttt{ADEgS} contains the list of the reduced graphs:
 
+<<label=plot8b, include = FALSE, fig = TRUE, echo = TRUE, keep.source = TRUE, width = 8, height = 8>>=
+rbindADEg(cbindADEg(g2, g3, plot = FALSE), cbindADEg(g5, g6, plot = FALSE))
+@
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{fig-plot8b.pdf}
+\end{figure}
+
+
+
+
+The function \texttt{insert} allows the insertion of a graphical object on another one (\texttt{ADEg} or \texttt{ADEgS}). It takes the position of the inserted graph as an argument:
 
 <<label=plot9, include = FALSE, fig = TRUE, echo = TRUE, keep.source = TRUE, width = 5, height = 5>>=
 g7 <- insert(g2, g6, posi = c(0.65, 0.65, 0.95, 0.95))
@@ -638,7 +652,7 @@ adegpar("ppoints")
 adegpar()$ppoints
 @
 
-The full list of available parameters is summarized in Figure~\ref{fig:3}. The ordinate represents the different sublists and the abscissa gives the name of the parameters available in each sublist. Note that some row names have two keys separated by a dot: the first key indicates the first level of the sublist, etc. For example \texttt{plegend.text} is the sublist \texttt{text} of the sublist \texttt{plegend}. The parameters \texttt{col} and \texttt{cex} in \texttt{plegend.text} allow to control the aspect of the text of the legend.
+The full list of available parameters is summarized in Figure \ref{fig:3}. The ordinate represents the different sublists and the abscissa gives the name of the parameters available in each sublist. Note that some row names have two keys separated by a dot: the first key indicates the first level of the sublist, etc. For example \texttt{plegend.text} is the sublist \texttt{text} of the sublist \texttt{plegend}. The parameters \texttt{col} and \texttt{cex} in \texttt{plegend.text} allow to control the aspect of the text of the legend.
 
 <<label=paramVSparam, include=FALSE, fig=TRUE, echo=FALSE, width=10, height=8>>=
 source("paramVSparam.R")
@@ -650,7 +664,7 @@ source("paramVSparam.R")
 \label{fig:3}
 \end{figure}
 
-According to the function called, only some of the full list of \texttt{adeg.par} parameters are useful to modify the graphical display. Figure~\ref{fig:4} indicates which parameters can affect the display of an object created by a given user function. For example, the background (\texttt{pbackground} parameter) can be modified for all functions whereas the display of ellipses (\texttt{pellipses} parameter) affects only three functions.
+According to the function called, only some of the full list of \texttt{adeg.par} parameters are useful to modify the graphical display. Figure \ref{fig:4} indicates which parameters can affect the display of an object created by a given user function. For example, the background (\texttt{pbackground} parameter) can be modified for all functions whereas the display of ellipses (\texttt{pellipses} parameter) affects only three functions.
 
 <<label=paramVSfunction, include=FALSE, fig=TRUE, echo=FALSE, width=5.5, height=6.5>>=
 source("paramVSfunction.R")
@@ -730,7 +744,7 @@ s.label(pca2$li, facets = jv73$fac.riv, samelimits = FALSE)
 \end{figure}
 
 
-Several other \texttt{g.args} parameters can be updated according to the class of the created object (see Figure~\ref{fig:2} in \ref{arguments}).
+Several other \texttt{g.args} parameters can be updated according to the class of the created object (see Figure \ref{fig:2} in \ref{arguments}).
 
 \subsection{Parameters applied on a \texttt{ADEgS}}
 Users can either apply the changes to all graphs or to update only one graph. Of an \texttt{ADEgS}, to apply changes on all the graphs contained in an \texttt{ADEgS}, the syntax is similar to the one described for an \texttt{ADEg} object. For example, background color can be changed for all graphs in \texttt{g10} using the \texttt{pbackground.col} parameter.

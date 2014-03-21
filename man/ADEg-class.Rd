@@ -100,6 +100,12 @@
     \item{printSuperpose}{\code{signature(g1 = "ADEgORtrellis", refg = "ADEgORtrellis", position = "numeric")}: 
       internal method, not for users.}
       
+    \item{cbindADEg}{\code{signature(g1 = "ADEgORADEgS", g2 = "ADEgORADEgS")}:
+      creates a new \code{"ADEgS"} object combining \code{g1} on \code{g2}.}
+      
+    \item{rbindADEg}{\code{signature(g1 = "ADEgORADEgS", g2 = "ADEgORADEgS")}:
+      creates a new \code{"ADEgS"} object combining \code{g1} on \code{g2} by rows.}
+      
     \item{insert}{\code{signature(graphics = "ADEgORtrellis", oldgraphics = "missing", posi, ratio, inset, plot, which)}: 
       creates a new \code{ADEgS} object performing an insertion of \code{graphics} into the current device.}
       

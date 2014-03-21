@@ -3,9 +3,9 @@
 \alias{superpose}
 \alias{superpose-methods}
 \alias{superpose,ADEgORtrellis,ADEgORtrellis,ANY,ANY-method}
-\alias{superpose,ADEgS,ADEg,numeric,logical-method}
-\alias{superpose,ADEgS,ADEg,numeric,ANY-method}
-\alias{superpose,ADEgS,ADEg,missing,ANY-method}
+\alias{superpose,ADEgS,ADEgORtrellis,numeric,logical-method}
+\alias{superpose,ADEgS,ADEgORtrellis,numeric,ANY-method}
+\alias{superpose,ADEgS,ADEgORtrellis,missing,ANY-method}
 \alias{superpose,ADEgS,ADEgS,missing,ANY-method}
 
 \alias{+-methods}
@@ -32,7 +32,7 @@ superpose(g1, g2, which, plot = FALSE)
   
   \item{e1}{an object of class \code{ADEg} or \code{ADEgS}}
   
-  \item{e2}{an object of class \code{ADEg} or \code{ADEgS} superposed on e1)}
+  \item{e2}{an object of class \code{ADEg} or \code{ADEgS} superposed on \code{e1}}
   
   \item{which}{if \code{g1} is an \code{ADEgS}, which \code{ADEg} is used as the base of superposition 
   (\code{g2} is superposed on \code{g1[[which]]})}
@@ -95,11 +95,10 @@ g6 <- s.class(pca1$li, jv73$fac.riv, starSize = 0, ellipseSize = 0, chullSize = 
   ppolygons.alpha = 0.4, col = rainbow(12), ppoints.cex = 0)
 g5 + g6
 
-\dontrun{
-  g7 <- s.label(pca1$li, plabels.optim = TRUE, facets = jv73$fac.riv)
-  g8 <- s.class(pca1$li, jv73$fac.riv, facets = jv73$fac.riv, starSize = 0, chullSize = 1, 
-    ellipseSize = 0, ppolygons.alpha = 0.4, col = rainbow(12), ppoints.cex = 0)
-  g9 <- superpose(g7, g8, plot = TRUE)
+\dontrun{g7 <- s.label(pca1$li, plabels.optim = TRUE, facets = jv73$fac.riv)
+g8 <- s.class(pca1$li, jv73$fac.riv, facets = jv73$fac.riv, starSize = 0, chullSize = 1, 
+  ellipseSize = 0, ppolygons.alpha = 0.4, col = rainbow(12), ppoints.cex = 0)
+g9 <- superpose(g7, g8, plot = TRUE)
 }
 }
 

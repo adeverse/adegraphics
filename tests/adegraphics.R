@@ -9,7 +9,7 @@ pca <- ade4::dudi.pca(olympic$tab, scan = FALSE)
 g2 <- s.corcircle(pca$co, lab = names(olympic$tab))
 
 g3 <- ADEgS(list(g1, g2), rbind(c(0, 0, 0.5, 1), c(0.5, 0, 1, 1)))
-g4 <- ADEgS(list(g1, g2), layout = c(1, 2))
+g4 <- ADEgS(list(g1, g2), layout = c(1, 2)) ## the same as g3
 g5 <- s.label(xy, plabels.cex = 0, paxes.draw = TRUE)
 
 g6 <- superpose(g1, g5, plot = TRUE)
@@ -23,3 +23,15 @@ g10 <- g8[1, drop = FALSE]
 class(g10)
 
 g11 <- ADEgS(list(g8, g3), positions = rbind(c(0, 0, 0.5, 1), c(0.5, 0, 1, 1)))
+
+## cbindADEgS - rbindADEgS
+g12 <- cbindADEg(g1, g2) ## the same as g2 and g3
+g13 <- cbindADEg(g8, g3) ## the same as g11
+g14 <- rbindADEg(g8, g3)
+
+data(banque, package = "ade4")
+banque.acm <- ade4::dudi.acm(banque, scann = FALSE, nf = 3)
+g15 <- score.acm(banque.acm, which = which(banque.acm$cr[,1] > 0.2), plot = FALSE)
+g15 <- g15[[1]]
+cbindADEg(g15[[1]], g15[[2]])   ## work on trellis object
+
