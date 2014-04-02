@@ -44,7 +44,7 @@
           else if(n > 2)
             return(brewer.pal(n, name))
           else
-            return(brewer.pal(n + 1, name)[1:2])
+            return(brewer.pal(n + 2, name)[1:n])
         }),  ## see http://colorbrewer2.org/
       
       ppoints = list(alpha = 1, cex = 1, col = "black", pch = 20, fill = "black"),
