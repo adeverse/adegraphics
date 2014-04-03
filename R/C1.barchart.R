@@ -1,9 +1,3 @@
-#######################################################################
-##    S1.density to compare with S1.gauss afterwards                 ##
-## TODO: reverse/vertical mettre a l'echelle distribution calculee   ##
-## Dans l'idée S1.density plutot si par de factor...                 ##
-#######################################################################
-
 setClass(
   Class = "C1.barchart",
   contains = "ADEg.C1"
@@ -22,7 +16,6 @@ setMethod(
   })
 
 
-## densities calculations according to user parameters and score/factor
 setMethod(
   f = "prepare",
   signature = "C1.barchart",
