@@ -8,7 +8,8 @@
 }
 
 \usage{
-s1d.density(score, fac = gl(1, NROW(score)), kernel = "normal",
+s1d.density(score, fac = gl(1, NROW(score)), kernel = c("normal", "box", 
+"epanech", "biweight", "triweight"),
   bandwidth = NULL, gridsize = 450, col = TRUE, fill =
   TRUE, facets = NULL, plot = TRUE, storeData = FALSE,
   add = FALSE, pos = -1, ...)
@@ -18,7 +19,7 @@ s1d.density(score, fac = gl(1, NROW(score)), kernel = "normal",
   
   \item{fac}{a factor (or a matrix of factors) to split \code{score}}
   
-  \item{kernel}{the smoothing kernel used}
+  \item{kernel}{the smoothing kernel used, see \code{\link[KernSmooth]{bkde}}}
   
   \item{bandwidth}{the kernel bandwidth smoothing parameter}
   
@@ -51,7 +52,7 @@ s1d.density(score, fac = gl(1, NROW(score)), kernel = "normal",
 }
 
 \details{
-  \code{kernel}, \code{bandwidth} and \code{gridsize} are passed in parameters in \code{bkde} function of the \code{KernSmooth} package.
+  \code{kernel}, \code{bandwidth} and \code{gridsize} are passed as parameters to \code{\link[KernSmooth]{bkde}} function of the \code{KernSmooth} package.
   
   Graphical parameters for rugs are available in \code{plines} of \code{adegpar} and the ones for density curves filled in \code{ppolygons}.
   Some appropriated graphical parameters in \code{p1d} are also available.

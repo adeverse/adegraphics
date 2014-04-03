@@ -178,7 +178,7 @@ setMethod(
 ## s1d.density: user function
 ## kernel, bandwidth and gridsize directly passed to the bkde function (for density calculation)
 ## if fill is FALSE, polygons density curves are transparent
-s1d.density <- function(score, fac = gl(1, NROW(score)), kernel = "normal", bandwidth = NULL, gridsize = 450, col = TRUE, fill = TRUE, facets = NULL,
+s1d.density <- function(score, fac = gl(1, NROW(score)), kernel = c("normal", "box", "epanech", "biweight", "triweight"), bandwidth = NULL, gridsize = 450, col = TRUE, fill = TRUE, facets = NULL,
                         plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
 
 	thecall <- .expand.call(match.call())
