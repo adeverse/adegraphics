@@ -119,46 +119,6 @@ getpoly <- function(n = 4, radius = 1, angle = 0) {
 }
 
 
-############### Ajouter pixmap ############
-## fonctions tirees et adaptees  de http://rwiki.sciviews.org/doku.php?id=tips:graphics-grid:displaybitmap
-## usefull s.logo
-as.raster.pixmapRGB <- function(x, ...) {
-  nr <- nrow(x@red)
-  r <- rgb((x@red), (x@green), (x@blue))
-  dim(r) <- x@size
-  r
-}
-
-
-as.raster.pixmapGrey <- function(x, ...) {
-  nr <- nrow(x@grey)
-  r <- x@grey
-  dim(r) <- x@size
-  r
-}
-
-
-pixmapGrob <- function(pic, x = 0.5, y = 0.5, cex = 1, rect, ...) {
-  raster <- pic
-  pic <- as(pic, "pixmapIndexed")
-  width <- unit(pic@bbox[3] * cex, "points")
-  height <-  unit(pic@bbox[4] * cex , "points") 
-  vp <- viewport(x = x, y = y, width = width, height = height)
-
-  child <- rasterGrob(raster, vp = vp, ...)
-  if(rect) {
-    rect <- rectGrob(x = unit(0.5, "npc"), y = unit(0.5, "npc"), width = width , height = height , vp = vp) ## gp = gpar(col = "red", fill = "grey"))
-    grobtree <- gTree(width = convertUnit(width, unitTo = "in", typeFrom = "dimension", valueOnly = TRUE),
-                      height = convertUnit(height, unitTo = "in", typeFrom = "dimension", valueOnly = TRUE),
-                      children = gList(child, rect), childrenvp = vp, cl = "pixmap")
-  }
-  else
-    grobtree <- gTree(width =  convertUnit(width, unitTo = "in", typeFrom = "dimension", valueOnly = TRUE),
-                      height = convertUnit(height, unitTo = "in", typeFrom = "dimension", valueOnly = TRUE),
-                      children=gList(child), childrenvp = vp, cl = "pixmap")
-  return(grobtree)
-}
-
 
 #############################################
 ### Utiliser objet NB: neighbouring graph ###

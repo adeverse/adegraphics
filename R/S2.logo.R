@@ -1,8 +1,8 @@
 #########################################################
-###                       s.logo                      ##
+##                         s.logo                      ##
 #########################################################
 
-## TODO: prendre en comptre differentes types de logo peut etre possible 
+
 setClass(
   Class = "S2.logo",
   contains = "ADEg.S2",
@@ -45,28 +45,20 @@ setMethod(
   f = "panel",
   signature = "S2.logo",
   definition = function(object, x, y) {
-    ## list of pixmap object :logos
+    ## list of bitmap objects:logos
     if(object@data$storeData)
       logos <- object@data$logos
     else
       logos <- eval(object@data$logos, envir = sys.frame(object@data$frame))
-    ## Here, x and y are converted in 'npc' units
-    ## TODO: it would be better if we can use x and y in native coordinates, and then convert them when creating the viewport in pixmapGrob,
     
-    ## drawing every logo
-    ## attention ici on ne devrait pas avoir a convertir... pourquoi?
-    
-    xbis <- convertX(unit(x, "native"), unitTo = "npc", valueOnly = TRUE)
-    ybis <- convertY(unit(y, "native"), unitTo = "npc", valueOnly = TRUE)
     for(i in 1:length(logos)) {
-      grid.draw(pixmapGrob(logos[[i]], x = xbis[i], y = ybis[i], object@adeg.par$ppoints$cex, rect = object@g.args$rect))
+      grid.draw(rasterGrob(logos[[i]], x =x[i], y = y[i], height = unit(0.1, "npc") * object@adeg.par$ppoints$cex, default.units = "native"))
+      
     }
   })
 
 
-## prototype, arguments to add according their use (ie: klogo?)
-## to add: rectLogo
-s.logo <- function(dfxy, logos, rect = TRUE, xax = 1, yax = 2, facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
+s.logo <- function(dfxy, logos, xax = 1, yax = 2, facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
   
   ## evaluation of some parameters
   thecall <- .expand.call(match.call())
@@ -99,9 +91,8 @@ s.logo <- function(dfxy, logos, rect = TRUE, xax = 1, yax = 2, facets = NULL, pl
       warning(c("Unused parameters: ", paste(unique(names(sortparameters$rest)), " ", sep = "")), call. = FALSE)
     
     ## creation of the ADEg object
-    g.args <- c(sortparameters$g.args, list(rect = thecall$rect))
     tmp_data <- list(dfxy = thecall$dfxy, xax = xax, yax = yax, logos = thecall$logos, frame = sys.nframe() + pos, storeData = storeData)
-    object <- new(Class = "S2.logo", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = g.args, Call =  as.call(thecall))
+    object <- new(Class = "S2.logo", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = sortparameters$g.args, Call =  as.call(thecall))
     
     ## preparation
     prepare(object)

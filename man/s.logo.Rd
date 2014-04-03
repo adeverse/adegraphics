@@ -1,14 +1,14 @@
 \name{s.logo}
 \alias{s.logo}
 
-\title{2-D scatter plot with logos (pixmap objects)}
+\title{2-D scatter plot with logos (bitmap objects)}
 
 \description{
   This function represents a two dimensional scatter plot associating logos with points.
 }
 
 \usage{
-s.logo(dfxy, logos, rect = TRUE, xax = 1, yax = 2, facets = NULL, 
+s.logo(dfxy, logos, xax = 1, yax = 2, facets = NULL, 
   plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...)
 }
 
@@ -16,8 +16,6 @@ s.logo(dfxy, logos, rect = TRUE, xax = 1, yax = 2, facets = NULL,
   \item{dfxy}{a data frame used to produce the plot}
 
   \item{logos}{a list containing the picture to use for each point}
-  
-  \item{rect}{a logical to frame \code{logos}}
   
   \item{xax}{an integer (or a vector) indicating which column(s) of \code{dfxy} is(are) plotted on the x-axis}
   
@@ -61,12 +59,13 @@ s.logo(dfxy, logos, rect = TRUE, xax = 1, yax = 2, facets = NULL,
 \examples{
 data(ggtortoises, package = "ade4")
 g1 <- s.logo(ggtortoises$pop, ggtortoises$ico[as.character(ggtortoises$pop$carap)], 
-  pori.incl = FALSE)
+  pori.incl = FALSE, ppoints.cex = 0.5)
 g1 <- s.label(ggtortoises$pop, add = TRUE, plabels.boxes.alpha = 0)
 
 if(require(sp, quiet = TRUE)) {
   g2 <- s.logo(ggtortoises$pop, ggtortoises$ico[as.character(ggtortoises$pop$carap)], 
-    Sp = ggtortoises$Spatial, pback.col = "lightblue", pSp.col = "white", pgrid.draw = FALSE)
+    Sp = ggtortoises$Spatial, pback.col = "lightblue", pSp.col = "white", pgrid.draw = FALSE,
+    ppoints.cex = 0.5)
   g2 <- s.label(ggtortoises$misc, pgrid.draw = FALSE, porigin.include = FALSE, paxes.draw = FALSE, 
     add = TRUE)
 
