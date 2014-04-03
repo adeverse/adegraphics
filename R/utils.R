@@ -123,7 +123,7 @@
 
 
 ## if aspect.ratio == "iso", we must have identical limits range in x and y
-.setlimits<- function(minX, maxX, minY, maxY, origin = c(0, 0), aspect.ratio = "iso", includeOr) {
+.setlimits <- function(minX, maxX, minY, maxY, origin = c(0, 0), aspect.ratio = "iso", includeOr) {
   origin <- rep(origin, length.out = 2)
   if(includeOr) { ## to include origin
     newvalu <- list(.includeorigin(origin[1], minX, maxX), .includeorigin(origin[2], minY, maxY))

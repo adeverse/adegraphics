@@ -114,8 +114,8 @@ setMethod(
 ## modified object only displayed (not save), original limits ect are kept 
 setMethod(
   f = "printSuperpose",
-  signature = c("ADEgORtrellis", "ADEgORtrellis", "numeric"),
-  definition = function(g1, refg, position) {
+  signature = c("ADEgORtrellis", "ADEgORtrellis"),
+  definition = function(g1, refg) {
     ## to respect axis, limits, etc., we work directly on the trellis objects.
     if(inherits(refg, "ADEg")) {
       trelref <- gettrellis(refg)
@@ -132,7 +132,7 @@ setMethod(
   	      g1@g.args$min3d <- refg@g.args$min3d
         	g1@g.args$max3d <- refg@g.args$max3d
         	g1@adeg.par$pgrid$text$cex <- 0 ## no text corner for g1
-        	g1@lattice.call$arguments$par.settings$axis.text$cex <- "transparent"
+        	g1@lattice.call$arguments$par.settings$axis.text$cex <- 0
       	}
       	setlatticecall(g1)
       	trel1 <- gettrellis(g1)
@@ -159,13 +159,15 @@ setMethod(
     
     trel1$par.settings$panel.background$col <- "transparent"
     trel1$par.settings$axis.text$alpha <- 0
-    trel1$par.settings$axis.line$col <- "transparent"
+    trel1$par.settings$axis.line$alpha <- 0
+    trel1$par.settings$add.line$alpha <- 0
+    trel1$par.settings$add.text$alpha <- 0
     
     names <- c("x.scales", "y.scales", "xlab", "ylab", "main", "sub", "x.between", "y.between", "as.table", "x.limits", "y.limits", "aspect.ratio")            
     for(i in names)
       trel1[[i]] <- trelref[[i]]
-    
-    print(trel1, position = position, newpage = FALSE)          
+
+    print(trel1, newpage = FALSE)
   })
 
   
@@ -198,7 +200,7 @@ setMethod(
       newADEgS <- insert(graphics = graphics, oldgraphics = currentgraphic, posi = posi, ratio = ratio, inset = inset, plot = plot, which = which)
     
     if(plot)
-      print(newADEgS[length(newADEgS)], newpage = FALSE)
+      print(newADEgS[length(newADEgS)], closeViewport = FALSE)
     assign("currentadeg", newADEgS, envir = .ADEgEnv)
     invisible(newADEgS)
   })
@@ -246,7 +248,7 @@ setMethod(
     
     else if(inherits(previous, "ADEgS"))
       printSuperpose(object, previous[[length(previous)]], position = previous@positions[length(previous), ])
-    lattice:::lattice.setStatus(print.more = FALSE)
+#    lattice:::lattice.setStatus(print.more = FALSE)
     assign("currentadeg", objects, envir = .ADEgEnv)
     invisible(objects)
   })

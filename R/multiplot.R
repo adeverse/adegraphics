@@ -32,7 +32,7 @@ multi.ax.S2 <- function(thecall) {
 
   ## create the multiplot ADEgS
   names(listGraph) <- paste("x", apply(expand.grid(xax, yax), 1, paste, collapse = "y"), sep = "")
-  posmatrix <- layout2position(c(length(yax), length(xax)), ng = length(listGraph))
+  posmatrix <- layout2position(c(length(yax), length(xax)), ng = length(listGraph), square = TRUE)
   object <- new(Class = "ADEgS", ADEglist = listGraph, positions = posmatrix, add = matrix(0, ncol = length(listGraph), nrow = length(listGraph)), Call = as.call(thecall))
   return(object)
 }
@@ -134,7 +134,7 @@ multi.facets.S2 <- function(thecall, adepar, samelimits = TRUE) {
 
   ## creation of the multi-plot (ADEgS object)
   names(listGraph) <- levels(facets)
-  posmatrix <- layout2position(n2mfrow(nlevels(facets)), ng = nlevels(facets))
+  posmatrix <- layout2position(n2mfrow(nlevels(facets)), ng = nlevels(facets), square = TRUE)
   object <- new(Class = "ADEgS", ADEglist = listGraph, positions = posmatrix, add = matrix(0, ncol = nlevels(facets), nrow = nlevels(facets)), Call = as.call(thecall))
   ## change pos et frame a posteriori ??
   return(object)
@@ -176,7 +176,7 @@ multi.variables.S2 <- function(thecall, arg.vary) {
   
   ## create the multiplot ADEgS
   names(listGraph) <- colnames(dfvary)
-  posmatrix <- layout2position(n2mfrow(ncol(dfvary)), ng = ncol(dfvary))
+  posmatrix <- layout2position(n2mfrow(ncol(dfvary)), ng = ncol(dfvary), square = TRUE)
   object <- new(Class = "ADEgS", ADEglist = listGraph, positions = posmatrix, add = matrix(0, ncol = ncol(dfvary), nrow = ncol(dfvary)), Call = as.call(thecall))
   return(object)
 }
@@ -468,7 +468,7 @@ multi.variables.S1 <- function(thecall, arg.vary) {
   
   ## create the multiplot ADEgS
   names(listGraph) <- colnames(dfvary)
-  posmatrix <- layout2position(n2mfrow(ncol(dfvary)), ng = ncol(dfvary))
+  posmatrix <- layout2position(n2mfrow(ncol(dfvary)), ng = ncol(dfvary), square = FALSE)
   object <- new(Class = "ADEgS", ADEglist = listGraph, positions = posmatrix, add = matrix(0, ncol = ncol(dfvary), nrow = ncol(dfvary)), Call = as.call(thecall))
   return(object)
 }

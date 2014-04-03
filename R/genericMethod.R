@@ -25,6 +25,6 @@ setGeneric("superpose", function(g1, g2, which, plot = FALSE) {standardGeneric("
 setGeneric("printSuperpose", function(g1, refg, position) {standardGeneric("printSuperpose")})
 setGeneric("insert", function(graphics, oldgraphics, posi = c("bottomleft", "bottomright", "topleft", "topright"), ratio = 0.2, inset = 0.0, plot = TRUE, which, dispatch = FALSE) {standardGeneric("insert")})
 
-setGeneric("cbindADEg", function(g1, g2, ..., plot = TRUE) {standardGeneric("cbindADEg")})
-setGeneric("rbindADEg", function(g1, g2, ..., plot = TRUE) {standardGeneric("rbindADEg")})
+setGeneric("cbindADEg", function(g1, g2, ..., plot = FALSE) {standardGeneric("cbindADEg")})
+setGeneric("rbindADEg", function(g1, g2, ..., plot = FALSE) {standardGeneric("rbindADEg")})
 

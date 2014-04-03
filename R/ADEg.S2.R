@@ -206,8 +206,8 @@ setMethod(
     name_obj <- deparse(substitute(object))
 
     ## background and box
-     if(!inherits(object, "S2.corcircle"))
-       object@trellis.par$panel.background$col <- object@adeg.par$pbackground$col
+    if(!inherits(object, "S2.corcircle"))
+      object@trellis.par$panel.background$col <- object@adeg.par$pbackground$col
     if(!object@adeg.par$pbackground$box)
       object@trellis.par$axis.line$col <- "transparent"
     
@@ -309,7 +309,7 @@ setMethod(
     sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
     update(object, sortparameters[[1]], plot = FALSE)
     ## setting positions
-    positions <- layout2position(matrix(c(2, 4, 1, 3), 2, 2, byrow = TRUE), c(3, 1) / 2, c(1, 3) / 2, TRUE)
+    positions <- layout2position(matrix(c(2, 4, 1, 3), 2, 2, byrow = TRUE), c(3, 1) / 2, c(3, 1) / 2, FALSE)
 
     ## grid computation
     xlimX <- object@g.args$xlim
@@ -370,7 +370,7 @@ setMethod(
     
     yax <- eval(object@data$yax, envir = sys.frame(object@data$frame))
     xax <- eval(object@data$xax, envir = sys.frame(object@data$frame))
-    tmptrellis <- do.call(what = object@lattice.call$graphictype, args = c(formula(dfxy[, yax] ~ dfxy[, xax]), object@lattice.call$arguments,environment()))
+    tmptrellis <- do.call(what = object@lattice.call$graphictype, args = c(formula(dfxy[, yax] ~ dfxy[, xax]), object@lattice.call$arguments, environment()))
     return(tmptrellis)
   })
 

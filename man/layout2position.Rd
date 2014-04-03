@@ -9,7 +9,7 @@
 }
 
 \usage{
-layout2position(mat, widths = rep(1, NCOL(mat)), heights = rep(1, NROW(mat)), ng)
+layout2position(mat, widths = rep(1, NCOL(mat)), heights = rep(1, NROW(mat)), ng, square = FALSE)
 }
 
 \arguments{
@@ -22,6 +22,8 @@ layout2position(mat, widths = rep(1, NCOL(mat)), heights = rep(1, NROW(mat)), ng
   \item{heights}{a vector of relative values for the rows' heights on the device. Their sum must be equal to the number of rows.}
     
   \item{ng}{a value for the number of positions needed (i.e. the number of graphics to plot)}
+  
+  \item{square}{a logical indicating if the graphics is an isometric plot}
 }
 
 \value{

@@ -95,9 +95,9 @@ g6 <- s.class(pca1$li, jv73$fac.riv, starSize = 0, ellipseSize = 0, chullSize = 
   ppolygons.alpha = 0.4, col = rainbow(12), ppoints.cex = 0)
 g5 + g6
 
-\dontrun{g7 <- s.label(pca1$li, plabels.optim = TRUE, facets = jv73$fac.riv)
+\dontrun{g7 <- s.label(pca1$li, plabels.optim = TRUE, facets = jv73$fac.riv, plot = FALSE)
 g8 <- s.class(pca1$li, jv73$fac.riv, facets = jv73$fac.riv, starSize = 0, chullSize = 1, 
-  ellipseSize = 0, ppolygons.alpha = 0.4, col = rainbow(12), ppoints.cex = 0)
+  ellipseSize = 0, ppolygons.alpha = 0.4, col = rainbow(12), ppoints.cex = 0, plot = FALSE)
 g9 <- superpose(g7, g8, plot = TRUE)
 }
 }

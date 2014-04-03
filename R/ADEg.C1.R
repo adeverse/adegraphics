@@ -199,7 +199,7 @@ setMethod(
     if(grid$draw & (grid$text$cex > 0)) { 
       text.pos <- .setposition(grid$text$pos)
       textgrid <- textGrob(label = paste("d =", object@s.misc$backgrid$d), x = text.pos$posi[1], y = text.pos$posi[2], gp = gpar(cex = grid$text$cex, col = grid$text$col), name = "gridtext")
-      grid.rect(x = text.pos$posi[1], y = text.pos$posi[2], width = grobWidth(textgrid), height = grobHeight(textgrid), gp = gpar(fill= object@adeg.par$pbackground$col, alpha = 0.8, col = "transparent"))
+      grid.rect(x = text.pos$posi[1], y = text.pos$posi[2], width = grobWidth(textgrid), height = grobHeight(textgrid), gp = gpar(fill = object@adeg.par$pbackground$col, alpha = 0.8, col = "transparent"))
       grid.draw(textgrid)
     }
     

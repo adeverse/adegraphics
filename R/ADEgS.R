@@ -49,6 +49,13 @@ setMethod(
           superpose[[i]] <- c(superpose[[i]], superpose[[j]])
         }}}
     .Object@add <- add
+    
+    ## check names of the list ADEglist
+    if(is.null(names(ADEglist)))
+      names(ADEglist) <- paste("g", lapply(1:length(ADEglist), function(i) i), sep="")
+    else
+      names(ADEglist) <- make.names(names(ADEglist),unique = TRUE)
+    
     ## assignation
     .Object@ADEglist <- ADEglist
     .Object@positions <- positions
@@ -304,32 +311,17 @@ setMethod(
 setMethod(
   f = "cbindADEg", 
   signature = c("ADEgORADEgSORtrellis", "ADEgORADEgSORtrellis"),
-  definition = function(g1, g2, ..., plot = TRUE) {
+  definition = function(g1, g2, ..., plot = FALSE) {
   	if(try(is.list(...), silent = TRUE) == TRUE)
       glist <- as.list(c(g1, g2, ...))
    
 	  else
 	    glist <- list(g1, g2, ...)
     
-    Posi <- as.null()
     nbg <- length(glist)
-    for(g in 1:nbg) {
-      
-      ## reduce graph size
-      posi <- cbind(0, 0, 1, 1)
-      posi[, 1] <- posi[, 1] / nbg
-      posi[, 3] <- posi[, 3] / nbg
-      
-      ## shift graph
-      if(g != 1) {
-        posi[, 1] <- posi[, 1] + Posi[nrow(Posi), 3]
-        posi[, 3] <- posi[, 3] + Posi[nrow(Posi), 3]
-      }
-      
-      Posi <- rbind(Posi, posi)
-    }
-    
-    obj <- new(Class = "ADEgS", ADEglist = glist, positions = Posi, add = matrix(0, ncol = nbg, nrow = nbg), Call = match.call())
+    obj <- ADEgS(adeglist = glist, layout = c(1, nbg), add = matrix(0, ncol = nbg, nrow = nbg), plot = FALSE)
+    obj@Call <- match.call()
+
     if(plot)
       print(obj)
     invisible(obj)
@@ -339,35 +331,23 @@ setMethod(
 setMethod(
   f = "rbindADEg", 
   signature = c("ADEgORADEgSORtrellis", "ADEgORADEgSORtrellis"),
-  definition = function(g1, g2, ..., plot = TRUE) {
+  definition = function(g1, g2, ..., plot = FALSE) {
   	if(try(is.list(...), silent = TRUE) == TRUE)
       glist <- as.list(c(g1, g2, ...))
 	  else
 	    glist <- list(g1, g2, ...)
     
-    Posi <- as.null()
     nbg <- length(glist)
-    for(g in 1:nbg) {
-      
-      ## reduce graph size
-      posi <- cbind(0, 0, 1, 1)
-      posi[, 2] <- posi[, 2] / nbg
-      posi[, 4] <- posi[, 4] / nbg
-      
-      ## shift graph
-      posi[, 2] <- posi[, 2] + (nbg - g) / nbg
-      posi[, 4] <- posi[, 4] + (nbg - g) / nbg
-      
-      Posi <- rbind(Posi, posi)
-    }
+    obj <- ADEgS(adeglist = glist, layout = c(nbg, 1), add = matrix(0, ncol = nbg, nrow = nbg), plot = FALSE)
+    obj@Call <- match.call()
     
-    obj <- new(Class = "ADEgS", ADEglist = glist, positions = Posi, add = matrix(0, ncol = nbg, nrow = nbg), Call = match.call())
     if(plot)
       print(obj)
     invisible(obj)
   })
 
-##############################################          
+
+##############################################        
 ##                   insertion              ##
 ##############################################
 
@@ -513,11 +493,7 @@ setMethod(
 setMethod(
   f = "print",
   signature = "ADEgS",
-  definition = function(x, newpage = TRUE) {
-    oldpage <- as.numeric(!newpage) 
-    ## reverse newpage. will be defined for all futur call of printADEgS in print
-    ## gettextsize: function based on the text size handling with layout
-    ## we do size adjustment for text and point. Discusion
+  definition = function(x, closeViewport = TRUE, square = NULL) {
     oldtextcex <- trellis.par.get("fontsize")$text
     oldpointcex <- trellis.par.get("fontsize")$points
     oldmarginH <- trellis.par.get("layout.heights")
@@ -525,9 +501,9 @@ setMethod(
     
     trellis.par.set(layout.heights = list(top.padding = .2 + oldmarginH$top.padding, bottom.padding = .2 + oldmarginH$bottom.padding), layout.widths = list(left.padding = .2 + oldmarginW$left.padding, right.padding = .2 + oldmarginW$right.padding))
     on.exit(trellis.par.set(list("fontsize" = list("text" = oldtextcex, "points" = oldpointcex), "layout.widths" = list("left.padding" = oldmarginW$left.padding, "right.padding" = oldmarginW$right.padding), "layout.heights" = list("top.padding" = oldmarginH$top.padding, "bottom.padding" = oldmarginH$bottom.padding))))
-    gettextsize <- function(position) {
-      widG <- position[3] - position[1]
-      heigG <- position[4] - position[2]
+    
+    gettextsize <- function(widG, heigG) {
+      ## Adjust text size to viewport size
       if(widG < 1 / 2 || heigG < 1 / 2)
         return(0.66 / 1.25)
       if(widG == 1 / 2 && heigG == 1 / 2)
@@ -537,46 +513,88 @@ setMethod(
       else return(1 / 1.25)              
     }
     
-    printADEGs <- function(adegobject, oldpage) {
+    getxscale <- function(object) {
+      ## Obtain limits for x
+      if(inherits(object, "ADEg"))
+        object <- gettrellis(object)
+      if(class(object) == "trellis") {
+        res <- object$x.limits
+      } else {
+        res <- c(0, 1)
+      }
+      return(res)
+    }
+    
+    getyscale <- function(object) {
+      ## Obtain limits for y
+      if(inherits(object, "ADEg"))
+        object <- gettrellis(object)
+      if(class(object) == "trellis") {
+        res <- object$y.limits
+      } else {
+        res <- c(0, 1)
+      }
+      return(res)
+    }
+    
+    printADEGs <- function(adegobject, closeViewport, square) {
+      if(closeViewport)
+        grid.newpage()
+      
       positions <- adegobject@positions
       listG <- adegobject@ADEglist
+      
+      ## create the list of viewport and push it
+      square.vpL <- "npc"
+      if(isTRUE(square))
+      	square.vpL <- "snpc"
+      
+      vpL <- do.call("vpList", lapply(1:length(listG), function(i) do.call("viewport", args = list(x = positions[i, 1], y = positions[i, 2], width = positions[i, 3] - positions[i, 1], height = positions[i, 4] - positions[i, 2], just = c(0, 0), name = names(listG)[i], xscale = getxscale(listG[[i]]), yscale = getyscale(listG[[i]]), default.units = square.vpL))))
+      pushViewport(vpL)
+      
+      upViewport(0)
+      width.root <- convertWidth(unit(1, "snpc"), "inches", valueOnly = TRUE)
+      height.root <- convertHeight(unit(1, "snpc"), "inches", valueOnly = TRUE)
+      
       for(i in 1:length(listG)) {
-        ## all graphics one per one
         object <- listG[[i]]
+        seekViewport(names(listG)[i])
+        
+        if(inherits(object, "ADEg"))
+          object <- gettrellis(object)
+        
         if(class(object) == "trellis") {
-          sup <- adegobject@add[, i] ## if one is 1, i-th ADEg is to draw on top of another ADEg object
-          cst <- gettextsize(positions[i, ])
+          square.i <- ifelse(is.null(square), !object$aspect.fill, square)
+            
+          vp <- viewport(x = 0, y = 0, width = 1, height = 1, just = c(0, 0), name = "current", xscale = getxscale(listG[[i]]), yscale = getyscale(listG[[i]]), default.units = ifelse(square.i, "snpc", "npc"))
+          pushViewport(vp)
+
+          width.current <- convertWidth(unit(1, "snpc"), "inches", valueOnly = TRUE)
+          height.current <- convertHeight(unit(1, "snpc"), "inches", valueOnly = TRUE)
+          ratio.width <- width.current / width.root
+          ratio.height <- height.current / height.root
+          
+          cst <- gettextsize(ratio.width, ratio.height)
+          sup <- adegobject@add[, i]
           trellis.par.set(list("fontsize" = list("text" = oldtextcex * cst, "points" = oldpointcex * cst)))
-          if(any(sup == 1)) {
-            printSuperpose(g1 = object, refg = listG[[which(adegobject@add[, i] == 1)[1]]], position = positions[i, ])
-          } else {
-            print(object, position = positions[i, ], newpage = ! oldpage)
-          }
-          oldpage <- oldpage + 1
-        } else if(inherits(object, "ADEg")) {
-          sup <- adegobject@add[, i] ## if one is 1, i-th ADEg is to draw on top of another ADEg object
-          cst <- gettextsize(positions[i, ])
-          trellis.par.set(list("fontsize" = list("text" = oldtextcex * cst, "points" = oldpointcex * cst)))
-          if(any(sup == 1)) {
-            ## finding the master graphs => the lowest layer, 
-            ## call to printSuperpose, i-th graph is modified to match the master graph
-            ## here we assume than printSuperpose, which is not exported will only be call after an other plot, so by default, in printSuperpose, we have : print(trellis, newpage = FALSE)                                        
-            printSuperpose(g1 = object, refg = listG[[which(adegobject@add[, i] == 1)[1]]], position = positions[i, ])
-          }
-          else { ## juxtaposition                  
-            print(gettrellis(object), posi = positions[i, ], newpage = !oldpage)
-          }
-          oldpage <- oldpage + 1
-        } ## end if inherits ADEg
-        else if(inherits(object, "ADEgS")) {
-          object@positions <- .updateADEgSposition(object@positions, positions[i, ]) ## maj normalement nest pas repercutee au niveau superieur.
-          oldpage <- printADEGs(object, oldpage)
+          if(any(sup == 1))
+            printSuperpose(g1 = object, refg = listG[[which(adegobject@add[, i] == 1)[1]]])
+          else
+            print(object, newpage = FALSE)
+          
+          popViewport()
+          
+        } else if(inherits(object, "ADEgS")) {
+          names(object) <- paste(names(listG)[i], names(object), sep = ".")
+          printADEGs(object, closeViewport = FALSE, square = square)
+        } else {
+          stop(paste("Not implemented for class:", class(object), sep = " "))
         }
-        else print(paste("unidentified class for print ADEgS", class(object), sep = " "))
+        popViewport()
       }
-      invisible(oldpage)
     }
-    printADEGs(x, oldpage)
+    
+    printADEGs(x, closeViewport = closeViewport, square = square)
     assign("currentadeg", x, envir = .ADEgEnv)
   })
 
@@ -594,6 +612,7 @@ ADEgS <- function(adeglist, positions, layout, add = NULL, plot = TRUE) {
   }
   if(missing(positions)) 
     positions <- matrix(rep(c(0, 0, 1, 1), length.out = length(adeglist) * 4), byrow = TRUE, ncol = 4)
+
   if(missing(add))
     add <- matrix(0, length(adeglist), length(adeglist))
   

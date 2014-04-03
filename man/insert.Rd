@@ -77,7 +77,7 @@ data(jv73, package = "ade4")
 pca1 <- ade4::dudi.pca(jv73$morpho, scannf = FALSE)
 g5 <- s.value(jv73$xy, pca1$li[, 1:2], porigin.include = FALSE)
 g6 <- s.corcircle(pca1$co, pbackground.box = FALSE)
-g7 <- insert(g6, g5, posi = c(0.55, 0.4, 0.75, 0.6))
+g7 <- insert(g6, g5, posi = c(0.3, 0.4, 0.5, 0.6))
 }
 
 \keyword{hplot}

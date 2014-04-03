@@ -14,8 +14,8 @@
 }
 
 \usage{
-cbindADEg(g1, g2, ..., plot = TRUE)
-rbindADEg(g1, g2, ..., plot = TRUE)
+cbindADEg(g1, g2, ..., plot = FALSE)
+rbindADEg(g1, g2, ..., plot = FALSE)
 }
 
 \arguments{
@@ -44,7 +44,7 @@ pca1 <- ade4::dudi.pca(jv73$morpho, scannf = FALSE)
 g1 <- s.label(pca1$li, plabels.optim = TRUE, plot = FALSE)
 g2 <- s.class(pca1$li, jv73$fac.riv, starSize = 0, ellipseSize = 0, chullSize = 1, 
   ppolygons.alpha = 0.4, col = rainbow(12), ppoints.cex = 0, plot = FALSE)
-g3 <- rbindADEg(cbindADEg(g1, g2, plot = FALSE), superpose(g1, g2, plot = FALSE))
+g3 <- rbindADEg(cbindADEg(g1, g2), superpose(g1, g2), plot = TRUE)
 }
 
 \keyword{hplot}

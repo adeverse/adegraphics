@@ -378,7 +378,7 @@ s.label(pca1$li, add = TRUE)
 The functions \texttt{cbindADEg} and \texttt{rbindADEg} allows to combine several graphical objects (\texttt{ADEg}, \texttt{ADEgS} or \texttt{trellis}) by rows or by columns. The new created \texttt{ADEgS} contains the list of the reduced graphs:
 
 <<label=plot8b, include = FALSE, fig = TRUE, echo = TRUE, keep.source = TRUE, width = 8, height = 8>>=
-rbindADEg(cbindADEg(g2, g3, plot = FALSE), cbindADEg(g5, g6, plot = FALSE))
+rbindADEg(cbindADEg(g2, g3), cbindADEg(g5, g6), plot = TRUE)
 @
 \begin{figure}[H]
 \centering
@@ -528,7 +528,7 @@ s.label(pca2$li)
 \end{figure}
 
 The sites are located on 12 rivers (\texttt{jv73\$fac.riv}) and it is possible to represent the PCA scores for each river using the \texttt{facets} argument:
-<<label=plot18, include = FALSE, fig = TRUE, echo = TRUE, keep.source = TRUE, width = 6, height = 8>>=
+<<label=plot18, include = FALSE, fig = TRUE, echo = TRUE, keep.source = TRUE, width = 8, height = 8>>=
 g8 <- s.label(pca2$li, facets = jv73$fac.riv)
 length(g8)
 names(g8)
@@ -536,19 +536,19 @@ names(g8)
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{fig-plot18.pdf}
+\includegraphics[width=1\textwidth]{fig-plot18.pdf}
 \end{figure}
 
 
 The \texttt{ADEgS} returned object contains the 12 plots. It is then possible to focus on a given river (e.g., the Doubs river) by considering only a subplot (e.g., type \texttt{g8\$Doubs}). The \texttt{facets} functionality is very general and available for the majority of \texttt{adegraphics} functions. For instance, with the \texttt{s.class} function:
 
-<<label=plot19, include = FALSE, fig = TRUE, echo = TRUE, keep.source = TRUE, width = 6, height = 8>>=
+<<label=plot19, include = FALSE, fig = TRUE, echo = TRUE, keep.source = TRUE, width = 8, height = 8>>=
 s.class(pca2$li, fac = jv73$fac.riv, col = rainbow(12), facets = jv73$fac.riv)
 @
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{fig-plot19.pdf}
+\includegraphics[width=1\textwidth]{fig-plot19.pdf}
 \end{figure}
 
 \subsubsection{Multiple axes}
@@ -735,12 +735,12 @@ The \texttt{ADEg.S2} objects can also contain spatial information (map stored as
 
 When the \texttt{facets} (see \ref{facets}) argument is used, users can modify the parameter \texttt{samelimits}: if it is \texttt{TRUE}, all graphs have the same limits whereas limits are computed for each subgraph independently when it is \texttt{FALSE}. 
 For example, considering the \texttt{jv73} data set, each subgraph is computed with its own limits and labels are then more scattered:
-<<label=plot25c, fig = TRUE, include = FALSE, echo = TRUE, keep.source = FALSE, width=6, height=8>>=
+<<label=plot25c, fig = TRUE, include = FALSE, echo = TRUE, keep.source = FALSE, width=8, height=8>>=
 s.label(pca2$li, facets = jv73$fac.riv, samelimits = FALSE)
 @
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{fig-plot25c.pdf}
+\includegraphics[width=1\textwidth]{fig-plot25c.pdf}
 \end{figure}
 
 

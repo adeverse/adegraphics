@@ -19,7 +19,7 @@
 \alias{panelbase}
 \alias{panelbase-methods}
 \alias{panelbase,ADEg-method}
-\alias{printSuperpose,ADEgORtrellis,ADEgORtrellis,numeric-method}
+\alias{printSuperpose,ADEgORtrellis,ADEgORtrellis-method}
 \alias{plot,ADEg-method}
 \alias{plot,ADEg,ANY-method}
 \alias{print,ADEg-method}
@@ -97,7 +97,7 @@
     \item{superpose}{\code{signature(g1 = "ADEgORtrellis", g2 = "ADEgORtrellis", which = "ANY", plot = "ANY")}: 
       creates a new \code{ADEgS} object performing a superposition of \code{g2} on \code{g1}.}
       
-    \item{printSuperpose}{\code{signature(g1 = "ADEgORtrellis", refg = "ADEgORtrellis", position = "numeric")}: 
+    \item{printSuperpose}{\code{signature(g1 = "ADEgORtrellis", refg = "ADEgORtrellis")}: 
       internal method, not for users.}
       
     \item{cbindADEg}{\code{signature(g1 = "ADEgORADEgS", g2 = "ADEgORADEgS")}:

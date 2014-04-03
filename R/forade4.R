@@ -604,7 +604,7 @@ repList <- function(x, times) {
   g4 <- do.call("s.corcircle",c(list(dfxy = substitute(x$as), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
   
   ## ADEgS creation
-  lay <- matrix(c(1, 1, 2, 1, 1, 3, 1, 1, 4), 3, 3)  
+  lay <-  matrix(c(rep(0,4), 2, 2, rep(1,4),2,2,rep(1,4), 3,3,rep(1,4), 3,3, rep(1,4), 4,4,rep(0,4), 4,4), 6, 6) 
   object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4), positions = layout2position(lay), add = matrix(0, ncol = 4, nrow = 4), Call = match.call())
   names(object) <- graphsnames
   if(plot)

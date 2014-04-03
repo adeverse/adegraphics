@@ -159,7 +159,7 @@
 ## Get positions matrix for ADEgs according  a given layout
 ## strongly inspired by the layout function
 ## ng: number of positions to get
-layout2position <- function(mat, widths = rep(1, NCOL(mat)), heights = rep(1, NROW(mat)), ng) {
+layout2position <- function(mat, widths = rep(1, NCOL(mat)), heights = rep(1, NROW(mat)), ng, square = FALSE) {
   if(is.vector(mat)) {
     if(missing(ng)) ng <- mat[1] * mat[2]
     mat <- matrix(c(1:ng, rep(0, length.out = ((mat[1] * mat[2]) - ng))), nrow = mat[1], byrow = TRUE)
@@ -173,26 +173,27 @@ layout2position <- function(mat, widths = rep(1, NCOL(mat)), heights = rep(1, NR
   nbgraph <- max(mat)
   ## get xi position and yi position
   xi <- c(0)
-  yi <- c(1)
+  yi <- c(0)
   ## here, width given such as proportional colums.
   ## so the sum(width)/length(widths) == 1
   ## more units to take in account"
-  wi <- widths / length(widths)
-  hi <- heights / length(heights)
-  ## 18/11/12: signif added to avoid inequalities due to approximation (ex: 1/3)
-  if(signif(sum(wi)) != 1)
-    stop("wrong widths given")
-  if(signif(sum(hi)) != 1)
-    stop("wrong heights given")
+  if(square == TRUE) {
+    wi <- widths / max(length(widths), length(heights))
+  	hi <- heights / max(length(widths), length(heights))
+  } else {    
+  	wi <- widths / length(widths)
+  	hi <- heights / length(heights)
+  }
   
   ## layout from left to right, up to bottom 
   for(i in 1:length(wi))
     xi <- c(xi, xi[i] + wi[i])
   for(i in 1:length(hi))
-    yi <- c(yi, yi[i] - hi[i])
+    yi <- c(yi, yi[i] + hi[i])
   
+  yi <- rev(yi)
   pos <- c()
-  for(i in 1:nbgraph) { ## for each graph, get the positions as x0,y0, x1, y1
+  for(i in 1:nbgraph) { ## for each graph, get the positions as x0, y0, x1, y1
     indx <- which(mat == i, arr.ind = TRUE)
     if(length(indx) == 0) { ## just in case
       warning(paste("in layout2position, a graph position is missing, no graph", i, "defined", sep = " "), call. = FALSE)
