@@ -188,7 +188,6 @@ multi.variables.S2 <- function(thecall, arg.vary) {
 
 multi.score.C1 <- function(thecall) {
   ## function to plot ADEgS when an s1d.* function is called and score is a data.frame with multiple columns
-  
   listGraph <- list()
   thenewcall <- thecall
  
@@ -197,19 +196,31 @@ multi.score.C1 <- function(thecall) {
   thenewcall$plot <- FALSE
 
   ## evaluate some arguments in the correct frame
-  score <- eval(thecall$score, envir = sys.frame(sys.nframe() + thenewcall$pos + 2))
-  name.score <- thecall$score
+  if(thenewcall[[1]] != "s1d.interval") {
+    score <- eval(thecall$score, envir = sys.frame(sys.nframe() + thenewcall$pos + 2))
+    name.score <- thecall$score
+  } else {
+    score <- eval(thecall$score1, envir = sys.frame(sys.nframe() + thenewcall$pos + 2))
+    name.score <- thecall$score1
+  }
   nc <- ncol(score)
+ 
   ## create ADEg plots
   for(i in 1:nc) {
-    thenewcall$score <- call("[", thecall$score, substitute(1:nrow(name.score)), i)
     thenewcall$psub.text <- colnames(score)[i]
     ## specific arguments for the different functions
+    if(thenewcall[[1]] != "s1d.interval") {
+      thenewcall$score <- call("[", thecall$score, substitute(1:nrow(name.score)), i)
+   } else {
+      thenewcall$score1 <- call("[", thecall$score1, substitute(1:nrow(name.score)), i)
+      thenewcall$score2 <- call("[", thecall$score2, substitute(1:nrow(name.score)), i)
+    }
+
     if(thenewcall[[1]] == "s1d.barchart") {
       if(is.null(thenewcall$labels))
         thenewcall$labels <- call("rownames", thecall$score)
     }
-    
+ 
     listGraph <- c(listGraph, do.call(as.character(thenewcall[[1]]), thenewcall[-1]))
   }
 
@@ -240,7 +251,14 @@ multi.facets.C1 <- function(thecall, adepar, samelimits = TRUE) {
   thenewcall$facets <- NULL
   
   ## evaluate some arguments in the correct frame
-  score <- eval(thecall$score, envir = sys.frame(sys.nframe() + thenewcall$pos + 2))
+  if(thenewcall[[1]] != "s1d.interval") {
+    score <- eval(thecall$score, envir = sys.frame(sys.nframe() + thenewcall$pos + 2))
+  } else {
+    score1 <- eval(thecall$score1, envir = sys.frame(sys.nframe() + thenewcall$pos + 2))
+    score2 <- eval(thecall$score2, envir = sys.frame(sys.nframe() + thenewcall$pos + 2))
+    score <- c(score1, score2)
+  }
+  
   facets <- factor(eval(thecall$facets, envir = sys.frame(sys.nframe() + thenewcall$pos + 2)))
   
   ## same limits for all graphics
@@ -257,10 +275,20 @@ multi.facets.C1 <- function(thecall, adepar, samelimits = TRUE) {
   ## creation of the plots (ADEg objects)
   for(i in 1:nlevels(facets)) {
     thenewcall$psub.text <- levels(facets)[i]
-    thenewcall$score <- call("[[", call("split", thecall$score, thecall$facets), i)
+    if(thecall[[1]] == "s1d.interval") {
+      thenewcall$score1 <- call("[[", call("split", thecall$score1, thecall$facets), i)
+      thenewcall$score2 <- call("[[", call("split", thecall$score2, thecall$facets), i)
+      thenewcall$at <- call("[[", call("split", thecall$at, thecall$facets), i)
+      } else {
+      thenewcall$score <- call("[[", call("split", thecall$score, thecall$facets), i)
+    }
+    
     
     if(thecall[[1]] == "s1d.barchart" & !is.null(thecall$labels))
       thenewcall$labels <- call("[[", call("split", thecall$labels, thecall$facets), i)
+
+     if(thecall[[1]] == "s1d.dotplot" | thecall[[1]] == "s1d.curve")
+      thenewcall$at <- call("[[", call("split", thecall$at, thecall$facets), i)
      
     if(thecall[[1]] == "s1d.density")
       thenewcall$fac <- call("[[", call("split", thecall$fac, thecall$facets), i)
@@ -286,7 +314,7 @@ multi.facets.C1 <- function(thecall, adepar, samelimits = TRUE) {
 ##
 
 multi.variables.C1 <- function(thecall, arg.vary) {
-  ## function to plot ADEgS when an s1d.* function is called and an argument is multivariable (e.g., z in fac in s1d.density)
+  ## function to plot ADEgS when an s1d.* function is called and an argument is multivariable (e.g., fac in s1d.density)
   ## the name of the varying argument is in name.vary
   
   listGraph <- list()

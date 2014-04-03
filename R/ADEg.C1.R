@@ -59,10 +59,12 @@ setMethod(
     }
 
     origin <- object@adeg.par$porigin
+    
     lim <- .setlimits1D(minX, maxX, origin = origin$origin[1], includeOr = origin$include)
     
     ## compute grid size
     tmp <- pretty(lim, n = object@adeg.par$pgrid$nint)
+
     if(!origin$include)
       origin$origin[1] <- tmp[1]
     
@@ -255,11 +257,17 @@ setMethod(
       score <- eval(object@data$score, envir = sys.frame(object@data$frame))
     
     score <- as.matrix(score)[, 1]  ## to manage 'score' when it is a data.frame with only one column
+
+    xdata <- rep(1, length(score))
+    if(inherits(object, "C1.barchart")){
+        xdata <- 1:length(score)
+    } else if(inherits(object, "C1.dotplot") | inherits(object, "C1.curve") | inherits(object, "C1.interval")){
+        if(object@data$storeData)
+            xdata <- object@data$at
+        else
+            xdata <- eval(object@data$at, envir = sys.frame(object@data$frame))
+    }
     
-    if(inherits(object, "C1.barchart"))
-      xdata <- 1:length(score)
-    else
-      xdata <- rep(1, length(score))
     fml <- as.formula(score ~ xdata)
     
     tmptrellis <- do.call(what = object@lattice.call$graphictype, args = c(fml, object@lattice.call$arguments, environment()))
