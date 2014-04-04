@@ -52,8 +52,7 @@ setMethod(
       logos <- eval(object@data$logos, envir = sys.frame(object@data$frame))
     
     for(i in 1:length(logos)) {
-      grid.draw(rasterGrob(logos[[i]], x =x[i], y = y[i], height = unit(0.1, "npc") * object@adeg.par$ppoints$cex, default.units = "native"))
-      
+      grid.draw(rasterGrob(logos[[i]], x = x[i], y = y[i], height = unit(0.1, "npc") * object@adeg.par$ppoints$cex, default.units = "native"))
     }
   })
 

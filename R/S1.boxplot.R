@@ -40,8 +40,6 @@ setMethod(
       adegtot$plabels$orientation <- 0
     else if(!adegtot$p1d$horizontal & is.null(object@adeg.par$plabels$orientation))
       adegtot$plabels$orientation <- 90
-    if(is.null(object@adeg.par$ppolygons$col))
-      adegtot$ppolygons$col <- "white"
 
     if(!is.null(object@g.args$col))
       if(is.logical(object@g.args$col)) {

@@ -49,7 +49,7 @@
       
       ppoints = list(alpha = 1, cex = 1, col = "black", pch = 20, fill = "black"),
       
-      ppolygons = list(border = "black", col = "transparent", lty = 1, lwd = 1, alpha = 0.4),
+      ppolygons = list(border = "black", col = "grey", lty = 1, lwd = 1, alpha = 0.4),
       
       pSp = list(col = "black", border = 1, lwd = 1, lty = 1, alpha = 0.8),
       
