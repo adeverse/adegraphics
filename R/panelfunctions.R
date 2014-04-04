@@ -251,3 +251,22 @@ adeg.panel.values <- function(x, y, z, method, symbol, ppoints, breaks, centerpa
     panel.points(x = xnull, y = ynull, pch = centerpar$pch, col = centerpar$col, cex = centerpar$cex)
   return(cstnormal) ## renvoye a fonction panel si necessaire pour ajouter dans la legende. a stoker dans s.misc$maxvalue
 }
+
+
+## from http://rwiki.sciviews.org/doku.php?id=tips:graphics-grid:displaybitmap
+## used in s.logo (rasterGrob) to handle pixmap objects
+
+as.raster.pixmapRGB <- function(x, ...) {
+  nr <- nrow(x@red)
+  r <- rgb((x@red), (x@green), (x@blue))
+  dim(r) <- x@size
+  r
+}
+
+
+as.raster.pixmapGrey <- function(x, ...) {
+  nr <- nrow(x@grey)
+  r <- x@grey
+  dim(r) <- x@size
+  r
+}

@@ -17,6 +17,8 @@ export(
   adeg.panel.Spatial,
   adeg.panel.values,
   layout2position,
+  as.raster.pixmapRGB, 	 
+  as.raster.pixmapGrey,
   changelatticetheme,
   ADEgS,
   s.label,
