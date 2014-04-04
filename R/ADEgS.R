@@ -560,12 +560,13 @@ setMethod(
         object <- listG[[i]]
         seekViewport(names(listG)[i])
         
-        if(inherits(object, "ADEg"))
-          object <- gettrellis(object)
-        
-        if(class(object) == "trellis") {
-          square.i <- ifelse(is.null(square), !object$aspect.fill, square)
-            
+        if(inherits(object, "ADEg") | class(object) == "trellis") {
+          if(inherits(object, "ADEg"))
+            trobject <- gettrellis(object)
+          else
+            trobject <- object
+          
+          square.i <- ifelse(is.null(square), !trobject$aspect.fill, square)
           vp <- viewport(x = 0, y = 0, width = 1, height = 1, just = c(0, 0), name = "current", xscale = getxscale(listG[[i]]), yscale = getyscale(listG[[i]]), default.units = ifelse(square.i, "snpc", "npc"))
           pushViewport(vp)
 

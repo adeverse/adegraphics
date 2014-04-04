@@ -66,11 +66,16 @@ g2 <- s1d.barchart(score = dd1$eig, plot = FALSE,
   p1d = list(horizontal = FALSE), psub = list(position = "topright", text = "Eigenvalues"), 
   pgrid = list(draw = FALSE), pbackground = list(box = TRUE), xlim = c(0.5, 9.5))
 g1
-g3 <- insert(g2)
+g3 <- insert(g2, plot = FALSE)
 
 mat <- g3@positions
 mat[2, ] <- c(0.8, 0, 1, 0.2)
-update(g3, positions = mat)
+update(g3, positions = mat, plot = FALSE)
+print(g3) ## square == NULL
+print(g3, square = TRUE)
+print(g3, square = FALSE)
+
+
 g4 <- insert(g2, g1, posi = "topleft")
 
 data(jv73, package = "ade4")

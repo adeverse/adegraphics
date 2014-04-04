@@ -9,7 +9,8 @@
 }
 
 \usage{
-layout2position(mat, widths = rep(1, NCOL(mat)), heights = rep(1, NROW(mat)), ng, square = FALSE)
+layout2position(mat, widths = rep(1, NCOL(mat)), heights = rep(1, NROW(mat)), ng, 
+square = FALSE)
 }
 
 \arguments{
