@@ -46,7 +46,7 @@
     }}
     
     \item{\code{stats}}{a list of internal preliminary calculations. 
-      The specific slot for \code{C1.gauss} objects is: \itemize{
+      The specific slots for \code{C1.gauss} objects are: \itemize{
       \item{\code{means}: the weighted mean calculated for each \code{fac} value.}
       \item{\code{var}: the weighted variance calculated for each \code{fac} value.}
       \item{\code{gausscurves}: the density gauss curve calculated for each \code{fac} value.}
@@ -61,7 +61,8 @@
 \section{Extends}{
   Class \code{\linkS4class{ADEg.C1}}, directly.\cr
   Class \code{\linkS4class{ADEg}}, by class \code{ADEg.C1}, distance 2.\cr
-  Class \code{\linkS4class{ADEgORtrellis}}, by class \code{ADEg.C1}, distance 3.
+  Class \code{\linkS4class{ADEgORtrellis}}, by class \code{ADEg.C1}, distance 3.\cr
+  Class \code{\linkS4class{ADEgORADEgSORtrellis}}, by class \code{ADEg.C1}, distance 3.
 }
 
 \section{Methods}{

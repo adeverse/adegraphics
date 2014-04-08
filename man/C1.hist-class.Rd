@@ -1,28 +1,27 @@
-\name{C1.density-class}
+\name{C1.hist-class}
 \docType{class}
 
-\alias{C1.density}
-\alias{C1.density-class}
-\alias{prepare,C1.density-method}
-\alias{panel,C1.density-method}
+\alias{C1.hist}
+\alias{C1.hist-class}
+\alias{prepare,C1.hist-method}
+\alias{panel,C1.hist-method}
 
-\title{Class \code{C1.density}}
+\title{Class \code{C1.hist}}
 
 \description{
-  A class for the creation and display of a numeric score using density curves.
+  A class for the creation and display of a numeric score using a histogram.
 }
 
 \section{Objects from the Class}{
-  \code{C1.density} objects can be created by calls of the form \code{new("C1.density", ...)}.
+  \code{C1.hist} objects can be created by calls of the form \code{new("C1.hist", ...)}.
   
-  The regular usage in this package is to use the \code{s1d.density} function.
+  The regular usage in this package is to use the \code{s1d.hist} function.
 }
 
 \section{Slots}{
   \describe{
     \item{\code{data}}{a list containing data or data's name. \itemize{
-      \item{\code{score}: the displayed values in the form of a numeric vector, a name or a matching call.}
-      \item{\code{fac}: a factor for \code{score} to split in the form of a vector, a factor, a name or a matching call.}
+      \item{\code{score}: the displayed values in the form of a vector, a factor, a name or a matching call.}
       \item{\code{frame}: a positive or null integer. It is the number of the frame containing the data (used 
         with \code{sys.frame(..., env = data$frame)}). Only if the data are not stored (i.e. \code{data$storeData = FALSE}).}
       \item{\code{storeData}: a logical indicating if the data should be stored in the returned object. 
@@ -36,21 +35,20 @@
       given by \code{adegpar()} function.}
       
     \item{\code{lattice.call}}{a list to create the \code{trellis} object.}
-
+    
     \item{\code{g.args}}{a list containing some method parameters linked with the created object of \code{ADEg.C1} class.
-      The specific slots for \code{C1.density} objects are: \itemize{
-      \item{\code{kernel}, \code{bandwidth} and \code{gridsize}: passed in parameters in \code{bkde} function of the 
-        \code{KernSmooth} package.}
-      \item{\code{fill}: a logical to yield the polygons density curves filled.}
-      \item{\code{col}: a logical, a color or a colors vector to color labels, rugs, lines and polygons.}
-    }}
+      The specific slots for \code{C1.hist} objects are: \itemize{
+      \item{\code{breaks}: a vector of values to split \code{score}. If \code{NULL}, \code{pretty(score, nclass)} is used.}
+      \item{\code{nclass}: an integer for the number of desired intervals, ignored if \code{breaks} is not missing.}
+      \item{\code{type}: a value among \code{count}, \code{density}, \code{percent} to indicate the unit of the cell height.}
+     }}
     
-    \item{\code{stats}}{a list of internal preliminary calculations. 
-      The specific slot for \code{C1.density} objects is: \itemize{
-      \item{\code{densit}: the values of density curve calculated for each factor in \code{fac} computes with 
-        the \code{bkde} function of the \code{KernSmooth} package.}
+    \item{\code{stats}}{a list of internal preliminary calculations.
+      The specific slots for \code{C1.hist} objects are: \itemize{
+        \item{\code{heights}: the cell height.}
+        \item{\code{breaks}: the cell boundaries.}
     }}
-    
+
     \item{\code{s.misc}}{a list of some others internal parameters}
     
     \item{\code{Call}}{an object of class \code{call}}
@@ -66,14 +64,14 @@
 
 \section{Methods}{
   The methods of the father classes \code{"ADEg.C1"} and \code{"ADEg"} can be used by inheritance.
-  The specific methods for \code{C1.density} are: 
+  The specific methods for \code{C1.hist} are: 
   \describe{
-    \item{prepare}{\code{signature(object = "C1.density")}: 
-      calls the parent method (\code{prepare} for \code{ADEg.C1}), modifies some graphical parameters used by default and 
-      calculates the density curves according to the numeric score and the values' categories.}
+    \item{prepare}{\code{signature(object = "C1.hist")}: 
+      calls the parent method (\code{prepare} for \code{ADEg.C1}), modifies some graphical parameters used by default 
+      and calculates the boundaries and the height of cells.}
       
-    \item{panel}{\code{signature(object = "C1.density")}: 
-      draws density curves}
+    \item{panel}{\code{signature(object = "C1.hist")}: 
+      draws rectangles.}
   }
 }
 
@@ -83,11 +81,11 @@
 \seealso{
   \code{\linkS4class{ADEg}}    
   \code{\linkS4class{ADEg.C1}}
-  \code{\link{s1d.density}}
+  \code{\link{s1d.hist}}
 }
 
 \examples{
-showClass("C1.density")
+showClass("C1.hist")
 }
 
 \keyword{classes}

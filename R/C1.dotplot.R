@@ -17,7 +17,6 @@ setMethod(
   })
 
 
-
 setMethod(
   f = "prepare",
   signature = "C1.dotplot",
@@ -41,52 +40,48 @@ setMethod(
     callNextMethod() ## prepare graph
     
     if(object@adeg.par$p1d$horizontal && is.null(object@g.args$ylim))
-        object@g.args$ylim <- range(x.at) + c(-1, 1) * diff(range(x.at))/10
+      object@g.args$ylim <- range(x.at) + c(-1, 1) * diff(range(x.at)) / 10
     if(!object@adeg.par$p1d$horizontal && is.null(object@g.args$xlim))
-        object@g.args$xlim <- range(x.at) + c(-1, 1) * diff(range(x.at))/10
+      object@g.args$xlim <- range(x.at) + c(-1, 1) * diff(range(x.at)) / 10
     
     assign(nameobj, object, envir = parent.frame())
   })
 
 
 setMethod(
-    f = "panel",
-    signature = "C1.dotplot",
-    definition = function(object, x, y) {
-        ## Drawing dotchart
-        ## x is the index
-        ## y is the score
-        
-        ## get some parameters    
-        pscore <- object@adeg.par$p1d
-        ppoints <- lapply(object@adeg.par$ppoints, FUN = function(x) {rep(x, length.out = length(x))})
-        plines <- lapply(object@adeg.par$plines, FUN = function(x) {rep(x, length.out = length(x))})
-        lims <- current.panel.limits(unit = "native")
-        
-        ## reorder the values
-        y <- y[order(x)]
-        x <- sort(x)
-
-        ## Starts the display
-        ## depends on the parametres horizontal
-        ## rug.draw and reverse are always considered as FALSE
-        
-        if(pscore$horizontal) {
-          x.tmp <- y
-          y.tmp <- x
-          panel.segments(object@adeg.par$porigin$origin[1],y.tmp,x.tmp, y.tmp, lwd = plines$lwd,
-                         lty = plines$lty, col = plines$col)
-        } else {
-            x.tmp <- x
-            y.tmp <- y
-            panel.segments(x.tmp, object@adeg.par$porigin$origin[1], x.tmp, y.tmp, lwd = plines$lwd,
-                           lty = plines$lty, col = plines$col)
-        }
-         
-        panel.dotplot(x = x.tmp, y = y.tmp, horizontal = pscore$horizontal, pch = ppoints$pch, cex = ppoints$cex,
-                      col = ppoints$col, alpha = ppoints$alpha, col.line = 'transparent')
-        
-    })
+  f = "panel",
+  signature = "C1.dotplot",
+  definition = function(object, x, y) {
+    ## Drawing dotchart
+    ## x is the index
+    ## y is the score
+    
+    ## get some parameters    
+    pscore <- object@adeg.par$p1d
+    ppoints <- lapply(object@adeg.par$ppoints, FUN = function(x) {rep(x, length.out = length(x))})
+    plines <- lapply(object@adeg.par$plines, FUN = function(x) {rep(x, length.out = length(x))})
+    lims <- current.panel.limits(unit = "native")
+    
+    ## reorder the values
+    y <- y[order(x)]
+    x <- sort(x)
+    
+    ## Starts the display
+    ## depends on the parametres horizontal
+    ## rug.draw and reverse are always considered as FALSE
+    
+    if(pscore$horizontal) {
+      x.tmp <- y
+      y.tmp <- x
+      panel.segments(object@adeg.par$porigin$origin[1], y.tmp, x.tmp, y.tmp, lwd = plines$lwd, lty = plines$lty, col = plines$col)
+    } else {
+      x.tmp <- x
+      y.tmp <- y
+      panel.segments(x.tmp, object@adeg.par$porigin$origin[1], x.tmp, y.tmp, lwd = plines$lwd, lty = plines$lty, col = plines$col)
+    }
+    
+    panel.dotplot(x = x.tmp, y = y.tmp, horizontal = pscore$horizontal, pch = ppoints$pch, cex = ppoints$cex, col = ppoints$col, alpha = ppoints$alpha, col.line = "transparent")
+  })
 
 
 s1d.dotplot <- function(score, at = 1:NROW(score), facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {

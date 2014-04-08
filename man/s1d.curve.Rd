@@ -1,26 +1,23 @@
-\name{s1d.match}
-\alias{s1d.match}
+\name{s1d.curve}
+\alias{s1d.curve}
 
-\title{1-D plot of the matching between two numeric scores}
+\title{1-D plot of a numeric score linked by curves}
 
 \description{
-  This function represents paired scores with evenly spaced labels.
+  This function represents a score using points linked by curves.
 }
 
 \usage{
-s1d.match(score1, score2, labels = 1:NROW(score1), facets =
-  NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos
-  = -1, ...)
+s1d.curve(score, at = 1:NROW(score), facets = NULL, plot = TRUE, 
+  storeData = FALSE, add = FALSE, pos = -1, ...)
 }
 
 \arguments{
-  \item{score1}{a numeric vector (or a data frame) used to produce the plot}
+  \item{score}{a numeric vector (or a data frame) used to produce the plot}
   
-  \item{score2}{a numeric vector used to produce the plot with as many values as values (or rows) in \code{score1}}
+  \item{at}{a numeric vector used as an index}
   
-  \item{labels}{the labels' names drawn for each \code{score1} value}
-  
-  \item{facets}{a factor splitting \code{score1} so that subsets    % facets uniquement sur score1. quid de score2 
+  \item{facets}{a factor splitting \code{score} so that subsets
     of the data are represented on different sub-graphics}
     
   \item{plot}{a logical indicating if the graphics is displayed}
@@ -42,13 +39,13 @@ s1d.match(score1, score2, labels = 1:NROW(score1), facets =
 }
 
 \details{
-  Graphical parameters for rugs are available in \code{plines} of \code{adegpar}.
+  Graphical parameters for lines and points are available in \code{plines} and in \code{ppoints} of \code{adegpar}.
   Some appropriated graphical parameters in \code{p1d} are also available.
 }
 
 \value{
-  An object of class \code{ADEg} (subclass \code{S1.match}) or \code{ADEgS} (if \code{add} is \code{TRUE} and/or 
-  if facets or data frame for \code{score} or data frame for \code{fac} are used).\cr
+  An object of class \code{ADEg} (subclass \code{C1.curve}) or \code{ADEgS} (if \code{add} is \code{TRUE} and/or 
+  if facets or data frame for \code{score} are used).\cr
   The result is displayed if \code{plot} is \code{TRUE}.
 }
 
@@ -56,13 +53,20 @@ s1d.match(score1, score2, labels = 1:NROW(score1), facets =
 }
 
 \seealso{
-  \code{\linkS4class{S1.match}}
-  \code{\linkS4class{ADEg.S1}}
+  \code{\linkS4class{C1.curve}}
+  \code{\linkS4class{ADEg.C1}}
 }
 
 \examples{
-s1d.match(-5:5, 2 * (-5:5))
+data(rpjdl, package = "ade4")
+rpjdl.coa <- ade4::dudi.coa(rpjdl$fau, scannf = FALSE, nf = 4)
+s1d.curve(rpjdl.coa$eig)
+
+set.seed(40)
+score1 <- rnorm(10)
+s1d.curve(score1)
 }
 
 \keyword{aplot}
 \keyword{hplot}
+

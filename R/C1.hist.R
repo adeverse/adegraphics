@@ -38,12 +38,10 @@ setMethod(
     ## object modification before calling inherited method
     object@adeg.par <- adegtot
     callNextMethod() ## prepare graph
-
-    ## compute histogram
     
+    ## compute histogram
     h <- hist(score, breaks = if(is.null(object@g.args$breaks)) object@g.args$nclass else object@g.args$breaks, plot = FALSE)
-    y <- switch(object@g.args$type, count = h$counts, percent = 100 * h$counts/length(score), 
-            density = h$density)
+    y <- switch(object@g.args$type, count = h$counts, percent = 100 * h$counts / length(score), density = h$density)
     object@stats$heights <- y
     object@stats$breaks <- h$breaks
     
@@ -60,9 +58,9 @@ setMethod(
   f = "panel",
   signature = "C1.hist",
   definition = function(object, x, y) {
-      ## Drawing hist
-      ## y is the score
-   
+    ## Drawing hist
+    ## y is the score
+    
     ## get some parameters    
     pscore <- object@adeg.par$p1d
     ppoly <- lapply(object@adeg.par$ppolygons, FUN = function(x) {rep(x, length.out = length(x))})
@@ -73,20 +71,20 @@ setMethod(
     ## depends on the parametres horizontal
     ## reverse and rug.draw are always considered as FALSE
     if(pscore$horizontal) {
-        panel.rect(x = breaks[-length(breaks)], y = 0, height = heights, width = diff(breaks), 
-                   col = ppoly$col, alpha = ppoly$alpha, border = ppoly$border, lty = ppoly$lty, 
-                   lwd = ppoly$lwd, just = c("left", "bottom"))
+      panel.rect(x = breaks[-length(breaks)], y = 0, height = heights, width = diff(breaks), 
+        col = ppoly$col, alpha = ppoly$alpha, border = ppoly$border, lty = ppoly$lty, 
+        lwd = ppoly$lwd, just = c("left", "bottom"))
       
     } else {
       panel.rect(x = 0, y = breaks[-length(breaks)], height = diff(breaks), width = heights, 
-                   col = ppoly$col, alpha = ppoly$alpha, border = ppoly$border, lty = ppoly$lty, 
-                   lwd = ppoly$lwd, just = c("left", "bottom"))
+        col = ppoly$col, alpha = ppoly$alpha, border = ppoly$border, lty = ppoly$lty, 
+        lwd = ppoly$lwd, just = c("left", "bottom"))
     }
-   
   })
 
 
-s1d.hist <- function(score, breaks = NULL, nclass = round(log2(length(score)) + 1), type = c("count", "density", "percent"), facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
+s1d.hist <- function(score, breaks = NULL, nclass = round(log2(length(score)) + 1), type = c("count", "density", "percent"), facets = NULL, plot = TRUE, 
+	storeData = FALSE, add = FALSE, pos = -1, ...) {
   
   ## evaluation of some parameters
   thecall <- .expand.call(match.call())

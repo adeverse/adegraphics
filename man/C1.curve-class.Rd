@@ -1,28 +1,28 @@
-\name{C1.barchart-class}
+\name{C1.curve-class}
 \docType{class}
 
-\alias{C1.barchart}
-\alias{C1.barchart-class}
-\alias{prepare,C1.barchart-method}
-\alias{panel,C1.barchart-method}
+\alias{C1.curve}
+\alias{C1.curve-class}
+\alias{prepare,C1.curve-method}
+\alias{panel,C1.curve-method}
 
-\title{Class \code{C1.barchart}}
+\title{Class \code{C1.curve}}
 
 \description{
-  A class for the creation and display of a numeric score using barcharts.
+  A class for the creation and display of a numeric score linked by curves.
 }
 
 \section{Objects from the Class}{
-  \code{C1.barchart} objects can be created by calls of the form \code{new("C1.barchart", ...)}.
+  \code{C1.curve} objects can be created by calls of the form \code{new("C1.curve", ...)}.
   
-  The regular usage in this package is to use the \code{s1d.barchart} function.
+  The regular usage in this package is to use the \code{s1d.curve} function.
 }
 
 \section{Slots}{
   \describe{
     \item{\code{data}}{a list containing data or data's name. \itemize{
       \item{\code{score}: the displayed values in the form of a vector, a factor, a name or a matching call.}
-      \item{\code{labels}: the labels' names drawn on the top of bars.}
+      \item{\code{at}: the index value.}
       \item{\code{frame}: a positive or null integer. It is the number of the frame containing the data (used 
         with \code{sys.frame(..., env = data$frame)}). Only if the data are not stored (i.e. \code{data$storeData = FALSE}).}
       \item{\code{storeData}: a logical indicating if the data should be stored in the returned object. 
@@ -56,13 +56,13 @@
 
 \section{Methods}{
   The methods of the father classes \code{"ADEg.C1"} and \code{"ADEg"} can be used by inheritance.
-  The specific methods for \code{C1.barchart} are: 
+  The specific methods for \code{C1.curve} are: 
   \describe{
-    \item{prepare}{\code{signature(object = "C1.barchart")}: 
+    \item{prepare}{\code{signature(object = "C1.curve")}: 
       calls the parent method (\code{prepare} for \code{ADEg.C1}) and modifies some graphical parameters used by default.}
       
-    \item{panel}{\code{signature(object = "C1.barchart")}: 
-      draws bar charts and labels.}
+    \item{panel}{\code{signature(object = "C1.curve")}: 
+      draws points and curves.}
   }
 }
 
@@ -72,11 +72,11 @@
 \seealso{
   \code{\linkS4class{ADEg}}    
   \code{\linkS4class{ADEg.C1}}
-  \code{\link{s1d.barchart}}
+  \code{\link{s1d.curve}}
 }
 
 \examples{
-showClass("C1.barchart")
+showClass("C1.curve")
 }
 
 \keyword{classes}

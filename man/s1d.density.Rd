@@ -9,11 +9,11 @@
 
 \usage{
 s1d.density(score, fac = gl(1, NROW(score)), kernel = c("normal", "box", 
-"epanech", "biweight", "triweight"),
-  bandwidth = NULL, gridsize = 450, col = TRUE, fill =
-  TRUE, facets = NULL, plot = TRUE, storeData = FALSE,
+  "epanech", "biweight", "triweight"), bandwidth = NULL, gridsize = 450, 
+  col = TRUE, fill = TRUE, facets = NULL, plot = TRUE, storeData = FALSE,
   add = FALSE, pos = -1, ...)
 }
+
 \arguments{
   \item{score}{a numeric vector (or a data frame) used to produce the plot}
   

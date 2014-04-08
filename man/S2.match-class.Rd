@@ -40,7 +40,7 @@
     \item{\code{lattice.call}}{a list to create the \code{trellis} object.}
 
     \item{\code{g.args}}{a list containing some method parameters linked with the created object of \code{ADEg.S2} class.
-      The specific slots for \code{S2.match} objects are: \itemize{
+      The specific slot for \code{S2.match} objects is: \itemize{
         \item{\code{arrows}: a logical to draw arrows.}
     }}
 
@@ -55,7 +55,8 @@
 \section{Extends}{
   Class \code{\linkS4class{ADEg.S2}}, directly.\cr
   Class \code{\linkS4class{ADEg}}, by class \code{ADEg.S2}, distance 2.\cr
-  Class \code{\linkS4class{ADEgORtrellis}}, by class \code{ADEg.S2}, distance 3.
+  Class \code{\linkS4class{ADEgORtrellis}}, by class \code{ADEg.S2}, distance 3.\cr
+  Class \code{\linkS4class{ADEgORADEgSORtrellis}}, by class \code{ADEg.S2}, distance 3.
 }
 
 \section{Methods}{

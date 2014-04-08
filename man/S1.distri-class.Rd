@@ -45,7 +45,7 @@
     }}
     
     \item{\code{stats}}{a list of internal preliminary calculations. 
-      The specific slot for \code{S1.class} objects is: \itemize{
+      The specific slots for \code{S1.class} objects are: \itemize{
       \item{\code{means}: the weighted mean calculated for each distribution.} 
       \item{\code{sds}: the weighted variance calculated for each distribution.}
     }}
@@ -59,7 +59,8 @@
 \section{Extends}{
   Class \code{\linkS4class{ADEg.S1}}, directly.\cr
   Class \code{\linkS4class{ADEg}}, by class \code{ADEg.S1}, distance 2.\cr
-  Class \code{\linkS4class{ADEgORtrellis}}, by class \code{ADEg.S1}, distance 3.
+  Class \code{\linkS4class{ADEgORtrellis}}, by class \code{ADEg.S1}, distance 3.\cr
+  Class \code{\linkS4class{ADEgORADEgSORtrellis}}, by class \code{ADEg.S1}, distance 3.
 }
 
 \section{Methods}{

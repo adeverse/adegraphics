@@ -2,6 +2,8 @@
 
 \alias{ADEgORtrellis}
 \alias{ADEgORtrellis-class}
+\alias{ADEgORADEgSORtrellis}
+\alias{ADEgORADEgSORtrellis-class}
 
 \alias{axis.L}
 \alias{setlatticecall}

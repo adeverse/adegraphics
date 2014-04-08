@@ -59,7 +59,8 @@
   Class \code{\linkS4class{T.value}}, directly.\cr
   Class \code{\linkS4class{ADEg.T}}, by class \code{T.value}, distance 2.\cr
   Class \code{\linkS4class{ADEg}}, by class \code{T.value}, distance 3.\cr
-  Class \code{\linkS4class{ADEgORtrellis}}, by class \code{T.value}, distance 4.
+  Class \code{\linkS4class{ADEgORtrellis}}, by class \code{T.value}, distance 4.\cr
+  Class \code{\linkS4class{ADEgORADEgSORtrellis}}, by class \code{T.value}, distance 4.
 }
 
 \section{Methods}{

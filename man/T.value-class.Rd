@@ -68,7 +68,8 @@
 \section{Extends}{
   Class \code{\linkS4class{ADEg.T}}, directly.\cr
   Class \code{\linkS4class{ADEg}}, by class \code{ADEg.T}, distance 2.\cr
-  Class \code{\linkS4class{ADEgORtrellis}}, by class \code{ADEg.T}, distance 3.
+  Class \code{\linkS4class{ADEgORtrellis}}, by class \code{ADEg.T}, distance 3.\cr
+  Class \code{\linkS4class{ADEgORADEgSORtrellis}}, by class \code{ADEg.T}, distance 3.
 }
 
 \section{Methods}{

@@ -1,7 +1,3 @@
-###########################################################
-##                        s1d.interval                   ##
-###########################################################
-
 setClass(
   Class = "C1.interval",
   contains = "ADEg.C1"
@@ -31,7 +27,7 @@ setMethod(
     oldparamadeg <- adegpar()
     on.exit(adegpar(oldparamadeg))
     adegtot <- adegpar(object@adeg.par)
-
+    
     if(object@data$storeData)
       x.at <- object@data$at
     else
@@ -39,7 +35,7 @@ setMethod(
     
     ## change default for some parameters
     adegtot$p1d$rug$draw <- FALSE
-    if(object@g.args$method == "bars"){
+    if(object@g.args$method == "bars") {
       if(is.null(object@adeg.par$parrows$ends))
         adegtot$parrows$ends <- "both"
       if(is.null(object@adeg.par$parrows$angle))
@@ -49,11 +45,11 @@ setMethod(
     ## object modification before calling inherited method
     object@adeg.par <- adegtot
     callNextMethod() ## prepare graph
-
+    
     if(object@adeg.par$p1d$horizontal && is.null(object@g.args$ylim))
-        object@g.args$ylim <- range(x.at) + c(-1, 1) * diff(range(x.at))/10
+      object@g.args$ylim <- range(x.at) + c(-1, 1) * diff(range(x.at)) / 10
     if(!object@adeg.par$p1d$horizontal && is.null(object@g.args$xlim))
-        object@g.args$xlim <- range(x.at) + c(-1, 1) * diff(range(x.at))/10
+      object@g.args$xlim <- range(x.at) + c(-1, 1) * diff(range(x.at)) / 10
     
     assign(name_obj, object, envir = parent.frame())
   })
@@ -66,58 +62,52 @@ setMethod(
     ## Drawing interval
     ## x is the index
     ## y is the score  
-      
+    
     lims <- current.panel.limits(unit = "native")
-
+    
     pscore <- object@adeg.par$p1d
     plines <- object@adeg.par$plines
     parrows <- object@adeg.par$parrows
     ppoly <- object@adeg.par$ppolygons
-
+    
     nval <- length(y) %/% 2
     score2 <- y[(nval + 1):length(y)]
     score1 <- y[1 : nval]
-
+    
     ## reorder the values
     score1 <- score1[order(x)]
     score2 <- score2[order(x)]
     x <- sort(x)
-
-     ## Starts the display
-     ## depends on the parametres horizontal
-     ## rug.draw and reverse are always considered as FALSE
-        
+    
+    ## Starts the display
+    ## depends on the parametres horizontal
+    ## rug.draw and reverse are always considered as FALSE
+    
     if(pscore$horizontal) {
-      if(object@g.args$method == "area"){
-      panel.polygon(x = c(score1, rev(score2)), y = c(x, rev(x)), border = "transparent",
-                    col = ppoly$col, alpha = ppoly$alpha)
-      panel.lines(x = score1, y = x, col = ppoly$border, lty = ppoly$lty, lwd = ppoly$lwd)
-      panel.lines(x = score2, y = x, col = ppoly$border, lty = ppoly$lty, lwd = ppoly$lwd)
-      } else if(object@g.args$method == "bars"){
+      if(object@g.args$method == "area") {
+        panel.polygon(x = c(score1, rev(score2)), y = c(x, rev(x)), border = "transparent", col = ppoly$col, alpha = ppoly$alpha)
+        panel.lines(x = score1, y = x, col = ppoly$border, lty = ppoly$lty, lwd = ppoly$lwd)
+        panel.lines(x = score2, y = x, col = ppoly$border, lty = ppoly$lty, lwd = ppoly$lwd)
+      } else if(object@g.args$method == "bars") {
         panel.arrows(x0 = score1, y0 = x, x1 = score2, y1 = x, lwd = plines$lwd, col = plines$col, 
-                     lty = plines$lty, angle = parrows$angle, length = parrows$length, ends = parrows$ends)
-        
+          lty = plines$lty, angle = parrows$angle, length = parrows$length, ends = parrows$ends)
       }
       
     } else {
-      if(object@g.args$method == "area"){
-      panel.polygon(x = c(x, rev(x)), y = c(score1, rev(score2)),  border = "transparent",
-                    col = ppoly$col, alpha = ppoly$alpha)
-      panel.lines(x = x, y = score1, col = ppoly$border, lty = ppoly$lty, lwd = ppoly$lwd)
-      panel.lines(x = x, y = score2, col = ppoly$border, lty = ppoly$lty, lwd = ppoly$lwd)
-      } else if(object@g.args$method == "bars"){
+      if(object@g.args$method == "area") {
+        panel.polygon(x = c(x, rev(x)), y = c(score1, rev(score2)),  border = "transparent", col = ppoly$col, alpha = ppoly$alpha)
+        panel.lines(x = x, y = score1, col = ppoly$border, lty = ppoly$lty, lwd = ppoly$lwd)
+        panel.lines(x = x, y = score2, col = ppoly$border, lty = ppoly$lty, lwd = ppoly$lwd)
+      } else if(object@g.args$method == "bars") {
         panel.arrows(x0 = x, y0 = score1, x1 = x, y1 = score2, lwd = plines$lwd, col = plines$col, 
-                     lty = plines$lty, angle = parrows$angle, length = parrows$length, ends = parrows$ends)
-        
+          lty = plines$lty, angle = parrows$angle, length = parrows$length, ends = parrows$ends)
       }
-      }
-
-      
+    }
   })
 
 
-s1d.interval <- function(score1, score2, at = 1:NROW(score1), method = c("bars","area"), facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
-
+s1d.interval <- function(score1, score2, at = 1:NROW(score1), method = c("bars", "area"), facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
+  
   ## evaluation of some parameters
   thecall <- .expand.call(match.call())
   score1 <- eval(thecall$score1, envir = sys.frame(sys.nframe() + pos))
@@ -129,8 +119,7 @@ s1d.interval <- function(score1, score2, at = 1:NROW(score1), method = c("bars",
   
   if((is.data.frame(score1) & NCOL(score1) == 1) | (is.data.frame(score2) & NCOL(score2) == 1)) 
     stop("Not yet implemented for data.frame with only one column, please convert into vector")
-    
-    
+  
   ## parameters sorted
   sortparameters <- .specificpar(...)
   
