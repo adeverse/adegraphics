@@ -98,8 +98,12 @@ Several user functions are available to create a simple graph (stored as an \tex
 
       \hline Function & Class of the returned object & Description \\ \hline      
       \texttt{s1d.barchart} & \texttt{C1.barchart} & 1-D plot of a numeric score by bars\\
+      \texttt{s1d.curve} & \texttt{C1.curve} & 1-D plot of a numeric score linked by curves\\
       \texttt{s1d.density} & \texttt{C1.density} & 1-D plot of a numeric score by density curves\\
+      \texttt{s1d.dotplot} & \texttt{C1.dotplot} & 1-D plot of a numeric score by dots\\
       \texttt{s1d.gauss}  & \texttt{C1.gauss} & 1-D plot of a numeric score by Gaussian curves\\
+      \texttt{s1d.hist} & \texttt{C1.hist} & 1-D plot of a numeric score by bars\\
+      \texttt{s1d.interval} & \texttt{C1.interval} & 1-D plot of the interval between two numeric scores\\
       \hline 
       \texttt{s1d.boxplot} & \texttt{S1.boxplot} & 1-D box plot of a numeric score partitioned in classes\\
       \texttt{s1d.class} & \texttt{S1.class} & 1-D plot of a numeric score partitioned in classes\\
