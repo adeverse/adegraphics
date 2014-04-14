@@ -7,7 +7,7 @@ changelatticetheme <- function(...) {
   else 
     changes <- list(...)
   
-  newtheme <- get("lattice.theme", envir = lattice:::.LatticeEnv)
+  newtheme <- get("lattice.theme", envir = getFromNamespace(".LatticeEnv", ns = "lattice")) 
   adegspecial <- get("adegtheme", envir = .ADEgEnv)
   
   if(length(changes))
