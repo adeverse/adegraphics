@@ -1,7 +1,5 @@
 ###################################################
-## Alice Julien-Laferriere                      ###
-## definition of generic methods                ###
-## TODO: lock binding (cf Genolini S4 )         ###
+##        definition of generic methods         ###
 ###################################################
 
 setGeneric("getparameters", function(object, number) {standardGeneric("getparameters")})

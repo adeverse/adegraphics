@@ -70,7 +70,7 @@
       calls the parent method (\code{prepare} for \code{ADEg.S2}), modifies some graphical parameters used by default and calculates limits.}
       
     \item{panel}{\code{signature(object = "S2.arrow")}: 
-      draws points, arrows and labels .}
+      draws points, arrows and labels.}
   }
 }
 

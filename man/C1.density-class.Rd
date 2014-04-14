@@ -73,7 +73,7 @@
       calculates the density curves according to the numeric score and the values' categories.}
       
     \item{panel}{\code{signature(object = "C1.density")}: 
-      draws density curves}
+      draws density curves.}
   }
 }
 

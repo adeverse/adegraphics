@@ -13,7 +13,7 @@
 }
 
 \section{Objects from the Class}{
-  \code{S1.class} objects can be created by calls of the form \code{new("S1.distri", ...)}.
+  \code{S1.distri} objects can be created by calls of the form \code{new("S1.distri", ...)}.
   
   The regular usage in this package is to use the \code{s1d.distri} function.
 }
@@ -45,7 +45,7 @@
     }}
     
     \item{\code{stats}}{a list of internal preliminary calculations. 
-      The specific slots for \code{S1.class} objects are: \itemize{
+      The specific slots for \code{S1.distri} objects are: \itemize{
       \item{\code{means}: the weighted mean calculated for each distribution.} 
       \item{\code{sds}: the weighted variance calculated for each distribution.}
     }}
@@ -67,10 +67,10 @@
   The methods of the father classes \code{"ADEg.S1"} and \code{"ADEg"} can be used by inheritance.
   The specific methods for \code{S1.distri} are: 
   \describe{
-    \item{prepare}{\code{signature(object = "S1.class")}: 
+    \item{prepare}{\code{signature(object = "S1.distri")}: 
       calls the parent method (\code{prepare} for \code{ADEg.S1}), modifies some graphical parameters used by default and calculates weighted mean and standard deviation.}
     
-    \item{panel}{\code{signature(object = "S1.class")}: 
+    \item{panel}{\code{signature(object = "S1.distri")}: 
       draws mean points and segments with matching labels.}
   }
 }
