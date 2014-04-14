@@ -31,7 +31,7 @@ g14 <- rbindADEg(g8, g3)
 
 data(banque, package = "ade4")
 banque.acm <- ade4::dudi.acm(banque, scann = FALSE, nf = 3)
-g15 <- score.acm(banque.acm, which = which(banque.acm$cr[,1] > 0.2), plot = FALSE)
+g15 <- score(banque.acm, which = which(banque.acm$cr[,1] > 0.2), plot = FALSE)
 g15 <- g15[[1]]
 cbindADEg(g15[[1]], g15[[2]])   ## work on trellis object
 

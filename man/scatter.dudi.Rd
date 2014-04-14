@@ -9,7 +9,7 @@
 }
 
 \usage{
-scatter.dudi(x, xax = 1, yax = 2, permute = FALSE, posieig = "topleft",
+\method{scatter}{dudi}(x, xax = 1, yax = 2, permute = FALSE, posieig = "topleft",
   prop = FALSE, density.plot = ifelse(permute, ncol(x$tab) > 1000, 
   nrow(x$tab) > 1000), plot = TRUE, storeData = FALSE, pos = -1, ...)
 }
@@ -68,11 +68,11 @@ scatter.dudi(x, xax = 1, yax = 2, permute = FALSE, posieig = "topleft",
 \examples{
 data(deug, package = "ade4")
 dd1 <- ade4::dudi.pca(deug$tab, scannf = FALSE, nf = 4)
-g1 <- scatter.dudi(dd1, posieig = "bottomright")
+g1 <- scatter(dd1, posieig = "bottomright")
 
 data(rhone, package = "ade4")
 dd2 <- ade4::dudi.pca(rhone$tab, scannf = FALSE, nf = 4)
-g2 <- scatter.dudi(dd2, row.sub = "Principal component analysis")
+g2 <- scatter(dd2, row.sub = "Principal component analysis")
 }
 
 \keyword{hplot}

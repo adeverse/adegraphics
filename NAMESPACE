@@ -1,10 +1,48 @@
+S3method("kplot","foucart")
+S3method("kplot","mcoa")
+S3method("kplot","mfa")
+S3method("kplot","pta")
+S3method("kplot","sepan")
+S3method("kplot","statis")  
+S3method("plot","acm")
+S3method("plot","betcoi")
+S3method("plot","betrlq")
+S3method("plot","between")
+S3method("plot","coinertia")
+S3method("plot","discrimin")
+S3method("plot","dpcoa")
+S3method("plot","fca")
+S3method("plot","foucart")
+S3method("plot","mcoa")
+S3method("plot","mfa")
+S3method("plot","multispati")
+S3method("plot","niche") 
+S3method("plot","pcaiv")
+S3method("plot","procuste")
+S3method("plot","rlq")
+S3method("plot","pta")
+S3method("plot","sepan")
+S3method("plot","statis")
+S3method("plot","witcoi")
+S3method("plot","within")
+S3method("plot","witrlq")
+S3method("scatter","coa")
+S3method("scatter","dudi")
+S3method("scatter","nipals")
+S3method("scatter","pco")
+S3method("score","acm")
+S3method("score","mix")
+S3method("score","pca")
+S3method("screeplot","dudi")
+
 import(utils)
 import(grDevices)
 import(lattice)
 import(grid)
 import(sp)
 importFrom(graphics, plot)
-importFrom(ade4, covfacwt, covwt, meanfacwt, varfacwt, varwt)
+importFrom(stats, "screeplot")
+importFrom(ade4, covfacwt, covwt, meanfacwt, varfacwt, varwt, scatter, score, kplot)
 importFrom(KernSmooth, bkde2D, bkde)
 importFrom(methods, show)
 importFrom(RColorBrewer, brewer.pal)
@@ -51,43 +89,12 @@ export(
   s1d.interval,
   s1d.match,
   s1d.boxplot,
-  plot.coinertia,
-  plot.foucart,
-  plot.pcaiv,
-  plot.betcoi,
-  plot.betrlq,
-  plot.between,
-  plot.discrimin,
-  plot.within,
-  plot.witcoi,
-  plot.witrlq,
-  plot.dpcoa,
-  plot.mcoa,
-  plot.mfa,
-  plot.multispati,
-  plot.niche, 
-  plot.procuste,
-  plot.rlq,
-  plot.pta,
-  plot.sepan,
-  plot.statis,
-  kplot.foucart,
-  kplot.mcoa,
-  kplot.mfa,
-  kplot.pta,
-  kplot.sepan,
+  kplot,
   kplot.sepan.coa,
-  kplot.statis,
-  screeplot.dudi,
-  scatter.dudi,
-  scatter.coa,
-  scatter.pco,
-  scatter.nipals,
-  plot.acm,
-  plot.fca,
-  score.acm,
-  score.mix,
-  score.pca
+  plot,
+  scatter,
+  score,
+  screeplot
   )
 
 exportMethods(
@@ -104,62 +111,62 @@ exportMethods(
   "add.ADEg",
   "addhist",
   "getcall",
+  "getgraphics",
+  "getlatticecall",
   "getparameters",
   "getpositions",
-  "getgraphics",
   "getstats",
   "gettrellis",
-  "getlatticecall",
-  "plot",
-  "print",
-  "show",
-  "superpose",
-  "printSuperpose", 
   "insert",
-  "update",
-  "zoom",
   "panel",
   "panelbase",
+  "plot",
   "prepare",
-  "setlatticecall"
+  "print",
+  "printSuperpose",
+  "setlatticecall",
+  "show",
+  "superpose",
+  "update",
+  "zoom"
   )
 
 exportClasses(
   "ADEg",
   "ADEgS",
-  "ADEg.S2",
-  "ADEg.S1",
   "ADEg.C1",
+  "ADEg.S1",
+  "ADEg.S2",
   "ADEg.T",
   "ADEg.Tr",
-  "S2.arrow",
-  "S2.class",
-  "S2.distri",
-  "S2.corcircle",
-  "S2.density",
-  "S2.image",
-  "S2.label",
-  "S2.match",
-  "S2.value",
-  "S2.traject",
-  "S2.logo",
-  "T.value",
-  "T.image",
-  "T.cont",
-  "Tr.label",
-  "Tr.match",
-  "Tr.class",
-  "Tr.traject",
-  "S1.label",
-  "S1.class",
-  "S1.match",
-  "S1.boxplot",
-  "S1.distri",
   "C1.barchart",
   "C1.curve",
   "C1.density",
   "C1.dotplot",
   "C1.gauss",
   "C1.hist",
-  "C1.interval"
+  "C1.interval",
+  "S1.boxplot",
+  "S1.class",
+  "S1.distri",
+  "S1.label",
+  "S1.match",
+  "S2.arrow",
+  "S2.class",
+  "S2.corcircle",
+  "S2.density",
+  "S2.distri",
+  "S2.image",
+  "S2.label",
+  "S2.logo",
+  "S2.match",
+  "S2.traject",
+  "S2.value",
+  "T.cont",
+  "T.image",
+  "T.value",
+  "Tr.class",
+  "Tr.label",
+  "Tr.match",
+  "Tr.traject"
   )
