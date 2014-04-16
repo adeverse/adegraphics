@@ -29,7 +29,7 @@ repList <- function(x, times) {
   ## ADEg creation
   object <- do.call("s1d.barchart", c(list(score = substitute(x$eig), pos = pos - 2, plot = FALSE), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args))
   object@Call <- match.call()
-  if(plot) 
+  if(plot)
     print(object)
   invisible(object)  
 }

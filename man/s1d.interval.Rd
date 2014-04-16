@@ -66,8 +66,8 @@ s1d.interval(score1, score2, at = 1:NROW(score1), method = c("bars", "area"),
 set.seed(40)
 sc1 <- rnorm(10)
 sc2 <- rnorm(10)
-s1d.interval(sc1, sc2, type = "bars")
-s1d.interval(sc1, sc2, type = "area")
+s1d.interval(sc1, sc2, method = "bars")
+s1d.interval(sc1, sc2, method = "area")
 }
 
 \keyword{aplot}

@@ -159,7 +159,7 @@ setMethod(
     
     trel1$par.settings$panel.background$col <- "transparent"
     trel1$par.settings$axis.text$alpha <- 0
-    trel1$par.settings$axis.line$alpha <- 0
+    trel1$par.settings$axis.line$col <- "transparent"
     
     names <- c("x.scales", "y.scales", "xlab", "ylab", "main", "sub", "x.between", "y.between", "as.table", "x.limits", "y.limits", "aspect.ratio")            
     for(i in names)
