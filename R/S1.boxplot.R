@@ -200,7 +200,7 @@ setMethod(
   })
 
 
-s1d.boxplot <- function(score, fac = gl(1, NROW(score)), col = NULL, facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ... ) {
+s1d.boxplot <- function(score, fac = gl(1, NROW(score)), col = NULL, facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
 
   ## evaluation of some parameters
   thecall <- .expand.call(match.call())

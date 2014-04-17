@@ -8,8 +8,8 @@
 }
 
 \usage{
-s1d.boxplot(score, fac, col = NULL, facets = NULL, plot = TRUE, storeData = FALSE, 
-  add = FALSE, pos = -1, ...)
+s1d.boxplot(score, fac = gl(1, NROW(score)), col = NULL, facets = NULL, plot = TRUE, 
+  storeData = FALSE, add = FALSE, pos = -1, ...)
 }
 
 \arguments{
