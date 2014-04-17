@@ -122,7 +122,10 @@ setMethod(
       
       ylab <- seq(from = ref[1] + lead * margin, to = ref[2], length.out = nlev + 2)
       ylab <- ylab[-c(1, length(ylab))]
-      bwid <- diff(range(ylab)) / (nlev + 1)
+      if(length(ylab) > 1)
+          bwid <- diff(range(ylab)) / (nlev + 1)
+      else
+          bwid <- 1/10
 
       ## panel.bwplot
       do.call("panel.bwplot", list(x = y, y = ylab[fac], box.ratio = bwid, coef = 1.5, pch = "|", horizontal = TRUE))
@@ -141,7 +144,11 @@ setMethod(
       
       xlab <- seq(from = ref[1] + lead * margin, to = ref[2], length.out = nlev + 2)
       xlab <- xlab[-c(1, length(xlab))]
-      bwid <- diff(range(xlab)) / (nlev + 1)
+
+      if(length(xlab) > 1)
+          bwid <- diff(range(xlab)) / (nlev + 1)
+      else
+          bwid <- 1/10
       
       ## panel.bwplot
       do.call("panel.bwplot", list(x = xlab[fac], y = y, box.ratio = bwid, coef = 1.5, pch = "|", horizontal = FALSE))
@@ -193,7 +200,7 @@ setMethod(
   })
 
 
-s1d.boxplot <- function(score, fac, col = NULL, facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ... ) {
+s1d.boxplot <- function(score, fac = gl(1, NROW(score)), col = NULL, facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ... ) {
 
   ## evaluation of some parameters
   thecall <- .expand.call(match.call())

@@ -40,9 +40,9 @@ setMethod(
     callNextMethod() ## prepare graph
     
     if(object@adeg.par$p1d$horizontal && is.null(object@g.args$ylim))
-      object@g.args$ylim <- range(x.at) + c(-1, 1) * diff(range(x.at)) / 10
+      object@g.args$ylim <- .setlimits1D(min(x.at), max(x.at), 0, FALSE)  
     if(!object@adeg.par$p1d$horizontal && is.null(object@g.args$xlim))
-      object@g.args$xlim <- range(x.at) + c(-1, 1) * diff(range(x.at)) / 10
+      object@g.args$xlim <- .setlimits1D(min(x.at), max(x.at), 0, FALSE)
     
     assign(nameobj, object, envir = parent.frame())
   })
