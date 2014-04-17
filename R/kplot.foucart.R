@@ -19,14 +19,7 @@
   df <- rbind(as.matrix(object$li), as.matrix(object$Tli), as.matrix(object$Tco))
   adegtot <- adegpar()
   lim.global <- .setlimits(minX = min(df[,xax]), maxX = max(df[,xax]), minY = min(df[ ,yax]), maxY = max(df[ ,yax]), origin = adegtot$porigin$origin, aspect.ratio = adegtot$paxes$aspectratio, includeOr = adegtot$porigin$include)
-  
-  ## prepare subs (should be in ade4 : TC should contains tab.names instead of numbers)
-  ## levels(object$TL[, 1]) <- levels(object$TC[, 1]) <- object$tab.names
-  TL <- object$TL[, 1]
-  #levels(TL) <- object$tab.names
-  TC <- object$TC[, 1]
-  #levels(TC) <- object$tab.names
-  
+    
   ## parameters management
   params <- list()
   params$row <- list(plabels = list(cex = 1), xlim = lim.global$xlim, ylim = lim.global$ylim, plabels = list(cex = 1.25))
@@ -35,8 +28,8 @@
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
   ## creation of each individual ADEg
-  g1 <- do.call("s.label", c(list(dfxy = substitute(object$Tli), facets = TL, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$row))[which.tab]
-  g2 <- do.call("s.label", c(list(dfxy = substitute(object$Tco), facets = TC, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$col))[which.tab]
+  g1 <- do.call("s.label", c(list(dfxy = substitute(object$Tli), facets =  substitute(object$TL[, 1]), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$row))[which.tab]
+  g2 <- do.call("s.label", c(list(dfxy = substitute(object$Tco), facets = substitute(object$TC[, 1]), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$col))[which.tab]
   
   ## ADEgS creation
   obj <- do.call("superpose", list(g1, g2))
