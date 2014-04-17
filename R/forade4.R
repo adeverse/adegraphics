@@ -898,3 +898,226 @@ repList <- function(x, times) {
     print(object)
   invisible(object)
 }
+
+
+
+"plot.multiblock" <- function(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, ...) {
+    if(!inherits(x, "multiblock")) 
+        stop("Object of class 'multiblock' expected")
+    if((xax == yax) || (x$nf == 1))
+        stop("One axis only : not yet implemented")
+    if(length(xax) > 1 | length(yax) > 1)
+        stop("Not implemented for multiple xax/yax")
+    
+    if(xax > x$nf) 
+        stop("Non convenient xax")
+    if(yax > x$nf) 
+        stop("Non convenient yax")
+    
+    
+    ## sort parameters for each graph
+    graphsnames <- c("G1", "G2", "G3", "G4", "G5")
+    sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+    
+    ## parameters management
+    params <- list()
+    
+    params[[1]]<- list(psub = list(text = "Scores (X)"), plabels = list(cex = 1.25))
+    params[[2]]<- list(psub = list(text = "Eigenvalues"))
+
+    params[[3]] <- list(psub = list(text = "Cov^2"), plabels = list(cex = 1.25))
+    params[[4]] <- list(psub = list(text = "Y variables"), plabels = list(cex = 1.25))
+    params[[5]] <- list(psub = list(text = "X loadings"), plabels = list(cex = 1.25))
+     
+    names(params) <- graphsnames
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+    
+    ## creation of each individual ADEg
+    g1 <- do.call("s.label", c(list(dfxy = substitute(x$lX), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
+    g2 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[2]]))
+    g3 <- do.call("s.arrow", c(list(dfxy = substitute(x$cov2), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]]))
+    g4 <- do.call("s.arrow", c(list(dfxy = substitute(x$Yco), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
+    g5 <- do.call("s.arrow", c(list(dfxy = substitute(x$faX), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]]))
+
+    
+    ## ADEgS creation
+    lay <-  matrix(c(rep(c(0, 0, 2, 2, 3, 3), 2), rep(c(rep(1, 4), 4, 4), 2), rep(c(rep(1, 4), 5, 5), 2)), 6, 6)
+    object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4, g5), positions = layout2position(lay), add = matrix(0, ncol = 5, nrow = 5), Call = match.call())
+    names(object) <- graphsnames
+    if(plot)
+        print(object)
+    invisible(object)
+}
+
+kplot.mbpcaiv <- function(object, xax = 1, yax = 2, which.tab = 1:length(object$blo), pos = -1, storeData = FALSE, plot = TRUE, ...) {
+  if(!inherits(object, "mbpcaiv")) 
+	  stop("Object of class 'mbpcaiv' expected")
+  if((xax == yax) || (object$nf == 1))
+    stop("One axis only : not yet implemented")
+  if(length(xax) > 1 | length(yax) > 1)
+    stop("Not implemented for multiple xax/yax")
+  
+  if(xax > object$nf)
+    stop("Non convenient xax")
+  if(yax > object$nf)
+    stop("Non convenient yax")
+  
+  sortparameters <- .specificpar(...)
+    
+  obj <- do.call("s.label", c(list(dfxy = substitute(object$Tli), xax = xax, yax = yax, facets = substitute(object$TL[, 1]), plot = plot, storeData = storeData, pos = pos - 2), adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = sortparameters$g.args))[which.tab]
+  
+  obj@Call <- match.call()
+  invisible(obj)
+}
+
+
+plot.randxval <- function(x, pos = -1, storeData = FALSE, plot = TRUE, ...){
+    if (!inherits(x, "randxval")) 
+        stop("Object of class 'randxval' expected")
+    
+    ## Plot results 
+    graphsnames <- c("RMSEcMean", "RMSEcQuantiles", "RMSEvMean", "RMSEvQuantiles")
+    sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+    
+    ## compute common limits
+    lim <- range(x$stats)
+    origin <- if(is.null(sortparameters[[1]]$porigin)) list(origin = 0, include = FALSE) else sortparameters[[1]]$porigin
+    lim <- .setlimits1D(lim[1], lim[2], origin = origin$origin[1], includeOr = origin$include)
+    
+    params <- list()
+    params[[1]] <- list(plines.col = 'red', ppoints.col = 'red', p1d.horizontal = FALSE, paxes.draw = TRUE, ppoints.cex = 2, ylab = "Root Mean Square Error", ylim = lim, porigin = origin)
+    params[[2]] <- list(plines.col = 'red', ppoly.col = 'red', p1d.horizontal = FALSE, paxes.draw = TRUE, method = "bars")
+    params[[3]] <- list(plines.col = 'blue', ppoints.col = 'blue', p1d.horizontal = FALSE, paxes.draw = TRUE, ppoints.cex = 2)
+    params[[4]] <- list(plines.col = 'blue', ppoly.col = 'blue', p1d.horizontal = FALSE, paxes.draw = TRUE, method = "bars")
+    names(params) <- graphsnames
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+    
+    ## creation of each individual ADEg
+    g1 <- do.call("s1d.curve", c(list(score = substitute(x$stats[1,1]), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
+    g2 <- do.call("s1d.interval", c(list(score1 = substitute(x$stats[1,2]), score2 = substitute(x$stats[1,3]), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
+    g3 <- do.call("s1d.curve", c(list(score = substitute(x$stats[2,1]), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]]))
+    g4 <- do.call("s1d.interval", c(list(score1 = substitute(x$stats[2,2]), score2 = substitute(x$stats[2,3]), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
+
+    ## ADEgS creation
+    add.mat <- matrix(0, nrow = 4, ncol = 4)
+    add.mat[upper.tri(add.mat)] <- 1
+    object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4), positions = matrix(rep(c(0,0,1,1), 4), nrow = 4, byrow = TRUE), add = add.mat, Call = match.call())
+    names(object) <- graphsnames
+    if(plot)
+        print(object)
+    invisible(object)
+    
+}
+
+
+plot.krandxval <- function(x, pos = -1, storeData = FALSE, plot = TRUE, ...){
+    if (!inherits(x, "krandxval")) 
+        stop("Object of class 'krandxval' expected")
+    
+    ## Plot results 
+    graphsnames <- c("RMSEcMean", "RMSEcQuantiles", "RMSEvMean", "RMSEvQuantiles")
+    sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+    
+    ## compute common limits
+    lim <- range(x$statsRMSEc[,-1], x$statsRMSEv[,-1])
+    origin <- if(is.null(sortparameters[[1]]$porigin)) list(origin = 0, include = FALSE) else sortparameters[[1]]$porigin
+    lim <- .setlimits1D(lim[1], lim[2], origin = origin$origin[1], includeOr = origin$include)
+    
+    params <- list()
+    params[[1]] <- list(plines.col = 'red', ppoints.col = 'red', p1d.horizontal = FALSE, paxes.draw = TRUE, ppoints.cex = 2, ylab = "Root Mean Square Error", ylim = lim, porigin = origin)
+    params[[2]] <- list(plines.col = 'red', ppoly.col = 'red', p1d.horizontal = FALSE, paxes.draw = TRUE, method = "area")
+    params[[3]] <- list(plines.col = 'blue', ppoints.col = 'blue', p1d.horizontal = FALSE, paxes.draw = TRUE, ppoints.cex = 2)
+    params[[4]] <- list(plines.col = 'blue', ppoly.col = 'blue', p1d.horizontal = FALSE, paxes.draw = TRUE, method = "area")
+    names(params) <- graphsnames
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+    
+    ## creation of each individual ADEg
+    g1 <- do.call("s1d.curve", c(list(score = substitute(x$statsRMSEc[,1]), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
+    g2 <- do.call("s1d.interval", c(list(score1 = substitute(x$statsRMSEc[,2]), score2 = substitute(x$statsRMSEc[,3]), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
+    g3 <- do.call("s1d.curve", c(list(score = substitute(x$statsRMSEv[,1]), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]]))
+    g4 <- do.call("s1d.interval", c(list(score1 = substitute(x$statsRMSEv[,2]), score2 = substitute(x$statsRMSEv[,3]), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
+
+    ## ADEgS creation
+    add.mat <- matrix(0, nrow = 4, ncol = 4)
+    add.mat[upper.tri(add.mat)] <- 1
+    object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4), positions = matrix(rep(c(0,0,1,1), 4), nrow = 4, byrow = TRUE), add = add.mat, Call = match.call())
+    names(object) <- graphsnames
+    if(plot)
+        print(object)
+    invisible(object)
+    
+}
+
+
+plot.randboot <- function(x, pos = -1, storeData = FALSE, plot = TRUE, ...){
+    if (!inherits(x, "randboot")) 
+        stop("Object of class 'randboot' expected")
+    
+    ## Plot results 
+    graphsnames <- c("Obs", "Quantiles")
+    sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+    
+    ## compute common limits
+    lim <- range(c(x$obs, x$stats))
+    origin <- if(is.null(sortparameters[[1]]$porigin)) list(origin = 0, include = FALSE) else sortparameters[[1]]$porigin
+    lim <- .setlimits1D(lim[1], lim[2], origin = origin$origin[1], includeOr = origin$include)
+    
+    params <- list()
+    params[[1]] <- list(p1d.horizontal = FALSE, paxes.draw = TRUE, ppoints.cex = 2, ylim = lim, porigin = origin)
+    params[[2]] <- list(p1d.horizontal = FALSE, paxes.draw = TRUE, method = "bars")
+    
+    names(params) <- graphsnames
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+    
+    ## creation of each individual ADEg
+    g1 <- do.call("s1d.curve", c(list(score = substitute(x$obs), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
+    g2 <- do.call("s1d.interval", c(list(score1 = substitute(x$stats[1]), score2 = substitute(x$stats[2]), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
+   
+    ## ADEgS creation
+    object <- superpose(g1, g2)
+    object@Call <- match.call()
+    names(object) <- graphsnames
+    if(plot)
+        print(object)
+    invisible(object)
+    
+}
+
+
+plot.krandboot <- function(x, pos = -1, storeData = FALSE, plot = TRUE, ...){
+    if (!inherits(x, "krandboot")) 
+        stop("Object of class 'krandboot' expected")
+    
+    ## Plot results 
+    graphsnames <- c("Obs", "Quantiles")
+    sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+    
+    ## compute common limits
+    lim <- range(c(x$obs, range(x$stats)))
+    origin <- if(is.null(sortparameters[[1]]$porigin)) list(origin = 0, include = FALSE) else sortparameters[[1]]$porigin
+    lim <- .setlimits1D(lim[1], lim[2], origin = origin$origin[1], includeOr = origin$include)
+    
+    params <- list()
+    params[[1]] <- list(p1d.horizontal = FALSE, paxes.draw = TRUE, ppoints.cex = 2, ylim = lim, porigin = origin)
+    params[[2]] <- list(p1d.horizontal = FALSE, paxes.draw = TRUE, method = "bars")
+    
+    names(params) <- graphsnames
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+    
+    ## creation of each individual ADEg
+    g1 <- do.call("s1d.curve", c(list(score = substitute(x$obs), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
+    g2 <- do.call("s1d.interval", c(list(score1 = substitute(x$stats[,1]), score2 = substitute(x$stats[,2]), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
+   
+    ## ADEgS creation
+    object <- superpose(g1, g2)
+    object@Call <- match.call()
+    names(object) <- graphsnames
+    if(plot)
+        print(object)
+    invisible(object)
+    
+}
+
+
+
+
