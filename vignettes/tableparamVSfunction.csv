@@ -13,9 +13,13 @@ s.value			1	1		1		1		1	1	1	1		1	1
 s1d.barchart	1		1	1		1	1				1			1		1	
 s1d.boxplot	1		1	1		1	1		1		1		1	1		1	
 s1d.class	1		1	1		1	1		1		1		1			1	
+s1d.curve	1		1	1		1			1		1		1			1	
 s1d.density	1		1	1		1	1		1		1					1	
 s1d.distri	1		1	1		1	1		1		1		1			1	
+s1d.dotplot	1		1	1		1			1		1		1			1	
 s1d.gauss	1		1	1		1	1		1		1					1	
+s1d.hist	1		1	1		1					1			1		1	
+s1d.interval	1	1	1	1		1			1		1			1		1	
 s1d.label	1		1	1		1	1		1		1		1			1	
 s1d.match	1		1	1		1	1		1		1		1			1	
 table.image				1		1		1					1			1	1
