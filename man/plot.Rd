@@ -4,6 +4,7 @@
 \alias{kplot.foucart}
 \alias{kplot.mcoa}
 \alias{kplot.mfa}
+\alias{kplot.mbpcaiv}
 \alias{kplot.pta}
 \alias{kplot.sepan}
 \alias{kplot.sepan.coa}
@@ -18,12 +19,17 @@
 \alias{plot.dpcoa}
 \alias{plot.fca}
 \alias{plot.foucart}
+\alias{plot.krandboot}
+\alias{plot.krandxval}
 \alias{plot.mcoa}
 \alias{plot.mfa}
+\alias{plot.multiblock}
 \alias{plot.multispati}
 \alias{plot.niche}
 \alias{plot.pcaiv}
 \alias{plot.procuste}
+\alias{plot.randboot}
+\alias{plot.randxval}
 \alias{plot.rlq}
 \alias{plot.pta}
 \alias{plot.sepan}
@@ -43,10 +49,10 @@
 \alias{screeplot}
 \alias{screeplot.dudi}
 
-\title{Methods to display the analysis results from \code{ade4}.}
+\title{Methods to display the outputs of an analysis performed with \code{ade4}}
 
 \description{
-  S3 methods to display the outputs of a multivariate analysis provided by \code{ade4}.
+  S3 methods to display the outputs of an analysis performed with \code{ade4}
 }
 
 \usage{
@@ -56,6 +62,8 @@
   option = c("points", "axis", "columns"), pos = -1, storeData = FALSE, plot = TRUE, \dots)
 \method{kplot}{mfa}(object, xax = 1, yax = 2, which.tab = 1:length(object$blo), traject = FALSE, 
   permute = FALSE, pos = -1, storeData = FALSE, plot = TRUE, \dots)
+\method{kplot}{mbpcaiv}(object, xax = 1, yax = 2, which.tab =
+1:length(object$blo), pos = -1, storeData = FALSE, plot = TRUE, \dots)
 \method{kplot}{pta}(object, xax = 1, yax = 2, which.tab = 1:nrow(object$RV), which.graph = 1:4, 
   pos = -1, storeData = FALSE, plot = TRUE, \dots)
 \method{kplot}{sepan}(object, xax = 1, yax = 2, which.tab = 1:length(object$blo), permute = FALSE, 
@@ -73,14 +81,22 @@
 \method{plot}{discrimin}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
 \method{plot}{dpcoa}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
 \method{plot}{fca}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
-\method{plot}{foucart}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
+\method{plot}{foucart}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE,
+plot = TRUE, \dots)
+\method{plot}{krandboot}(x, pos = -1, storeData = FALSE, plot = TRUE, \dots)
+\method{plot}{krandxval}(x, pos = -1, storeData = FALSE, plot = TRUE, \dots)
 \method{plot}{mcoa}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
-\method{plot}{mfa}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
+\method{plot}{mfa}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE,
+plot = TRUE, \dots)
+\method{plot}{multiblock}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
 \method{plot}{multispati}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
 \method{plot}{niche}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
 \method{plot}{pcaiv}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
 \method{plot}{pta}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
-\method{plot}{procuste}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
+\method{plot}{procuste}(x, xax = 1, yax = 2, pos = -1, storeData =
+FALSE, plot = TRUE, \dots)
+\method{plot}{randboot}(x, pos = -1, storeData = FALSE, plot = TRUE, \dots)
+\method{plot}{randxval}(x, pos = -1, storeData = FALSE, plot = TRUE, \dots)
 \method{plot}{rlq}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
 \method{plot}{sepan}(x, pos = -1, storeData = FALSE, plot = TRUE, \dots)
 \method{plot}{statis}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
@@ -185,7 +201,8 @@
 }
 
 \examples{
-cat("To run the example on 'topic', \n tape example(topic, package = 'ade4') \n")
+cat("To run the example on 'topic'\n")
+cat("Type in your R console: example(topic, package = 'ade4') \n")
 }
 
 \keyword{hplot}
