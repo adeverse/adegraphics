@@ -18,7 +18,8 @@ s.Spatial <- function(spObj, col = TRUE, nclass = 5, plot = TRUE, storeData = FA
   if(nvar < 2) {
     if(nvar == 1) {
       ## Spatial*DataFrame object -> ADEg
-      sortparameters$adepar$psub$text <- names(spObj)[1]
+      defaultpar$psub$text <- names(spObj)[1]
+      sortparameters$adepar <- modifyList(defaultpar, sortparameters$adepar, keep.null = TRUE)
       if(is.logical(col)) {
         if(col) {
           if(is.numeric(spObj@data[, 1])) {
@@ -58,7 +59,8 @@ s.Spatial <- function(spObj, col = TRUE, nclass = 5, plot = TRUE, storeData = FA
       }
       
       sortparameters$adepar$pSp$col <- colnew
-      sortparameters$adepar$psub$text <- names(spObj)[i]
+      defaultpar$psub$text <- names(spObj)[1]
+      sortparameters$adepar <- modifyList(defaultpar, sortparameters$adepar, keep.null = TRUE)
       ## create map
       listGraph <- c(listGraph, do.call("s.label", c(list(dfxy = substitute(sp::coordinates(spObj)), Sp = substitute(spObj[, i]), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args)))
     }
