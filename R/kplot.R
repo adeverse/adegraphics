@@ -329,7 +329,7 @@
 }
 
 
-"kplot.statis" <- function(object, xax = 1, yax = 2, which.tab = 1:length(object$tab.names), traject = FALSE, arrow = TRUE, class = FALSE, pos = -1, storeData = FALSE, plot = TRUE, ...) {
+"kplot.statis" <- function(object, xax = 1, yax = 2, which.tab = 1:length(object$tab.names), traject = FALSE, arrow = TRUE, class = NULL, pos = -1, storeData = FALSE, plot = TRUE, ...) {
   if(!inherits(object, "statis")) 
 	  stop("Object of class 'statis' expected")
   if((xax == yax) || (object$C.nf == 1))
@@ -370,11 +370,18 @@
   } else
     obj <- g1
   
-  if(class) {
-    g3 <- do.call("s.class", c(list(dfxy = substitute(object$C.Co), fac = object$TC[, 1], xax = xax, yax = yax, facets = facets, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$class))[which.tab]
+  if(!is.null(class)) {
+    if(length(class) == 1) {
+    	if(class)
+	    	g3 <- do.call("s.class", c(list(dfxy = substitute(object$C.Co), fac = object$TC[, 1], xax = xax, yax = yax, facets = facets, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$class))[which.tab]
+	  } else {
+      if(length(class) == length(object$TC[, 1]))
+      	g3 <- do.call("s.class", c(list(dfxy = substitute(object$C.Co), fac = factor(class), xax = xax, yax = yax, facets = facets, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$class))[which.tab]
+    }
     obj <- do.call("superpose", list(obj, g3))
-    obj@Call <- call("superpose", obj@Call, g3@Call)
+  	obj@Call <- call("superpose", g3@Call, obj@Call)
   }
+  
 	
   ## ADEgS creation
   names(obj) <- object$tab.names[which.tab]

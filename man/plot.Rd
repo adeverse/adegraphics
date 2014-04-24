@@ -71,7 +71,7 @@
 \method{kplot}{sepan.coa}(object, xax = 1, yax = 2, which.tab = 1:length(object$blo), permute = FALSE, 
   posieig = "bottomleft", pos = -1, storeData = FALSE, plot = TRUE, \dots)
 \method{kplot}{statis}(object, xax = 1, yax = 2, which.tab = 1:length(object$tab.names), traject = FALSE, 
-  arrow = TRUE, class = FALSE, pos = -1, storeData = FALSE, plot = TRUE, \dots)
+  arrow = TRUE, class = NULL, pos = -1, storeData = FALSE, plot = TRUE, \dots)
 
 \method{plot}{acm}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
 \method{plot}{betcoi}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)

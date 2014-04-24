@@ -18,7 +18,8 @@ s.Spatial <- function(spObj, col = TRUE, nclass = 5, plot = TRUE, storeData = FA
   if(nvar < 2) {
     if(nvar == 1) {
       ## Spatial*DataFrame object -> ADEg
-      sortparameters$adepar$psub$text <- modifyList(names(spObj)[1], sortparameters$adepar$psub$text, keep.null = TRUE)
+      defaultpar <- list(psub = list(text = names(spObj)[1]))
+      sortparameters$adepar <- modifyList(defaultpar, sortparameters$adepar, keep.null = TRUE)
       if(is.logical(col)) {
         if(col) {
           if(is.numeric(spObj@data[, 1])) {
@@ -43,10 +44,8 @@ s.Spatial <- function(spObj, col = TRUE, nclass = 5, plot = TRUE, storeData = FA
   } else {
     ## Spatial*DataFrame object with several variables -> ADEgS
     listGraph <- list()
-    defaultpar <- list(psub = list(text = names(spObj)))
-    sortparameters$adepar <- modifyList(defaultpar, sortparameters$adepar, keep.null = TRUE)
-    names <- sortparameters$adepar$psub$text
     for(i in 1:nvar) {
+      sortparameters$adepar <- modifyList(defaultpar, sortparameters$adepar, keep.null = TRUE)
       if(is.logical(col)) {
         if(col) {
           if(is.numeric(spObj@data[, i])) {
@@ -61,7 +60,7 @@ s.Spatial <- function(spObj, col = TRUE, nclass = 5, plot = TRUE, storeData = FA
       }
       
       sortparameters$adepar$pSp$col <- colnew
-      sortparameters$adepar$psub$text <- names[i] 
+      sortparameters$adepar$psub$text <- names(spObj)[i]
       ## create map
       listGraph <- c(listGraph, do.call("s.label", c(list(dfxy = substitute(sp::coordinates(spObj)), Sp = substitute(spObj[, i]), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args)))
     }
