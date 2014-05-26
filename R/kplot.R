@@ -138,6 +138,8 @@
     stop("One axis only : not yet implemented")
   if(length(xax) > 1 | length(yax) > 1)
     stop("Not implemented for multiple xax/yax")
+  if(!is.numeric(which.graph) || any(which.graph < 1) || any(which.graph > 4)) 
+    stop("`which' must be in 1:4")
   
   if(xax > object$nf)
     stop("Non convenient xax")
@@ -145,7 +147,7 @@
     stop("Non convenient yax")
   
   ## sort parameters for each graph
-  graphsnames <- c("axis", "rows", "columns", "components")
+  graphsnames <- c("axis", "rows", "columns", "components")[which.graph]
   sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
   
   ## parameters management
@@ -156,27 +158,45 @@
   params$components <- list(pbackground = list(box = FALSE), plabels = list(cex = 1.25))
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
+  g <- as.null()
+  adeglist <- as.null()
   ## creation of each individual ADEg
-  facets1 <- substitute(object$T4[, 1])
-  g1 <- do.call("s.corcircle", c(list(dfxy = substitute(object$Tax), labels = substitute(object$T4[, 2]), facets = facets1, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$axis))[which.tab]
-  names(g1) <- paste(graphsnames[1], "_", object$tab.names, sep = "")
+  if(1 %in% which.graph) {
+  	facets1 <- substitute(object$T4[, 1])
+  	g1 <- do.call("s.corcircle", c(list(dfxy = substitute(object$Tax), labels = substitute(object$T4[, 2]), facets = facets1, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$axis))[which.tab]
+  	names(g1) <- paste(graphsnames[1], "_", object$tab.names, sep = "")[which.tab]
+    g <- c(g, g1)
+    adeglist <- c(adeglist, g1@ADEglist)
+	}
   
-  facets2 <- substitute(object$TL[, 1])
-  g2 <- do.call("s.label", c(list(dfxy = substitute(object$Tli), labels = substitute(object$TL[,2]), facets = facets2, xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$rows))[which.tab]
-  names(g2) <- paste(graphsnames[2], "_", object$tab.names, sep = "")
+  if(2 %in% which.graph) {
+    facets2 <- substitute(object$TL[, 1])
+    g2 <- do.call("s.label", c(list(dfxy = substitute(object$Tli), labels = substitute(object$TL[,2]), facets = facets2, xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$rows))[which.tab]
+    names(g2) <- paste(graphsnames[2], "_", object$tab.names, sep = "")[which.tab]
+    g <- c(g, g2)
+    adeglist <- c(adeglist, g2@ADEglist)
+	}
   
-  facets3 <- substitute(object$TC[, 1])
-  g3 <- do.call("s.arrow", c(list(dfxy = substitute(object$Tco), labels = substitute(object$TC[,2]), facets = facets3, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$columns))[which.tab]
-  names(g3) <- paste(graphsnames[3], "_", object$tab.names, sep = "")
+  if(3 %in% which.graph) {
+    facets3 <- substitute(object$TC[, 1])
+  	g3 <- do.call("s.arrow", c(list(dfxy = substitute(object$Tco), labels = substitute(object$TC[,2]), facets = facets3, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$columns))[which.tab]
+  	names(g3) <- paste(graphsnames[3], "_", object$tab.names, sep = "")[which.tab]
+    g <- c(g, g3)
+    adeglist <- c(adeglist, g3@ADEglist)
+  }
   
-  facets4 <- substitute(object$T4[, 1])
-  g4 <- do.call("s.corcircle", c(list(dfxy = substitute(object$Tcomp), labels = substitute(object$T4[, 2]), facets = facets4, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$components))[which.tab]
-  names(g4) <- paste(graphsnames[4], "_", object$tab.names, sep = "")
+  if(4 %in% which.graph) {
+  	facets4 <- substitute(object$T4[, 1])
+  	g4 <- do.call("s.corcircle", c(list(dfxy = substitute(object$Tcomp), labels = substitute(object$T4[, 2]), facets = facets4, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$components))[which.tab]
+  	names(g4) <- paste(graphsnames[4], "_", object$tab.names, sep = "")[which.tab]
+    g <- c(g, g4)
+    adeglist <- c(adeglist, g4@ADEglist)
+  }
   
   ## ADEgS creation
-  ng <- sum(sapply(c(g1, g2, g3, g4), function(x) length(x)))
-  lay <- matrix(1:ng, ncol = 4)
-  obj <- new(Class = "ADEgS", ADEglist = c(g1@ADEglist, g2@ADEglist, g3@ADEglist, g4@ADEglist), positions = layout2position(lay), add = matrix(0, ncol = ng, nrow = ng), Call = match.call())
+  ng <- sum(sapply(g, function(x) length(x)))
+  lay <- matrix(1:ng, ncol = length(which.graph))
+  obj <- new(Class = "ADEgS", ADEglist = c(adeglist), positions = layout2position(lay), add = matrix(0, ncol = ng, nrow = ng), Call = match.call())
   if(plot) 
     print(obj)
   invisible(obj)
