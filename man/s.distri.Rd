@@ -69,14 +69,11 @@ s.distri(dfxy, dfdistri, xax = 1, yax = 2, starSize = 1,
 data(rpjdl, package = "ade4")
 xy <- ade4::dudi.coa(rpjdl$fau, scan = FALSE)$li
 j <- c(1, 5, 8, 20, 21, 23, 26, 33, 36, 44, 47, 49)
-coli <- colorRampPalette(c("blue", "red", "orange"))(49)
+dfdistri <- rpjdl$fau[, j]
+coli <- colorRampPalette(c("blue", "red", "orange"))(49)[j]
 
-s.distri(xy, dfdistri = rpjdl$fau[, 1], ellipseSize = 1, starSize = 0, 
-  porigin.include = FALSE, pellipses = list(col = coli[1], alpha = 0.3))
-
-for(i in j[-1])
-  s.distri(xy, dfdistri = rpjdl$fau[, i], ellipseSize = 1, starSize = 0, 
-  porigin.include = FALSE, pellipses = list(col = coli[i], alpha = 0.3), add = TRUE)
+s.distri(xy, dfdistri, ellipseSize = 1, starSize = 0, porigin.include = FALSE, 
+  pellipses = list(col = coli, alpha = 0.3), plabels.cex = 0)
 }
 
 \keyword{aplot}
