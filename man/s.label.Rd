@@ -75,8 +75,7 @@ if(require(sp, quiet = TRUE)){
   \dontrun{
   data(atlas, package = "ade4")
   g4 <- s.label(atlas$xy, lab = atlas$names.district, Sp = atlas$Spatial.contour)
-  g5 <- s.label(atlas$xy, lab = atlas$names.district, Sp = atlas$Spatial)
-  }
+  g5 <- s.label(atlas$xy, lab = atlas$names.district, Sp = atlas$Spatial)}
 }
 }
 \keyword{aplot}

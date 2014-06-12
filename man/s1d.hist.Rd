@@ -9,8 +9,8 @@
 
 \usage{
 s1d.hist(score, breaks = NULL, nclass = round(log2(length(score)) + 1), 
-  type = c("count", "density", "percent"), facets = NULL, plot = TRUE, 
-  storeData = FALSE, add = FALSE, pos = -1, ...)
+  type = c("count", "density", "percent"), right = TRUE, facets = NULL, 
+  plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...)
 }
 
 \arguments{
@@ -21,6 +21,8 @@ s1d.hist(score, breaks = NULL, nclass = round(log2(length(score)) + 1),
   \item{nclass}{an integer for the number of desired intervals, ignored if \code{breaks} is not missing.}
   
   \item{type}{a value among \code{count}, \code{density}, \code{percent} to indicate the unit of the cell height.}
+  
+  \item{right}{a logical indicating if the histogram cells are right-closed (left open) intervals.}
   
   \item{facets}{a factor splitting \code{score} so that subsets
     of the data are represented on different sub-graphics}

@@ -60,7 +60,7 @@ repList <- function(x, times) {
   mat <- rbind(x$msX, x$msY, x$mX)
   minmat <- apply(mat, 2, min)
   maxmat <- apply(mat, 2, max)
-  limdefault <- .setlimits(minmat[1], maxmat[1], minmat[2], maxmat[2], origin = c(0,0), includeOr = TRUE)     
+  limdefault <- .setlimits(minmat[1], maxmat[1], minmat[2], maxmat[2], origin = c(0, 0), includeOr = TRUE)     
   
   ## parameters management
   params <- list()
@@ -333,7 +333,7 @@ repList <- function(x, times) {
   params[[4]] <- list()
   params[[4]]$l1 <- list(psub = list(text = "X -> Y"), xlim = limdefault$xlim, ylim = limdefault$ylim, chullSize = 1, ppoints = list(pch = 16, cex = 0.5), plabels = list(alpha = 0, boxes = list(draw = FALSE)), ppolygon = list(lwd = 0.5, alpha = 0.2), pellipses = list(alpha = 0.0, axes = list(draw = FALSE)), col = adegpar()$ppalette$quali(nlevels(fac)))
   params[[4]]$l2 <- list(xlim = limdefault$xlim, ylim = limdefault$ylim, chullSize = 1, ppoints = list(pch = 15, cex = 0.5), plabels = list(alpha = 0, boxes = list(draw = FALSE)), ppolygon = list(lwd = 0.5, alpha = 0.2), pellipses = list(alpha = 0.0, axes = list(draw = FALSE)), col = adegpar()$ppalette$quali(nlevels(fac)))
-  params[[4]]$l3 <- list(xlim = limdefault$xlim, ylim = limdefault$ylim, ppoints = list(cex = 0.7), plines = list(lwd = 2), plabels = list(alpha = 1, boxes = list(draw = TRUE), cex = 1.25), col = "black")
+  params[[4]]$l3 <- list(xlim = limdefault$xlim, ylim = limdefault$ylim, ppoints = list(cex = 0.7), plines = list(lwd = 2), plabels = list(alpha = 1, boxes = list(draw = TRUE), cex = 1.25))
   params[[5]] <- list(psub = list(text = "Y Canonical weights"), plabels = list(cex = 1.25))
   params[[6]] <- list(psub = list(text = "X Canonical weights"), plabels = list(cex = 1.25))
   names(params) <- graphsnames

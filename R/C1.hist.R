@@ -40,7 +40,7 @@ setMethod(
     callNextMethod() ## prepare graph
     
     ## compute histogram
-    h <- hist(score, breaks = if(is.null(object@g.args$breaks)) object@g.args$nclass else object@g.args$breaks, plot = FALSE)
+    h <- hist(score, breaks = if(is.null(object@g.args$breaks)) object@g.args$nclass else object@g.args$breaks, right = object@g.args$right, plot = FALSE)
     y <- switch(object@g.args$type, count = h$counts, percent = 100 * h$counts / length(score), density = h$density)
     object@stats$heights <- y
     object@stats$breaks <- h$breaks
@@ -83,8 +83,8 @@ setMethod(
   })
 
 
-s1d.hist <- function(score, breaks = NULL, nclass = round(log2(length(score)) + 1), type = c("count", "density", "percent"), facets = NULL, plot = TRUE, 
-	storeData = FALSE, add = FALSE, pos = -1, ...) {
+s1d.hist <- function(score, breaks = NULL, nclass = round(log2(length(score)) + 1), type = c("count", "density", "percent"), right = TRUE, 
+  facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
   
   ## evaluation of some parameters
   thecall <- .expand.call(match.call())
@@ -112,7 +112,7 @@ s1d.hist <- function(score, breaks = NULL, nclass = round(log2(length(score)) + 
       warning(c("Unused parameters: ", paste(unique(names(sortparameters$rest)), " ", sep = "")), call. = FALSE)
     
     ## creation of the ADEg object
-    g.args <- c(sortparameters$g.args, list(type = match.arg(type), nclass = nclass, breaks = breaks))
+    g.args <- c(sortparameters$g.args, list(type = match.arg(type), nclass = nclass, breaks = breaks, right = right))
     tmp_data <- list(score = thecall$score, frame = sys.nframe() + pos, storeData = storeData)
     object <- new(Class = "C1.hist", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = g.args, Call = match.call())
     

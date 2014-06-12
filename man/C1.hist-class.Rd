@@ -41,6 +41,7 @@
       \item{\code{breaks}: a vector of values to split \code{score}. If \code{NULL}, \code{pretty(score, nclass)} is used.}
       \item{\code{nclass}: an integer for the number of desired intervals, ignored if \code{breaks} is not missing.}
       \item{\code{type}: a value among \code{count}, \code{density}, \code{percent} to indicate the unit of the cell height.}
+      \item{\code{right}: a logical indicating if the histogram cells are right-closed (left open) intervals.}
      }}
     
     \item{\code{stats}}{a list of internal preliminary calculations.

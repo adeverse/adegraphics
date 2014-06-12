@@ -17,7 +17,8 @@
   
   The \code{ADEg.C1} class is a virtual class, i.e. a class which is not possible to create objects but which have heirs.
   This class inherits from \code{ADEg} class and 
-  has three son classes : \code{C1.barchart}, \code{C1.density} and \code{C1.gauss}.
+  has three son classes : \code{C1.barchart}, \code{C1.curve}, \code{C1.density}, \code{C1.dotplot}, \code{C1.gauss}, 
+  \code{C1.hist}, \code{C1.interval}
 }
 
 \section{Objects from the Class}{
@@ -95,8 +96,12 @@
 \seealso{
   \code{\link{adegpar}}
   \code{\linkS4class{C1.barchart}}
+  \code{\linkS4class{C1.curve}}
   \code{\linkS4class{C1.density}}
+  \code{\linkS4class{C1.dotplot}}
   \code{\linkS4class{C1.gauss}}
+  \code{\linkS4class{C1.hist}}
+  \code{\linkS4class{C1.interval}}
   \code{\linkS4class{ADEg}}
 }
 
