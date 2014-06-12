@@ -44,7 +44,8 @@ setMethod(
     coordsx <- coordsx[col(as.matrix(dftab))]
     coordsy <- coordsy[row(as.matrix(dftab))]
     if(object@g.args$ablineX)
-      panel.abline(reg = lm(coordsx ~ coordsy, weights = as.vector(as.matrix(dftab))), col = object@adeg.par$plines$col, lty = object@adeg.par$plines$lty, lwd = object@adeg.par$plines$lwd)
+      panel.abline(reg = lm(coordsy ~ coordsx, weights = as.vector(as.matrix(dftab))), col = object@adeg.par$plines$col, lty = object@adeg.par$plines$lty, lwd = object@adeg.par$plines$lwd)
+    
     if(object@g.args$ablineY) {
       w <- coefficients(lm(coordsx ~ coordsy, weights = as.vector(as.matrix(dftab))))
       if(w[2] == 0)
