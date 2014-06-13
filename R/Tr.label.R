@@ -134,7 +134,7 @@ setMethod(
       }
       
       if(object@g.args$addaxes) {
-        axx <- ade4::dudi.pca(df, scannf = FALSE)$c1
+        axx <- ade4::dudi.pca(df, scale = FALSE, scannf = FALSE)$c1
         cornerp <- object@s.misc$cornerp
         a1 <- axx[, 1]
         x1 <- a1[1] * cornerp$A + a1[2] * cornerp$B + a1[3] * cornerp$C
