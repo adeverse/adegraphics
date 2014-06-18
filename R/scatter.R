@@ -13,7 +13,7 @@
     stop("Non convenient yax")  
   
   position <- match.arg(posieig[1], choices = c("bottomleft", "bottomright", "topleft", "topright", "none"), several.ok = FALSE)
-  
+
   ## sort parameters for each graph
   graphsnames <- c("row", "col", "eig")
   sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)

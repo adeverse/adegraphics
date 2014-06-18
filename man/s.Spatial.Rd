@@ -12,7 +12,7 @@ s.Spatial(spObj, col = TRUE, nclass = 5, plot = TRUE,
 }
 
 \arguments{
-  \item{spObj}{an object deriving from class \code{Spatial} (package \code{sp}}
+  \item{spObj}{an object deriving from class \code{Spatial} (package \code{sp})}
   
   \item{col}{a logical or a color to fill the background color of \code{spObj}}
   
@@ -53,18 +53,17 @@ s.Spatial(spObj, col = TRUE, nclass = 5, plot = TRUE,
 
 \examples{
 data(elec88, package = "ade4")
+## mapping whithout data
+g1 <- s.Spatial(elec88$Spatial)
 
-if(require(sp, quiet = TRUE)) {
-  ## mapping whithout data
-  g1 <- s.Spatial(elec88$Spatial)
-
-  \dontrun{
+\dontrun{
+  if(require(sp, quiet = TRUE)) {
     ## mapping whith data
-    obj <- sp::SpatialPolygonsDataFrame(Sr = elec88$Spatial, data = elec88$tab)
+    obj <- SpatialPolygonsDataFrame(Sr = elec88$Spatial, data = elec88$tab)
     g2 <- s.Spatial(obj)
     g3 <- s.Spatial(obj, nclass = 2, col = c("red", "blue"))
   }
- }
+}
 }
 
 \keyword{hplot}

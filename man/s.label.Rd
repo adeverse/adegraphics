@@ -67,15 +67,13 @@ g1 <- s.label(data.frame(x0, y0), label = as.character(z < 1), paxes.draw = TRUE
 data(mafragh, package = "ade4")
 g2 <- s.label(mafragh$xy, nb = mafragh$nb, paxes.draw = FALSE)
 
-if(require(sp, quiet = TRUE)){
-  data(irishdata, package = "ade4")
-  g3 <- s.label(irishdata$xy.utm, Sp = irishdata$Spatial.contour)   
-  ## update irishdata$xy.utm call to irishdata$xy
+data(irishdata, package = "ade4")
+g3 <- s.label(irishdata$xy.utm, Sp = irishdata$Spatial.contour)   
+## update irishdata$xy.utm call to irishdata$xy
 
-  \dontrun{
-  data(atlas, package = "ade4")
+\dontrun{data(atlas, package = "ade4")
   g4 <- s.label(atlas$xy, lab = atlas$names.district, Sp = atlas$Spatial.contour)
-  g5 <- s.label(atlas$xy, lab = atlas$names.district, Sp = atlas$Spatial)}
+  g5 <- s.label(atlas$xy, lab = atlas$names.district, Sp = atlas$Spatial)
 }
 }
 \keyword{aplot}

@@ -48,6 +48,8 @@
 \alias{score.pca}
 \alias{screeplot}
 \alias{screeplot.dudi}
+\alias{biplot}
+\alias{biplot.dudi}
 
 \title{Methods to display the outputs of an analysis performed with \code{ade4}}
 
@@ -120,6 +122,8 @@ FALSE, plot = TRUE, \dots)
 \method{score}{pca}(x, xax = 1, which.var = NULL, pos = -1, storeData = FALSE, plot = TRUE, \dots)
 
 \method{screeplot}{dudi}(x, col.kept = "grey", col = "white", pos = -1, plot = TRUE, \dots)
+
+\method{biplot}{dudi}(x, pos = -1, plot = TRUE, \dots)
 }
 
 \arguments{

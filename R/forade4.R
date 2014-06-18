@@ -31,7 +31,19 @@ repList <- function(x, times) {
   object@Call <- match.call()
   if(plot)
     print(object)
-  invisible(object)  
+  invisible(object)
+}
+
+
+"biplot.dudi" <- function(x, pos = -1, plot = TRUE, ...) {
+  if(!inherits(x, "dudi")) 
+    stop("Object of class 'dudi' expected")
+  
+  object <- do.call("scatter", c(list(substitute(x), pos = pos - 3, plot = FALSE, ...)))
+  object@Call <- match.call()
+  if(plot)
+    print(object)
+  invisible(object)
 }
 
 
