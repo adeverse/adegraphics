@@ -39,7 +39,7 @@ s.Spatial <- function(spObj, col = TRUE, nclass = 5, plot = TRUE, storeData = FA
 
     sortparameters$adepar$pSp$col <- colnew
     ## create map
-    object <- do.call("s.label", c(list(dfxy = substitute(sp::coordinates(spObj)), Sp = substitute(spObj), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args))
+    object <- do.call("s.label", c(list(dfxy = substitute(sp::coordinates(spObj)), Sp = substitute(spObj), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args)) ## use '::' to access 'coordinates' in Global Env
     
   } else {
     ## Spatial*DataFrame object with several variables -> ADEgS
