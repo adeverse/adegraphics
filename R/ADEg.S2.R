@@ -80,12 +80,7 @@ setMethod(
       }
     }
     
-    if(is.null(object@g.args$Sp))
       limits <- .setlimits(minX = minX, maxX = maxX, minY = minY, maxY = maxY, origin = rep(object@adeg.par$porigin$origin, le = 2), aspect.ratio = object@adeg.par$paxes$aspectratio, includeOr = object@adeg.par$porigin$include)
-    else {
-      limsSp <- sp::bbox(object@g.args$Sp)
-      limits <- .setlimits(minX = limsSp[1, 1], maxX = limsSp[1, 2], minY = limsSp[2, 1], maxY = limsSp[2, 2], origin = rep(object@adeg.par$porigin$origin, le = 2), aspect.ratio = object@adeg.par$paxes$aspectratio, includeOr = object@adeg.par$porigin$include) 
-    }
     
     if(is.null(object@g.args$xlim) || !identical(object@s.misc$xfullcircle.update, object@g.args$fullcircle))
       object@g.args$xlim <- limits$xlim
