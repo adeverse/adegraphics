@@ -181,6 +181,9 @@ adeg.panel.Spatial <- function(SpObject, sp.layout = NULL, col = 1, border = 1, 
     mapSp <- SpObject
     colvalue <- col
   }
+
+   if(!is.null(sp.layout))
+    sp.panel.layout(lst = sp.layout)
   
   if(inherits(SpObject, what = "SpatialPoints")) {
     ## insert ppoints.parameters for pch and cex
@@ -195,8 +198,6 @@ adeg.panel.Spatial <- function(SpObject, sp.layout = NULL, col = 1, border = 1, 
     sp.lines(mapSp, col = colvalue, alpha = alpha, lty = lty, lwd = lwd)
   if(inherits(SpObject, what = "SpatialGrid"))
     sp.grid(mapSp, at = breaks, col = col)
-  if(!is.null(sp.layout))
-    sp.panel.layout(lst = sp.layout)
 }
 
 
