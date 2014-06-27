@@ -57,8 +57,8 @@ g6 <- xyplot(1 ~ 1, xlim = bbox(sp)[1, ], ylim = bbox(sp)[2, ], panel = function
 g7 <- xyplot(1 ~ 1, xlim = bbox(sp)[1, ], ylim = bbox(sp)[2, ], aspect = "iso", panel = function(...) {sp.polygons(nc, col = "black", fill = 1:5)})
 g8 <- xyplot(1 ~ 1, xlim = bbox(sp)[1, ], ylim = bbox(sp)[2, ], panel = function(...) {adeg.panel.Spatial(SpObject = sp, col = "black", border = "blue")})
 g9 <- xyplot(1 ~ 1, xlim = bbox(sp)[1, ], ylim = bbox(sp)[2, ], panel = function(...) {adeg.panel.Spatial(SpObject = nc, col = "black", border = "blue")})
-g10 <- s.label(cbind(-80, 35), Sp = nc)
-g11 <- s.label(cbind(-80, 35), Sp = sp)
+#g10 <- s.label(cbind(-80, 35), Sp = nc)
+#g11 <- s.label(cbind(-80, 35), Sp = sp)
 
 
 ## ex5
