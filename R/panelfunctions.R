@@ -151,7 +151,7 @@ adeg.panel.edges <- function(edges, coords, col.edge = "black", lwd = 1, lty = 1
 ## SpatialGridDataFrame","SpatialLinesDataFrame","SpatialPixelsDataFrame","SpatialPointsDataFrame","SpatialPolygonsDataFrame"
 ## n : nombre intervales si data 
 ## TODO: spObject pourrait etre une liste
-adeg.panel.Spatial <- function(SpObject, sp.layout = NULL, col = 1, border = 1, lwd = 1, lty = 1, alpha = 0.8, n = length(col), spIndex = 1, ...) {
+adeg.panel.Spatial <- function(SpObject, sp.layout = NULL, col = 1, border = 1, lwd = 1, lty = 1, alpha = 0.8, cex = 1, pch = 20, n = length(col), spIndex = 1, ...) {
 
   if(length(grep("DataFrame", class(SpObject))) > 0) { ## there is data in 'SpObject' (it is a SpatialPolygonsDataFrame).
     mapSp <- try(SpObject[names(SpObject)[spIndex]], silent = TRUE) ## only the first map (spIndex = 1)
@@ -187,7 +187,7 @@ adeg.panel.Spatial <- function(SpObject, sp.layout = NULL, col = 1, border = 1, 
   
   if(inherits(SpObject, what = "SpatialPoints")) {
     ## insert ppoints.parameters for pch and cex
-    sp.points(mapSp, col = colvalue, pch = 20, cex = 1, alpha = alpha)
+    sp.points(mapSp, col = colvalue, pch = pch, cex = cex, alpha = alpha)
   }
   
   if(inherits(SpObject, what = "SpatialPolygons"))

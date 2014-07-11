@@ -11,7 +11,7 @@
 
 \usage{
 adeg.panel.Spatial(SpObject, sp.layout = NULL, col = 1, border = 1, lwd = 1, 
-  lty = 1, alpha = 0.8, n = length(col), spIndex = 1, ...)
+  lty = 1, alpha = 0.8, cex = 1, pch = 20, n = length(col), spIndex = 1, ...)
 }
 
 \arguments{
@@ -31,6 +31,10 @@ adeg.panel.Spatial(SpObject, sp.layout = NULL, col = 1, border = 1, lwd = 1,
   \item{lty}{line type (border)}
 
   \item{alpha}{background transparency of \code{Spobject}}
+  
+  \item{cex}{point size}
+  
+  \item{pch}{point type}
 
   \item{n}{if \code{SpObject} contains data, the  _desired_ number
     of intervals splitting the data (using \code{pretty}).}
