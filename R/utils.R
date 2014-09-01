@@ -68,7 +68,7 @@
   ## specify where to draw grid lines
   if(missing(origin)) {
     ## i.e. porigin.include = FALSE
-    origin <- c(pretty(xlim, n = nbgrid)[1], pretty(ylim, n = nbgrid )[1])
+    origin <- c(pretty(xlim, n = nbgrid)[1], pretty(ylim, n = nbgrid)[1])
   } 
   minX <- xlim[1]
   minY <- ylim[1]
@@ -117,11 +117,11 @@
     maxi <- newvalu[2L]
   }
   ## add 10% in both directions
-  if(abs(diff(c(mini, maxi))) > .Machine$double.eps^2)
-      res <- c(mini, maxi) + c(-1, 1) * diff(c(mini, maxi)) / 10
+  if(abs(diff(c(mini, maxi))) > .Machine$double.eps ^ 2)
+    res <- c(mini, maxi) + c(-1, 1) * diff(c(mini, maxi)) / 10
   else
-      res <- c(mini, maxi) + c(-1, 1) * abs(mini) / 10 ## if there is only one value
-      return(res)
+    res <- c(mini, maxi) + c(-1, 1) * abs(mini) / 10 ## if there is only one value
+  return(res)
 }
 
 
@@ -147,6 +147,13 @@
     } else { ## biggest is in Y
       minX <- minX - (interY - interX) / 2
       maxX <- maxX + (interY - interX) / 2
+    }
+    if(interX == 0 && interY == 0) { ## if there is only one value
+      biggest <- max(abs(maxX), abs(maxY))
+      minY <- minY - 1
+      maxY <- maxY + 1
+      minX <- minX - 1
+      maxX <- maxX + 1
     }
   }
   xvalu <- c(minX, maxX) + c(-1, 1) * diff(c(minX, maxX)) / 10
