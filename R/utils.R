@@ -104,7 +104,7 @@
   h0 <- sort(h0[h0 >= minY & h0 <= maxY])
   
   res <- list(x0 = c(v0, rep(NA, length.out = length(h0))), x1 = c(v0, rep(NA, length.out = length(h0)))
-    , y0 = c(rep(NA, length.out = length(v0)), h0), y1 = c(rep(NA, length.out = length(v0)), h0), d = cgrid.x)
+    , y0 = c(rep(NA, length.out = length(v0)), h0), y1 = c(rep(NA, length.out = length(v0)), h0), d = signif(cgrid.x, 3))
   return(res)
 }
 
@@ -158,7 +158,7 @@
   }
   xvalu <- c(minX, maxX) + c(-1, 1) * diff(c(minX, maxX)) / 10
   yvalu <- c(minY, maxY) + c(-1, 1) * diff(c(minY, maxY)) / 10
-  return(list(xlim = signif(xvalu, 3), ylim = signif(yvalu, 3)))
+  return(list(xlim = xvalu, ylim = yvalu))
 }
 
 
