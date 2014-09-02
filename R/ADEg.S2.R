@@ -28,9 +28,6 @@ setMethod(
       dfxy <- object@data$dfxy
     else
       dfxy <- eval(object@data$dfxy, envir = sys.frame(object@data$frame))
-    
-    if(is.null(dim(dfxy))) ## there is only one individual
-    	dfxy <- t(as.matrix(dfxy))
       
     ## axes limits
     if(class(object) == "S2.corcircle") {
@@ -365,9 +362,6 @@ setMethod(
       dfxy <- object@data$dfxy
     else
       dfxy <- as.matrix(eval(object@data$dfxy, envir = sys.frame(object@data$frame)))
-    
-    if(ncol(dfxy) == 1) ## there is only one individual
-    	dfxy <- t(dfxy)
     
     yax <- eval(object@data$yax, envir = sys.frame(object@data$frame))
     xax <- eval(object@data$xax, envir = sys.frame(object@data$frame))

@@ -148,16 +148,16 @@
       minX <- minX - (interY - interX) / 2
       maxX <- maxX + (interY - interX) / 2
     }
-    if(interX == 0 && interY == 0) { ## if there is only one value
-      biggest <- max(abs(maxX), abs(maxY))
-      minY <- minY - 1
-      maxY <- maxY + 1
-      minX <- minX - 1
-      maxX <- maxX + 1
-    }
   }
-  xvalu <- c(minX, maxX) + c(-1, 1) * diff(c(minX, maxX)) / 10
-  yvalu <- c(minY, maxY) + c(-1, 1) * diff(c(minY, maxY)) / 10
+  
+  if(interX > .Machine$double.eps ^ 2 || interY > .Machine$double.eps ^ 2) {
+  	xvalu <- c(minX, maxX) + c(-1, 1) * diff(c(minX, maxX)) / 10
+  	yvalu <- c(minY, maxY) + c(-1, 1) * diff(c(minY, maxY)) / 10
+  } else {
+    xvalu <- c(minX, maxX) + c(-1, 1) * abs(max(minX, minY)) / 10
+  	yvalu <- c(minY, maxY) + c(-1, 1) * abs(max(minX, minY)) / 10
+  }
+  
   return(list(xlim = xvalu, ylim = yvalu))
 }
 
