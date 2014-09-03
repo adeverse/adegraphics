@@ -42,7 +42,7 @@ setMethod(
       stop("'bandwidth' must be strictly positive")
     object@g.args$threshold <- min(max(0, object@g.args$threshold), 1)
     
-    object@stats$densit <- KernSmooth::bkde2D(dfxy[, c(object@data$xax[1], object@data$yax[1])], bandwidth = object@g.args$bandwidth, gridsize = rep(object@g.args$gridsize, length.out = 2))
+    object@stats$densit <- bkde2D(dfxy[, c(object@data$xax[1], object@data$yax[1])], bandwidth = object@g.args$bandwidth, gridsize = rep(object@g.args$gridsize, length.out = 2))
     ## TODO: as in s.image, remove points (only) where density is null
     ## use expand.grid....           
     assign(name_obj, object, envir = parent.frame())

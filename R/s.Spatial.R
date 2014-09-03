@@ -4,6 +4,8 @@ s.Spatial <- function(spObj, col = TRUE, nclass = 5, plot = TRUE, storeData = FA
   sortparameters <- .specificpar(...)
   adegtot <- adegpar(sortparameters$adepar)
   
+  xy <- coordinates(spObj)[1, , drop = FALSE]  ## to access 'coordinates' in the 'imports' environment of 'adegraphics'
+  
   ## default values for non-used parameters
   defaultpar <- list(plabels = list(cex = 0), pgrid = list(draw = FALSE), ppoints = list(cex = 0), porigin = list(include = FALSE))
   sortparameters$adepar <- modifyList(defaultpar, sortparameters$adepar, keep.null = TRUE)
@@ -14,7 +16,7 @@ s.Spatial <- function(spObj, col = TRUE, nclass = 5, plot = TRUE, storeData = FA
   nvar <- 0
   if(length(grep("DataFrame", class(spObj))) > 0)
     nvar <- ncol(spObj)
-
+  
   if(nvar < 2) {
     if(nvar == 1) {
       ## Spatial*DataFrame object -> ADEg
@@ -36,10 +38,11 @@ s.Spatial <- function(spObj, col = TRUE, nclass = 5, plot = TRUE, storeData = FA
       ## Spatial object (no data)
       colnew <- adegtot$pSp$col
     }
-
+    
     sortparameters$adepar$pSp$col <- colnew
+
     ## create map
-    object <- do.call("s.label", c(list(dfxy = substitute(sp::coordinates(spObj)), Sp = substitute(spObj), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args)) ## use '::' to access 'coordinates' in Global Env
+    object <- do.call("s.label", c(list(dfxy = xy, Sp = substitute(spObj), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args))
     
   } else {
     ## Spatial*DataFrame object with several variables -> ADEgS
@@ -61,8 +64,9 @@ s.Spatial <- function(spObj, col = TRUE, nclass = 5, plot = TRUE, storeData = FA
       
       sortparameters$adepar$pSp$col <- colnew
       sortparameters$adepar$psub$text <- names(spObj)[i]
+      
       ## create map
-      listGraph <- c(listGraph, do.call("s.label", c(list(dfxy = substitute(sp::coordinates(spObj)), Sp = substitute(spObj[, i]), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args)))
+      listGraph <- c(listGraph, do.call("s.label", c(list(dfxy = xy, Sp = substitute(spObj[, i]), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args)))
     }
     names(listGraph) <- names(spObj)
     posmatrix <- layout2position(n2mfrow(nvar), ng = nvar)

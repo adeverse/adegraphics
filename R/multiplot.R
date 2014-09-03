@@ -72,7 +72,7 @@ multi.facets.S2 <- function(thecall, adepar, samelimits = TRUE) {
       lim.global <- .setlimits(minX = min(dfxy[, xax]), maxX = max(dfxy[, xax]), minY = min(dfxy[, yax]), maxY = max(dfxy[, yax]),
         origin = adegtot$porigin$origin, aspect.ratio = adegtot$paxes$aspectratio, includeOr = adegtot$porigin$include)
     else { ## Sp: ex map, alors par defaut on prend la bbox
-      limsSp <- sp::bbox(eval(thenewcall$Sp))
+      limsSp <- bbox(eval(thenewcall$Sp))
       lim.global <- .setlimits(minX = limsSp[1, 1], maxX = limsSp[1, 2], minY = limsSp[2, 1], maxY = limsSp[2, 2], origin = rep(adegtot$porigin$origin, le = 2), aspect.ratio = adegtot$paxes$aspectratio, includeOr = adegtot$porigin$include) 
     }
     if(is.null(thecall$xlim))
