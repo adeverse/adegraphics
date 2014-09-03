@@ -17,6 +17,14 @@ s.Spatial <- function(spObj, col = TRUE, nclass = 5, plot = TRUE, storeData = FA
   if(length(grep("DataFrame", class(spObj))) > 0)
     nvar <- ncol(spObj)
   
+  ## limits mangagement 
+  limsSp <- bbox(spObj)
+  lim.global <- .setlimits(minX = limsSp[1, 1], maxX = limsSp[1, 2], minY = limsSp[2, 1], maxY = limsSp[2, 2], includeOr = FALSE) 
+	if(is.null(sortparameters$g.args$xlim))
+  	sortparameters$g.args$xlim <- lim.global$xlim
+  if(is.null(sortparameters$g.args$ylim))
+    sortparameters$g.args$ylim <- lim.global$ylim
+  
   if(nvar < 2) {
     if(nvar == 1) {
       ## Spatial*DataFrame object -> ADEg
