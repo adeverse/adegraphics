@@ -27,7 +27,7 @@
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
   if(prop) {
-    id <- inertia.dudi(x, col = TRUE)
+    id <- inertia.dudi(x, col.inertia = TRUE)
     if(is.null(sortparameters[[2]]$plabels$cex)) {
       sortparameters$col$plabels$cex <- id$col.cum[, 2] / (max(id$col.cum[, 2]) / 1.5)
     } else {

@@ -457,8 +457,9 @@ setMethod(
     ## sort parameters
     sep <- separation(..., pattern = lpattern)
     slots <- modifyList(slots, sep[[1]], keep.null = TRUE)
-    
-    ADEglist <- lapply(object@ADEglist, FUN = function(x) {if(inherits(x, "ADEg") | inherits(x, "ADEgS")) update(x, plot = FALSE, sep[[2]]) else do.call("update", c(list(object = x), sep[[2]]))})
+    sep[[2]] <- .paramsADEgS(sep[[2]], graphsnames = slots$names)
+
+    ADEglist <- sapply(1:length(object@ADEglist), FUN = function(x) {if(inherits(object@ADEglist[[x]], "ADEg") | inherits(object@ADEglist[[x]], "ADEgS")) update(object@ADEglist[[x]], plot = FALSE, sep[[2]][[x]]) else do.call("update", c(list(object = object@ADEglist[[x]]), sep[[2]][[x]]))})
     object <- new("ADEgS", ADEglist = ADEglist, positions = slots$positions, add = object@add, Call = match.call())
     names(object) <- slots$names
     
