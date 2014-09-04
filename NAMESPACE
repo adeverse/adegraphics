@@ -7,7 +7,7 @@ importFrom(sp, sp.points, sp.polygons, sp.lines, sp.grid, sp.panel.layout, Spati
 importClassesFrom(sp, Spatial, SpatialGrid, SpatialGridDataFrame, SpatialLines, SpatialLinesDataFrame, SpatialPoints, SpatialPointsDataFrame, SpatialPolygons, SpatialPolygonsDataFrame)
 importFrom(graphics, plot)
 importFrom(stats, biplot, screeplot)
-importFrom(ade4, covfacwt, covwt, meanfacwt, varfacwt, varwt, scatter, score, kplot, dudi.pca)
+importFrom(ade4, covfacwt, covwt, meanfacwt, varfacwt, varwt, scatter, score, kplot, dudi.pca, inertia.dudi)
 importFrom(KernSmooth, bkde2D, bkde)
 importFrom(methods, show)
 importFrom(RColorBrewer, brewer.pal)
