@@ -1,1051 +1,1038 @@
-repList <- function(x, times) {
-  if(times == 1)
-    l <- x
-  else {
-    l <- list()
-    l <- lapply(1:times, function(i) x)
-    names(l) <- paste("l", sapply(1:times, function(i) i), sep = "")
-  }
-  return(l)
-}
-
-
 "screeplot.dudi" <- function(x, col.kept = "grey", col = "white", pos = -1, plot = TRUE, ...) {
-  if(!inherits(x, "dudi")) 
-    stop("Object of class 'dudi' expected")
-  
-  ## prepare
-  nf <- 1:x$nf
-  col <- rep(col, length(x$eig))
-  col[nf] <- col.kept
-  
-  ## parameters management
-  sortparameters <- .specificpar(...)
-  params <- list()
-  params$adepar <- list(ppolygons = list(col = col), porigin = list(origin = c(0,0)), pgrid = list(draw = FALSE), p1d = list(horizontal = FALSE), paxes = list(draw = TRUE, x = list(draw = FALSE)))
-  params$g.args <- list(main = deparse(substitute(x)), xlab = "Axis", ylab = "Inertia", ylim = c(min(0, min(x$eig)), max(x$eig) * 1.1))
-  sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
-  
-  ## ADEg creation
-  object <- do.call("s1d.barchart", c(list(score = substitute(x$eig), pos = pos - 2, plot = FALSE), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args))
-  object@Call <- match.call()
-  if(plot)
-    print(object)
-  invisible(object)
+    if(!inherits(x, "dudi")) 
+        stop("Object of class 'dudi' expected")
+    
+    ## prepare
+    nf <- 1:x$nf
+    col <- rep(col, length(x$eig))
+    col[nf] <- col.kept
+    
+    ## default values for parameters 
+    sortparameters <- .specificpar(...)
+    params <- list()
+    params$adepar <- list(ppolygons = list(col = col), porigin = list(origin = c(0,0)), pgrid = list(draw = FALSE), p1d = list(horizontal = FALSE), paxes = list(draw = TRUE, x = list(draw = FALSE)))
+    params$g.args <- list(main = deparse(substitute(x)), xlab = "Axis", ylab = "Inertia", ylim = c(min(0, min(x$eig)), max(x$eig) * 1.1))
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+    
+    ## ADEg creation
+    object <- do.call("s1d.barchart", c(list(score = substitute(x$eig), pos = pos - 2, plot = FALSE), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args))
+    object@Call <- match.call()
+    if(plot)
+        print(object)
+    invisible(object)
 }
 
 
 "biplot.dudi" <- function(x, pos = -1, plot = TRUE, ...) {
-  if(!inherits(x, "dudi")) 
-    stop("Object of class 'dudi' expected")
-  
-  object <- do.call("scatter", c(list(substitute(x), pos = pos - 3, plot = FALSE, ...)))
-  object@Call <- match.call()
-  if(plot)
-    print(object)
-  invisible(object)
+    if(!inherits(x, "dudi")) 
+        stop("Object of class 'dudi' expected")
+    
+    object <- do.call("scatter", c(list(substitute(x), pos = pos - 3, plot = FALSE, ...)))
+    object@Call <- match.call()
+    if(plot)
+        print(object)
+    invisible(object)
 }
 
 "plot.coinertia" <- function(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, ...) {
-  if(!inherits(x, "coinertia")) 
-		stop("Object of class 'coinertia' expected")
-  if((xax == yax) || (x$nf == 1))
-    stop("One axis only : not yet implemented")
-  if(length(xax) > 1 | length(yax) > 1)
-    stop("Not implemented for multiple xax/yax")
-  
-  if(xax > x$nf) 
-    stop("Non convenient xax")
-  if(yax > x$nf) 
-    stop("Non convenient yax")
-  
-  ## sort parameters for each graph
-  graphsnames <- c("Xax", "Yax", "eig", "XYmatch", "Yloadings", "Xloadings")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
-  
-  ## parameters management
-  params <- list()
-  params[[1]] <- list(psub = list(text = "X axes"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
-  params[[2]] <- list(psub = list(text = "Y axes"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
-  params[[3]] <- list(psub = list(text = "Eigenvalues"))
-  params[[4]] <- list(psub = list(text = "X -> Y"))
-  params[[5]] <- list(psub = list(text = "Y loadings"), plabels = list(cex = 1.25))
-  params[[6]] <- list(psub = list(text = "X loadings"), plabels = list(cex = 1.25))
-  names(params) <- graphsnames
-  sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
-  
-  ## Creation of each individual ADEg
-  g1 <- do.call("s.corcircle", c(list(dfxy = substitute(x$aX), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
-  g2 <- do.call("s.corcircle", c(list(dfxy = substitute(x$aY), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
-  g3 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[3]]))
-  g4 <- do.call("s.match", c(list(dfxy1 = substitute(x$mX), dfxy2 = substitute(x$mY), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
-  g5 <- do.call("s.arrow", c(list(dfxy = substitute(x$l1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]])) 
-  g6 <- do.call("s.arrow", c(list(dfxy = substitute(x$c1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
-  
-  ## ADEgS creation
-  lay <- matrix(c(1, 2, 3, 4, 4, 5, 4, 4, 6), 3, 3)
-  object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4, g5, g6), positions = layout2position(lay), add = matrix(0, ncol = 6, nrow = 6), Call = match.call() )
-  names(object) <- graphsnames
-  if(plot)
-    print(object)
-  invisible(object)
+    if(!inherits(x, "coinertia")) 
+        stop("Object of class 'coinertia' expected")
+    if((xax == yax) || (x$nf == 1))
+        stop("One axis only : not yet implemented")
+    if(length(xax) > 1 | length(yax) > 1)
+        stop("Not implemented for multiple xax/yax")
+    
+    if(xax > x$nf) 
+        stop("Non convenient xax")
+    if(yax > x$nf) 
+        stop("Non convenient yax")
+    
+    ## sort parameters for each graph
+    graphsnames <- c("Xax", "Yax", "eig", "XYmatch", "Yloadings", "Xloadings")
+    sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+    
+    ## default values for parameters
+    params <- list()
+    params[[1]] <- list(psub = list(text = "Unconstrained axes (X)"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
+    params[[2]] <- list(psub = list(text = "Unconstrained axes (Y)"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
+    params[[3]] <- list(psub = list(text = "Eigenvalues"))
+    params[[4]] <- list(psub = list(text = "Row scores (X -> Y)"))
+    params[[5]] <- list(psub = list(text = "Y loadings"), plabels = list(cex = 1.25))
+    params[[6]] <- list(psub = list(text = "X loadings"), plabels = list(cex = 1.25))
+    names(params) <- graphsnames
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+    
+    ## Creation of each individual ADEg
+    g1 <- do.call("s.corcircle", c(list(dfxy = substitute(x$aX), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
+    g2 <- do.call("s.corcircle", c(list(dfxy = substitute(x$aY), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
+    g3 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[3]]))
+    g4 <- do.call("s.match", c(list(dfxy1 = substitute(x$mX), dfxy2 = substitute(x$mY), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
+    g5 <- do.call("s.arrow", c(list(dfxy = substitute(x$l1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]])) 
+    g6 <- do.call("s.arrow", c(list(dfxy = substitute(x$c1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
+    
+    ## ADEgS creation
+    lay <- matrix(c(1, 2, 3, 4, 4, 5, 4, 4, 6), 3, 3)
+    object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4, g5, g6), positions = layout2position(lay), add = matrix(0, ncol = 6, nrow = 6), Call = match.call() )
+    names(object) <- graphsnames
+    if(plot)
+        print(object)
+    invisible(object)
 }
 
 
 "plot.pcaiv" <- function(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, ...) {
-  if(!inherits(x, "pcaiv")) 
-	  stop("Object of class 'pcaiv' expected")
-  if((xax == yax) || (x$nf == 1))
-    stop("One axis only : not yet implemented")
-  if(length(xax) > 1 | length(yax) > 1)
-    stop("Not implemented for multiple xax/yax")
-  
-  if(xax > x$nf) 
-    stop("Non convenient xax")
-  if(yax > x$nf) 
-    stop("Non convenient yax")
-  
-  ## sort parameters for each graph
-  graphsnames <- c("Xloadings", "Xcor", "eig", "XYmatch", "Yax", "Yvar")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
-  
-  ## parameters management
-  params <- list()
-  params[[1]] <- list(psub = list(text = "X loadings"), plabels = list(cex = 1.25))
-  params[[2]] <- list(psub = list(text = "X correlation"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
-  params[[3]] <- list(psub = list(text = "Eigenvalues"))
-  params[[4]] <- list(psub = list(text = "Predictions (X) -> Scores (Y)"))
-  params[[5]] <- list(psub = list(text = "Y axes"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
-  params[[6]] <- list(psub = list(text = "Y variables"), plabels = list(cex = 1.25))
-  names(params) <- graphsnames
-  sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
-  
-  ## Creation of each individual ADEg
-  g1 <- do.call("s.arrow", c(list(dfxy = substitute(na.omit(x$fa)), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
-  g2 <- do.call("s.corcircle", c(list(dfxy = substitute(na.omit(x$cor)), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
-  g3 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[3]]))
-  g4 <- do.call("s.match", c(list(dfxy1 = substitute(x$li), dfxy2 = substitute(x$ls), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]] ))
-  g5 <- do.call("s.corcircle", c(list(dfxy = substitute(x$as), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]]))
-  g6 <- do.call("s.arrow", c(list(dfxy = substitute(x$c1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
-  
-  ## ADEgS creation
-  lay <- matrix(c(1, 2, 3, 4, 4, 5, 4, 4, 6), 3, 3)
-  object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4, g5, g6), positions = layout2position(lay), add = matrix(0, ncol = 6, nrow = 6), Call = match.call() )
-  names(object) <- graphsnames
-  if(plot)
-    print(object)
-  invisible(object)
+    if(!inherits(x, "pcaiv")) 
+        stop("Object of class 'pcaiv' expected")
+    if((xax == yax) || (x$nf == 1))
+        stop("One axis only : not yet implemented")
+    if(length(xax) > 1 | length(yax) > 1)
+        stop("Not implemented for multiple xax/yax")
+    
+    if(xax > x$nf) 
+        stop("Non convenient xax")
+    if(yax > x$nf) 
+        stop("Non convenient yax")
+    
+    ## sort parameters for each graph
+    graphsnames <- c("Xloadings", "Xcor", "eig", "XYmatch", "Yax", "Ycol")
+    sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+    
+    ## default values for parameters
+    params <- list()
+    params[[1]] <- list(psub = list(text = "X loadings"), plabels = list(cex = 1.25))
+    params[[2]] <- list(psub = list(text = "X correlation"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
+    params[[3]] <- list(psub = list(text = "Eigenvalues"))
+    params[[4]] <- list(psub = list(text = "Predictions (X) -> Scores (Y)"))
+    params[[5]] <- list(psub = list(text = "Unconstrained axes (Y)"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
+    params[[6]] <- list(psub = list(text = "Y columns"), plabels = list(cex = 1.25))
+    names(params) <- graphsnames
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+    
+    ## Creation of each individual ADEg
+    g1 <- do.call("s.arrow", c(list(dfxy = substitute(na.omit(x$fa)), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
+    g2 <- do.call("s.corcircle", c(list(dfxy = substitute(na.omit(x$cor)), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
+    g3 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[3]]))
+    g4 <- do.call("s.match", c(list(dfxy1 = substitute(x$li), dfxy2 = substitute(x$ls), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]] ))
+    g5 <- do.call("s.corcircle", c(list(dfxy = substitute(x$as), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]]))
+    g6 <- do.call("s.arrow", c(list(dfxy = substitute(x$c1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
+    
+    ## ADEgS creation
+    lay <- matrix(c(1, 2, 3, 4, 4, 5, 4, 4, 6), 3, 3)
+    object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4, g5, g6), positions = layout2position(lay), add = matrix(0, ncol = 6, nrow = 6), Call = match.call() )
+    names(object) <- graphsnames
+    if(plot)
+        print(object)
+    invisible(object)
 }
 
 
 "plot.betcoi" <- function(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, ...) {
-  if(!inherits(x, "betcoi"))
+    if(!inherits(x, "betcoi"))
   	stop("Object of class 'betcoi' expected")
-  if((xax == yax) || (x$nf == 1))
-    stop("One axis only : not yet implemented")
-  if(length(xax) > 1 | length(yax) > 1)
-    stop("Not implemented for multiple xax/yax")
-  
-  if(xax > x$nf)
-    stop("Non convenient xax")
-  if(yax > x$nf)
-    stop("Non convenient yax")
-  
-  appel <- as.list(x$call)
-  fac <- eval.parent(appel$fac)
-  
-  ## sort parameters for each graph
-  graphsnames <- c("Xax", "Yax", "eig", "XYmatch", "Yweights", "Xweights")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
-  sortparameters <- mapply(repList, sortparameters, c(1, 1, 1, 3, 1, 1))
-  
-  ## limits calcul for the ADEgS ('XYmatch') made up of two s.class and one s.match
-  mat <- rbind(x$msX, x$msY, x$mX)
-  minmat <- apply(mat, 2, min)
-  maxmat <- apply(mat, 2, max)
-  limdefault <- .setlimits(minmat[1], maxmat[1], minmat[2], maxmat[2], origin = c(0, 0), includeOr = TRUE)     
-  
-  ## parameters management
-  params <- list()
-  params[[1]] <- list(psub = list(text = "X axes"), plabels = list(cex = 1.25))
-  params[[2]] <- list(psub = list(text = "Y axes"), plabels = list(cex = 1.25))
-  params[[3]] <- list(psub = list(text = "Eigenvalues"))
-  params[[4]] <- list()
-  params[[4]]$l1 <- list(psub = list(text = "X -> Y"), xlim = limdefault$xlim, ylim = limdefault$ylim, chullSize = 1, ppoints = list(pch = 16, cex = 0.5), plines = list(lwd = 1), plabels = list(alpha = 0, boxes = list(draw = FALSE)), ppolygon = list(lwd = 0.5, alpha = 0.2), pellipses = list(alpha = 0, axes = list(draw = FALSE)), col = adegpar()$ppalette$quali(nlevels(fac)))
-  params[[4]]$l2 <- list(xlim = limdefault$xlim, ylim = limdefault$ylim, chullSize = 1, ppoints = list(pch = 15, cex = 0.5), plines = list(lwd = 1), plabels = list(alpha = 0, boxes = list(draw = FALSE)), ppolygon = list(lwd = 0.5, alpha = 0.2), pellipses = list(alpha = 0.0, axes = list(draw = FALSE)), col = adegpar()$ppalette$quali(nlevels(fac)))
-  params[[4]]$l3 <- list(xlim = limdefault$xlim, ylim = limdefault$ylim, ppoints = list(cex = 0.7), plines = list(lwd = 2), plabels = list(alpha = 1, boxes = list(draw = TRUE), cex = 1.25))
-  params[[5]] <- list(psub = list(text = "Y Canonical weights"), plabels = list(cex = 1.25))
-  params[[6]] <- list(psub = list(text = "X Canonical weights"), plabels = list(cex = 1.25))
-  names(params) <- graphsnames
-  sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
-  
-  ## creation of each individual ADEg
-  g1 <- do.call("s.arrow", c(list(dfxy = substitute(x$aX), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
-  g2 <- do.call("s.arrow", c(list(dfxy = substitute(x$aY), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
-  g3 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[3]])) 
-  g41 <- do.call("s.class", c(list(dfxy = substitute(x$msX), fac = appel$fac, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]][[1]]))
-  g42 <- do.call("s.class", c(list(dfxy = substitute(x$msY), fac = appel$fac, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]][[2]]))
-  g43 <- do.call("s.match", c(list(dfxy1 = substitute(x$mX), dfxy2 = substitute(x$mY), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]][[3]]))
-	g4 <- do.call("superpose", list(g41, g42))
-  g4@Call <- call("superpose", g41@Call, g42@Call)
-  g4 <- do.call("superpose", list(g4, g43))
-  g4@Call <- call("superpose", g4@Call, g43@Call)
-	g5 <- do.call("s.arrow", c(list(dfxy = substitute(x$l1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]])) 
-  g6 <- do.call("s.arrow", c(list(dfxy = substitute(x$c1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
-  
-  ## ADEgS creation
-  lay <- matrix(c(1, 2, 3, 4, 4, 5, 4, 4, 6), 3, 3)
-  object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4, g5, g6), positions = layout2position(lay), add = matrix(0, ncol = 6, nrow = 6), Call = match.call())
-  names(object) <- graphsnames
-  if(plot)
-    print(object)
-  invisible(object)
+    if((xax == yax) || (x$nf == 1))
+        stop("One axis only : not yet implemented")
+    if(length(xax) > 1 | length(yax) > 1)
+        stop("Not implemented for multiple xax/yax")
+    
+    if(xax > x$nf)
+        stop("Non convenient xax")
+    if(yax > x$nf)
+        stop("Non convenient yax")
+    
+    appel <- as.list(x$call)
+    fac <- eval.parent(appel$fac)
+    
+    ## sort parameters for each graph
+    graphsnames <- c("Xax", "Yax", "eig", "XYmatch", "Yloadings", "Xloadings")
+    sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+    sortparameters <- mapply(repList, sortparameters, c(1, 1, 1, 3, 1, 1))
+    
+    ## compute limits for the ADEgS 'XYmatch' (two s.class and one s.match)
+    mat <- rbind(x$msX, x$msY, x$mX)
+    minmat <- apply(mat, 2, min)
+    maxmat <- apply(mat, 2, max)
+    limdefault <- .setlimits(minmat[1], maxmat[1], minmat[2], maxmat[2], origin = c(0, 0), includeOr = TRUE)     
+    
+    ## default values for parameters
+    params <- list()
+    params[[1]] <- list(psub = list(text = "Unconstrained axes (X)"), plabels = list(cex = 1.25))
+    params[[2]] <- list(psub = list(text = "Unconstrained axes (Y)"), plabels = list(cex = 1.25))
+    params[[3]] <- list(psub = list(text = "Eigenvalues"))
+    params[[4]] <- list()
+    params[[4]]$l1 <- list(psub = list(text = "Row scores (X -> Y)"), xlim = limdefault$xlim, ylim = limdefault$ylim, chullSize = 1, ppoints = list(pch = 16, cex = 0.5), plines = list(lwd = 1), plabels = list(alpha = 0, boxes = list(draw = FALSE)), ppolygon = list(lwd = 0.5, alpha = 0.2), pellipses = list(alpha = 0, axes = list(draw = FALSE)), col = adegpar()$ppalette$quali(nlevels(fac)))
+    params[[4]]$l2 <- list(xlim = limdefault$xlim, ylim = limdefault$ylim, chullSize = 1, ppoints = list(pch = 15, cex = 0.5), plines = list(lwd = 1), plabels = list(alpha = 0, boxes = list(draw = FALSE)), ppolygon = list(lwd = 0.5, alpha = 0.2), pellipses = list(alpha = 0.0, axes = list(draw = FALSE)), col = adegpar()$ppalette$quali(nlevels(fac)))
+    params[[4]]$l3 <- list(xlim = limdefault$xlim, ylim = limdefault$ylim, ppoints = list(cex = 0.7), plines = list(lwd = 2), plabels = list(alpha = 1, boxes = list(draw = TRUE), cex = 1.25))
+    params[[5]] <- list(psub = list(text = "Y loadings"), plabels = list(cex = 1.25))
+    params[[6]] <- list(psub = list(text = "X loadingss"), plabels = list(cex = 1.25))
+    names(params) <- graphsnames
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+    
+    ## creation of each individual ADEg
+    g1 <- do.call("s.arrow", c(list(dfxy = substitute(x$aX), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
+    g2 <- do.call("s.arrow", c(list(dfxy = substitute(x$aY), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
+    g3 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[3]])) 
+    g41 <- do.call("s.class", c(list(dfxy = substitute(x$msX), fac = appel$fac, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]][[1]]))
+    g42 <- do.call("s.class", c(list(dfxy = substitute(x$msY), fac = appel$fac, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]][[2]]))
+    g43 <- do.call("s.match", c(list(dfxy1 = substitute(x$mX), dfxy2 = substitute(x$mY), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]][[3]]))
+    g4 <- do.call("superpose", list(g41, g42))
+    g4@Call <- call("superpose", g41@Call, g42@Call)
+    g4 <- do.call("superpose", list(g4, g43))
+    g4@Call <- call("superpose", g4@Call, g43@Call)
+    g5 <- do.call("s.arrow", c(list(dfxy = substitute(x$l1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]])) 
+    g6 <- do.call("s.arrow", c(list(dfxy = substitute(x$c1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
+    
+    ## ADEgS creation
+    lay <- matrix(c(1, 2, 3, 4, 4, 5, 4, 4, 6), 3, 3)
+    object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4, g5, g6), positions = layout2position(lay), add = matrix(0, ncol = 6, nrow = 6), Call = match.call())
+    names(object) <- graphsnames
+    if(plot)
+        print(object)
+    invisible(object)
 }
 
 
 "plot.betrlq" <- function(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, ...) {
-  if(!inherits(x, "betrlq")) 
+    if(!inherits(x, "betrlq")) 
   	stop("Object of class 'betrlq' expected")
-  if((xax == yax) || (x$nf == 1))
-    stop("One axis only : not yet implemented")
-  if(length(xax) > 1 | length(yax) > 1)
-    stop("Not implemented for multiple xax/yax")
-  
-  if(xax > x$nf)
-    stop("Non convenient xax")
-  if(yax > x$nf)
-    stop("Non convenient yax")
-  
-  appel <- as.list(x$call)
-  fac <- eval.parent(appel$fac)
-  
-  ## sort parameters for each graph
-  graphsnames <- c("G1", "G2", "G3", "G4", "G5", "G6", "G7")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
-  
-  ## parameters management
-  params <- list()
-  params[[1]] <- list(psub = list(text = "R row scores and classes"), plabels = list(cex = 1.25))
-  params[[2]] <- list(psub = list(text = "Q row scores"), plabels = list(cex = 1.25))
-  params[[3]] <- list(psub = list(text = "R axes"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
-  params[[4]] <- list(psub = list(text = "R loadings"), plabels = list(cex = 1.25))
-  params[[5]] <- list(psub = list(text = "Q axes"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
-  params[[6]] <- list(psub = list(text = "Q loadings"), plabels = list(cex = 1.25))
-  params[[7]] <- list(psub = list(text = "Eigenvalues"))
-  names(params) <- graphsnames
-  sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
-  
-  ## creation of each individual ADEg
-  g1 <- do.call("s.class", c(list(dfxy = substitute(x$lsR), fac = appel$fac, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
-  g2 <- do.call("s.label", c(list(dfxy = substitute(x$lQ), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
-  g3 <- do.call("s.corcircle", c(list(dfxy = substitute(x$aR), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]]))
-  g4 <- do.call("s.arrow", c(list(dfxy = substitute(x$l1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
-  g5 <- do.call("s.corcircle", c(list(dfxy = substitute(x$aQ), xax, yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]]))
-  g6 <- do.call("s.arrow", c(list(dfxy = substitute(x$c1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
-  g7 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[7]])) 
-  
-  ## ADEgS creation
-  lay <- matrix(c(1, 1, 3, 1, 1, 4, 2, 2, 5, 2, 2, 6, 0, 0, 7), 3, 5)
-  object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4, g5, g6, g7), positions = layout2position(lay), add = matrix(0, ncol = 7, nrow = 7), Call = match.call())
-  names(object) <- graphsnames
-  if(plot)
-    print(object)
-  invisible(object)
+    if((xax == yax) || (x$nf == 1))
+        stop("One axis only : not yet implemented")
+    if(length(xax) > 1 | length(yax) > 1)
+        stop("Not implemented for multiple xax/yax")
+    
+    if(xax > x$nf)
+        stop("Non convenient xax")
+    if(yax > x$nf)
+        stop("Non convenient yax")
+    
+    appel <- as.list(x$call)
+    fac <- eval.parent(appel$fac)
+    
+    ## sort parameters for each graph
+    graphsnames <- c("Rrow", "Qrow", "Rax", "Rloadings", "Qax", "Qloadings", "eig")
+    sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+    
+    ## default values for parameters
+    params <- list()
+    params[[1]] <- list(psub = list(text = "R row scores and classes"), plabels = list(cex = 1.25))
+    params[[2]] <- list(psub = list(text = "Q row scores"), plabels = list(cex = 1.25))
+    params[[3]] <- list(psub = list(text = "Unconstrained axes (R)"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
+    params[[4]] <- list(psub = list(text = "R loadings"), plabels = list(cex = 1.25))
+    params[[5]] <- list(psub = list(text = "Unconstrained axes (Q)"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
+    params[[6]] <- list(psub = list(text = "Q loadings"), plabels = list(cex = 1.25))
+    params[[7]] <- list(psub = list(text = "Eigenvalues"))
+    names(params) <- graphsnames
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+    
+    ## creation of each individual ADEg
+    g1 <- do.call("s.class", c(list(dfxy = substitute(x$lsR), fac = appel$fac, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
+    g2 <- do.call("s.label", c(list(dfxy = substitute(x$lQ), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
+    g3 <- do.call("s.corcircle", c(list(dfxy = substitute(x$aR), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]]))
+    g4 <- do.call("s.arrow", c(list(dfxy = substitute(x$l1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
+    g5 <- do.call("s.corcircle", c(list(dfxy = substitute(x$aQ), xax, yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]]))
+    g6 <- do.call("s.arrow", c(list(dfxy = substitute(x$c1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
+    g7 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[7]])) 
+    
+    ## ADEgS creation
+    lay <- matrix(c(1, 1, 3, 1, 1, 4, 2, 2, 5, 2, 2, 6, 0, 0, 7), 3, 5)
+    object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4, g5, g6, g7), positions = layout2position(lay), add = matrix(0, ncol = 7, nrow = 7), Call = match.call())
+    names(object) <- graphsnames
+    if(plot)
+        print(object)
+    invisible(object)
 }
 
 
 "plot.between" <- function(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, ...) {
-  if(!inherits(x, "between")) 
+    if(!inherits(x, "between")) 
   	stop("Object of class 'between' expected")
-  if((xax == yax) || (x$nf == 1))
-    stop("One axis only : not yet implemented")
-  if(length(xax) > 1 | length(yax) > 1)
-    stop("Not implemented for multiple xax/yax")
-  
-  if(xax > x$nf)
-    stop("Non convenient xax")
-  if(yax > x$nf)
-    stop("Non convenient yax")
-  
-  appel <- as.list(x$call)
-  fac <- eval.parent(appel$fac)
-  
-  ## sort parameters for each graph
-  graphsnames <- c("G1", "G2", "G3", "G4", "G5", "G6")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
-  
-  ## parameters management
-  params <- list()
-  params[[1]] <- list(psub = list(text = "Canonical weights"), plabels = list(cex = 1.25))
-  params[[2]] <- list(psub = list(text = "Variables"), plabels = list(cex = 1.25))
-  params[[3]] <- list(psub = list(text = "Eigenvalues"))
-  params[[4]] <- list(psub = list(text = "Scores and classes"), plabels = list(cex = 1.25))
-  params[[5]] <- list(psub = list(text = "Inertia axes"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
-  params[[6]] <- list(psub = list(text = "Classes"), plabels = list(cex = 1.25))
-  names(params) <- graphsnames
-  sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
-  
-  ## creation of each individual ADEg
-  g1 <- do.call("s.arrow", c(list(dfxy = substitute(x$c1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
-  g2 <- do.call("s.arrow", c(list(dfxy = substitute(x$co), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
-  g3 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[3]])) 
-  g4 <- do.call("s.class", c(list(dfxy = substitute(x$ls), fac = appel$fac, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
-  g5 <- do.call("s.corcircle", c(list(dfxy = substitute(x$as), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]]))
-  g6 <- do.call("s.label", c(list(dfxy = substitute(x$li), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
-  
-  ## ADEgS creation
-  lay <- matrix(c(1, 2, 3, 4, 4, 5, 4, 4, 6), 3, 3)
-  object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4, g5, g6), positions = layout2position(lay), add = matrix(0, ncol = 6, nrow = 6), Call = match.call())
-  names(object) <- graphsnames
-  if(plot)
-    print(object)
-  invisible(object)
+    if((xax == yax) || (x$nf == 1))
+        stop("One axis only : not yet implemented")
+    if(length(xax) > 1 | length(yax) > 1)
+        stop("Not implemented for multiple xax/yax")
+    
+    if(xax > x$nf)
+        stop("Non convenient xax")
+    if(yax > x$nf)
+        stop("Non convenient yax")
+    
+    appel <- as.list(x$call)
+    fac <- eval.parent(appel$fac)
+    
+    ## sort parameters for each graph
+    graphsnames <- c("loadings", "col", "eig", "row", "Xax", "class")
+    sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+    
+    ## default values for parameters
+    params <- list()
+    params[[1]] <- list(psub = list(text = "Loadings"), plabels = list(cex = 1.25))
+    params[[2]] <- list(psub = list(text = "Columns"), plabels = list(cex = 1.25))
+    params[[3]] <- list(psub = list(text = "Eigenvalues"))
+    params[[4]] <- list(psub = list(text = "Row scores and classes"), plabels = list(cex = 1.25))
+    params[[5]] <- list(psub = list(text = "Unconstrained axes"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
+    params[[6]] <- list(psub = list(text = "Classes"), plabels = list(cex = 1.25))
+    names(params) <- graphsnames
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+    
+    ## creation of each individual ADEg
+    g1 <- do.call("s.arrow", c(list(dfxy = substitute(x$c1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
+    g2 <- do.call("s.arrow", c(list(dfxy = substitute(x$co), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
+    g3 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[3]])) 
+    g4 <- do.call("s.class", c(list(dfxy = substitute(x$ls), fac = appel$fac, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
+    g5 <- do.call("s.corcircle", c(list(dfxy = substitute(x$as), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]]))
+    g6 <- do.call("s.label", c(list(dfxy = substitute(x$li), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
+    
+    ## ADEgS creation
+    lay <- matrix(c(1, 2, 3, 4, 4, 5, 4, 4, 6), 3, 3)
+    object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4, g5, g6), positions = layout2position(lay), add = matrix(0, ncol = 6, nrow = 6), Call = match.call())
+    names(object) <- graphsnames
+    if(plot)
+        print(object)
+    invisible(object)
 }
 
 
 "plot.discrimin" <- function(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, ...) {
-  if(!inherits(x, "discrimin")) 
-	  stop("Object of class 'discrimin' expected")
-  if((xax == yax) || (x$nf == 1))
-    stop("One axis only : not yet implemented")
-  if(length(xax) > 1 | length(yax) > 1)
-    stop("Not implemented for multiple xax/yax")
-  
-  if(xax > x$nf)
-    stop("Non convenient xax")
-  if(yax > x$nf)
-    stop("Non convenient yax")
-  
-  appel <- as.list(x$call)
-  fac <- eval.parent(appel$fac)
-  
-  ## sort parameters for each graph  
-  graphsnames <- c("G1", "G2", "G3", "G4", "G5", "G6")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
-  
-  ## parameters management
-  params <- list()
-  params[[1]] <- list(psub = list(text = "Canonical weights"), plabels = list(cex = 1.25))
-  params[[2]] <- list(psub = list(text = "Cos(variates,canonical variates)"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
-  params[[3]] <- list(psub = list(text = "Eigenvalues"))
-  params[[4]] <- list(psub = list(text = "Scores and classes"), plabels = list(cex = 1.25))
-  params[[5]] <- list(psub = list(text = "Cos(components,canonical variates)"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
-  params[[6]] <- list(psub = list(text = "Classes scores"), plabels = list(cex = 1.25))
-  names(params) <- graphsnames
-  sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
-  
-  ## creation of each individual ADEg
-  g1 <- do.call("s.arrow", c(list(dfxy = substitute(x$fa), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
-  g2 <- do.call("s.corcircle", c(list(dfxy = substitute(x$va), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
-  g3 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[3]])) 
-  g4 <- do.call("s.class", c(list(dfxy = substitute(x$li), fac = appel$fac, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
-  g5 <- do.call("s.corcircle", c(list(dfxy = substitute(x$cp), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]]))
-  g6 <- do.call("s.label", c(list(dfxy = substitute(x$gc), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
-  
-  ## ADEgS creation
-  lay <- matrix(c(1, 2, 3, 4, 4, 5, 4, 4, 6), 3, 3)
-  object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4, g5, g6), positions = layout2position(lay), add = matrix(0, ncol = 6, nrow = 6), Call = match.call())
-  names(object) <- graphsnames
-  if(plot)
-    print(object)
-  invisible(object)
+    if(!inherits(x, "discrimin")) 
+        stop("Object of class 'discrimin' expected")
+    if((xax == yax) || (x$nf == 1))
+        stop("One axis only : not yet implemented")
+    if(length(xax) > 1 | length(yax) > 1)
+        stop("Not implemented for multiple xax/yax")
+    
+    if(xax > x$nf)
+        stop("Non convenient xax")
+    if(yax > x$nf)
+        stop("Non convenient yax")
+    
+    appel <- as.list(x$call)
+    fac <- eval.parent(appel$fac)
+    
+    ## sort parameters for each graph  
+    graphsnames <- c("loadings", "col", "eig", "row", "Xax", "class")
+    sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+    
+    ## default values for parameters
+    params <- list()
+    params[[1]] <- list(psub = list(text = "Loadings"), plabels = list(cex = 1.25))
+    params[[2]] <- list(psub = list(text = "Columns"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
+    params[[3]] <- list(psub = list(text = "Eigenvalues"))
+    params[[4]] <- list(psub = list(text = "Row scores and classes"), plabels = list(cex = 1.25))
+    params[[5]] <- list(psub = list(text = "Unconstrained axes"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
+    params[[6]] <- list(psub = list(text = "Classes scores"), plabels = list(cex = 1.25))
+    names(params) <- graphsnames
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+    
+    ## creation of each individual ADEg
+    g1 <- do.call("s.arrow", c(list(dfxy = substitute(x$fa), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
+    g2 <- do.call("s.corcircle", c(list(dfxy = substitute(x$va), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
+    g3 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[3]])) 
+    g4 <- do.call("s.class", c(list(dfxy = substitute(x$li), fac = appel$fac, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
+    g5 <- do.call("s.corcircle", c(list(dfxy = substitute(x$cp), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]]))
+    g6 <- do.call("s.label", c(list(dfxy = substitute(x$gc), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
+    
+    ## ADEgS creation
+    lay <- matrix(c(1, 2, 3, 4, 4, 5, 4, 4, 6), 3, 3)
+    object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4, g5, g6), positions = layout2position(lay), add = matrix(0, ncol = 6, nrow = 6), Call = match.call())
+    names(object) <- graphsnames
+    if(plot)
+        print(object)
+    invisible(object)
 }
 
 
 "plot.within" <- function(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, ...) {
-  if(!inherits(x, "within")) 
-	  stop("Object of class 'within' expected")
-  if((xax == yax) || (x$nf == 1))
-    stop("One axis only : not yet implemented")
-  if(length(xax) > 1 | length(yax) > 1)
-    stop("Not implemented for multiple xax/yax")
-  
-  if(xax > x$nf) 
-    stop("Non convenient xax")
-  if(yax > x$nf) 
-    stop("Non convenient yax")
-  
-  appel <- as.list(x$call)
-  fac <- eval.parent(appel$fac)
-  
-  ## sort parameters for each graph
-  graphsnames <- c("G1", "G2", "G3", "G4", "G5", "G6")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
-  
-  ## parameters management
-  params <- list()
-  params[[1]] <- list(psub = list(text = "Canonical weights"), plabels = list(cex = 1.25))
-  params[[2]] <- list(psub = list(text = "Variables"), plabels = list(cex = 1.25))
-  params[[3]] <- list(psub = list(text = "Eigenvalues"))
-  params[[4]] <- list(psub = list(text = "Scores and classes"), plabels = list(cex = 1.25))
-  params[[5]] <- list(psub = list(text = "Inertia axes"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
-  params[[6]] <- list(psub = list(text = "Common centring"), pellipses = list(axes = list(draw = FALSE)), plines = list(lwd = 0), plabels = list(alpha = 0, boxes = list(draw = FALSE), cex = 1.25))
-  names(params) <- graphsnames
-  sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
-  
-  ## creation of each individual ADEg
-  g1 <- do.call("s.arrow", c(list(dfxy = substitute(x$c1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
-  g2 <- do.call("s.arrow", c(list(dfxy = substitute(x$co), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
-  g3 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[3]]))
-  g4 <- do.call("s.class", c(list(dfxy = substitute(x$ls), fac = appel$fac, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
-  g5 <- do.call("s.corcircle", c(list(dfxy = substitute(x$as), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]]))
-  g6 <- do.call("s.class", c(list(dfxy = substitute(x$li), fac = appel$fac, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
-  
-  ## ADEgS creation
-  lay <- matrix(c(1, 2, 3, 4, 4, 5, 4, 4, 6), 3, 3)
-  object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4, g5, g6), positions = layout2position(lay), add = matrix(0, ncol = 6, nrow = 6), Call = match.call())
-  names(object) <- graphsnames
-  if(plot)
-    print(object)
-  invisible(object)
+    if(!inherits(x, "within")) 
+        stop("Object of class 'within' expected")
+    if((xax == yax) || (x$nf == 1))
+        stop("One axis only : not yet implemented")
+    if(length(xax) > 1 | length(yax) > 1)
+        stop("Not implemented for multiple xax/yax")
+    
+    if(xax > x$nf) 
+        stop("Non convenient xax")
+    if(yax > x$nf) 
+        stop("Non convenient yax")
+    
+    appel <- as.list(x$call)
+    fac <- eval.parent(appel$fac)
+    
+    ## sort parameters for each graph
+    graphsnames <- c("loadings", "col", "eig", "row", "Xax", "ccrow")
+    sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+    
+    ## default values for parameters
+    params <- list()
+    params[[1]] <- list(psub = list(text = "Loadings"), plabels = list(cex = 1.25))
+    params[[2]] <- list(psub = list(text = "Columns"), plabels = list(cex = 1.25))
+    params[[3]] <- list(psub = list(text = "Eigenvalues"))
+    params[[4]] <- list(psub = list(text = "Row scores and classes"), plabels = list(cex = 1.25))
+    params[[5]] <- list(psub = list(text = "Unconstrained axes"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
+    params[[6]] <- list(psub = list(text = "Row scores (common centring)"), pellipses = list(axes = list(draw = FALSE)), plines = list(lwd = 0), plabels = list(alpha = 0, boxes = list(draw = FALSE), cex = 1.25))
+    names(params) <- graphsnames
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+    
+    ## creation of each individual ADEg
+    g1 <- do.call("s.arrow", c(list(dfxy = substitute(x$c1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
+    g2 <- do.call("s.arrow", c(list(dfxy = substitute(x$co), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
+    g3 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[3]]))
+    g4 <- do.call("s.class", c(list(dfxy = substitute(x$ls), fac = appel$fac, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
+    g5 <- do.call("s.corcircle", c(list(dfxy = substitute(x$as), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]]))
+    g6 <- do.call("s.class", c(list(dfxy = substitute(x$li), fac = appel$fac, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
+    
+    ## ADEgS creation
+    lay <- matrix(c(1, 2, 3, 4, 4, 5, 4, 4, 6), 3, 3)
+    object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4, g5, g6), positions = layout2position(lay), add = matrix(0, ncol = 6, nrow = 6), Call = match.call())
+    names(object) <- graphsnames
+    if(plot)
+        print(object)
+    invisible(object)
 }
 
 
 "plot.witcoi" <- function(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, ...) {
-  if(!inherits(x, "witcoi"))
-	  stop("Object of class 'witcoi' expected")
-  if((xax == yax) || (x$nf == 1))
-    stop("One axis only : not yet implemented")
-  if(length(xax) > 1 | length(yax) > 1)
-    stop("Not implemented for multiple xax/yax")
-  
-  if(xax > x$nf)
-    stop("Non convenient xax")
-  if(yax > x$nf)
-    stop("Non convenient yax")
-  
-  appel <- as.list(x$call)
-  fac <- eval.parent(appel$fac)
-  
-  ## sort parameters for each graph
-  graphsnames <- c("G1", "G2", "G3", "G4", "G5", "G6")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
-  sortparameters <- mapply(repList, sortparameters, c(1, 1, 1, 3, 1, 1))
-  
-  ## limits calcul for the ADEgS made up of two s.class and one s.match
-  mat <- rbind(x$msX, x$msY, x$mX)
-  minmat <- apply(mat, 2, min)
-  maxmat <- apply(mat, 2, max)
-  limdefault <- .setlimits(minmat[1], maxmat[1], minmat[2], maxmat[2], origin = c(0,0), includeOr = TRUE)     
-  
-  ## parameters management
-  params <- list()
-  params[[1]] <- list(psub = list(text = "X axes"), plabels = list(cex = 1.25))
-  params[[2]] <- list(psub = list(text = "Y axes"), plabels = list(cex = 1.25))
-  params[[3]] <- list(psub = list(text = "Eigenvalues"))
-  params[[4]] <- list()
-  params[[4]]$l1 <- list(psub = list(text = "X -> Y"), xlim = limdefault$xlim, ylim = limdefault$ylim, chullSize = 1, ppoints = list(pch = 16, cex = 0.5), plabels = list(alpha = 0, boxes = list(draw = FALSE)), ppolygon = list(lwd = 0.5, alpha = 0.2), pellipses = list(alpha = 0.0, axes = list(draw = FALSE)), col = adegpar()$ppalette$quali(nlevels(fac)))
-  params[[4]]$l2 <- list(xlim = limdefault$xlim, ylim = limdefault$ylim, chullSize = 1, ppoints = list(pch = 15, cex = 0.5), plabels = list(alpha = 0, boxes = list(draw = FALSE)), ppolygon = list(lwd = 0.5, alpha = 0.2), pellipses = list(alpha = 0.0, axes = list(draw = FALSE)), col = adegpar()$ppalette$quali(nlevels(fac)))
-  params[[4]]$l3 <- list(xlim = limdefault$xlim, ylim = limdefault$ylim, ppoints = list(cex = 0.7), plines = list(lwd = 2), plabels = list(alpha = 1, boxes = list(draw = TRUE), cex = 1.25))
-  params[[5]] <- list(psub = list(text = "Y Canonical weights"), plabels = list(cex = 1.25))
-  params[[6]] <- list(psub = list(text = "X Canonical weights"), plabels = list(cex = 1.25))
-  names(params) <- graphsnames
-  sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
-  
-  ## creation of each individual ADEg
-  g1 <- do.call("s.arrow", c(list(dfxy = substitute(x$aX), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
-  g2 <- do.call("s.arrow", c(list(dfxy = substitute(x$aY), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))  
-  g3 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[3]])) 
-  g41 <- do.call("s.class", c(list(dfxy = substitute(x$msX), fac = appel$fac, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]][[1]]))
-  g42 <- do.call("s.class", c(list(dfxy = substitute(x$msY), fac = appel$fac, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]][[2]]))
-  g43 <- do.call("s.match", c(list(dfxy1 = g41@stats$means, dfxy2 = g42@stats$means, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]][[3]]))
-  g4 <- do.call("superpose", list(g41, g42))
-  g4@Call <- call("superpose", g41@Call, g42@Call)
-  g4 <- do.call("superpose", list(g4, g43))
-  g4@Call <- call("superpose", g4@Call, g43@Call)
-  g5 <- do.call("s.arrow", c(list(dfxy = substitute(x$l1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]]))
-  g6 <- do.call("s.arrow", c(list(dfxy = substitute(x$c1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
-  
-  ## ADEgS creation
-  lay <- matrix(c(1, 2, 3, 4, 4, 5, 4, 4, 6), 3, 3)
-  object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4, g5, g6), positions = layout2position(lay), add = matrix(0, ncol = 6, nrow = 6), Call = match.call())
-  names(object) <- graphsnames
-  if(plot)
-    print(object)
-  invisible(object)
+    if(!inherits(x, "witcoi"))
+        stop("Object of class 'witcoi' expected")
+    if((xax == yax) || (x$nf == 1))
+        stop("One axis only : not yet implemented")
+    if(length(xax) > 1 | length(yax) > 1)
+        stop("Not implemented for multiple xax/yax")
+    
+    if(xax > x$nf)
+        stop("Non convenient xax")
+    if(yax > x$nf)
+        stop("Non convenient yax")
+    
+    appel <- as.list(x$call)
+    fac <- eval.parent(appel$fac)
+    
+    ## sort parameters for each graph
+    graphsnames <- c("Xax", "Yax", "eig", "XYmatch", "Yloadings", "Xloadings")
+    sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+    sortparameters <- mapply(repList, sortparameters, c(1, 1, 1, 3, 1, 1))
+    
+    ## compute limits for the ADEgS (two s.class and one s.match)
+    mat <- rbind(x$msX, x$msY, x$mX)
+    minmat <- apply(mat, 2, min)
+    maxmat <- apply(mat, 2, max)
+    limdefault <- .setlimits(minmat[1], maxmat[1], minmat[2], maxmat[2], origin = c(0,0), includeOr = TRUE)     
+    
+    ## default values for parameters
+    params <- list()
+    params[[1]] <- list(psub = list(text = "Unconstrained axes (X)"), plabels = list(cex = 1.25))
+    params[[2]] <- list(psub = list(text = "Unconstrained axes (Y)"), plabels = list(cex = 1.25))
+    params[[3]] <- list(psub = list(text = "Eigenvalues"))
+    params[[4]] <- list()
+    params[[4]]$l1 <- list(psub = list(text = "Row scores (X -> Y)"), xlim = limdefault$xlim, ylim = limdefault$ylim, chullSize = 1, ppoints = list(pch = 16, cex = 0.5), plabels = list(alpha = 0, boxes = list(draw = FALSE)), ppolygon = list(lwd = 0.5, alpha = 0.2), pellipses = list(alpha = 0.0, axes = list(draw = FALSE)), col = adegpar()$ppalette$quali(nlevels(fac)))
+    params[[4]]$l2 <- list(xlim = limdefault$xlim, ylim = limdefault$ylim, chullSize = 1, ppoints = list(pch = 15, cex = 0.5), plabels = list(alpha = 0, boxes = list(draw = FALSE)), ppolygon = list(lwd = 0.5, alpha = 0.2), pellipses = list(alpha = 0.0, axes = list(draw = FALSE)), col = adegpar()$ppalette$quali(nlevels(fac)))
+    params[[4]]$l3 <- list(xlim = limdefault$xlim, ylim = limdefault$ylim, ppoints = list(cex = 0.7), plines = list(lwd = 2), plabels = list(alpha = 1, boxes = list(draw = TRUE), cex = 1.25))
+    params[[5]] <- list(psub = list(text = "Y loadings"), plabels = list(cex = 1.25))
+    params[[6]] <- list(psub = list(text = "X loadings"), plabels = list(cex = 1.25))
+    names(params) <- graphsnames
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+    
+    ## creation of each individual ADEg
+    g1 <- do.call("s.arrow", c(list(dfxy = substitute(x$aX), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
+    g2 <- do.call("s.arrow", c(list(dfxy = substitute(x$aY), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))  
+    g3 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[3]])) 
+    g41 <- do.call("s.class", c(list(dfxy = substitute(x$msX), fac = appel$fac, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]][[1]]))
+    g42 <- do.call("s.class", c(list(dfxy = substitute(x$msY), fac = appel$fac, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]][[2]]))
+    g43 <- do.call("s.match", c(list(dfxy1 = g41@stats$means, dfxy2 = g42@stats$means, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]][[3]]))
+    g4 <- do.call("superpose", list(g41, g42))
+    g4@Call <- call("superpose", g41@Call, g42@Call)
+    g4 <- do.call("superpose", list(g4, g43))
+    g4@Call <- call("superpose", g4@Call, g43@Call)
+    g5 <- do.call("s.arrow", c(list(dfxy = substitute(x$l1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]]))
+    g6 <- do.call("s.arrow", c(list(dfxy = substitute(x$c1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
+    
+    ## ADEgS creation
+    lay <- matrix(c(1, 2, 3, 4, 4, 5, 4, 4, 6), 3, 3)
+    object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4, g5, g6), positions = layout2position(lay), add = matrix(0, ncol = 6, nrow = 6), Call = match.call())
+    names(object) <- graphsnames
+    if(plot)
+        print(object)
+    invisible(object)
 }
 
 
 "plot.witrlq" <- function(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, ...) {
-  if(!inherits(x, "witrlq"))
-	  stop("Object of class 'witrlq' expected")
-  if((xax == yax) || (x$nf == 1))
-    stop("One axis only : not yet implemented")
-  if(length(xax) > 1 | length(yax) > 1)
-    stop("Not implemented for multiple xax/yax")
-  
-  if(xax > x$nf)
-    stop("Non convenient xax")
-  if(yax > x$nf)
-    stop("Non convenient yax")
-  
-  appel <- as.list(x$call)
-  fac <- eval.parent(appel$fac)
-  
-  ## sort parameters for each graph
-  graphsnames <- c("G1", "G2", "G3", "G4", "G5", "G6", "G7")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
-  
-  ## parameters management
-  params <- list()
-  params[[1]] <- list(psub = list(text = "R row scores and classes"), plabels = list(cex = 1.25))
-  params[[2]] <- list(psub = list(text = "Q row scores"), plabels = list(cex = 1.25))
-  params[[3]] <- list(psub = list(text = "R axes"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
-  params[[4]] <- list(psub = list(text = "R loadings"), plabels = list(cex = 1.25))
-  params[[5]] <- list(psub = list(text = "Q axes"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
-  params[[6]] <- list(psub = list(text = "Q loadings"), plabels = list(cex = 1.25))
-  params[[7]] <- list(psub = list(text = "Eigenvalues"))
-  names(params) <- graphsnames
-  sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
-  
-  ## creation of each individual ADEg
-  g1 <- do.call("s.class", c(list(dfxy = substitute(x$lsR), fac = appel$fac, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
-  g2 <- do.call("s.label", c(list(dfxy = substitute(x$lQ), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
-  g3 <- do.call("s.corcircle", c(list(dfxy = substitute(x$aR), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]]))
-  g4 <- do.call("s.arrow", c(list(dfxy = substitute(x$l1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
-  g5 <- do.call("s.corcircle", c(list(dfxy = substitute(x$aQ), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]]))
-  g6 <- do.call("s.arrow", c(list(dfxy = substitute(x$c1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
-  g7 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[7]])) 
-  
-  ## ADEgS creation
-  lay <- matrix(c(1, 1, 3, 1, 1, 4, 2, 2, 5, 2, 2, 6, 0, 0, 7), 3, 5)
-  object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4, g5, g6, g7), positions = layout2position(lay), add = matrix(0, ncol = 7, nrow = 7), Call = match.call())
-  names(object) <- graphsnames
-  if(plot)
-    print(object)
-  invisible(object)
+    if(!inherits(x, "witrlq"))
+        stop("Object of class 'witrlq' expected")
+    if((xax == yax) || (x$nf == 1))
+        stop("One axis only : not yet implemented")
+    if(length(xax) > 1 | length(yax) > 1)
+        stop("Not implemented for multiple xax/yax")
+    
+    if(xax > x$nf)
+        stop("Non convenient xax")
+    if(yax > x$nf)
+        stop("Non convenient yax")
+    
+    appel <- as.list(x$call)
+    fac <- eval.parent(appel$fac)
+    
+    ## sort parameters for each graph
+    graphsnames <- c("Rrow", "Qrow", "Rax", "Rloadings", "Qax", "Qloadings", "eig")
+    sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+    
+    ## default values for parameters
+    params <- list()
+    params[[1]] <- list(psub = list(text = "R row scores and classes"), plabels = list(cex = 1.25))
+    params[[2]] <- list(psub = list(text = "Q row scores"), plabels = list(cex = 1.25))
+    params[[3]] <- list(psub = list(text = "Unconstrained axes (R)"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
+    params[[4]] <- list(psub = list(text = "R loadings"), plabels = list(cex = 1.25))
+    params[[5]] <- list(psub = list(text = "Unconstrained axes (Q)"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
+    params[[6]] <- list(psub = list(text = "Q loadings"), plabels = list(cex = 1.25))
+    params[[7]] <- list(psub = list(text = "Eigenvalues"))
+    names(params) <- graphsnames
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+    
+    ## creation of each individual ADEg
+    g1 <- do.call("s.class", c(list(dfxy = substitute(x$lsR), fac = appel$fac, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
+    g2 <- do.call("s.label", c(list(dfxy = substitute(x$lQ), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
+    g3 <- do.call("s.corcircle", c(list(dfxy = substitute(x$aR), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]]))
+    g4 <- do.call("s.arrow", c(list(dfxy = substitute(x$l1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
+    g5 <- do.call("s.corcircle", c(list(dfxy = substitute(x$aQ), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]]))
+    g6 <- do.call("s.arrow", c(list(dfxy = substitute(x$c1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
+    g7 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[7]])) 
+    
+    ## ADEgS creation
+    lay <- matrix(c(1, 1, 3, 1, 1, 4, 2, 2, 5, 2, 2, 6, 0, 0, 7), 3, 5)
+    object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4, g5, g6, g7), positions = layout2position(lay), add = matrix(0, ncol = 7, nrow = 7), Call = match.call())
+    names(object) <- graphsnames
+    if(plot)
+        print(object)
+    invisible(object)
 }
 
 
 "plot.dpcoa" <- function(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, ...) {
-	if(!inherits(x, "dpcoa")) 
-	  stop("Object of class 'dpcoa' expected")
-	if((xax == yax) || (x$nf == 1))
-    stop("One axis only : not yet implemented")
-  if(length(xax) > 1 | length(yax) > 1)
-    stop("Not implemented for multiple xax/yax")
-  
-  if(xax > x$nf) 
-    stop("Non convenient xax")
-  if(yax > x$nf) 
-    stop("Non convenient yax")
-  
-  ## sort parameters for each graph
-  graphsnames <- c("G1", "G2", "G3", "G4")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
-  sortparameters <- mapply(repList, sortparameters, c(2, 1, 1, 1))
-  
-	## parameters management
-  params <- list()
-  params[[1]] <- list()
-  params[[1]]$l1 <- list(psub = list(text = "Base", position = "topleft"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
-  params[[1]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
-  params[[2]] <- list(psub = list(text = ""), plabels = list(cex = 1.25))
-  params[[3]] <- list(psub = list(text = ""), ppoints = list(pch = 16, cex = 2), plines = list(col = "transparent"), pellipses = list(axes = list(draw = FALSE)), ellipseSize = 1, plabels = list(cex = 1.25))
-  params[[4]] <- list(psub = list(text = "Rao Divcs", position = "topleft"))
-  names(params) <- graphsnames
-  sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
-  
-  ## creation of each individual ADEg
-	g11 <- do.call("s.corcircle", c(list(dfxy = substitute(x$c1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]][[1]]))
-  g12 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[1]][[2]]))
-  g1 <- do.call("insert", list(g12@Call, g11@Call, posi = "bottomleft", plot = FALSE, ratio = 0.25, inset = 0))
-  g2 <- do.call("s.label", c(list(dfxy = substitute(x$l2), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
-  g3 <- do.call("s.distri", c(list(dfxy = substitute(x$l1), dfdistri = as.list(x$call)[[2]], xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]]))
-  g4 <- do.call("s.value", c(list(dfxy = substitute(x$l2), z = substitute(x$RaoDiv), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
-  
-  ## ADEgS creation
-  lay <- matrix(c(1, 2, 3, 4), 2, 2)
-  object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4), positions = layout2position(lay), add = matrix(0, ncol = 4, nrow = 4), Call = match.call())
-  names(object) <- graphsnames
-  if(plot)
-    print(object)
-  invisible(object)
+    if(!inherits(x, "dpcoa")) 
+        stop("Object of class 'dpcoa' expected")
+    if((xax == yax) || (x$nf == 1))
+        stop("One axis only : not yet implemented")
+    if(length(xax) > 1 | length(yax) > 1)
+        stop("Not implemented for multiple xax/yax")
+    
+    if(xax > x$nf) 
+        stop("Non convenient xax")
+    if(yax > x$nf) 
+        stop("Non convenient yax")
+    
+    ## sort parameters for each graph
+    graphsnames <- c("axes", "categories", "collections", "div")
+    sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+    sortparameters <- mapply(repList, sortparameters, c(2, 1, 1, 1))
+    
+    ## default values for parameters
+    params <- list()
+    params[[1]] <- list()
+    params[[1]]$l1 <- list(psub = list(text = "Principal axes", position = "topleft"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
+    params[[1]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
+    params[[2]] <- list(psub = list(text = "Categories"), plabels = list(cex = 1.25))
+    params[[3]] <- list(psub = list(text = "Collections"), ppoints = list(pch = 16, cex = 2), plines = list(col = "transparent"), pellipses = list(axes = list(draw = FALSE)), ellipseSize = 1, plabels = list(cex = 1.25))
+    params[[4]] <- list(psub = list(text = "Rao Divcs", position = "topleft"))
+    names(params) <- graphsnames
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+    
+    ## creation of each individual ADEg
+    g11 <- do.call("s.corcircle", c(list(dfxy = substitute(x$c1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]][[1]]))
+    g12 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[1]][[2]]))
+    g1 <- do.call("insert", list(g12@Call, g11@Call, posi = "bottomleft", plot = FALSE, ratio = 0.25, inset = 0))
+    g2 <- do.call("s.label", c(list(dfxy = substitute(x$l2), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
+    g3 <- do.call("s.distri", c(list(dfxy = substitute(x$l1), dfdistri = as.list(x$call)[[2]], xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]]))
+    g4 <- do.call("s.value", c(list(dfxy = substitute(x$l2), z = substitute(x$RaoDiv), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
+    
+    ## ADEgS creation
+    lay <- matrix(c(1, 2, 3, 4), 2, 2)
+    object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4), positions = layout2position(lay), add = matrix(0, ncol = 4, nrow = 4), Call = match.call())
+    names(object) <- graphsnames
+    if(plot)
+        print(object)
+    invisible(object)
 }
 
 
 "plot.mcoa" <- function(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, ...) {
-	if(!inherits(x, "mcoa")) 
-	  stop("Object of class 'mcoa' expected")
-	if((xax == yax) || (x$nf == 1))
-    stop("One axis only : not yet implemented")
-  if(length(xax) > 1 | length(yax) > 1)
-    stop("Not implemented for multiple xax/yax")
-  
-  if(xax > x$nf) 
-    stop("Non convenient xax")
-  if(yax > x$nf) 
-    stop("Non convenient yax")
-  
-  ## prepare - TODO find better Call for rownames and colnames 
-  coolig <- call("as.data.frame", call("matrix", call("kronecker", rep(1, nrow(x$cov2)), substitute(as.matrix(x$SynVar))), nrow = nrow(x$Tl1), ncol = ncol(x$Tl1), dimnames = list(rownames(x$Tl1), colnames(x$Tl1))))
-  
-  ## sort parameters for each graph
-  graphsnames <- c("G1", "G2", "G3", "G4")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
-  sortparameters <- mapply(repList, sortparameters, c(2, 2, 1, 1))
-  
-  ## parameters management
-  params <- list()
-  params[[1]] <- list()
-  params[[1]]$l1 <- list(psub = list(text = "Row projection"), parrows = list(angle = 0), plabels = list(alpha = 0, boxes = list(draw = FALSE)))
-  params[[1]]$l2 <- list(plabels = list(cex = 1.25))
-  params[[2]] <- list()
-  params[[2]]$l1 <- list(psub = list(text = "First axis projection", position = "topleft"), pbackground = list(box = FALSE), fullcircle = FALSE, plabels = list(cex = 1.25))
-  params[[2]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
-  params[[3]] <- list(psub = list(text = "Col projection"), plabels = list(cex = 1.25))
-  params[[4]] <- list(porigin = list(include = FALSE), paxes = list(aspectratio = "fill", draw = TRUE), main = "Pseudo-eigen values", xlab = "cov21", ylab = "cov22", plabels = list(cex = 1.25))
-  names(params) <- graphsnames
-  sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
-  
-  ## creation of each individual ADEg
-  g11 <- do.call("s.match", c(list(dfxy1 = substitute(x$Tl1), dfxy2 = coolig, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]][[1]]))
-  g12 <- do.call("s.label", c(list(dfxy = substitute(x$SynVar), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]][[2]]))
-  g1 <- do.call("superpose", list(g11, g12))
-  g1@Call <- call("superpose", g11@Call, g12@Call)
-  g21 <- do.call("s.corcircle", c(list(dfxy = substitute(x$Tax[x$T4[, 2] == 1, ]), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]][[1]]))
-  g22 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$pseudoeig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[2]][[2]]))
-  g2 <- do.call("insert", list(g22@Call, g21@Call, posi = "bottomleft", plot = FALSE, ratio = 0.25, inset = 0))
-  g3 <- do.call("s.arrow", c(list(dfxy = substitute(x$Tco), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]]))
-  g4 <- do.call("s.label", c(list(dfxy = substitute(x$cov2), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
-  
-  ## ADEgS creation
-  lay <- matrix(c(1, 2, 3, 4), 2, 2)
-  object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4), positions = layout2position(lay), add = matrix(0, ncol = 4, nrow = 4), Call = match.call())
-  names(object) <- graphsnames
-  if(plot)
-    print(object)
-  invisible(object)
+    if(!inherits(x, "mcoa")) 
+        stop("Object of class 'mcoa' expected")
+    if((xax == yax) || (x$nf == 1))
+        stop("One axis only : not yet implemented")
+    if(length(xax) > 1 | length(yax) > 1)
+        stop("Not implemented for multiple xax/yax")
+    
+    if(xax > x$nf) 
+        stop("Non convenient xax")
+    if(yax > x$nf) 
+        stop("Non convenient yax")
+    
+    ## prepare - TODO find better Call for rownames and colnames 
+    coolig <- call("as.data.frame", call("matrix", call("kronecker", rep(1, nrow(x$cov2)), substitute(as.matrix(x$SynVar))), nrow = nrow(x$Tl1), ncol = ncol(x$Tl1), dimnames = list(rownames(x$Tl1), colnames(x$Tl1))))
+    
+    ## sort parameters for each graph
+    graphsnames <- c("row", "axes", "col", "pseudoeig")
+    sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+    sortparameters <- mapply(repList, sortparameters, c(2, 2, 1, 1))
+    
+    ## default values for parameters
+    params <- list()
+    params[[1]] <- list()
+    params[[1]]$l1 <- list(psub = list(text = "Rows"), parrows = list(angle = 0), plabels = list(alpha = 0, boxes = list(draw = FALSE)))
+    params[[1]]$l2 <- list(plabels = list(cex = 1.25))
+    params[[2]] <- list()
+    params[[2]]$l1 <- list(psub = list(text = "Axes (separate analyses)", position = "topleft"), pbackground = list(box = FALSE), fullcircle = FALSE, plabels = list(cex = 1.25))
+    params[[2]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
+    params[[3]] <- list(psub = list(text = "Columns"), plabels = list(cex = 1.25))
+    params[[4]] <- list(porigin = list(include = FALSE), paxes = list(aspectratio = "fill", draw = TRUE), main = "Pseudo eigenvalues", xlab = "cov21", ylab = "cov22", plabels = list(cex = 1.25))
+    names(params) <- graphsnames
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+    
+    ## creation of each individual ADEg
+    g11 <- do.call("s.match", c(list(dfxy1 = substitute(x$Tl1), dfxy2 = coolig, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]][[1]]))
+    g12 <- do.call("s.label", c(list(dfxy = substitute(x$SynVar), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]][[2]]))
+    g1 <- do.call("superpose", list(g11, g12))
+    g1@Call <- call("superpose", g11@Call, g12@Call)
+    g21 <- do.call("s.corcircle", c(list(dfxy = substitute(x$Tax[x$T4[, 2] == 1, ]), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]][[1]]))
+    g22 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$pseudoeig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[2]][[2]]))
+    g2 <- do.call("insert", list(g22@Call, g21@Call, posi = "bottomleft", plot = FALSE, ratio = 0.25, inset = 0))
+    g3 <- do.call("s.arrow", c(list(dfxy = substitute(x$Tco), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]]))
+    g4 <- do.call("s.label", c(list(dfxy = substitute(x$cov2), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
+    
+    ## ADEgS creation
+    lay <- matrix(c(1, 2, 3, 4), 2, 2)
+    object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4), positions = layout2position(lay), add = matrix(0, ncol = 4, nrow = 4), Call = match.call())
+    names(object) <- graphsnames
+    if(plot)
+        print(object)
+    invisible(object)
 }
+
 
 "plot.foucart" <- function(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, ...) {
-  if(!inherits(x, "foucart"))
-	  stop("Object of class 'foucart' expected")
-  if((xax == yax) || (x$nf == 1))
-    stop("One axis only : not yet implemented")
-  if(length(xax) > 1 | length(yax) > 1)
-    stop("Not implemented for multiple xax/yax")
-  
-  if(xax > x$nf)
-    stop("Non convenient xax")
-  if(yax > x$nf)
-    stop("Non convenient yax")
-  
-  ## sort parameters for each graph
-  graphsnames <- c("Rb1", "Cb1", "R1", "C1")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
-  
-	## limits calcul
-  df <- rbind(as.matrix(x$li), as.matrix(x$Tli), as.matrix(x$Tco))
-  adegtot <- adegpar()
-  lim.global <- .setlimits(minX = min(df[, xax]), maxX = max(df[, xax]), minY = min(df[, yax]), maxY = max(df[, yax]), origin = adegtot$porigin$origin, aspect.ratio = adegtot$paxes$aspectratio, includeOr = adegtot$porigin$include)
-  
-  ## parameters management
-  params <- list()
-  params[[1]] <- list(psub = list(text = "Rows - Base"), xlim = lim.global$xlim, ylim = lim.global$ylim, plabels = list(cex = 1.25))
-  params[[2]] <- list(psub = list(text = "Columns - Base"), xlim = lim.global$xlim, ylim = lim.global$ylim, plabels = list(cex = 1.25))
-  params[[3]] <- list(psub = list(text = "Rows"), xlim = lim.global$xlim, ylim = lim.global$ylim, pellipses = list(axes = list(draw = FALSE)))
-  params[[4]] <- list(psub = list(text = "Columns"), xlim = lim.global$xlim, ylim = lim.global$ylim, pellipses = list(axes = list(draw = FALSE)), plabels = list(cex = 1.25))
-  names(params) <- graphsnames
-  sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
-  
-  ## creation of each individual ADEg
-  g1 <- do.call("s.label", c(list(dfxy = substitute(x$li), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
-  g2 <- do.call("s.label", c(list(dfxy = substitute(x$co), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
-  g3 <- do.call("s.class", c(list(dfxy = substitute(x$Tli), fac = substitute(x$TL[, 2]), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]]))
-  g4 <- do.call("s.class", c(list(dfxy = substitute(x$Tco), fac = substitute(x$TC[, 2]), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
-  
-  ## ADEgS creation
-	lay <- matrix(c(1, 3, 2, 4), 2, 2)
-	object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4), positions = layout2position(lay), add = matrix(0, ncol = 4, nrow = 4), Call = match.call())
-  names(object) <- graphsnames
-  if(plot) 
-    print(object)
-  invisible(object)  
+    if(!inherits(x, "foucart"))
+        stop("Object of class 'foucart' expected")
+    if((xax == yax) || (x$nf == 1))
+        stop("One axis only : not yet implemented")
+    if(length(xax) > 1 | length(yax) > 1)
+        stop("Not implemented for multiple xax/yax")
+    
+    if(xax > x$nf)
+        stop("Non convenient xax")
+    if(yax > x$nf)
+        stop("Non convenient yax")
+    
+    ## sort parameters for each graph
+    graphsnames <- c("rowB", "colB", "row", "col")
+    sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+    
+    ## compute limits
+    df <- rbind(as.matrix(x$li), as.matrix(x$Tli), as.matrix(x$Tco))
+    adegtot <- adegpar()
+    lim.global <- .setlimits(minX = min(df[, xax]), maxX = max(df[, xax]), minY = min(df[, yax]), maxY = max(df[, yax]), origin = adegtot$porigin$origin, aspect.ratio = adegtot$paxes$aspectratio, includeOr = adegtot$porigin$include)
+    
+    ## pdefault values for parameters
+    params <- list()
+    params[[1]] <- list(psub = list(text = "Rows (Base)"), xlim = lim.global$xlim, ylim = lim.global$ylim, plabels = list(cex = 1.25))
+    params[[2]] <- list(psub = list(text = "Columns (Base)"), xlim = lim.global$xlim, ylim = lim.global$ylim, plabels = list(cex = 1.25))
+    params[[3]] <- list(psub = list(text = "Rows"), xlim = lim.global$xlim, ylim = lim.global$ylim, pellipses = list(axes = list(draw = FALSE)))
+    params[[4]] <- list(psub = list(text = "Columns"), xlim = lim.global$xlim, ylim = lim.global$ylim, pellipses = list(axes = list(draw = FALSE)), plabels = list(cex = 1.25))
+    names(params) <- graphsnames
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+    
+    ## creation of each individual ADEg
+    g1 <- do.call("s.label", c(list(dfxy = substitute(x$li), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
+    g2 <- do.call("s.label", c(list(dfxy = substitute(x$co), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
+    g3 <- do.call("s.class", c(list(dfxy = substitute(x$Tli), fac = substitute(x$TL[, 2]), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]]))
+    g4 <- do.call("s.class", c(list(dfxy = substitute(x$Tco), fac = substitute(x$TC[, 2]), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
+    
+    ## ADEgS creation
+    lay <- matrix(c(1, 3, 2, 4), 2, 2)
+    object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4), positions = layout2position(lay), add = matrix(0, ncol = 4, nrow = 4), Call = match.call())
+    names(object) <- graphsnames
+    if(plot) 
+        print(object)
+    invisible(object)  
 }
 
-
+## TODO (Aurelie correct eigenvalues, keep only g22)
 "plot.mfa" <- function(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, ...) {
-	if(!inherits(x, "mfa")) 
-	  stop("Object of class 'mfa' expected")
-	if((xax == yax) || (x$nf == 1))
-    stop("One axis only : not yet implemented")
-  if(length(xax) > 1 | length(yax) > 1)
-    stop("Not implemented for multiple xax/yax")
-  
-  if(xax > x$nf) 
-    stop("Non convenient xax")
-  if(yax > x$nf)
-    stop("Non convenient yax")
-  
-  ## sort parameters for each graph
-  graphsnames <- c("G1", "G2", "G3", "G4")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
-  sortparameters <- mapply(repList, sortparameters, c(2, 2, 2, 1))
-  
-  ## parameters management
-  params <- list()
-  params[[1]] <- list()
-  params[[1]]$l1 <- list(psub = list(text = "Row projection"), pellipses = list(alpha = 0, axes = list(draw = FALSE)), label = row.names(x$li), plabels = list(cex = 1.25))
-  params[[1]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
-  params[[2]] <- list()
-  params[[2]]$l1 <- list(psub = list(text = "Component projection", position = "topleft"), pbackground = list(box = FALSE), fullcircle = FALSE, plabels = list(cex = 1.25))
-  params[[2]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
-  params[[3]] <- list()
-  params[[3]]$l1 <- list(psub = list(text = "Col projection"), plabels = list(cex = 1.25))
-  params[[3]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
-  params[[4]] <- list(porigin = list(include = FALSE), paxes = list(aspectratio = "fill", draw = TRUE), main = "Link", xlab = "Comp1", ylab = "Comp2", plabels = list(cex = 1.25))
-  names(params) <- graphsnames
-  sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
-  
-  ## creation of each individual ADEg
-  g11 <- do.call("s.class", c(list(dfxy = substitute(x$lisup), fac = substitute(as.factor(x$TL[, 2])), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]][[1]]))
-  g12 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[1]][[2]]))
-  g1 <- do.call("insert", list(g12@Call, g11@Call, posi = "topleft", plot = FALSE, inset = 0, ratio = 0.2))
-  g21 <- do.call("s.corcircle", c(list(dfxy = substitute(x$T4comp[x$T4[, 2] == 1, ]), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]][[1]]))
-  g22 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[2]][[2]]))
-  g2 <- do.call("insert", list(g22@Call, g21@Call, posi = "bottomleft", plot = FALSE, inset = 0, ratio = 0.2))
-  g31 <- do.call("s.arrow", c(list(dfxy = substitute(x$co), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]][[1]]))
-  g32 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[3]][[2]]))
-  g3 <- do.call("insert", list(g32@Call, g31@Call, posi = "topleft", plot = FALSE, inset = 0, ratio = 0.2))
-  g4 <- do.call("s.label", c(list(dfxy = substitute(x$link), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
-  
-  ## ADEgS creation
-  lay <- matrix(c(1, 2, 3, 4), 2, 2)
-  object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4), positions = layout2position(lay), add = matrix(0, ncol = 4, nrow = 4), Call = match.call())
-  names(object) <- graphsnames
-  if(plot)
-    print(object)
-  invisible(object)
+    if(!inherits(x, "mfa")) 
+        stop("Object of class 'mfa' expected")
+    if((xax == yax) || (x$nf == 1))
+        stop("One axis only : not yet implemented")
+    if(length(xax) > 1 | length(yax) > 1)
+        stop("Not implemented for multiple xax/yax")
+    
+    if(xax > x$nf) 
+        stop("Non convenient xax")
+    if(yax > x$nf)
+        stop("Non convenient yax")
+    
+    ## sort parameters for each graph
+    graphsnames <- c("row", "comp", "eig", "link")
+    sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+    sortparameters <- mapply(repList, sortparameters, c(2, 2, 2, 1))
+    
+    ## default values for parameters
+    params <- list()
+    params[[1]] <- list()
+    params[[1]]$l1 <- list(psub = list(text = "Rows"), pellipses = list(alpha = 0, axes = list(draw = FALSE)), label = row.names(x$li), plabels = list(cex = 1.25))
+    params[[1]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
+    params[[2]] <- list()
+    params[[2]]$l1 <- list(psub = list(text = "Components (separate analyses)", position = "topleft"), pbackground = list(box = FALSE), fullcircle = FALSE, plabels = list(cex = 1.25))
+    params[[2]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
+    params[[3]] <- list()
+    params[[3]]$l1 <- list(psub = list(text = "Columns"), plabels = list(cex = 1.25))
+    params[[3]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
+    params[[4]] <- list(porigin = list(include = FALSE), paxes = list(aspectratio = "fill", draw = TRUE), main = "Link", xlab = "Comp1", ylab = "Comp2", plabels = list(cex = 1.25))
+    names(params) <- graphsnames
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+    
+    ## creation of each individual ADEg
+    g11 <- do.call("s.class", c(list(dfxy = substitute(x$lisup), fac = substitute(as.factor(x$TL[, 2])), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]][[1]]))
+    g12 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[1]][[2]]))
+    g1 <- do.call("insert", list(g12@Call, g11@Call, posi = "topleft", plot = FALSE, inset = 0, ratio = 0.2))
+    g21 <- do.call("s.corcircle", c(list(dfxy = substitute(x$T4comp[x$T4[, 2] == 1, ]), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]][[1]]))
+    g22 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[2]][[2]]))
+    g2 <- do.call("insert", list(g22@Call, g21@Call, posi = "bottomleft", plot = FALSE, inset = 0, ratio = 0.2))
+    g31 <- do.call("s.arrow", c(list(dfxy = substitute(x$co), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]][[1]]))
+    g32 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[3]][[2]]))
+    g3 <- do.call("insert", list(g32@Call, g31@Call, posi = "topleft", plot = FALSE, inset = 0, ratio = 0.2))
+    g4 <- do.call("s.label", c(list(dfxy = substitute(x$link), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
+    
+    ## ADEgS creation
+    lay <- matrix(c(1, 2, 3, 4), 2, 2)
+    object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4), positions = layout2position(lay), add = matrix(0, ncol = 4, nrow = 4), Call = match.call())
+    names(object) <- graphsnames
+    if(plot)
+        print(object)
+    invisible(object)
 }
 
 
 "plot.multispati" <- function(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, ...) {
-  if(!inherits(x, "multispati")) 
-	  stop("Object of class 'multispati' expected")
-	if((xax == yax) || ((x$nfposi + x$nfnega) == 1))
-    stop("One axis only : not yet implemented")
-  if(length(xax) > 1 | length(yax) > 1)
-    stop("Not implemented for multiple xax/yax")
-  
-  if(xax > (x$nfposi + x$nfnega)) 
-    stop("Non convenient xax")
-  if(yax > (x$nfposi + x$nfnega)) 
-    stop("Non convenient yax")
-  
-  ## sort parameters for each graph
-  graphsnames <- c("G1", "G2", "G3", "G4")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
-  
-  ## parameters management
-  params <- list()
-  params[[1]] <- list(psub = list(text = "Scores and lag scores"))
-  params[[2]] <- list(psub = list(text = "Eigenvalues"), paxes = list(draw = TRUE, x = list(draw = FALSE), y = list(draw = TRUE)))
-  params[[3]] <- list(psub = list(text = "Canonical weights"))
-  params[[4]] <- list(psub = list(text = "X axes"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
-  names(params) <- graphsnames
-  sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
-  
-  ## creation of each individual ADEg
-  g1 <- do.call("s.match", c(list(dfxy1 = substitute(x$li), dfxy2 = substitute(x$ls), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
-  g2 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = c(1:x$nfposi, length(x$eig):(length(x$eig) - x$nfnega + 1)), xax = xax, yax = yax, plot = FALSE), sortparameters[[2]]))
-  g3 <- do.call("s.arrow", c(list(dfxy = substitute(x$c1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]]))
-  g4 <- do.call("s.corcircle",c(list(dfxy = substitute(x$as), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
-  
-  ## ADEgS creation
-  lay <-  matrix(c(rep(0,4), 2, 2, rep(1,4),2,2,rep(1,4), 3,3,rep(1,4), 3,3, rep(1,4), 4,4,rep(0,4), 4,4), 6, 6) 
-  object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4), positions = layout2position(lay), add = matrix(0, ncol = 4, nrow = 4), Call = match.call())
-  names(object) <- graphsnames
-  if(plot)
-    print(object)
-  invisible(object)   
+    if(!inherits(x, "multispati")) 
+        stop("Object of class 'multispati' expected")
+    if((xax == yax) || ((x$nfposi + x$nfnega) == 1))
+        stop("One axis only : not yet implemented")
+    if(length(xax) > 1 | length(yax) > 1)
+        stop("Not implemented for multiple xax/yax")
+    
+    if(xax > (x$nfposi + x$nfnega)) 
+        stop("Non convenient xax")
+    if(yax > (x$nfposi + x$nfnega)) 
+        stop("Non convenient yax")
+    
+    ## sort parameters for each graph
+    graphsnames <- c("row", "eig", "loadings", "Xax")
+    sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+    
+    ## default values for parameters
+    params <- list()
+    params[[1]] <- list(psub = list(text = "Scores and lag scores"))
+    params[[2]] <- list(psub = list(text = "Eigenvalues"), paxes = list(draw = TRUE, x = list(draw = FALSE), y = list(draw = TRUE)))
+    params[[3]] <- list(psub = list(text = "Loadings"))
+    params[[4]] <- list(psub = list(text = "Unconstrained axes"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
+    names(params) <- graphsnames
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+    
+    ## creation of each individual ADEg
+    g1 <- do.call("s.match", c(list(dfxy1 = substitute(x$li), dfxy2 = substitute(x$ls), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
+    g2 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = c(1:x$nfposi, length(x$eig):(length(x$eig) - x$nfnega + 1)), xax = xax, yax = yax, plot = FALSE), sortparameters[[2]]))
+    g3 <- do.call("s.arrow", c(list(dfxy = substitute(x$c1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]]))
+    g4 <- do.call("s.corcircle",c(list(dfxy = substitute(x$as), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
+    
+    ## ADEgS creation
+    lay <-  matrix(c(rep(0,4), 2, 2, rep(1,4),2,2,rep(1,4), 3,3,rep(1,4), 3,3, rep(1,4), 4,4,rep(0,4), 4,4), 6, 6) 
+    object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4), positions = layout2position(lay), add = matrix(0, ncol = 4, nrow = 4), Call = match.call())
+    names(object) <- graphsnames
+    if(plot)
+        print(object)
+    invisible(object)   
 }
-
-
 "plot.niche" <- function(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, ...) {
-  if(!inherits(x, "niche")) 
-	  stop("Object of class 'niche' expected")
-  if((xax == yax) || (x$nf == 1))
-    stop("One axis only : not yet implemented")
-  if(length(xax) > 1 | length(yax) > 1)
-    stop("Not implemented for multiple xax/yax")
-  
-  if(xax > x$nf) 
-    stop("Non convenient xax")
-  if(yax > x$nf) 
-    stop("Non convenient yax")
-  
-  ## sort parameters for each graph
-  graphsnames <- c("G1", "G2", "G3", "G4", "G5", "G6")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
-  sortparameters <- mapply(repList, sortparameters, c(1, 1, 1, 2, 1, 1))
-  
-  ## parameters management
-  params <- list()
-  params[[1]] <- list(psub = list(text = "Axis"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
-  params[[2]] <- list(psub = list(text = "Variables"), plabels = list(cex = 1.25))
-  params[[3]] <- list(psub = list(text = "Eigenvalues"))
-  params[[4]] <- list()
-  params[[4]]$l1 <- list(psub = list(text = "Samples and Species"), plabels = list(alpha = 0, boxes = list(draw = FALSE)))
-  params[[4]]$l2 <- list(plabels = list(cex = 1.25))
-  params[[5]] <- list(psub = list(text = "Samples"))
-  params[[6]] <- list(psub = list(text = "Niches"), plines = list(col = "transparent"), pellipses = list(axes = list(draw = FALSE)), ellipseSize = 1, plabels = list(alpha = 0, boxes = list(draw = FALSE)))
-  names(params) <- graphsnames
-  sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
-  
-  ## creation of each individual ADEg
-  g1 <- do.call("s.corcircle", c(list(dfxy = substitute(x$as), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
-  g2 <- do.call("s.arrow", c(list(dfxy = substitute(x$c1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
-  g3 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[3]])) 
-  g41 <- do.call("s.label", c(list(dfxy = substitute(x$ls), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]][[1]]))
-  g42 <- do.call("s.label", c(list(dfxy = substitute(x$li), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]][[2]]))
-  g4 <- do.call("superpose", list(g41, g42))
-  g4@Call <- call("superpose", g41@Call, g42@Call)
-  g5 <- do.call("s.label", c(list(dfxy = substitute(x$ls), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]]))
-  g6 <- do.call("s.distri", c(list(dfxy = substitute(x$ls), dfdistri = as.list(x$call)[[3]], xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
-  
-  ## ADEgS creation
-  lay <- matrix(c(1, 2, 3, 4, 4, 5, 4, 4, 6), 3, 3)
-  object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4, g5, g6), positions = layout2position(lay), add = matrix(0, ncol = 6, nrow = 6), Call = match.call())
-  names(object) <- graphsnames
-  if(plot)
-    print(object)
-  invisible(object)
+    if(!inherits(x, "niche")) 
+        stop("Object of class 'niche' expected")
+    if((xax == yax) || (x$nf == 1))
+        stop("One axis only : not yet implemented")
+    if(length(xax) > 1 | length(yax) > 1)
+        stop("Not implemented for multiple xax/yax")
+    
+    if(xax > x$nf) 
+        stop("Non convenient xax")
+    if(yax > x$nf) 
+        stop("Non convenient yax")
+    
+    ## sort parameters for each graph
+    graphsnames <- c("Xax", "var", "eig", "species", "samples", "niches")
+    sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+    sortparameters <- mapply(repList, sortparameters, c(1, 1, 1, 2, 1, 1))
+    
+    ## default values for parameters
+    params <- list()
+    params[[1]] <- list(psub = list(text = "Unconstrained axes"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
+    params[[2]] <- list(psub = list(text = "Variables"), plabels = list(cex = 1.25))
+    params[[3]] <- list(psub = list(text = "Eigenvalues"))
+    params[[4]] <- list()
+    params[[4]]$l1 <- list(psub = list(text = "Samples and Species"), plabels = list(alpha = 0, boxes = list(draw = FALSE)))
+    params[[4]]$l2 <- list(plabels = list(cex = 1.25))
+    params[[5]] <- list(psub = list(text = "Samples"))
+    params[[6]] <- list(psub = list(text = "Niches"), plines = list(col = "transparent"), pellipses = list(axes = list(draw = FALSE)), ellipseSize = 1, plabels = list(alpha = 0, boxes = list(draw = FALSE)))
+    names(params) <- graphsnames
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+    
+    ## creation of each individual ADEg
+    g1 <- do.call("s.corcircle", c(list(dfxy = substitute(x$as), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
+    g2 <- do.call("s.arrow", c(list(dfxy = substitute(x$c1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
+    g3 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[3]])) 
+    g41 <- do.call("s.label", c(list(dfxy = substitute(x$ls), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]][[1]]))
+    g42 <- do.call("s.label", c(list(dfxy = substitute(x$li), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]][[2]]))
+    g4 <- do.call("superpose", list(g41, g42))
+    g4@Call <- call("superpose", g41@Call, g42@Call)
+    g5 <- do.call("s.label", c(list(dfxy = substitute(x$ls), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]]))
+    g6 <- do.call("s.distri", c(list(dfxy = substitute(x$ls), dfdistri = as.list(x$call)[[3]], xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
+    
+    ## ADEgS creation
+    lay <- matrix(c(1, 2, 3, 4, 4, 5, 4, 4, 6), 3, 3)
+    object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4, g5, g6), positions = layout2position(lay), add = matrix(0, ncol = 6, nrow = 6), Call = match.call())
+    names(object) <- graphsnames
+    if(plot)
+        print(object)
+    invisible(object)
 }
 
 
 "plot.procuste" <- function(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, ...) {
-  if(!inherits(x, "procuste")) 
+    if(!inherits(x, "procuste")) 
   	stop("Object of class 'procuste' expected")
-  if((xax == yax) || (x$nf == 1))
+    if((xax == yax) || (x$nf == 1))
   	stop("One axis only : not yet implemented")
-  if(length(xax) > 1 | length(yax) > 1)
+    if(length(xax) > 1 | length(yax) > 1)
   	stop("Not implemented for multiple xax/yax")
-  
-  if(xax > x$nf) 
+    
+    if(xax > x$nf) 
   	stop("Non convenient xax")
-  if(yax > x$nf) 
+    if(yax > x$nf) 
   	stop("Non convenient yax")
-  
-  ## sort parameters for each graph
-  graphsnames <- c("G1", "G2", "G3", "G4", "G5", "G6")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
-  
-  ## parameters management
-  params <- list()
-  params[[1]] <- list(psub = list(text = "Loadings 1"), plabels = list(cex = 1.25))
-  params[[2]] <- list(psub = list(text = "Loadings 2"), plabels = list(cex = 1.25))
-  params[[3]] <- list(psub = list(text = "Eigenvalues"))
-  params[[4]] <- list(psub = list(text = "Common projection"))
-  params[[5]] <- list(psub = list(text = "Array 1"))
-  params[[6]] <- list(psub = list(text = "Array 2"))
-  names(params) <- graphsnames
-  sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
-  
-  ## creation of each individual ADEg
-  g1 <- do.call("s.arrow", c(list(dfxy = substitute(x$load1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
-  g2 <- do.call("s.arrow", c(list(dfxy = substitute(x$load2), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
-  g3 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$d^2), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[3]])) 
-  g4 <- do.call("s.match", c(list(dfxy1 = substitute(x$scor1), dfxy2 = substitute(x$scor2), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
-  g5 <- do.call("s.label", c(list(dfxy = substitute(x$scor1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]]))
-  g6 <- do.call("s.label", c(list(dfxy = substitute(x$scor2), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
-  
-  ## ADEgS creation
-  lay <- matrix(c(1, 2, 3, 4, 4, 5, 4, 4, 6), 3, 3)
-  object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4, g5, g6), positions = layout2position(lay), add = matrix(0, ncol = 6, nrow = 6), Call = match.call())
-  names(object) <- graphsnames
-  if(plot)
+    
+    ## sort parameters for each graph
+    graphsnames <- c("Xloadings", "Yloadings", "eig", "XYmatch", "Xrow", "Yrow")
+    sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+    
+    ## default values for parameters
+    params <- list()
+    params[[1]] <- list(psub = list(text = "X loadings"), plabels = list(cex = 1.25))
+    params[[2]] <- list(psub = list(text = "Y loadings"), plabels = list(cex = 1.25))
+    params[[3]] <- list(psub = list(text = "Eigenvalues"))
+    params[[4]] <- list(psub = list(text = "Row scores (X -> Y)"))
+    params[[5]] <- list(psub = list(text = "X row scores"))
+    params[[6]] <- list(psub = list(text = "Y row scores"))
+    names(params) <- graphsnames
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+    
+    ## creation of each individual ADEg
+    g1 <- do.call("s.arrow", c(list(dfxy = substitute(x$load1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
+    g2 <- do.call("s.arrow", c(list(dfxy = substitute(x$load2), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
+    g3 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$d^2), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[3]])) 
+    g4 <- do.call("s.match", c(list(dfxy1 = substitute(x$scor1), dfxy2 = substitute(x$scor2), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
+    g5 <- do.call("s.label", c(list(dfxy = substitute(x$scor1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]]))
+    g6 <- do.call("s.label", c(list(dfxy = substitute(x$scor2), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
+    
+    ## ADEgS creation
+    lay <- matrix(c(1, 2, 3, 4, 4, 5, 4, 4, 6), 3, 3)
+    object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4, g5, g6), positions = layout2position(lay), add = matrix(0, ncol = 6, nrow = 6), Call = match.call())
+    names(object) <- graphsnames
+    if(plot)
   	print(object)
-  invisible(object)
+    invisible(object)
 }
 
 
 "plot.rlq" <- function(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, ...) {
-  if(!inherits(x, "rlq")) 
-	  stop("Object of class 'rlq' expected")
-  if((xax == yax) || (x$nf == 1))
-    stop("One axis only : not yet implemented")
-  if(length(xax) > 1 | length(yax) > 1)
-    stop("Not implemented for multiple xax/yax")
-  
-  if(xax > x$nf)
-    stop("Non convenient xax")
-  if(yax > x$nf)
-    stop("Non convenient yax")
-  
-  appel <- as.list(x$call)
-  fac <- eval.parent(appel$fac)
-  
-  ## sort parameters for each graph
-  graphsnames <- c("G1", "G2", "G3", "G4", "G5", "G6", "G7")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
-  
-  ## parameters management
-  params <- list()
-  params[[1]] <- list(psub = list(text = "R row scores"), plabels = list(cex = 1.25))
-  params[[2]] <- list(psub = list(text = "Q row scores"), plabels = list(cex = 1.25))
-  params[[3]] <- list(psub = list(text = "R axes"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
-  params[[4]] <- list(psub = list(text = "R Canonical weights"))
-  params[[5]] <- list(psub = list(text = "Q axes"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
-  params[[6]] <- list(psub = list(text = "Q Canonical weights"))
-  params[[7]] <- list(psub = list(text = "Eigenvalues"))
-  names(params) <- graphsnames
-  sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
-  
-  ## creation of each individual ADEg
-  g1 <- do.call("s.label", c(list(dfxy = substitute(x$lR), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
-  g2 <- do.call("s.label", c(list(dfxy = substitute(x$lQ), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
-  g3 <- do.call("s.corcircle", c(list(dfxy = substitute(x$aR), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]]))
-  g4 <- do.call("s.arrow", c(list(dfxy = substitute(x$l1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
-  g5 <- do.call("s.corcircle", c(list(dfxy = substitute(x$aQ), xax, yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]]))
-  g6 <- do.call("s.arrow", c(list(dfxy = substitute(x$c1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
-  g7 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[7]])) 
-  
-  ## ADEgS creation
-  lay <- matrix(c(1, 1, 3, 1, 1, 4, 2, 2, 5, 2, 2, 6, 0, 0, 7), 3, 5)
-  object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4, g5, g6, g7), positions = layout2position(lay), add = matrix(0, ncol = 7, nrow = 7), Call = match.call())
-  names(object) <- graphsnames
-  if(plot)
-    print(object)
-  invisible(object)
+    if(!inherits(x, "rlq")) 
+        stop("Object of class 'rlq' expected")
+    if((xax == yax) || (x$nf == 1))
+        stop("One axis only : not yet implemented")
+    if(length(xax) > 1 | length(yax) > 1)
+        stop("Not implemented for multiple xax/yax")
+    
+    if(xax > x$nf)
+        stop("Non convenient xax")
+    if(yax > x$nf)
+        stop("Non convenient yax")
+    
+    appel <- as.list(x$call)
+    fac <- eval.parent(appel$fac)
+    
+    ## sort parameters for each graph
+    graphsnames <- c("Rrow", "Qrow", "Rax", "Rloadings", "Qax", "Qloadings", "eig")
+    sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+    
+    ## default values for parameters
+    params <- list()
+    params[[1]] <- list(psub = list(text = "R row scores"), plabels = list(cex = 1.25))
+    params[[2]] <- list(psub = list(text = "Q row scores"), plabels = list(cex = 1.25))
+    params[[3]] <- list(psub = list(text = "Unconstrained axes (R)"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
+    params[[4]] <- list(psub = list(text = "R loadings"))
+    params[[5]] <- list(psub = list(text = "Unconstrained axes (Q)"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
+    params[[6]] <- list(psub = list(text = "Q loadings"))
+    params[[7]] <- list(psub = list(text = "Eigenvalues"))
+    names(params) <- graphsnames
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+    
+    ## creation of each individual ADEg
+    g1 <- do.call("s.label", c(list(dfxy = substitute(x$lR), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
+    g2 <- do.call("s.label", c(list(dfxy = substitute(x$lQ), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
+    g3 <- do.call("s.corcircle", c(list(dfxy = substitute(x$aR), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]]))
+    g4 <- do.call("s.arrow", c(list(dfxy = substitute(x$l1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
+    g5 <- do.call("s.corcircle", c(list(dfxy = substitute(x$aQ), xax, yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]]))
+    g6 <- do.call("s.arrow", c(list(dfxy = substitute(x$c1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
+    g7 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[7]])) 
+    
+    ## ADEgS creation
+    lay <- matrix(c(1, 1, 3, 1, 1, 4, 2, 2, 5, 2, 2, 6, 0, 0, 7), 3, 5)
+    object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4, g5, g6, g7), positions = layout2position(lay), add = matrix(0, ncol = 7, nrow = 7), Call = match.call())
+    names(object) <- graphsnames
+    if(plot)
+        print(object)
+    invisible(object)
 }
 
 
 "plot.pta" <- function(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, ...) {
-  if(!inherits(x, "pta")) 
-	  stop("Object of class 'pta' expected")
-  if((xax == yax) || (x$nf == 1))
-    stop("One axis only : not yet implemented")
-  if(length(xax) > 1 | length(yax) > 1)
-    stop("Not implemented for multiple xax/yax")
-  
-  if(xax > x$nf) 
-    stop("Non convenient xax")
-  if(yax > x$nf) 
-    stop("Non convenient yax")
-  
-  #prepare
-  dfxy <- substitute(matrix(c(x$tabw, x$cos2), nrow = length(x$tabw), ncol = 2, dimnames = list(rownames(x$RV))))
-  
-  ## sort parameters for each graph
-  graphsnames <- c("G1", "G2", "G3", "G4")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
-  sortparameters <- mapply(repList, sortparameters, c(2, 1, 2, 1))
-  
-  ## parameters management
-  params <- list()
-  params[[1]] <- list()
-  params[[1]]$l1 <- list(psub = list(text = "Interstructure", position = "topleft"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
-  params[[1]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE), p1d = list(horizontal = FALSE))
-  params[[2]] <- list(psub = list(text = "Compromise", position = "topleft"), plabels = list(cex = 1.25))
-  params[[3]] <- list()
-  params[[3]]$l1 <- list(psub = list(text = "Compromise", position = "topleft"), plabels = list(cex = 1.25))
-  params[[3]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE), p1d = list(horizontal = FALSE))
-  params[[4]] <- list(porigin = list(include = FALSE), paxes = list(aspectratio = "fill", draw = TRUE), main = "Typological value", xlab = "Tables weights", ylab = "Cos 2", plabels = list(cex = 1.25))
-  names(params) <- graphsnames
-  sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
-  
-  ## creation of each individual ADEg
-  g11 <- do.call("s.corcircle", c(list(dfxy = substitute(x$RV.coo), xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]$l1))
-  g12 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$RV.eig), nf = 1:length(x$RV.eig), xax = xax, yax = yax, plot = FALSE), sortparameters[[1]]$l2))
-  g1 <- do.call("insert", list(g12@Call, g11@Call, posi = "bottomleft", plot = FALSE, ratio = 0.25, inset = 0))
-  g2 <- do.call("s.arrow", c(list(dfxy = substitute(x$co), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
-  g31 <- do.call("s.label", c(list(dfxy = substitute(x$li), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]]$l1))
-  g32 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[3]]$l2))
-  g3 <- do.call("insert", list(g32@Call, g31@Call, posi = "bottomleft", plot = FALSE, ratio = 0.25, inset = 0))
-  g4 <- do.call("s.label", c(list(dfxy = dfxy, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
-  
-  ## ADEgS creation
-  lay <- matrix(c(1, 2, 3, 4), 2, 2)
-  object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4), positions = layout2position(lay), add = matrix(0, ncol = 4, nrow = 4), Call = match.call())
-  names(object) <- graphsnames
-  if(plot)
-    print(object)
-  invisible(object)
+    if(!inherits(x, "pta")) 
+        stop("Object of class 'pta' expected")
+    if((xax == yax) || (x$nf == 1))
+        stop("One axis only : not yet implemented")
+    if(length(xax) > 1 | length(yax) > 1)
+        stop("Not implemented for multiple xax/yax")
+    
+    if(xax > x$nf) 
+        stop("Non convenient xax")
+    if(yax > x$nf) 
+        stop("Non convenient yax")
+    
+    ## prepare
+    dfxy <- substitute(matrix(c(x$tabw, x$cos2), nrow = length(x$tabw), ncol = 2, dimnames = list(rownames(x$RV))))
+    
+    ## sort parameters for each graph
+    graphsnames <- c("inter", "col", "row", "typo")
+    sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+    sortparameters <- mapply(repList, sortparameters, c(2, 1, 2, 1))
+    
+    ## default values for parameters
+    params <- list()
+    params[[1]] <- list()
+    params[[1]]$l1 <- list(psub = list(text = "Interstructure", position = "topleft"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
+    params[[1]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE), p1d = list(horizontal = FALSE))
+    params[[2]] <- list(psub = list(text = "Columns (compromise)", position = "topleft"), plabels = list(cex = 1.25))
+    params[[3]] <- list()
+    params[[3]]$l1 <- list(psub = list(text = "Rows (compromise)", position = "topleft"), plabels = list(cex = 1.25))
+    params[[3]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE), p1d = list(horizontal = FALSE))
+    params[[4]] <- list(porigin = list(include = FALSE), paxes = list(aspectratio = "fill", draw = TRUE), main = "Typological value", xlab = "Tables weights", ylab = "Cos 2", plabels = list(cex = 1.25))
+    names(params) <- graphsnames
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+    
+    ## creation of each individual ADEg
+    g11 <- do.call("s.corcircle", c(list(dfxy = substitute(x$RV.coo), xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]$l1))
+    g12 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$RV.eig), nf = 1:length(x$RV.eig), xax = xax, yax = yax, plot = FALSE), sortparameters[[1]]$l2))
+    g1 <- do.call("insert", list(g12@Call, g11@Call, posi = "bottomleft", plot = FALSE, ratio = 0.25, inset = 0))
+    g2 <- do.call("s.arrow", c(list(dfxy = substitute(x$co), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
+    g31 <- do.call("s.label", c(list(dfxy = substitute(x$li), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]]$l1))
+    g32 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[3]]$l2))
+    g3 <- do.call("insert", list(g32@Call, g31@Call, posi = "bottomleft", plot = FALSE, ratio = 0.25, inset = 0))
+    g4 <- do.call("s.label", c(list(dfxy = dfxy, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
+    
+    ## ADEgS creation
+    lay <- matrix(c(1, 2, 3, 4), 2, 2)
+    object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4), positions = layout2position(lay), add = matrix(0, ncol = 4, nrow = 4), Call = match.call())
+    names(object) <- graphsnames
+    if(plot)
+        print(object)
+    invisible(object)
 }
 
 
 "plot.sepan" <- function(x, pos = -1, storeData = FALSE, plot = TRUE, ...) {
-  if(!inherits(x, "sepan")) 
-	  stop("Object of class 'sepan' expected")
-  
-  ## prepare 
-  facets <- substitute(reorder(as.factor(rep(x$tab.names, x$rank)), rep(1:length(x$rank), x$rank)))
-  
-  ## parameter management
-  sortparameters <- .specificpar(...)
-  params <- list()
-  params$adepar <- list(pbackground = list(box = TRUE), pgrid = list(draw = TRUE, text = list(cex = 0)), paxes = list(draw = TRUE, x = list(draw = FALSE)))
-  if(isTRUE(sortparameters$adepar$p1d$horizontal))
-    params$g.args <- list(ylim = c(0, max(x$rank) + 1))
-  else
-    params$g.args <- list(xlim = c(0, max(x$rank) + 1))
-  sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
-  
-  ## ADEgS creation
-  object <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$Eig), nf = 1:ncol(x$Li), xax = 1, yax = 2, pos = pos, storeData = storeData, plot = FALSE, facets = facets), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args))
-  object@Call <- match.call()
-  if(plot)
-    print(object)
-  invisible(object)
+    if(!inherits(x, "sepan")) 
+        stop("Object of class 'sepan' expected")
+    
+    ## prepare 
+    facets <- substitute(reorder(as.factor(rep(x$tab.names, x$rank)), rep(1:length(x$rank), x$rank)))
+    
+    ## default values for parameters
+    sortparameters <- .specificpar(...)
+    params <- list()
+    params$adepar <- list(pbackground = list(box = TRUE), pgrid = list(draw = TRUE, text = list(cex = 0)), paxes = list(draw = TRUE, x = list(draw = FALSE)))
+    if(isTRUE(sortparameters$adepar$p1d$horizontal))
+        params$g.args <- list(ylim = c(0, max(x$rank) + 1))
+    else
+        params$g.args <- list(xlim = c(0, max(x$rank) + 1))
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+    
+    ## ADEgS creation
+    object <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$Eig), nf = 1:ncol(x$Li), xax = 1, yax = 2, pos = pos, storeData = storeData, plot = FALSE, facets = facets), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args))
+    object@Call <- match.call()
+    if(plot)
+        print(object)
+    invisible(object)
 }
 
-
+## TODO Aurelie virer g32
 "plot.statis" <- function(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, ...) {
-  if(!inherits(x, "statis")) 
-    stop("Object of class 'statis' expected")
-  if((xax == yax) || (x$C.nf == 1))
-    stop("One axis only : not yet implemented")
-  if(length(xax) > 1 | length(yax) > 1)
-    stop("Not implemented for multiple xax/yax")
-  
-  if(xax > x$C.nf) 
-    stop("Non convenient xax")
-  if(yax > x$C.nf) 
-    stop("Non convenient yax")
-  
-  #prepare
-  dfxy <- substitute(matrix(c(x$RV.tabw, x$cos2), nrow = length(x$RV.tabw), ncol = 2, dimnames = list(rownames(x$RV))))
-  
-  ## sort parameters for each graph
-  graphsnames <- c("G1", "G2", "G3", "G4")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
-  sortparameters <- mapply(repList, sortparameters, c(2, 1, 2, 2))
-  
-  ## parameters management
-  params <- list()
-  params[[1]] <- list()
-  params[[1]]$l1 <- list(psub = list(text = "Interstructure", position = "topleft"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
-  params[[1]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
-  params[[2]] <- list(porigin = list(include = FALSE), paxes = list(aspectratio = "fill", draw = TRUE), main = "Typological Value", xlab = "Tables Weights", ylab = "Cos 2", plabels = list(cex = 1.25))
-  params[[3]] <- list()
-  params[[3]]$l1 <- list(psub = list(text = "Compromise", position = "topleft"), plabels = list(cex = 1.25))
-  params[[3]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
-  params[[4]] <- list()
-  params[[4]]$l1 <- list(psub = list(text = "Component projection", position = "topleft"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
-  params[[4]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
-  names(params) <- graphsnames
-  sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
-  
-  ## creation of each individual ADEg
-  g11 <- do.call("s.corcircle", c(list(dfxy = substitute(x$RV.coo), xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]][[1]]))
-  g12 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$RV.eig), nf = 1:length(x$RV.eig), xax = xax, yax = yax, plot = FALSE), sortparameters[[1]][[2]]))
-  g1 <- do.call("insert", list(g12@Call, g11@Call, posi = "bottomleft", plot = FALSE, ratio = 0.25, inset = 0))
-  g2 <- do.call("s.label", c(list(dfxy = dfxy, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
-  g31 <- do.call("s.label", c(list(dfxy = substitute(x$C.li), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]][[1]]))
-  g32 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$C.eig), nf = 1:x$C.nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[3]][[2]]))
-  g3 <- do.call("insert", list(g32@Call, g31@Call, posi = "bottomleft", plot = FALSE, ratio = 0.25, inset = 0))
-  g41 <- do.call("s.corcircle", c(list(dfxy = substitute(x$C.T4[x$T4[, 2] == 1, ]), xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]][[1]]))
-  g42 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$C.eig), nf = 1:x$C.nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[4]][[2]]))
-  g4 <- do.call("insert", list(g42@Call, g41@Call, posi = "bottomleft", plot = FALSE, ratio = 0.25, inset = 0))
-  
-  ## ADEgS creation
-  lay <- matrix(c(1, 2, 3, 4), 2, 2)
-  object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4), positions = layout2position(lay), add = matrix(0, ncol = 4, nrow = 4), Call = match.call())
-  names(object) <- graphsnames
-  if(plot)
-    print(object)
-  invisible(object)
+    if(!inherits(x, "statis")) 
+        stop("Object of class 'statis' expected")
+    if((xax == yax) || (x$C.nf == 1))
+        stop("One axis only : not yet implemented")
+    if(length(xax) > 1 | length(yax) > 1)
+        stop("Not implemented for multiple xax/yax")
+    
+    if(xax > x$C.nf) 
+        stop("Non convenient xax")
+    if(yax > x$C.nf) 
+        stop("Non convenient yax")
+    
+    ## prepare
+    dfxy <- substitute(matrix(c(x$RV.tabw, x$cos2), nrow = length(x$RV.tabw), ncol = 2, dimnames = list(rownames(x$RV))))
+    
+    ## sort parameters for each graph
+    graphsnames <- c("inter", "typo", "row", "comp")
+    sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+    sortparameters <- mapply(repList, sortparameters, c(2, 1, 2, 2))
+    
+    ## default values for parameters
+    params <- list()
+    params[[1]] <- list()
+    params[[1]]$l1 <- list(psub = list(text = "Interstructure", position = "topleft"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
+    params[[1]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
+    params[[2]] <- list(porigin = list(include = FALSE), paxes = list(aspectratio = "fill", draw = TRUE), main = "Typological Value", xlab = "Tables Weights", ylab = "Cos 2", plabels = list(cex = 1.25))
+    params[[3]] <- list()
+    params[[3]]$l1 <- list(psub = list(text = "Rows (compromise)", position = "topleft"), plabels = list(cex = 1.25))
+    params[[3]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
+    params[[4]] <- list()
+    params[[4]]$l1 <- list(psub = list(text = "Components (separate analyses)", position = "topleft"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
+    params[[4]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
+    names(params) <- graphsnames
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+    
+    ## creation of each individual ADEg
+    g11 <- do.call("s.corcircle", c(list(dfxy = substitute(x$RV.coo), xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]][[1]]))
+    g12 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$RV.eig), nf = 1:length(x$RV.eig), xax = xax, yax = yax, plot = FALSE), sortparameters[[1]][[2]]))
+    g1 <- do.call("insert", list(g12@Call, g11@Call, posi = "bottomleft", plot = FALSE, ratio = 0.25, inset = 0))
+    g2 <- do.call("s.label", c(list(dfxy = dfxy, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
+    g31 <- do.call("s.label", c(list(dfxy = substitute(x$C.li), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]][[1]]))
+    g32 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$C.eig), nf = 1:x$C.nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[3]][[2]]))
+    g3 <- do.call("insert", list(g32@Call, g31@Call, posi = "bottomleft", plot = FALSE, ratio = 0.25, inset = 0))
+    g41 <- do.call("s.corcircle", c(list(dfxy = substitute(x$C.T4[x$T4[, 2] == 1, ]), xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]][[1]]))
+    g42 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$C.eig), nf = 1:x$C.nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[4]][[2]]))
+    g4 <- do.call("insert", list(g42@Call, g41@Call, posi = "bottomleft", plot = FALSE, ratio = 0.25, inset = 0))
+    
+    ## ADEgS creation
+    lay <- matrix(c(1, 2, 3, 4), 2, 2)
+    object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4), positions = layout2position(lay), add = matrix(0, ncol = 4, nrow = 4), Call = match.call())
+    names(object) <- graphsnames
+    if(plot)
+        print(object)
+    invisible(object)
 }
 
 
@@ -1063,21 +1050,20 @@ repList <- function(x, times) {
     if(yax > x$nf) 
         stop("Non convenient yax")
     
-    
     ## sort parameters for each graph
-    graphsnames <- c("G1", "G2", "G3", "G4", "G5")
+    graphsnames <- c("Xrow", "eig", "cov2", "Ycol", "Xloadings")
     sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
     
-    ## parameters management
+    ## default values for parameters
     params <- list()
     
-    params[[1]]<- list(psub = list(text = "Scores (X)"), plabels = list(cex = 1.25))
+    params[[1]]<- list(psub = list(text = "Row scores (X)"), plabels = list(cex = 1.25))
     params[[2]]<- list(psub = list(text = "Eigenvalues"))
 
     params[[3]] <- list(psub = list(text = "Cov^2"), plabels = list(cex = 1.25))
-    params[[4]] <- list(psub = list(text = "Y variables"), plabels = list(cex = 1.25))
+    params[[4]] <- list(psub = list(text = "Y columns"), plabels = list(cex = 1.25))
     params[[5]] <- list(psub = list(text = "X loadings"), plabels = list(cex = 1.25))
-     
+    
     names(params) <- graphsnames
     sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
     
@@ -1112,7 +1098,8 @@ plot.randxval <- function(x, pos = -1, storeData = FALSE, plot = TRUE, ...){
     lim <- range(x$stats)
     origin <- if(is.null(sortparameters[[1]]$porigin)) list(origin = 0, include = FALSE) else sortparameters[[1]]$porigin
     lim <- .setlimits1D(lim[1], lim[2], origin = origin$origin[1], includeOr = origin$include)
-    
+
+    ## default values for parameters
     params <- list()
     params[[1]] <- list(plines.col = 'red', ppoints.col = 'red', p1d.horizontal = FALSE, paxes.draw = TRUE, ppoints.cex = 2, ylab = "Root Mean Square Error", ylim = lim, porigin = origin)
     params[[2]] <- list(plines.col = 'red', ppoly.col = 'red', p1d.horizontal = FALSE, paxes.draw = TRUE, method = "bars")
@@ -1151,7 +1138,8 @@ plot.krandxval <- function(x, pos = -1, storeData = FALSE, plot = TRUE, ...){
     lim <- range(x$statsRMSEc[,-1], x$statsRMSEv[,-1])
     origin <- if(is.null(sortparameters[[1]]$porigin)) list(origin = 0, include = FALSE) else sortparameters[[1]]$porigin
     lim <- .setlimits1D(lim[1], lim[2], origin = origin$origin[1], includeOr = origin$include)
-    
+
+    ## default values for parameters
     params <- list()
     params[[1]] <- list(plines.col = 'red', ppoints.col = 'red', p1d.horizontal = FALSE, paxes.draw = TRUE, ppoints.cex = 2, ylab = "Root Mean Square Error", ylim = lim, porigin = origin)
     params[[2]] <- list(plines.col = 'red', ppoly.col = 'red', p1d.horizontal = FALSE, paxes.draw = TRUE, method = "area")
@@ -1183,14 +1171,15 @@ plot.randboot <- function(x, pos = -1, storeData = FALSE, plot = TRUE, ...){
         stop("Object of class 'randboot' expected")
     
     ## Plot results 
-    graphsnames <- c("Obs", "Quantiles")
+    graphsnames <- c("obs", "quantiles")
     sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
     
     ## compute common limits
     lim <- range(c(x$obs, x$stats))
     origin <- if(is.null(sortparameters[[1]]$porigin)) list(origin = 0, include = FALSE) else sortparameters[[1]]$porigin
     lim <- .setlimits1D(lim[1], lim[2], origin = origin$origin[1], includeOr = origin$include)
-    
+
+    ## default values for parameters
     params <- list()
     params[[1]] <- list(p1d.horizontal = FALSE, paxes.draw = TRUE, ppoints.cex = 2, ylim = lim, porigin = origin)
     params[[2]] <- list(p1d.horizontal = FALSE, paxes.draw = TRUE, method = "bars")
@@ -1201,7 +1190,7 @@ plot.randboot <- function(x, pos = -1, storeData = FALSE, plot = TRUE, ...){
     ## creation of each individual ADEg
     g1 <- do.call("s1d.curve", c(list(score = substitute(x$obs), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
     g2 <- do.call("s1d.interval", c(list(score1 = substitute(x$stats[1]), score2 = substitute(x$stats[2]), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
-   
+    
     ## ADEgS creation
     object <- superpose(g1, g2)
     object@Call <- match.call()
@@ -1218,14 +1207,15 @@ plot.krandboot <- function(x, pos = -1, storeData = FALSE, plot = TRUE, ...){
         stop("Object of class 'krandboot' expected")
     
     ## Plot results 
-    graphsnames <- c("Obs", "Quantiles")
+    graphsnames <- c("obs", "quantiles")
     sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
     
     ## compute common limits
     lim <- range(c(x$obs, range(x$stats)))
     origin <- if(is.null(sortparameters[[1]]$porigin)) list(origin = 0, include = FALSE) else sortparameters[[1]]$porigin
     lim <- .setlimits1D(lim[1], lim[2], origin = origin$origin[1], includeOr = origin$include)
-    
+
+    ## default values for parameters
     params <- list()
     params[[1]] <- list(p1d.horizontal = FALSE, paxes.draw = TRUE, ppoints.cex = 2, ylim = lim, porigin = origin)
     params[[2]] <- list(p1d.horizontal = FALSE, paxes.draw = TRUE, method = "bars")
@@ -1236,7 +1226,7 @@ plot.krandboot <- function(x, pos = -1, storeData = FALSE, plot = TRUE, ...){
     ## creation of each individual ADEg
     g1 <- do.call("s1d.curve", c(list(score = substitute(x$obs), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
     g2 <- do.call("s1d.interval", c(list(score1 = substitute(x$stats[,1]), score2 = substitute(x$stats[,2]), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
-   
+    
     ## ADEgS creation
     object <- superpose(g1, g2)
     object@Call <- match.call()

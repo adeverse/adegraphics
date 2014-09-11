@@ -1,3 +1,14 @@
+repList <- function(x, times) {
+  if(times == 1)
+    l <- x
+  else {
+    l <- list()
+    l <- lapply(1:times, function(i) x)
+    names(l) <- paste("l", sapply(1:times, function(i) i), sep = "")
+  }
+  return(l)
+}
+
 .proportional_map <- function(z, maxz) {
   ## Proportional Symbol Mapping in R
   ## Susumu Tanimura, Chusi Kuroiwa, Tsutomu Mizota
@@ -425,19 +436,6 @@ breakstest <- function(breaki, zi, n) {
     }
   }
   return(breaki)
-}
-
-## extract the main string in row names for labels
-extractlabels <- function(labels) {
-  start <- sapply(labels, FUN = function(x) {max(unlist(gregexpr("\\.", x)))})
-  if(!all.equal(start, rep(-1, length(start)), check.attributes = FALSE) == TRUE) {
-    start <- start + 1
-    end <- sapply(labels, function(x) nchar(x))
-    t <- sort(as.numeric(names(table(substr(labels, start, end)))))
-    if((all.equal(t, seq(1, length(t))) == TRUE) | (length(t) == 1))
-      labels <- substr(labels, 1, start - 2)
-  }
-  return(labels)
 }
 
 
