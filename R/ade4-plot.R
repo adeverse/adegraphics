@@ -653,7 +653,6 @@
     invisible(object)  
 }
 
-## TODO (Aurelie correct eigenvalues, keep only g22)
 "plot.mfa" <- function(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, ...) {
     if(!inherits(x, "mfa")) 
         stop("Object of class 'mfa' expected")
@@ -670,33 +669,25 @@
     ## sort parameters for each graph
     graphsnames <- c("row", "comp", "eig", "link")
     sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
-    sortparameters <- mapply(repList, sortparameters, c(2, 2, 2, 1))
+    sortparameters <- mapply(repList, sortparameters, c(1, 2, 1, 1))
     
     ## default values for parameters
     params <- list()
-    params[[1]] <- list()
-    params[[1]]$l1 <- list(psub = list(text = "Rows"), pellipses = list(alpha = 0, axes = list(draw = FALSE)), label = row.names(x$li), plabels = list(cex = 1.25))
-    params[[1]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
+    params[[1]] <- list(psub = list(text = "Rows"), pellipses = list(alpha = 0, axes = list(draw = FALSE)), label = row.names(x$li), plabels = list(cex = 1.25))
     params[[2]] <- list()
     params[[2]]$l1 <- list(psub = list(text = "Components (separate analyses)", position = "topleft"), pbackground = list(box = FALSE), fullcircle = FALSE, plabels = list(cex = 1.25))
     params[[2]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
-    params[[3]] <- list()
-    params[[3]]$l1 <- list(psub = list(text = "Columns"), plabels = list(cex = 1.25))
-    params[[3]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
+    params[[3]] <- list(psub = list(text = "Columns"), plabels = list(cex = 1.25))
     params[[4]] <- list(porigin = list(include = FALSE), paxes = list(aspectratio = "fill", draw = TRUE), main = "Link", xlab = "Comp1", ylab = "Comp2", plabels = list(cex = 1.25))
     names(params) <- graphsnames
     sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
     
     ## creation of each individual ADEg
-    g11 <- do.call("s.class", c(list(dfxy = substitute(x$lisup), fac = substitute(as.factor(x$TL[, 2])), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]][[1]]))
-    g12 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[1]][[2]]))
-    g1 <- do.call("insert", list(g12@Call, g11@Call, posi = "topleft", plot = FALSE, inset = 0, ratio = 0.2))
+    g1 <- do.call("s.class", c(list(dfxy = substitute(x$lisup), fac = substitute(as.factor(x$TL[, 2])), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
     g21 <- do.call("s.corcircle", c(list(dfxy = substitute(x$T4comp[x$T4[, 2] == 1, ]), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]][[1]]))
     g22 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[2]][[2]]))
     g2 <- do.call("insert", list(g22@Call, g21@Call, posi = "bottomleft", plot = FALSE, inset = 0, ratio = 0.2))
-    g31 <- do.call("s.arrow", c(list(dfxy = substitute(x$co), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]][[1]]))
-    g32 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[3]][[2]]))
-    g3 <- do.call("insert", list(g32@Call, g31@Call, posi = "topleft", plot = FALSE, inset = 0, ratio = 0.2))
+    g3 <- do.call("s.arrow", c(list(dfxy = substitute(x$co), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]]))
     g4 <- do.call("s.label", c(list(dfxy = substitute(x$link), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
     
     ## ADEgS creation
@@ -749,6 +740,8 @@
         print(object)
     invisible(object)   
 }
+
+
 "plot.niche" <- function(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, ...) {
     if(!inherits(x, "niche")) 
         stop("Object of class 'niche' expected")
@@ -977,7 +970,6 @@
     invisible(object)
 }
 
-## TODO Aurelie virer g32
 "plot.statis" <- function(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, ...) {
     if(!inherits(x, "statis")) 
         stop("Object of class 'statis' expected")
@@ -997,34 +989,26 @@
     ## sort parameters for each graph
     graphsnames <- c("inter", "typo", "row", "comp")
     sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
-    sortparameters <- mapply(repList, sortparameters, c(2, 1, 2, 2))
+    sortparameters <- mapply(repList, sortparameters, c(1, 1, 2, 1))
     
     ## default values for parameters
     params <- list()
-    params[[1]] <- list()
-    params[[1]]$l1 <- list(psub = list(text = "Interstructure", position = "topleft"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
-    params[[1]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
+    params[[1]] <- list(psub = list(text = "Interstructure", position = "topleft"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
     params[[2]] <- list(porigin = list(include = FALSE), paxes = list(aspectratio = "fill", draw = TRUE), main = "Typological Value", xlab = "Tables Weights", ylab = "Cos 2", plabels = list(cex = 1.25))
     params[[3]] <- list()
     params[[3]]$l1 <- list(psub = list(text = "Rows (compromise)", position = "topleft"), plabels = list(cex = 1.25))
     params[[3]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
-    params[[4]] <- list()
-    params[[4]]$l1 <- list(psub = list(text = "Components (separate analyses)", position = "topleft"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
-    params[[4]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
+    params[[4]] <- list(psub = list(text = "Components (separate analyses)", position = "topleft"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
     names(params) <- graphsnames
     sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
     
     ## creation of each individual ADEg
-    g11 <- do.call("s.corcircle", c(list(dfxy = substitute(x$RV.coo), xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]][[1]]))
-    g12 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$RV.eig), nf = 1:length(x$RV.eig), xax = xax, yax = yax, plot = FALSE), sortparameters[[1]][[2]]))
-    g1 <- do.call("insert", list(g12@Call, g11@Call, posi = "bottomleft", plot = FALSE, ratio = 0.25, inset = 0))
+    g1 <- do.call("s.corcircle", c(list(dfxy = substitute(x$RV.coo), xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
     g2 <- do.call("s.label", c(list(dfxy = dfxy, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
     g31 <- do.call("s.label", c(list(dfxy = substitute(x$C.li), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]][[1]]))
     g32 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$C.eig), nf = 1:x$C.nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[3]][[2]]))
     g3 <- do.call("insert", list(g32@Call, g31@Call, posi = "bottomleft", plot = FALSE, ratio = 0.25, inset = 0))
-    g41 <- do.call("s.corcircle", c(list(dfxy = substitute(x$C.T4[x$T4[, 2] == 1, ]), xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]][[1]]))
-    g42 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$C.eig), nf = 1:x$C.nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[4]][[2]]))
-    g4 <- do.call("insert", list(g42@Call, g41@Call, posi = "bottomleft", plot = FALSE, ratio = 0.25, inset = 0))
+    g4 <- do.call("s.corcircle", c(list(dfxy = substitute(x$C.T4[x$T4[, 2] == 1, ]), xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
     
     ## ADEgS creation
     lay <- matrix(c(1, 2, 3, 4), 2, 2)
