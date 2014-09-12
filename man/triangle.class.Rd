@@ -3,7 +3,8 @@
 
 \title{Ternary plot with a partition in classes (levels of a factor)}
 
-\description{--
+\description{
+  This function represents a three dimensional scatter plot with a partition in classes (levels of a factor).
 }
 
 \usage{
@@ -61,8 +62,8 @@ triangle.class(dfxyz, fac, wt = rep(1, NROW(fac)), labels = levels(fac),
 }
 
 \value{
-  An object of class \code{ADEg} (subclass \code{Tr.class}) or \code{ADEgS} (if \code{add} is \code{TRUE} and/or 
-  if facets are used).\cr
+  An object of class \code{ADEg} (subclass \code{Tr.class}) or \code{ADEgS} (if \code{showposition} is TRUE, 
+  if \code{add} is \code{TRUE} and/or if facets are used).\cr
   The result is displayed if \code{plot} is \code{TRUE}.
 }
 

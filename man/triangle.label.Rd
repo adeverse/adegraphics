@@ -57,8 +57,8 @@ triangle.label(dfxyz, labels = rownames(dfxyz), adjust = TRUE, min3d = NULL,
 }
 
 \value{
-  An object of class \code{ADEg} (subclass \code{Tr.label}) or \code{ADEgS} (if \code{add} is \code{TRUE} and/or 
-  if facets are used).\cr
+  An object of class \code{ADEg} (subclass \code{Tr.label}) or \code{ADEgS} (if \code{showposition} is TRUE, 
+  if \code{add} is \code{TRUE} and/or if facets are used).\cr
   The result is displayed if \code{plot} is \code{TRUE}.
 }
 
