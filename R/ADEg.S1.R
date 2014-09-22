@@ -223,18 +223,20 @@ setMethod(
     
     object@lattice.call$arguments <- arguments          
     object@lattice.call$graphictype <- "xyplot" 
-    patt <- c("main", "sub", "xlab", "ylab", "xlim", "ylim")
-    patt2 <- c("main", "sub", "xlab", "ylab")
-    prese <- pmatch(patt, names(object@g.args))
-    prese2 <- pmatch(patt2, names(object@g.args))
-    not <- list()
-    if(any(is.na(prese2))) {
-      not <- not[1:sum(is.na(prese2))]
-      names(not) <- patt2[is.na(prese2)]
-    }
-    object@lattice.call$arguments <- c(object@lattice.call$arguments, object@g.args[patt[which(!is.na(prese))]], not, list(strip = FALSE))
+
+    ## get lattice arguments (set unspecified to NULL)
+    argnames <- c("main", "sub", "xlab", "ylab")
+    largs <- object@g.args[argnames]
+    names(largs) <- argnames
+    ## add xlim and ylim if not NULL
+    if("xlim" %in% names(object@g.args))
+        largs["xlim"] <- object@g.args["xlim"]
+    if("ylim" %in% names(object@g.args))
+        largs["ylim"] <- object@g.args["ylim"]
+    
+    object@lattice.call$arguments <- c(object@lattice.call$arguments, largs, list(strip = FALSE))
     assign(name_obj, object, envir = parent.frame())
-  })
+})
 
 
 setMethod(
