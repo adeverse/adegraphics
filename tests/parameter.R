@@ -56,7 +56,7 @@ adegraphics:::.mergingList(list(plabels = list(cex = 3)))
 cha <- rep(LETTERS, length.out = 100)
 xy <- cbind.data.frame(runif(length(cha)), runif(length(cha)))
 g1 <- s.label(xy, labels = cha, paxes.draw = TRUE, plabels.cex = runif(length(cha), 0.5, 1.5))
-update(g1, paxes = list(aspect = "fill", draw = TRUE, x = list(draw = FALSE), y = list(alternating = 3)), 
+update(g1, paxes = list(aspect = "fill", draw = TRUE, x = list(draw = FALSE)), 
   pgrid = list(col = "black", lwd = 2, lty = 5), 
   plabels = list(col = 1:4, alpha = 0.5, cex = 2, boxes = list(border = "blue", col = "antiquewhite", alpha = 0.2, lwd = 2.5, lty = 5))) 
 

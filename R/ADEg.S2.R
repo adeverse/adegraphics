@@ -80,7 +80,7 @@ setMethod(
       }
     }
     
-      limits <- .setlimits(minX = minX, maxX = maxX, minY = minY, maxY = maxY, origin = rep(object@adeg.par$porigin$origin, le = 2), aspect.ratio = object@adeg.par$paxes$aspectratio, includeOr = object@adeg.par$porigin$include)
+    limits <- .setlimits(minX = minX, maxX = maxX, minY = minY, maxY = maxY, origin = rep(object@adeg.par$porigin$origin, le = 2), aspect.ratio = object@adeg.par$paxes$aspectratio, includeOr = object@adeg.par$porigin$include)
     
     if(is.null(object@g.args$xlim) || !identical(object@s.misc$xfullcircle.update, object@g.args$fullcircle))
       object@g.args$xlim <- limits$xlim
@@ -104,22 +104,22 @@ setMethod(
               
       if(object@adeg.par$paxes$draw) {
         ## parameters to plot axes
-        scaleandlab <- list(x = object@adeg.par$paxes$x, y = object@adeg.par$paxes$y)
-        if(is.null(scaleandlab$y$at)) {
-          scaleandlab$y$at <- object@s.misc$backgrid[[3L]][!is.na(object@s.misc$backgrid[[3L]])]
+        scalesandlab <- list(x = object@adeg.par$paxes$x, y = object@adeg.par$paxes$y)
+        if(is.null(scalesandlab$y$at)) {
+          scalesandlab$y$at <- object@s.misc$backgrid[[3L]][!is.na(object@s.misc$backgrid[[3L]])]
           if(class(object) == "S2.corcircle")
-            scaleandlab$y$at <- scaleandlab$y$at[(length(scaleandlab$y$at) / 2 + 1):length(scaleandlab$y$at)]
+            scalesandlab$y$at <- scalesandlab$y$at[(length(scalesandlab$y$at) / 2 + 1):length(scalesandlab$y$at)]
         }
-        if(is.null(scaleandlab$x$at)) {
-          scaleandlab$x$at <- object@s.misc$backgrid[[1L]][!is.na(object@s.misc$backgrid[[1L]])]
+        if(is.null(scalesandlab$x$at)) {
+          scalesandlab$x$at <- object@s.misc$backgrid[[1L]][!is.na(object@s.misc$backgrid[[1L]])]
           if(class(object) == "S2.corcircle")
-            scaleandlab$x$at <- scaleandlab$x$at[1:(length(scaleandlab$x$at) / 2)]
+            scalesandlab$x$at <- scalesandlab$x$at[1:(length(scalesandlab$x$at) / 2)]
         }
       } else 
-        scaleandlab <- list(draw = FALSE) ## no axes
+        scalesandlab <- list(draw = FALSE) ## no axes
     }
     else
-      scaleandlab <- list(draw = FALSE) ## no axes
+      scalesandlab <- list(draw = FALSE) ## no axes
     
     if(object@adeg.par$paxes$aspectratio != "iso")
       object@adeg.par$pgrid$text$cex <- 0 ## grid cell size has no meaning
@@ -127,7 +127,7 @@ setMethod(
     ## if grid and axes are drawn, no text indication
     if(object@adeg.par$pgrid$draw && object@adeg.par$paxes$draw)
       object@adeg.par$pgrid$text$cex <- 0
-    object@s.misc$scales <- scaleandlab
+    object@g.args$scales <- scalesandlab
     assign(name_obj, object, envir = parent.frame())
   })
 
@@ -208,7 +208,7 @@ setMethod(
     
     arguments <- list(
                    par.settings = object@trellis.par,
-                   scales = object@s.misc$scales,
+                   scales = object@g.args$scales,
                    aspect = object@adeg.par$paxes$aspectratio,
                    axis = axis.L, ## see utils.R
                    panel = function(...) {
@@ -228,10 +228,10 @@ setMethod(
     names(largs) <- argnames
     ## add xlim and ylim if not NULL
     if("xlim" %in% names(object@g.args))
-        largs["xlim"] <- object@g.args["xlim"]
+      largs["xlim"] <- object@g.args["xlim"]
     if("ylim" %in% names(object@g.args))
-        largs["ylim"] <- object@g.args["ylim"]
-  
+      largs["ylim"] <- object@g.args["ylim"]
+      
     object@lattice.call$arguments <- c(object@lattice.call$arguments, largs, list(strip = FALSE))
     assign(name_obj, object, envir = parent.frame())
   })

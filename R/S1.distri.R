@@ -100,6 +100,7 @@ setMethod(
       margin <- ref[1]
       if(pscore$rug$draw)
         margin <- ifelse(is.unit(pscore$rug$margin), convertUnit(pscore$rug$margin, typeFrom = "dimension", unitTo = "native", axisFrom = "y", valueOnly = TRUE), pscore$rug$margin)
+          
       ## compute y coordinates for bars
       ylab <- seq(from = ref[1] + lead * margin, to = ref[2], length.out = ngroups + 2)
       ylab <- rev(ylab[-c(1, length(ylab))])

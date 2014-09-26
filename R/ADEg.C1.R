@@ -36,6 +36,9 @@ setMethod(
     
     score <- as.matrix(score)[, 1]  ## to manage 'score' when it is a data.frame with only one column
     
+    if(class(object) == "C1.interval")  ## to manage only the first score in c(score1, score2)
+      score <- score[1:(length(score) / 2)]
+      
     ## limits and scale
     if(!is.null(object@s.misc$hori.update))
       if(object@s.misc$hori.update != object@adeg.par$p1d$horizontal) {
@@ -81,32 +84,38 @@ setMethod(
     v0 <- sort(v0[v0 >= lim[1] & v0 <= lim[2]])
     object@s.misc$backgrid <- list(x = v0, d = cgrid)
 
-    scalesandlab <- list()
+    ## object@adeg.par$paxes has priority over object@g.args$scales
+    scalesandlab <- modifyList(as.list(object@g.args$scales), object@adeg.par$paxes, keep.null = TRUE)
+    
+    if(!scalesandlab$draw) {
+      scalesandlab$x$draw <- FALSE
+      scalesandlab$y$draw <- FALSE
+    }
+    
     if(object@adeg.par$p1d$horizontal) {
       ## draw axes for horizontal plot
-      if(object@adeg.par$paxes$draw) {
-        scalesandlab$y$draw <- object@adeg.par$paxes$y$draw
-        scalesandlab$x <- object@adeg.par$paxes$x
-        if(is.null(scalesandlab$x$at))
-          scalesandlab$x$at <- object@s.misc$backgrid$x
-      } else
-        scalesandlab$draw <- FALSE
+      if(is.null(scalesandlab$x$at))
+        scalesandlab$x$at <- object@s.misc$backgrid$x
+      
+      if(is.null(scalesandlab$y$at))
+        scalesandlab$y$at <- 1:NROW(score)
+      
       if(is.null(object@g.args$xlim))
         object@g.args$xlim <- lim
+      
     } else {
       ## draw axes for vertical plot
-      if(object@adeg.par$paxes$draw) {
-        scalesandlab$x$draw <- object@adeg.par$paxes$x$draw
-        scalesandlab$y <- object@adeg.par$paxes$y
-        if(is.null(scalesandlab$y$at))
-          scalesandlab$y$at <- object@s.misc$backgrid$x
-      } else
-        scalesandlab$draw <- FALSE
+      if(is.null(scalesandlab$y$at))
+        scalesandlab$y$at <- object@s.misc$backgrid$x
+      
+      if(is.null(scalesandlab$x$at))
+        scalesandlab$x$at <- 1:NROW(score)
+      
       if(is.null(object@g.args$ylim))
         object@g.args$ylim <- lim
     }
     
-    object@s.misc$scales <- scalesandlab
+    object@g.args$scales <- scalesandlab
     assign(name_obj, object, envir = parent.frame())
   })
 
@@ -223,7 +232,7 @@ setMethod(
     
     arguments <- list(
                    par.settings = object@trellis.par,
-                   scales = object@s.misc$scales,
+                   scales = object@g.args$scales,
                    ## skipt aspect ratio 
                    axis = axis.L, ## see utils.R
                    panel = function(...) {
@@ -240,9 +249,9 @@ setMethod(
     names(largs) <- argnames
     ## add xlim and ylim if not NULL
     if("xlim" %in% names(object@g.args))
-        largs["xlim"] <- object@g.args["xlim"]
+      largs["xlim"] <- object@g.args["xlim"]
     if("ylim" %in% names(object@g.args))
-        largs["ylim"] <- object@g.args["ylim"]
+      largs["ylim"] <- object@g.args["ylim"]
   
     object@lattice.call$arguments <- c(object@lattice.call$arguments, largs, list(strip = FALSE))
     assign(name_obj, object, envir = parent.frame())
@@ -261,13 +270,13 @@ setMethod(
     score <- as.matrix(score)[, 1]  ## to manage 'score' when it is a data.frame with only one column
 
     xdata <- rep(1, length(score))
-    if(inherits(object, "C1.barchart")){
-        xdata <- 1:length(score)
-    } else if(inherits(object, "C1.dotplot") | inherits(object, "C1.curve") | inherits(object, "C1.interval")){
-        if(object@data$storeData)
-            xdata <- object@data$at
-        else
-            xdata <- eval(object@data$at, envir = sys.frame(object@data$frame))
+    if(inherits(object, "C1.barchart")) {
+      xdata <- 1:length(score)
+    } else if(inherits(object, "C1.dotplot") | inherits(object, "C1.curve") | inherits(object, "C1.interval")) {
+      if(object@data$storeData)
+        xdata <- object@data$at
+      else
+        xdata <- eval(object@data$at, envir = sys.frame(object@data$frame))
     }
     
     fml <- as.formula(score ~ xdata)

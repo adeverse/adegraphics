@@ -59,8 +59,8 @@ setMethod(
     object@g.args$ylim <- range(coordsy) + c(-1, 1) * object@s.misc$axes$dy
     
     object@trellis.par <- c(object@trellis.par, list(clip = list(panel = "off"),
-                                                     layout.heights = list(top.padding = tt, bottom.padding = bb),
-                                                     layout.widths = list(left.padding = ll, right.padding = rr)))
+        layout.heights = list(top.padding = tt, bottom.padding = bb),
+        layout.widths = list(left.padding = ll, right.padding = rr)))
     assign(name_obj, object, envir = parent.frame())
   })
 
@@ -227,10 +227,10 @@ setMethod(
     names(largs) <- argnames
     ## add xlim and ylim if not NULL
     if("xlim" %in% names(object@g.args))
-        largs["xlim"] <- object@g.args["xlim"]
+      largs["xlim"] <- object@g.args["xlim"]
     if("ylim" %in% names(object@g.args))
-        largs["ylim"] <- object@g.args["ylim"]
-  
+      largs["ylim"] <- object@g.args["ylim"]
+      
     object@lattice.call$arguments <- c(object@lattice.call$arguments, largs, list(strip = FALSE))
     assign(name_obj, object, envir = parent.frame())
   })

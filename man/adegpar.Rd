@@ -60,12 +60,8 @@ adegpar(...)
       \item{\code{draw}: a logical indicating if axis (tick marks and labels) are drawn around the graphic}
       \item{\code{x}: a list used for the creation of x-axis in the \code{trellis} object. See \code{xyplot} for more information \itemize{
         \item{\code{draw}: a logical indicating if x-axis (tick marks and labels) are drawn around the graphic}
-        \item{\code{alternating}: a value indicating if axis labels are draws at no side of the panel (\code{0}), at one side (\code{1}), at the 
-          other side (\code{2}) or at the both (\code{3}).}
-        \item{\code{tck}: the length of tick marks}
-        \item{\code{at}: }
       }}
-      \item{\code{y}: the same list as for \code{x} with \code{draw}, \code{alternating}, \code{tck} and \code{at} parameters}
+      \item{\code{y}: the same list as for \code{x} with \code{draw} parameters}
     }}
     
     \item{\code{pbackground}:}{background's parameters \itemize{

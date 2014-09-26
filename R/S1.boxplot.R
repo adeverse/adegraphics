@@ -123,9 +123,9 @@ setMethod(
       ylab <- seq(from = ref[1] + lead * margin, to = ref[2], length.out = nlev + 2)
       ylab <- ylab[-c(1, length(ylab))]
       if(length(ylab) > 1)
-          bwid <- diff(range(ylab)) / (nlev + 1)
+        bwid <- diff(range(ylab)) / (nlev + 1)
       else
-          bwid <- 1/10
+        bwid <- 1/10
 
       ## panel.bwplot
       do.call("panel.bwplot", list(x = y, y = ylab[fac], box.ratio = bwid, coef = 1.5, pch = "|", horizontal = TRUE))

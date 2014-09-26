@@ -228,7 +228,7 @@ repList <- function(x, times) {
 
     ## removing g.args items
     if(length(rest)) {
-      pattern.g.args <- c("xlim", "ylim", "main", "sub", "xlab", "ylab", "Sp", "nbobject", "samelimits")
+      pattern.g.args <- c("xlim", "ylim", "main", "sub", "xlab", "ylab", "Sp", "nbobject", "samelimits", "scales")
       pmatch.g.args <- pmatch(names(rest), pattern.g.args)
       indix <- which(!is.na(pmatch.g.args))
       pmatch.g.args <- pmatch.g.args[!is.na(pmatch.g.args)]

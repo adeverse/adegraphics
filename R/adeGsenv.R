@@ -16,8 +16,7 @@
       
       parrows = list(angle = 15, ends = "last", length = 0.1),
       
-      paxes = list(aspectratio = "iso", draw = FALSE, x = list(draw = TRUE, alternating = 1, tck = c(1, 0), at = NULL),
-        y = list(draw = TRUE, alternating = 1, tck = c(1, 0), at = NULL)),
+      paxes = list(aspectratio = "iso", draw = FALSE, x = list(draw = TRUE), y = list(draw = TRUE)),
       
       pbackground = list(col = "white", box = TRUE),
       

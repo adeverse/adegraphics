@@ -729,6 +729,7 @@ The \texttt{g.args} slot is a list of parameters specific to the function used (
 \item \texttt{xlim}, \texttt{ylim}: limits of the graph on the x and y axes
 \item \texttt{main}, \texttt{sub}: main title and subtitle
 \item \texttt{xlab}, \texttt{ylab}: labels of the x and y axes
+\item \texttt{scales}: a list determining how the x and y axes (tick marks dans labels) are drawn; this is the \texttt{scales} parameter of the \texttt{xyplot} function of \texttt{lattice}
 \end{itemize}
 
 The \texttt{ADEg.S2} objects can also contain spatial information (map stored as a \texttt{Spatial} object or neighborhood stored as a \texttt{nb} object):
