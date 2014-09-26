@@ -109,16 +109,17 @@ setMethod(
       axisN <- colnames(eval(object@data$dfxyz, envir = sys.frame(object@data$frame)))[c(2, 1, 3)]
        
     lab <- apply(object@s.misc$lgrid$posgrid, 2, as.character)
-    labels <- lab[-c(1,nrow(lab)), ] ## without corner
+    labels <- lab[-c(1, nrow(lab)), ] ## without corner
     
     ## final limits for axes
     lcorners <- lab[c(1, nrow(lab)), ] ## corner lab (limits)
     orderCplot <- dfcorner[c(3, 1, 1, 2, 2, 3), ] ## ordre dessin label, selon row de dfcorner, a reprendre
     posCplot <- rep(c(2, 1, 4), each = 2)
+    order_lab <- c(2, 1, 3)
     for(i in 1:3) { ## for the three axis
       ## ticks
       if(object@adeg.par$paxes$draw)
-        do.call("panel.text", c(list(labels = labels[, i], x = object@s.misc$lgrid[[i]][, 1], y = object@s.misc$lgrid[[i]][, 2], pos = pos[i], srt = srt[i]), axis.text2))
+        do.call("panel.text", c(list(labels = labels[, order_lab[i]], x = object@s.misc$lgrid[[i]][, 1], y = object@s.misc$lgrid[[i]][, 2], pos = pos[i], srt = srt[i]), axis.text2))
       ptlab <- object@s.misc$lgrid[[i]][1, ] + (object@s.misc$lgrid[[i]][nn[i], ] - object@s.misc$lgrid[[i]][1, ]) / 2
       
       ## axis names
@@ -150,7 +151,7 @@ setMethod(
 
     arguments = list(
       par.settings = object@trellis.par,
-      scales = if(!is.null(object@s.misc$scales)) object@s.misc$scales else list(draw = FALSE),
+      scales = if(!is.null(object@g.args$scales)) object@g.args$scales else list(draw = FALSE),
       aspect = object@adeg.par$paxes$aspectratio,
       panel = function(...) {
         panelbase(object, ...)
@@ -165,10 +166,10 @@ setMethod(
     names(largs) <- argnames
     ## add xlim and ylim if not NULL
     if("xlim" %in% names(object@g.args))
-        largs["xlim"] <- object@g.args["xlim"]
+      largs["xlim"] <- object@g.args["xlim"]
     if("ylim" %in% names(object@g.args))
-        largs["ylim"] <- object@g.args["ylim"]
-  
+      largs["ylim"] <- object@g.args["ylim"]
+      
     object@lattice.call$arguments <- c(object@lattice.call$arguments, largs, list(strip = FALSE))
     assign(name_obj, object, envir = parent.frame())
   })
