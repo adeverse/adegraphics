@@ -130,8 +130,12 @@ repList <- function(x, times) {
   ## add 10% in both directions
   if(abs(diff(c(mini, maxi))) > .Machine$double.eps ^ 2)
     res <- c(mini, maxi) + c(-1, 1) * diff(c(mini, maxi)) / 10
-  else
-    res <- c(mini, maxi) + c(-1, 1) * abs(mini) / 10 ## if there is only one value
+  else { ## if there is only one value
+    if(mini < .Machine$double.eps ^ 2)
+  	  res <- mini + 0.02 * c(-1, 1)
+    else
+      res <- mini + c(-1, 1) * abs(mini) / 10 
+  }
   return(res)
 }
 
