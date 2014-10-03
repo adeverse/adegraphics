@@ -12,11 +12,13 @@ setClass(
 setMethod(
   f = "initialize",
   signature = "ADEg.S1",
-  definition = function(.Object, data = list(score = NULL, frame = 0, storeData = TRUE), ...) {
+  definition = function(.Object, data = list(score = NULL, at = NULL, frame = 0, storeData = TRUE), ...) {
     ## import the data in @data$score if storeData = TRUE
     .Object <- callNextMethod(.Object, ...) ## ADEg initialize
-    if(data$storeData)
+    if(data$storeData) {
       data$score <- eval(data$score, envir = sys.frame(data$frame))
+      data$at <- eval(data$at, envir = sys.frame(data$frame))
+    }
     .Object@data <- data
     return(.Object)
   })
@@ -29,10 +31,21 @@ setMethod(
   signature = "ADEg.S1",
   definition = function(object) {
     name_obj <- deparse(substitute(object))
-    if(object@data$storeData)
+    if(object@data$storeData) {
       score <- object@data$score
-    else
+      at <- object@data$at
+    } else {
       score <- eval(object@data$score, envir = sys.frame(object@data$frame))
+      at <- eval(object@data$at, envir = sys.frame(object@data$frame))
+    }
+    
+    if(inherits(object, "S1.boxplot")){
+      if(object@data$storeData) {
+        fac <- object@data$fac
+      } else {
+        fac <- eval(object@data$fac, envir = sys.frame(object@data$frame))
+      }
+    }
     
     score <- as.matrix(score)[, 1]  ## to manage 'score' when it is a data.frame with only one column
     
@@ -78,6 +91,8 @@ setMethod(
       scalesandlab$y$draw <- FALSE
     }
     
+    lead <- ifelse(object@adeg.par$p1d$reverse, 1 , -1)
+    
     if(object@adeg.par$p1d$horizontal) {
       ## draw axes for horizontal plot
       if(is.null(scalesandlab$x$at))
@@ -87,8 +102,17 @@ setMethod(
         object@g.args$xlim <- lim
       
       if(is.null(object@g.args$ylim))
-        object@g.args$ylim <- c(0, 1)
+        object@g.args$ylim <- .setlimits1D(min(at), max(at), 0, FALSE)
+      if(inherits(object, "S1.boxplot")) ## extend ylim for boxes
+        object@g.args$ylim <- object@g.args$ylim + c(-1, 1) * abs(diff(range(at))) / (nlevels(fac) + 1)
       
+      ref <- ifelse(object@adeg.par$p1d$reverse, 2, 1)
+      margin <- object@g.args$ylim[ref]
+      if(object@adeg.par$p1d$rug$draw)
+        margin <- object@adeg.par$p1d$rug$margin * abs(diff(object@g.args$ylim))
+      object@s.misc$rug <- object@g.args$ylim[ref]
+      object@g.args$ylim[ref] <- object@g.args$ylim[ref] + lead * margin
+        
     } else {
       ## draw axes for vertical plot
       if(is.null(scalesandlab$y$at))
@@ -98,7 +122,16 @@ setMethod(
         object@g.args$ylim <- lim
       
       if(is.null(object@g.args$xlim))
-        object@g.args$xlim <- c(0, 1)
+        object@g.args$xlim <- .setlimits1D(min(at), max(at), 0, FALSE)
+      if(inherits(object, "S1.boxplot")) ## extend xlim for boxes
+        object@g.args$xlim <- object@g.args$xlim + c(-1, 1) * abs(diff(range(at))) / (nlevels(fac) + 1)
+      
+      ref <- ifelse(object@adeg.par$p1d$reverse, 2, 1)
+      margin <- object@g.args$xlim[ref]
+      if(object@adeg.par$p1d$rug$draw)
+        margin <- object@adeg.par$p1d$rug$margin * abs(diff(object@g.args$xlim))
+      object@s.misc$rug <- object@g.args$xlim[ref]
+      object@g.args$xlim[ref] <-  object@g.args$xlim[ref] + lead * margin
     }
     
     object@g.args$scales <- scalesandlab
@@ -136,7 +169,7 @@ setMethod(
       ## horizontal plot
       
       ## set margins to get some place for rug
-      ref <- ifelse(pscore$reverse, lims$ylim[2], lims$ylim[1])
+      ref <- ifelse(pscore$reverse, object@g.args$ylim[2], object@g.args$ylim[1])
       margin <- ref
       if(pscore$rug$draw)
         margin <- ifelse(is.unit(pscore$rug$margin), convertUnit(pscore$rug$margin, typeFrom = "dimension", unitTo = "native", axisFrom = "y", valueOnly = TRUE), pscore$rug$margin)
@@ -148,24 +181,24 @@ setMethod(
       ## draw origin
       panel.abline(
         v = if(porigin$draw) porigin$origin else NULL,
-        h = if(pscore$rug$draw & pscore$rug$line) ref + lead * margin else NULL,
+        h = if(pscore$rug$draw & pscore$rug$line) object@s.misc$rug else NULL,
         col = porigin$col, lwd = porigin$lwd, lty = porigin$lty, alpha = porigin$alpha)
       
       ## draw rug
       if(pscore$rug$draw & (pscore$rug$ticksize != 0)) {
         ## tick end and starting points
-        start <- ref + lead * margin
+        start <- object@s.misc$rug
         end <- start - pscore$rug$ticksize * lead * abs(start - ref)
+        ## 'panel.rug' needs 'npc' values 
         start <- convertUnit(unit(start, "native"), unitTo = "npc", axisFrom = "y", valueOnly = TRUE)
         end <- convertUnit(unit(end, "native"), unitTo = "npc", axisFrom = "y", valueOnly = TRUE)
-        
         do.call("panel.rug", c(list(x = y, start = start, end = end), plines))
       }
     } else {
       ## vertical plot
       
       ## set margins to get some place for rug
-      ref <- ifelse(pscore$reverse, lims$xlim[2], lims$xlim[1])
+      ref <- ifelse(pscore$reverse, object@g.args$xlim[2], object@g.args$xlim[1])
       margin <- ref
       if(pscore$rug$draw)          
         margin <- ifelse(is.unit(pscore$rug$margin), convertUnit(pscore$rug$margin, typeFrom = "dimension", unitTo = "native", axisFrom = "x", valueOnly = TRUE), pscore$rug$margin)
@@ -177,13 +210,13 @@ setMethod(
       ## draw origin
       panel.abline(
         h = if(porigin$draw) porigin$origin else NULL,
-        v = if(pscore$rug$draw & pscore$rug$line) ref + lead * margin else NULL,
+        v = if(pscore$rug$draw & pscore$rug$line) object@s.misc$rug else NULL,
         col = porigin$col, lwd = porigin$lwd, lty = porigin$lty, alpha = porigin$alpha)
 
       ## draw rug
-      if(pscore$rug$draw && pscore$rug$ticksize != 0) {
+      if(pscore$rug$draw && (pscore$rug$ticksize != 0)) {
         ## tick end and starting points
-        start <- ref + lead * margin
+        start <- object@s.misc$rug
         end <- start - pscore$rug$ticksize * lead * abs(start - ref)
         start <- convertUnit(unit(start, "native"), unitTo = "npc", axisFrom = "x", valueOnly = TRUE)
         end <- convertUnit(unit(end, "native"), unitTo = "npc", axisFrom = "x", valueOnly = TRUE)
@@ -224,7 +257,7 @@ setMethod(
                      panel(object,...) ## call to S1.panel function, for slabel and ADEg.S1 class of graphs
                    })
     
-    object@lattice.call$arguments <- arguments          
+    object@lattice.call$arguments <- arguments
     object@lattice.call$graphictype <- "xyplot" 
 
     ## get lattice arguments (set unspecified to NULL)

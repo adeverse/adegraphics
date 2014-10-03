@@ -8,9 +8,9 @@
 }
 
 \usage{
-s1d.match(score1, score2, labels = 1:NROW(score1), facets =
-  NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos
-  = -1, ...)
+s1d.match(score1, score2, labels = 1:NROW(score1), at = 0.5, 
+  facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, 
+  pos = -1, ...)
 }
 
 \arguments{
@@ -19,6 +19,8 @@ s1d.match(score1, score2, labels = 1:NROW(score1), facets =
   \item{score2}{a numeric vector used to produce the plot with as many values as values (or rows) in \code{score1}}
   
   \item{labels}{the labels' names drawn for each \code{score1} value}
+  
+  \item{at}{a numeric vector used as an index}
   
   \item{facets}{a factor splitting \code{score1} so that subsets    % facets uniquement sur score1. quid de score2 
     of the data are represented on different sub-graphics}

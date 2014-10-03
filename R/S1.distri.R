@@ -11,7 +11,7 @@ setClass(
 setMethod(
   f = "initialize",
   signature = "S1.distri",
-  definition = function(.Object, data = list(score = NULL, dfdistri = NULL, labels = labels, frame = 0, storeData = TRUE), ...) {
+  definition = function(.Object, data = list(score = NULL, dfdistri = NULL, labels = NULL, at = NULL, frame = 0, storeData = TRUE), ...) {
     .Object <- callNextMethod(.Object, data = data, ...) ## ADEg.S1 initialize
     if(data$storeData) {
       data$dfdistri <- eval(data$dfdistri, envir = sys.frame(data$frame))
@@ -69,11 +69,14 @@ setMethod(
   f = "panel",
   signature = "S1.distri",
   definition = function(object, x, y) {
-    if(object@data$storeData)
+    if(object@data$storeData) {
       labels <- object@data$labels
-    else
+    	at <- object@data$at
+    } else {
       labels <- eval(object@data$labels, envir = sys.frame(object@data$frame))
-    
+    	at <- eval(object@data$at, envir = sys.frame(object@data$frame))
+    }
+
     lims <- current.panel.limits(unit = "native")
     pscore <- object@adeg.par$p1d
     ngroups <- length(object@stats$means)
@@ -83,48 +86,22 @@ setMethod(
     
     lead <- ifelse(pscore$reverse, -1, 1)
 
-    ## manage string rotation
-    srt <- 0
-    if(is.numeric(plabels$orientation[1]))
-      srt <- plabels$orientation[1]
-    else {
-      if(plabels$orientation[1] == "horizontal")
-        srt <- 0
-      else if(plabels$orientation[1] == "vertical")
-        srt <- 90
-    }
-
     if(pscore$horizontal) {
       ## horizontal plot
-      ref <- if(pscore$reverse) rev(lims$ylim) else lims$ylim
-      margin <- ref[1]
-      if(pscore$rug$draw)
-        margin <- ifelse(is.unit(pscore$rug$margin), convertUnit(pscore$rug$margin, typeFrom = "dimension", unitTo = "native", axisFrom = "y", valueOnly = TRUE), pscore$rug$margin)
-          
-      ## compute y coordinates for bars
-      ylab <- seq(from = ref[1] + lead * margin, to = ref[2], length.out = ngroups + 2)
-      ylab <- rev(ylab[-c(1, length(ylab))])
-      
+      ylab <- at
       if(object@g.args$yrank) {
         idx <- order(means, decreasing = TRUE)
         means <- means[idx]
         sds <- sds[idx]
+        labels <- labels[idx]
       }
       
-      labels <- names(means)
       do.call("panel.segments", c(list(x0 = means - sds, y0 = ylab, x1 = means + sds, y1 = ylab), object@adeg.par$plines))
       do.call("panel.points", c(list(x = means, y = ylab), object@adeg.par$ppoints))
       etis <- ifelse(abs(lims$xlim[2] - (means + sds)) > abs(lims$xlim[1] - (means - sds)), 1, -1)
     } else {
       ## vertical plot
-      ref <- if(pscore$reverse) rev(lims$xlim) else lims$xlim
-      margin <- ref
-      if(pscore$rug$draw)
-        margin <- ifelse(is.unit(pscore$rug$margin), convertUnit(pscore$rug$margin, typeFrom = "dimension", unitTo = "native", axisFrom = "x", valueOnly = TRUE), pscore$rug$margin)
-      ## compute x coordinates for bars
-      xlab <- seq(from = ref[1] + lead * margin, to = ref[2], length.out = ngroups + 2)
-      xlab <- rev(xlab[-c(1, length(xlab))])
-      
+      xlab <- at
       if(object@g.args$yrank) {
         idx <- order(means, decreasing = TRUE)
         means <- means[idx]
@@ -135,6 +112,17 @@ setMethod(
       do.call("panel.segments", c(list(x0 = xlab, y0 = means - sds, x1 = xlab, y1 = means + sds), object@adeg.par$plines))
       do.call("panel.points", c(list(x = xlab, y = means), object@adeg.par$ppoints))
       etis <- ifelse(abs(lims$ylim[2] - (means + sds)) > abs(lims$ylim[1] - (means - sds)), 1, -1)
+    }
+    
+    ## manage string rotation
+    srt <- 0
+    if(is.numeric(plabels$orientation[1]))
+      srt <- plabels$orientation[1]
+    else {
+      if(plabels$orientation[1] == "horizontal")
+        srt <- 0
+      else if(plabels$orientation[1] == "vertical")
+        srt <- 90
     }
     
     ## draw labels
@@ -163,7 +151,7 @@ setMethod(
   })
 
 
-s1d.distri <- function(score, dfdistri, yrank = TRUE, labels = colnames(dfdistri), sdSize = 1, facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
+s1d.distri <- function(score, dfdistri, labels = colnames(dfdistri), at = 1:NCOL(dfdistri), yrank = TRUE, sdSize = 1, facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
 
   ## evaluation of some parameters (required for multiplot)
   thecall <- .expand.call(match.call())
@@ -195,7 +183,7 @@ s1d.distri <- function(score, dfdistri, yrank = TRUE, labels = colnames(dfdistri
 
     ## creation of the ADEg object
     g.args <- c(sortparameters$g.args, list(yrank = yrank, sdSize = sdSize))
-    tmp_data <- list(score = thecall$score, dfdistri = thecall$dfdistri, labels = labels, frame = sys.nframe() + pos, storeData = storeData)
+    tmp_data <- list(score = thecall$score, dfdistri = thecall$dfdistri, at = thecall$at, labels = labels, frame = sys.nframe() + pos, storeData = storeData)
     object <- new(Class = "S1.distri", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = g.args, Call = match.call())
     
     ## preparation

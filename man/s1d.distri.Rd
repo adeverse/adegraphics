@@ -9,9 +9,9 @@ using an external table of weights}
 }
 
 \usage{
-s1d.distri(score, dfdistri, yrank = TRUE, labels =
-  colnames(dfdistri), sdSize = 1, facets = NULL, plot =
-  TRUE, storeData = FALSE, add = FALSE, pos = -1, ...)
+s1d.distri(score, dfdistri, labels = colnames(dfdistri), at = 1:NCOL(dfdistri), 
+  yrank = TRUE, sdSize = 1, facets = NULL, plot = TRUE, 
+  storeData = FALSE, add = FALSE, pos = -1, ...)
 }
 
 \arguments{
@@ -22,6 +22,8 @@ s1d.distri(score, dfdistri, yrank = TRUE, labels =
   \item{yrank}{a logical to draw the distributions sorted by means ascending order}
   
   \item{labels}{the labels' names drawn for each distribution}
+  
+  \item{at}{a numeric vector used as an index}
   
   \item{sdSize}{a numeric for the size of the standard deviation segments}
   

@@ -59,7 +59,6 @@
         \item{\code{cornerp}: coordinates of the triangle extremities.}
         \item{\code{lgrid}: a list containing the three coordinates of the grid segments extremities(\code{pts1}, 
           \code{pts2}, \code{pts3}) and the value of the division (\code{posgrid})}
-        \item{\code{scales}: a list of scales informations in the form of the lattice argument \code{scales} in the \code{xyplot} function}
     }}
     
     \item{\code{Call}}{an object of class \code{call}}

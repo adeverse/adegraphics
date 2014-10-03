@@ -63,6 +63,8 @@
         \item{\code{main}, \code{sub}}
         \item{\code{xlab}, \code{ylab}}
         \item{\code{samelimits}}
+        \item{\code{scales}: a list of scales informations (ticks, marks and labels for the x-axis or the y-axis) 
+          in the form of the lattice argument \code{scales} in the \code{xyplot} function}
     }}
       
     \item{\code{stats}}{a list of internal preliminary calculations}

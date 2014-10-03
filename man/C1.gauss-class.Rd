@@ -52,7 +52,10 @@
       \item{\code{gausscurves}: the density gauss curve calculated for each \code{fac} value.}
     }}
     
-    \item{\code{s.misc}}{a list of some others internal parameters}
+    \item{\code{s.misc}}{a list of some others internal parameters.
+      The specific slot for \code{C1.gauss} objects is: \itemize{
+      \item{\code{rug}: an index value indicating where the rugs are drawn}
+    }}
     
     \item{\code{Call}}{an object of class \code{call}}
   }

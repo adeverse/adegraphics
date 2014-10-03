@@ -12,7 +12,7 @@
 .onLoad <- function(libname, pkgname) {
   assign("padegraphic",
     list(
-      p1d = list(horizontal = TRUE, reverse = FALSE, labpos = 0.5, rug = list(draw = TRUE, ticksize = 0.5, margin = unit(0.07, "npc"), line = TRUE)),
+      p1d = list(horizontal = TRUE, reverse = FALSE, rug = list(draw = TRUE, ticksize = 0.5, margin = 0.07, line = TRUE)),
       
       parrows = list(angle = 15, ends = "last", length = 0.1),
       

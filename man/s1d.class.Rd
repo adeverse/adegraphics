@@ -9,7 +9,7 @@
 }
 
 \usage{
-s1d.class(score, fac, wt = rep(1, NROW(fac)), labels = levels(fac), 
+s1d.class(score, fac, wt = rep(1, NROW(fac)), labels = levels(fac), at = 0.5, 
   poslabel = c("regular", "value"), col = NULL, facets = NULL, plot = TRUE, 
   storeData = FALSE, add = FALSE, pos = -1, ...)
 }
@@ -22,6 +22,8 @@ s1d.class(score, fac, wt = rep(1, NROW(fac)), labels = levels(fac),
   \item{wt}{a vector of weights for \code{score}}
   
   \item{labels}{the labels' names drawn for each class}
+  
+  \item{at}{a numeric vector used as an index}
   
   \item{poslabel}{the label position of each class (each level of \code{fac}), it can be \code{regular} or \code{value}. 
     If \code{regular}, labels are evenly spaced. 

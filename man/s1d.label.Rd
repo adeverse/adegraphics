@@ -8,7 +8,7 @@
 }
 
 \usage{
-s1d.label(score, labels = 1:NROW(score), poslabel = c("regular",
+s1d.label(score, labels = 1:NROW(score), at = 0.5, poslabel = c("regular",
   "value"), facets = NULL, plot = TRUE, storeData =
   FALSE, add = FALSE, pos = -1, ...)
 }
@@ -17,6 +17,8 @@ s1d.label(score, labels = 1:NROW(score), poslabel = c("regular",
   \item{score}{a numeric vector (or a data frame) used to produce the plot}
   
   \item{labels}{the labels' names drawn for each \code{score} value}
+  
+  \item{at}{a numeric vector used as an index}
   
   \item{poslabel}{the label position of each class (each level of \code{fac}), it can be \code{regular} or \code{value}. 
     If \code{regular}, labels are evenly spaced. 
@@ -65,8 +67,8 @@ s1d.label(score, labels = 1:NROW(score), poslabel = c("regular",
 \examples{
 data(meau, package = "ade4")
 envpca <- ade4::dudi.pca(meau$env, scannf = FALSE)
-g1 <- s1d.label(envpca$l1[,1], row.names(envpca$l1), plot = FALSE)
-g2 <- s1d.label(envpca$co[,1], row.names(envpca$co), p1d.reverse = TRUE, plot = FALSE)
+g1 <- s1d.label(envpca$l1[, 1], row.names(envpca$l1), plot = FALSE)
+g2 <- s1d.label(envpca$co[, 1], row.names(envpca$co), p1d.reverse = TRUE, plot = FALSE)
 G <- ADEgS(c(g1, g2), layout = c(2, 1))      
 }
 

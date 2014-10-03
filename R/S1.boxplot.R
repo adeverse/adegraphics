@@ -11,7 +11,7 @@ setClass(
 setMethod(
   f = "initialize",
   signature  = "S1.boxplot",
-  definition = function(.Object, data = list(score = NULL, fac = NULL, frame = 0, storeData = TRUE), ...) {
+  definition = function(.Object, data = list(score = NULL, fac = NULL, at = NULL, frame = 0, storeData = TRUE), ...) {
     .Object <- callNextMethod(.Object, data = data, ...) ## ADEg.S1 initialize
     if(data$storeData)
       data$fac <- eval(data$fac, envir = sys.frame(data$frame))
@@ -61,18 +61,20 @@ setMethod(
   signature = "S1.boxplot",
   definition = function(object, x, y) {
 
-    if(object@data$storeData)
+    if(object@data$storeData) {
       fac <- object@data$fac
-    else
+      at <- object@data$at
+    } else {
       fac <- eval(object@data$fac, envir = sys.frame(object@data$frame))
+      at <- eval(object@data$at, envir = sys.frame(object@data$frame))
+    }
 
     fac <- as.factor(fac)
     nlev <- nlevels(fac)
     labels <- levels(fac)
     
     lims <- current.panel.limits(unit = "native")
-    p1d <- object@adeg.par$p1d
-    lead <- ifelse(p1d$reverse, -1, 1)
+    pscore <- object@adeg.par$p1d
     plabels <- object@adeg.par$plabels
     
     ## repeat graphical parameters (one for each level)
@@ -113,19 +115,13 @@ setMethod(
       }
     }
     
-    if(p1d$horizontal) {
+    if(pscore$horizontal) {
       ## horizontal plot
-      ref <- if(p1d$reverse) rev(lims$ylim) else lims$ylim
-      margin <- ref[1]
-      if(p1d$rug$draw)
-        margin <- ifelse(is.unit(p1d$rug$margin), convertUnit(p1d$rug$margin, typeFrom = "dimension", unitTo = "native", axisFrom = "y", valueOnly = TRUE), p1d$rug$margin)
-      
-      ylab <- seq(from = ref[1] + lead * margin, to = ref[2], length.out = nlev + 2)
-      ylab <- ylab[-c(1, length(ylab))]
+      ylab <- at
       if(length(ylab) > 1)
         bwid <- diff(range(ylab)) / (nlev + 1)
       else
-        bwid <- 1/10
+        bwid <- 1 / 10
 
       ## panel.bwplot
       do.call("panel.bwplot", list(x = y, y = ylab[fac], box.ratio = bwid, coef = 1.5, pch = "|", horizontal = TRUE))
@@ -137,18 +133,11 @@ setMethod(
       
     } else {
       ## vertical plot
-      ref <- if(p1d$reverse) rev(lims$xlim) else lims$xlim
-      margin <- ref[1]
-      if(p1d$rug$draw)
-        margin <- ifelse(is.unit(p1d$rug$margin), convertUnit(p1d$rug$margin, typeFrom = "dimension", unitTo = "native", axisFrom = "x", valueOnly = TRUE), p1d$rug$margin)
-      
-      xlab <- seq(from = ref[1] + lead * margin, to = ref[2], length.out = nlev + 2)
-      xlab <- xlab[-c(1, length(xlab))]
-
+      xlab <- at
       if(length(xlab) > 1)
-          bwid <- diff(range(xlab)) / (nlev + 1)
+        bwid <- diff(range(xlab)) / (nlev + 1)
       else
-          bwid <- 1/10
+        bwid <- 1 / 10
       
       ## panel.bwplot
       do.call("panel.bwplot", list(x = xlab[fac], y = y, box.ratio = bwid, coef = 1.5, pch = "|", horizontal = FALSE))
@@ -157,12 +146,12 @@ setMethod(
       do.call("panel.points", c(list(y = (tapply(y, fac , mean)), x = xlab), ppoints))
       minmax <- tapply(y, fac, range)
       etis <- sapply(minmax, gettextpos, lim = lims$ylim)
-     }
+    }
     
     ## draw labels
     if(abs(sin(srt)) > sin(45)) {
       ## almost vertical labels
-      if(p1d$horizontal)
+      if(pscore$horizontal)
         width <- stringWidth("h")
       else
         width <- stringWidth(labels) + stringWidth("h")
@@ -170,7 +159,7 @@ setMethod(
       width <- rep(plabels$cex, length.out = length(labels)) * convertUnit(width, "native", typeFrom = "dimension", axisFrom = "x", axisTo = "y", valueOnly = TRUE) / 2 
     } else {
       ## almost horizontal labels
-      if(p1d$horizontal)
+      if(pscore$horizontal)
         width <- stringWidth(labels) + stringWidth("h")
       else
         width <- stringWidth("h")
@@ -178,7 +167,7 @@ setMethod(
       width <- rep(plabels$cex, length.out = length(labels)) * convertUnit(width, "native", typeFrom = "dimension", axisFrom = "x", valueOnly = TRUE) / 2 
     }
     
-    if(p1d$horizontal)
+    if(pscore$horizontal)
       adeg.panel.label(x = etis[1, ] + etis[2, ] * width, y = ylab, labels = labels, plabels = plabels)
     else
       adeg.panel.label(x = xlab, y = etis[1, ] + etis[2, ] * width, labels = labels, plabels = plabels)
@@ -200,7 +189,7 @@ setMethod(
   })
 
 
-s1d.boxplot <- function(score, fac = gl(1, NROW(score)), col = NULL, facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
+s1d.boxplot <- function(score, fac = gl(1, NROW(score)), at = 1:nlevels(fac), col = NULL, facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
 
   ## evaluation of some parameters
   thecall <- .expand.call(match.call())
@@ -240,7 +229,7 @@ s1d.boxplot <- function(score, fac = gl(1, NROW(score)), col = NULL, facets = NU
     
     ## creation of the ADEg object
     g.args <- c(sortparameters$g.args, list(col = col))
-    tmp_data <- list(score = thecall$score, fac = fac, frame = sys.nframe() + pos, storeData = storeData)
+    tmp_data <- list(score = thecall$score, fac = fac, at = thecall$at, frame = sys.nframe() + pos, storeData = storeData)
     object <- new(Class = "S1.boxplot", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = g.args, Call = match.call())
     
     ## preparation

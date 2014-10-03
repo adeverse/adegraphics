@@ -29,9 +29,9 @@ setMethod(
     adegtot <- adegpar(object@adeg.par)
     
     if(object@data$storeData)
-      x.at <- object@data$at
+      at <- object@data$at
     else
-      x.at <- eval(object@data$at, envir = sys.frame(object@data$frame))
+      at <- eval(object@data$at, envir = sys.frame(object@data$frame))
     
     ## change some defaults
     adegtot$p1d$rug$draw <- FALSE
@@ -40,9 +40,9 @@ setMethod(
     callNextMethod() ## prepare graph
     
     if(object@adeg.par$p1d$horizontal && is.null(object@g.args$ylim))
-      object@g.args$ylim <- .setlimits1D(min(x.at), max(x.at), 0, FALSE)  
+      object@g.args$ylim <- .setlimits1D(min(at), max(at), 0, FALSE)  
     if(!object@adeg.par$p1d$horizontal && is.null(object@g.args$xlim))
-      object@g.args$xlim <- .setlimits1D(min(x.at), max(x.at), 0, FALSE)
+      object@g.args$xlim <- .setlimits1D(min(at), max(at), 0, FALSE)
     
     assign(nameobj, object, envir = parent.frame())
   })
@@ -60,7 +60,6 @@ setMethod(
     pscore <- object@adeg.par$p1d
     ppoints <- lapply(object@adeg.par$ppoints, FUN = function(x) {rep(x, length.out = length(x))})
     plines <- lapply(object@adeg.par$plines, FUN = function(x) {rep(x, length.out = length(x))})
-    lims <- current.panel.limits(unit = "native")
     
     ## reorder the values
     y <- y[order(x)]

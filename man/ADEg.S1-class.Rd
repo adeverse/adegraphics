@@ -27,6 +27,7 @@
   \describe{
     \item{\code{data}}{a list containing data or data's name. \itemize{
       \item{\code{score}: the displayed values in the form of a numeric vector, a name or a matching call.}
+      \item{\code{at}: the index value.}
       \item{\code{frame}: a positive or null integer. It is the number of the frame containing the data (used 
         with \code{sys.frame(..., env = data$frame)}). Only if the data are not stored (i.e. \code{data$storeData = FALSE}).}
       \item{\code{storeData}: a logical indicating if the data should be stored in the returned object. 
@@ -54,8 +55,7 @@
         \item{\code{hori.update}: a logical indicating if the sense of direction of the graphics is updating}
         \item{\code{backgrid}: a list of two elements for grid lines. \code{backgrid$x} defines the coordinates 
           of the lines (horizontal or vertical depending on the graphics orientation) and \code{backgrid$d} the grid mesh}
-        \item{\code{scales}: a list of scales informations (ticks, marks and labels for the x-axis or the y-axis) 
-          in the form of the lattice argument \code{scales} in the \code{xyplot} function}
+        \item{\code{rug}: an index value indicating where the rugs are drawn}
     }}
     
     \item{\code{Call}}{an object of class \code{call}}

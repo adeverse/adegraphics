@@ -64,8 +64,6 @@
         \item{\code{plegend.update}: a logical indicating if the legend parameters are updating}
         \item{\code{breaks.update}: a logical indicating if the legend breaks are updating}
         \item{\code{backgrid}: a list of elements for grid lines}
-        \item{\code{scales}: a list of scales informations (ticks, marks and labels for the x-axis or the y-axis) 
-          in the form of the lattice argument \code{scales} in the \code{xyplot} function}
     }}
     
     \item{\code{Call}}{an object of class \code{call}}

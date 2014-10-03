@@ -47,7 +47,7 @@
         \item{\code{arguments}: its parameters to obtain the \code{trellis} object} 
     }}
     
-    \item{\code{g.args}}{a list containing some method parameters linked with the created object of \code{ADEg.C1} class.}
+    \item{\code{g.args}}{a list containing some method parameters linked with the created object of \code{ADEg.C1} class}
     
     \item{\code{stats}}{a list of internal preliminary calculations}
     
@@ -56,8 +56,6 @@
         \item{\code{hori.update}: a logical indicating if the sense of direction of the graphics is updating}
         \item{\code{backgrid}: a list of two elements for grid lines. \code{backgrid$x} defines the coordinates 
           of the lines (horizontal or vertical depending on the graphics orientation) and \code{backgrid$d} the grid mesh}
-        \item{\code{scales}: a list of scales informations (ticks, marks and labels for the x-axis or the y-axis) 
-          in the form of the lattice argument \code{scales} in the \code{xyplot} function}
     }}
     
     \item{\code{Call}}{an object of class \code{call}}

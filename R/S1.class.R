@@ -11,7 +11,7 @@ setClass(
 setMethod(
   f = "initialize",
   signature = "S1.class",
-  definition = function(.Object, data = list(score = NULL, fac = NULL, wt = NULL, labels = NULL, frame = 0, storeData = TRUE), ...) {
+  definition = function(.Object, data = list(score = NULL, fac = NULL, wt = NULL, labels = NULL, at = NULL, frame = 0, storeData = TRUE), ...) {
     .Object <- callNextMethod(.Object, data = data, ...) ## ADEg.S1 initialize
     if(data$storeData) {
       data$fac <- eval(data$fac, envir = sys.frame(data$frame))
@@ -71,18 +71,21 @@ setMethod(
       fac <- object@data$fac
       score <- object@data$score
       wt <- object@data$wt
+      at <- object@data$at
+      labels <- object@data$labels
     } else {
       fac <- eval(object@data$fac, envir = sys.frame(object@data$frame))
       score <- eval(object@data$score, envir = sys.frame(object@data$frame))
       wt <- eval(object@data$wt, envir = sys.frame(object@data$frame))
+      at <- eval(object@data$at, envir = sys.frame(object@data$frame))
+      labels <- eval(object@data$labels, envir = sys.frame(object@data$frame))
     }
-    
+
     fac <- as.factor(fac)
-    labels <- levels(fac)
     nlev <- nlevels(fac)
     object@stats$means <- meanfacwt(score, fac, wt = wt)
     lims <- current.panel.limits(unit = "native")
-    p1d <- object@adeg.par$p1d
+    pscore <- object@adeg.par$p1d
     ## repeat graphical parameters (one for each level)
     ppoints <- lapply(object@adeg.par$ppoints, FUN = function(x) x <- rep(x, length.out = nlev))
     plines <- lapply(object@adeg.par$plines, FUN = function(x) x <- rep(x, length.out = nlev))
@@ -90,13 +93,16 @@ setMethod(
     plboxes <- lapply(object@adeg.par$plabels$boxes, FUN = function(x) x <- rep(x, length.out = nlev))
     plabels$boxes <- plboxes
     
-    test <- .textsize(labels, plabels)
-    w <- test$w
-    h <- test$h
+    if(!is.null(labels)) {
+      ## get text sizes for boxes
+      test <- .textsize(labels, plabels)
+      w <- test$w
+      h <- test$h
+    }
     
-    lead <- ifelse(p1d$reverse, -1, 1)
+    lead <- ifelse(pscore$reverse, -1, 1)
     
-    if(p1d$horizontal) {
+    if(pscore$horizontal) {
       ## horizontal plot
       xpoints <- y
       
@@ -110,20 +116,18 @@ setMethod(
       ## repeat means for each individual   
       xlablines <- xlab[fac]
       
-      ## set margins to get some place for rug
-      ref <- ifelse(p1d$reverse, lims$ylim[2], lims$ylim[1])
-      margin <- ref
-      if(p1d$rug$draw)
-        margin <- ifelse(is.unit(p1d$rug$margin), convertUnit(p1d$rug$margin, typeFrom = "dimension", unitTo = "native", axisFrom = "y", valueOnly = TRUE), p1d$rug$margin)
-      ypoints <- ref + lead * margin
-      ylab <- ypoints + lead * p1d$labpos
-     
+      ## repeat ylab for each individual
+      ylab <- rep(at, length.out = nlev)
+      ylablines <- ylab[fac]
+      
       ## draw lines and labels
-      panel.segments(x0 = xpoints, y0 = ypoints, y1 = ylab, x1 = xlablines, lwd = plines$lwd[fac], col = plines$col[fac], lty = plines$lty[fac])
+      ypoints <- object@s.misc$rug
+      panel.segments(x0 = xpoints, y0 = ypoints, x1 = xlablines, y1 = ylablines, lwd = plines$lwd[fac], col = plines$col[fac], lty = plines$lty[fac])
       if(any(ppoints$cex > 0))
         panel.points(x = xpoints, y = ypoints, pch = ppoints$pch[fac], cex = ppoints$cex[fac], col = ppoints$col[fac], alpha = ppoints$alpha[fac], fill = ppoints$fill[fac])
       if(any(plabels$cex > 0))
-        adeg.panel.label(x = xlab, y = rep(ylab, length.out = nlev) + lead * h / 2, labels = labels, plabels = plabels)
+        adeg.panel.label(x = xlab, y = ylab + lead * h / 2, labels = labels, plabels = plabels)
+      
     } else {
       ## vertical plot
       ypoints <- y
@@ -138,26 +142,23 @@ setMethod(
       ## repeat means for each individual   
       ylablines <- ylab[fac]
       
-      ## set margins to get some place for rug
-      ref <- ifelse(p1d$reverse, lims$xlim[2], lims$xlim[1])
-      margin <- ref
-      if(p1d$rug$draw)
-        margin <- ifelse(is.unit(p1d$rug$margin), convertUnit(p1d$rug$margin, typeFrom = "dimension", unitTo = "native", axisFrom = "x", valueOnly = TRUE), p1d$rug$margin)
-      xpoints <- ref + lead * margin
-      xlab <- xpoints + lead * p1d$labpos
-     
+      ## repeat ylab for each individual
+      xlab <- rep(at, length.out = nlev)
+      xlablines <- xlab[fac]
+      
       ## draw lines and labels
-      panel.segments(y0 = ypoints, x0 = xpoints, x1 = xlab, y1 = ylablines, lwd = plines$lwd[fac], col = plines$col[fac], lty = plines$lty[fac])
+      xpoints <- object@s.misc$rug
+      panel.segments(x0 = xpoints, y0 = ypoints, x1 = xlablines, y1 = ylablines, lwd = plines$lwd[fac], col = plines$col[fac], lty = plines$lty[fac])
       if(any(ppoints$cex > 0))
         panel.points(x = xpoints, y = ypoints, pch = ppoints$pch[fac], cex = ppoints$cex[fac], col = ppoints$col[fac], alpha = ppoints$alpha[fac], fill = ppoints$fill[fac])
       if(any(plabels$cex > 0))
-        adeg.panel.label(x = rep(xlab, length.out = nlev) + lead * w / 2 , y = ylab, labels = labels, plabels = plabels)
+        adeg.panel.label(x = xlab + lead * w / 2 , y = ylab, labels = labels, plabels = plabels)
     } 
   })
 
 
-s1d.class <- function(score, fac, wt = rep(1, NROW(fac)), labels = levels(fac), poslabel = c("regular", "value"), col = NULL, facets = NULL,
-                      plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
+s1d.class <- function(score, fac, wt = rep(1, NROW(fac)), labels = levels(fac), at = 0.5, poslabel = c("regular", "value"), col = NULL, 
+  										facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
   
   ## evaluation of some parameters
   thecall <- .expand.call(match.call())
@@ -203,7 +204,7 @@ s1d.class <- function(score, fac, wt = rep(1, NROW(fac)), labels = levels(fac), 
     
     ## creation of the ADEg object
     g.args <- c(sortparameters$g.args, list(poslabel = match.arg(poslabel), col = col))
-    tmp_data <- list(score = thecall$score, wt = thecall$wt, fac = thecall$fac, labels = thecall$labels, frame = sys.nframe() + pos, storeData = storeData)
+    tmp_data <- list(score = thecall$score, wt = thecall$wt, fac = thecall$fac, labels = thecall$labels, at = thecall$at, frame = sys.nframe() + pos, storeData = storeData)
     object <- new(Class = "S1.class", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = g.args, Call = match.call())
 
     ## preparation

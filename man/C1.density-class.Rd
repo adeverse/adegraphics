@@ -51,7 +51,10 @@
         the \code{bkde} function of the \code{KernSmooth} package.}
     }}
     
-    \item{\code{s.misc}}{a list of some others internal parameters}
+    \item{\code{s.misc}}{a list of some others internal parameters.
+      The specific slot for \code{C1.density} objects is: \itemize{
+      \item{\code{rug}: an index value indicating where the rugs are drawn}
+    }}
     
     \item{\code{Call}}{an object of class \code{call}}
   }

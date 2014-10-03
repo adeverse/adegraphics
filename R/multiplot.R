@@ -161,7 +161,7 @@ multi.variables.S2 <- function(thecall, arg.vary) {
   ## create ADEg plots
   for(j in 1:ncol(dfvary)) {
     thenewcall[[arg.vary]] <- call("[", name.vary, substitute(1:nrow(name.vary)), j)
-    thenewcall$psub.text <-  colnames(dfvary)[j]
+    thenewcall$psub.text <- colnames(dfvary)[j]
     if(thenewcall[[1]] == "s.class" || thenewcall[[1]] == "s.traject") {
       thenewcall$labels <- call("levels", call("as.factor", thenewcall[[arg.vary]]))
     }
@@ -491,6 +491,8 @@ multi.variables.S1 <- function(thecall, arg.vary) {
     if(thenewcall[[1]] == "s1d.class")
       thenewcall$labels <- call("levels", call("as.factor", thenewcall[[arg.vary]]))
     
+    if(thenewcall[[1]] == "s1d.boxplot" || thenewcall[[1]] == "s1d.distri")
+      thenewcall$at <- call("seq", 1, call("nlevels", call("as.factor", thenewcall[[arg.vary]])))
     listGraph <- c(listGraph, do.call(as.character(thenewcall[[1]]), thenewcall[-1]))
   }
   

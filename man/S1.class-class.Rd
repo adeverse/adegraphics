@@ -25,6 +25,7 @@
       \item{\code{fac}: a factor for \code{score} splitting in the form of a vector, a factor, a name or a matching call.}
       \item{\code{wt}: a vector of weights for \code{score}}
       \item{\code{labels}: the labels' names drawn for each class.}
+      \item{\code{at}: the index value.}
       \item{\code{frame}: a positive or null integer. It is the number of the frame containing the data (used 
         with \code{sys.frame(..., env = data$frame)}). Only if the data are not stored (i.e. \code{data$storeData = FALSE}).}
       \item{\code{storeData}: a logical indicating if the data should be stored in the returned object. 
@@ -50,7 +51,10 @@
       \item{\code{means}: the weighted mean calculated for each \code{fac} value.} 
     }}
 
-    \item{\code{s.misc}}{a list of some others internal parameters}
+    \item{\code{s.misc}}{a list of some others internal parameters.
+    The specific slot for \code{S1.class} objects is: \itemize{
+      \item{\code{rug}: an index value indicating where the rugs are drawn.}
+    }}
     
     \item{\code{Call}}{an object of class \code{call}}
   }

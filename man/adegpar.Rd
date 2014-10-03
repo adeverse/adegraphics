@@ -39,7 +39,6 @@ adegpar(...)
       \item{\code{reverse}: a logical indicating if the bottom of the plot is at the bottom (for \code{horizontal} as \code{TRUE}) 
         or at the left of the device (for \code{horizontal} as \code{FALSE}). If FALSE, the graphical display bottom is at the top 
         (for \code{horizontal} as \code{TRUE}) or at the right of the device (for \code{horizontal} as \code{FALSE}).}
-      \item{\code{labpos}: a value indicating labels positions, in \code{npc} unit, from the margin}
       \item{\code{rug}: a list dedicated to tick marks \itemize{
         \item{\code{draw}: a logical indicating if the rugs are drawn}
         \item{\code{ticksize}: size of the rug (ticks) in proportion from the reference line and the origin of the device}

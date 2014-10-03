@@ -24,6 +24,7 @@
       \item{\code{score}: the displayed values in the form of a numeric vector, a name or a matching call.}
       \item{\code{dfdistri}: the mass distribution in which each column is a class.}
       \item{\code{labels}: the labels' names drawn for each distribution.}
+      \item{\code{at}: the index value.}
       \item{\code{frame}: a positive or null integer. It is the number of the frame containing the data (used 
         with \code{sys.frame(..., env = data$frame)}). Only if the data are not stored (i.e. \code{data$storeData = FALSE}).}
       \item{\code{storeData}: a logical indicating if the data should be stored in the returned object. 

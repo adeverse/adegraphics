@@ -82,11 +82,29 @@ setMethod(
       }
     }
    
-    if(!object@adeg.par$p1d$horizontal && is.null(object@g.args$xlim))
-      object@g.args$xlim <- c(0, max(sapply(densit, FUN = function(x) {ifelse(is.na(x$y[1]), 0, max(x$y))}) / 0.85))
+    lead <- ifelse(object@adeg.par$p1d$reverse, 1 , -1)
     
     if(object@adeg.par$p1d$horizontal && is.null(object@g.args$ylim))
       object@g.args$ylim <- c(0, max(sapply(densit, FUN = function(x) {ifelse(is.na(x$y[1]), 0, max(x$y))}) / 0.85))
+    if(object@adeg.par$p1d$horizontal) {
+    	ref <- ifelse(object@adeg.par$p1d$reverse, 2, 1)
+      margin <- object@g.args$ylim[ref]
+      if(object@adeg.par$p1d$rug$draw)
+        margin <- object@adeg.par$p1d$rug$margin * abs(diff(object@g.args$ylim))
+      object@s.misc$rug <- object@g.args$ylim[ref]
+      object@g.args$ylim[ref] <- object@g.args$ylim[ref] + lead * margin
+    }
+    
+    if(!object@adeg.par$p1d$horizontal && is.null(object@g.args$xlim))
+      object@g.args$xlim <- c(0, max(sapply(densit, FUN = function(x) {ifelse(is.na(x$y[1]), 0, max(x$y))}) / 0.85))
+    if(!object@adeg.par$p1d$horizontal) {
+      ref <- ifelse(object@adeg.par$p1d$reverse, 2, 1)
+      margin <- object@g.args$xlim[ref]
+      if(object@adeg.par$p1d$rug$draw)
+        margin <- object@adeg.par$p1d$rug$margin * abs(diff(object@g.args$xlim))
+      object@s.misc$rug <- object@g.args$xlim[ref]
+      object@g.args$xlim[ref] <- object@g.args$xlim[ref] + lead * margin
+    }
     
     object@stats$densit <- densit
     assign(nameobj, object, envir = parent.frame())

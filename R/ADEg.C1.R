@@ -34,6 +34,12 @@ setMethod(
     else
       score <- eval(object@data$score, envir = sys.frame(object@data$frame))
     
+    if(inherits(object, "C1.curve") | inherits(object, "C1.dotplot") | inherits(object, "C1.interval"))
+      if(object@data$storeData)
+        at <- object@data$at
+      else
+        at <- eval(object@data$at, envir = sys.frame(object@data$frame))
+    
     score <- as.matrix(score)[, 1]  ## to manage 'score' when it is a data.frame with only one column
     
     if(class(object) == "C1.interval")  ## to manage only the first score in c(score1, score2)
@@ -50,7 +56,6 @@ setMethod(
     
     minX <- min(score)
     maxX <- max(score)
-    
     if(object@adeg.par$p1d$horizontal & !is.null(object@g.args$xlim)) {
       minX <- object@g.args$xlim[1]
       maxX <- object@g.args$xlim[2]
@@ -62,12 +67,10 @@ setMethod(
     }
 
     origin <- object@adeg.par$porigin
-    
     lim <- .setlimits1D(minX, maxX, origin = origin$origin[1], includeOr = origin$include)
     
     ## compute grid size
     tmp <- pretty(lim, n = object@adeg.par$pgrid$nint)
-
     if(!origin$include)
       origin$origin[1] <- tmp[1]
     
@@ -92,27 +95,37 @@ setMethod(
       scalesandlab$y$draw <- FALSE
     }
     
+    lead <- ifelse(object@adeg.par$p1d$reverse, 1 , -1)
+    
     if(object@adeg.par$p1d$horizontal) {
       ## draw axes for horizontal plot
       if(is.null(scalesandlab$x$at))
         scalesandlab$x$at <- object@s.misc$backgrid$x
       
-      if(is.null(scalesandlab$y$at))
-        scalesandlab$y$at <- 1:NROW(score)
-      
       if(is.null(object@g.args$xlim))
         object@g.args$xlim <- lim
+      
+      if(inherits(object, "C1.curve") | inherits(object, "C1.dotplot") | inherits(object, "C1.interval"))
+        if(!is.null(at))
+          scalesandlab$y$at <- at
+      
+      if(is.null(scalesandlab$y$at))
+        scalesandlab$y$at <- 1:NROW(score)
       
     } else {
       ## draw axes for vertical plot
       if(is.null(scalesandlab$y$at))
         scalesandlab$y$at <- object@s.misc$backgrid$x
       
-      if(is.null(scalesandlab$x$at))
-        scalesandlab$x$at <- 1:NROW(score)
-      
       if(is.null(object@g.args$ylim))
         object@g.args$ylim <- lim
+      
+      if(inherits(object, "C1.curve") | inherits(object, "C1.dotplot") | inherits(object, "C1.interval"))
+        if(!is.null(at))
+          scalesandlab$x$at <- at
+      
+      if(is.null(scalesandlab$x$at))
+        scalesandlab$x$at <- 1:NROW(score)
     }
     
     object@g.args$scales <- scalesandlab

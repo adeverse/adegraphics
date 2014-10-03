@@ -23,6 +23,7 @@
     \item{\code{data}}{a list containing data or data's name. \itemize{
       \item{\code{score}: the displayed values in the form of a numeric vector, a name or a matching call.}
       \item{\code{labels}: the labels' names drawn for each \code{score} value.}
+      \item{\code{at}: the index value.}
       \item{\code{frame}: a positive or null integer. It is the number of the frame containing the data (used 
         with \code{sys.frame(..., env = data$frame)}). Only if the data are not stored (i.e. \code{data$storeData = FALSE}).}
       \item{\code{storeData}: a logical indicating if the data should be stored in the returned object. 
@@ -44,7 +45,10 @@
 
     \item{\code{stats}}{a list of internal preliminary calculations}
 
-    \item{\code{s.misc}}{a list of some others internal parameters}
+    \item{\code{s.misc}}{a list of some others internal parameters.
+    The specific slot for \code{S1.label} objects is: \itemize{
+      \item{\code{rug}: an index value indicating where the rugs are drawn.}
+    }}
     
     \item{\code{Call}}{an object of class \code{call}}
   }
