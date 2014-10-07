@@ -148,7 +148,7 @@ setMethod(
       if(!is.null(object@data$fac)) {
         ## C1.density or C1.gauss (different colors for rugs)
         if(object@data$storeData)
-          fac <- object@data$fac
+          fac <- as.factor(object@data$fac)
         else
           fac <- as.factor(eval(object@data$fac, envir = sys.frame(object@data$frame)))
         plines <- lapply(plines, FUN = function(x) {return(rep(x, length.out = nlevels(fac))[fac])})
