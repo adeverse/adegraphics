@@ -9,8 +9,6 @@ setMethod(
   signature = "C1.interval",
   definition = function(.Object, data = list(score = NULL, at = NULL, frame = 0, storeData = TRUE), ...) {
     .Object <- callNextMethod(.Object, data = data, ...) ## ADEg.C1 initialize
-    if(data$storeData)
-      data$at <- eval(data$at, envir = sys.frame(data$frame))
     .Object@data$at <- data$at
     validObject(.Object)
     return(.Object)
@@ -106,7 +104,7 @@ setMethod(
   })
 
 
-s1d.interval <- function(score1, score2, at = 1:NROW(score1), method = c("bars", "area"), facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
+s1d.interval <- function(score1, score2, at = 1:NROW(score1), method = c("bars", "area"), facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
   
   ## evaluation of some parameters
   thecall <- .expand.call(match.call())
@@ -143,7 +141,10 @@ s1d.interval <- function(score1, score2, at = 1:NROW(score1), method = c("bars",
     
     ## creation of the ADEg object
     g.args <- c(sortparameters$g.args, list(method = match.arg(method)))
-    tmp_data <- list(score = call("c", thecall$score1, thecall$score2), at = thecall$at, frame = sys.nframe() + pos, storeData = storeData)
+    if(storeData)
+    	tmp_data <- list(score = c(score1, score2), at = at, frame = sys.nframe() + pos, storeData = storeData)
+    else
+      tmp_data <- list(score = call("c", thecall$score1, thecall$score2), at = thecall$at, frame = sys.nframe() + pos, storeData = storeData)
     object <- new(Class = "C1.interval", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = g.args, Call = match.call())
     
     ## preparation

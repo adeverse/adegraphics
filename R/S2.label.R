@@ -13,8 +13,6 @@ setMethod(
   signature = "S2.label",
   definition = function(.Object, data = list(dfxy = NULL, labels = NULL, xax = 1, yax = 2, frame = 0, storeData = TRUE), ...) {
     .Object <- callNextMethod(.Object, data = data, ...) ## ADEg.S2 initialize
-    if(data$storeData)
-      data$labels <- eval(data$labels, envir = sys.frame(data$frame))
     .Object@data$labels <- data$labels
     return(.Object)
   })
@@ -68,7 +66,7 @@ setMethod(
   })
 
 
-s.label <- function(dfxy, labels = rownames(dfxy), xax = 1, yax = 2, facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
+s.label <- function(dfxy, labels = rownames(dfxy), xax = 1, yax = 2, facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
   
   ## evaluation of some parameters
   thecall <- .expand.call(match.call())
@@ -97,7 +95,10 @@ s.label <- function(dfxy, labels = rownames(dfxy), xax = 1, yax = 2, facets = NU
       warning(c("Unused parameters: ", paste(unique(names(sortparameters$rest)), " ", sep = "")), call. = FALSE)
     
     ## creation of the ADEg object
-    tmp_data <- list(dfxy = thecall$dfxy, xax = xax, yax = yax, labels = thecall$labels, frame = sys.nframe() + pos, storeData = storeData)
+    if(storeData)
+    	tmp_data <- list(dfxy = dfxy, xax = xax, yax = yax, labels = labels, frame = sys.nframe() + pos, storeData = storeData)
+    else
+      tmp_data <- list(dfxy = thecall$dfxy, xax = xax, yax = yax, labels = thecall$labels, frame = sys.nframe() + pos, storeData = storeData)
     object <- new(Class = "S2.label", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = sortparameters$g.args, Call = as.call(thecall))
     
     ## preparation

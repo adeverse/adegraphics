@@ -13,10 +13,7 @@ setMethod(
   f = "initialize",
   signature = "S2.image",
   definition = function(.Object, data = list(dfxy = NULL, z = NULL, xax = 1, yax = 2, frame = 0, storeData = TRUE), ...) {
-    ## import the data in @data$dfxy if storeData = TRUE (i.e. $frame is NULL)
     .Object <- callNextMethod(.Object, data = data, ...) ## ADEg.S2 initialize
-    if(data$storeData)
-      data$z <- eval(data$z, envir = sys.frame(data$frame))
     .Object@data$z <- data$z
     return(.Object)
   })
@@ -100,7 +97,7 @@ setMethod(
 
 
 s.image <- function(dfxy, z, xax = 1, yax = 2, span = 0.5, gridsize = c(80L, 80L), contour = TRUE, region = TRUE, outsideLimits = NULL,  
-  									col = NULL, facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
+  									col = NULL, facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
  
   if(!is.null(outsideLimits)) {
     if(!inherits(outsideLimits, "SpatialPolygons"))
@@ -147,7 +144,10 @@ s.image <- function(dfxy, z, xax = 1, yax = 2, span = 0.5, gridsize = c(80L, 80L
     
     ## creation of the ADEg object
     g.args <- c(sortparameters$g.args, list(span = span, gridsize = gridsize, outsideLimits = outsideLimits, contour = contour, region = region, col = col))
-    tmp_data <- list(dfxy = thecall$dfxy, xax = xax, yax = yax, z = thecall$z, frame = sys.nframe() + pos, storeData = storeData)
+    if(storeData)
+    	tmp_data <- list(dfxy = dfxy, xax = xax, yax = yax, z = z, frame = sys.nframe() + pos, storeData = storeData)
+    else
+    	tmp_data <- list(dfxy = thecall$dfxy, xax = xax, yax = yax, z = thecall$z, frame = sys.nframe() + pos, storeData = storeData)
     object <- new(Class = "S2.image", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = g.args, Call = as.call(thecall))
    
     ## preparation of the graph

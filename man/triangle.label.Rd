@@ -10,7 +10,7 @@
 \usage{
 triangle.label(dfxyz, labels = rownames(dfxyz), adjust = TRUE, min3d = NULL, 
   max3d = NULL, addaxes = FALSE, addmean = FALSE, meanpar = NULL, axespar = NULL, 
-  showposition = TRUE, facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, 
+  showposition = TRUE, facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, 
   pos = -1, ...)
 }
 

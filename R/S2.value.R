@@ -14,10 +14,7 @@ setMethod(
   f = "initialize",
   signature = "S2.value",
   definition = function(.Object, data = list(dfxy = NULL, z = NULL, xax = 1, yax = 2, frame = 0, storeData = TRUE), ...) {
-    ## import the data in @data$dfxy if storeData = TRUE (i.e. $frame is NULL)
     .Object <- callNextMethod(.Object, data = data, ...) ## ADEg.S2 initialize
-    if(data$storeData)
-      data$z <- eval(data$z, envir = sys.frame(data$frame))
     .Object@data$z <- data$z
     return(.Object)
   })
@@ -155,7 +152,7 @@ setMethod(
 
 
 s.value <- function(dfxy, z, breaks = NULL, xax = 1, yax = 2, method = c("size", "color"), symbol = c("square", "circle"), col = NULL, maxsize = 1, nclass = 4, 
-  center = 0, centerpar = NULL, facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
+  center = 0, centerpar = NULL, facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
   
 	## evaluation of some parameters
   thecall <- .expand.call(match.call())
@@ -209,7 +206,10 @@ s.value <- function(dfxy, z, breaks = NULL, xax = 1, yax = 2, method = c("size",
     ## creation of the ADEg object
     g.args <- c(sortparameters$g.args, list(method = thecall$method, symbol = thecall$symbol, center = center, breaks = breaks, col = col, 
         maxsize = maxsize, nclass = nclass, centerpar = centerpar))
-    tmp_data <- list(dfxy = thecall$dfxy, xax = xax, yax = yax, z = thecall$z, frame = sys.nframe() + pos, storeData = storeData)
+    if(storeData)
+    	tmp_data <- list(dfxy = dfxy, xax = xax, yax = yax, z = z, frame = sys.nframe() + pos, storeData = storeData)
+    else
+      tmp_data <- list(dfxy = thecall$dfxy, xax = xax, yax = yax, z = thecall$z, frame = sys.nframe() + pos, storeData = storeData)
     object <- new(Class = "S2.value", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = g.args, Call = as.call(thecall))
     
     ## preparation of the graph

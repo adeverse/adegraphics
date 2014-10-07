@@ -14,11 +14,6 @@ setMethod(
   signature = "Tr.class",
   definition = function(.Object, data = list(dfxyz = NULL, fac = NULL, wt = NULL, labels = NULL, frame = 0, storeData = TRUE), ...) {
     .Object <- callNextMethod(.Object, data = data, ...)
-    if(data$storeData) {
-      data$fac <- eval(data$fac, envir = sys.frame(data$frame))
-      data$labels <- eval(data$labels, envir = sys.frame(data$frame))
-      data$wt <- eval(data$wt, envir = sys.frame(data$frame))
-    }
     .Object@data$fac <- data$fac
     .Object@data$wt <- data$wt
     .Object@data$labels <- data$labels
@@ -187,7 +182,7 @@ setMethod(
 
 
 triangle.class <- function(dfxyz, fac, wt = rep(1, NROW(fac)), labels = levels(fac), col = NULL, ellipseSize = 1, starSize = 1, chullSize = NULL, adjust = TRUE, 
-  min3d = NULL, max3d = NULL, showposition = TRUE, facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
+  min3d = NULL, max3d = NULL, showposition = TRUE, facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
   ## dfxyz: matrix/data.frame with 3 columns
   ## min3d, max3d: limits by default: c(0,0,0), c(1,1,1)
   
@@ -216,7 +211,10 @@ triangle.class <- function(dfxyz, fac, wt = rep(1, NROW(fac)), labels = levels(f
     
      ## creation of the ADEg object
     g.args <- c(sortparameters$g.args, list(adjust = adjust, min3d = min3d, max3d = max3d, ellipseSize = ellipseSize, starSize = starSize, chullSize = chullSize, col = col))
-    tmp_data <- list(dfxyz = thecall$dfxyz, fac = thecall$fac, wt = thecall$wt, labels = thecall$labels, frame = sys.nframe() + pos, storeData = storeData)
+    if(storeData)
+    	tmp_data <- list(dfxyz = dfxyz, fac = fac, wt = wt, labels = labels, frame = sys.nframe() + pos, storeData = storeData)
+    else
+      tmp_data <- list(dfxyz = thecall$dfxyz, fac = thecall$fac, wt = thecall$wt, labels = thecall$labels, frame = sys.nframe() + pos, storeData = storeData)
     object <- new(Class = "Tr.class", data  = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = g.args, Call = match.call())
     
     ## preparation

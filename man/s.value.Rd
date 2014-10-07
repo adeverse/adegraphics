@@ -10,7 +10,7 @@
 \usage{
 s.value(dfxy, z, breaks = NULL, xax = 1, yax = 2, method = c("size", "color"), 
   symbol = c("square", "circle"), col = NULL, maxsize = 1, nclass = 4, 
-  center = 0, centerpar = NULL, facets = NULL, plot = TRUE, storeData = FALSE, 
+  center = 0, centerpar = NULL, facets = NULL, plot = TRUE, storeData = TRUE, 
   add = FALSE, pos = -1, ...)
 }
 

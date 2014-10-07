@@ -9,7 +9,7 @@
 
 \usage{
 s1d.match(score1, score2, labels = 1:NROW(score1), at = 0.5, 
-  facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, 
+  facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, 
   pos = -1, ...)
 }
 

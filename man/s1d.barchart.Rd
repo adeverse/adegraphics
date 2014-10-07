@@ -9,7 +9,7 @@
 
 \usage{
 s1d.barchart(score, labels = NULL, facets = NULL, plot = TRUE, 
-  storeData = FALSE, add = FALSE, pos = -1, ...)
+  storeData = TRUE, add = FALSE, pos = -1, ...)
 }
 
 \arguments{

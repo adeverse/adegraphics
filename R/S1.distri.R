@@ -13,10 +13,6 @@ setMethod(
   signature = "S1.distri",
   definition = function(.Object, data = list(score = NULL, dfdistri = NULL, labels = NULL, at = NULL, frame = 0, storeData = TRUE), ...) {
     .Object <- callNextMethod(.Object, data = data, ...) ## ADEg.S1 initialize
-    if(data$storeData) {
-      data$dfdistri <- eval(data$dfdistri, envir = sys.frame(data$frame))
-      data$labels <- eval(data$labels, envir = sys.frame(data$frame))
-    }
     .Object@data$dfdistri <- data$dfdistri
     .Object@data$labels <- data$labels
     return(.Object)
@@ -151,7 +147,7 @@ setMethod(
   })
 
 
-s1d.distri <- function(score, dfdistri, labels = colnames(dfdistri), at = 1:NCOL(dfdistri), yrank = TRUE, sdSize = 1, facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
+s1d.distri <- function(score, dfdistri, labels = colnames(dfdistri), at = 1:NCOL(dfdistri), yrank = TRUE, sdSize = 1, facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
 
   ## evaluation of some parameters (required for multiplot)
   thecall <- .expand.call(match.call())
@@ -183,7 +179,10 @@ s1d.distri <- function(score, dfdistri, labels = colnames(dfdistri), at = 1:NCOL
 
     ## creation of the ADEg object
     g.args <- c(sortparameters$g.args, list(yrank = yrank, sdSize = sdSize))
-    tmp_data <- list(score = thecall$score, dfdistri = thecall$dfdistri, at = thecall$at, labels = labels, frame = sys.nframe() + pos, storeData = storeData)
+    if(storeData)
+    	tmp_data <- list(score = score, dfdistri = dfdistri, at = at, labels = labels, frame = sys.nframe() + pos, storeData = storeData)
+    else
+      tmp_data <- list(score = thecall$score, dfdistri = thecall$dfdistri, at = thecall$at, labels = labels, frame = sys.nframe() + pos, storeData = storeData)
     object <- new(Class = "S1.distri", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = g.args, Call = match.call())
     
     ## preparation

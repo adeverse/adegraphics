@@ -10,7 +10,7 @@
 \usage{
 s.traject(dfxy, fac = gl(1, nrow(dfxy)), order, labels = levels(fac), 
   xax = 1, yax = 2, col = NULL, facets = NULL, plot = TRUE, 
-  storeData = FALSE, add = FALSE, pos = -1, ...)
+  storeData = TRUE, add = FALSE, pos = -1, ...)
 }
 
 \arguments{

@@ -12,7 +12,7 @@
 \usage{
 s.density(dfxy, xax = 1, yax = 2, bandwidth = NULL, gridsize = c(450L, 450L), 
   nrpoints = 300, threshold = 0.1, col = NULL, contour = FALSE, region = !contour, 
-  nclass = 8, facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...)
+  nclass = 8, facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...)
 }
 
 \arguments{

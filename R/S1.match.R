@@ -13,8 +13,6 @@ setMethod(
   signature = "S1.match",
   definition = function(.Object, data = list(score = NULL, labels = NULL, at = NULL, frame = 0, storeData = TRUE), ...) {
     .Object <- callNextMethod(.Object, data = data, ...) ## ADEg.S1 initialize
-    if(data$storeData)
-      data$labels <- eval(data$labels, envir = sys.frame(data$frame))
     .Object@data$labels <- data$labels
     return(.Object)
   })
@@ -131,7 +129,7 @@ setMethod(
   })
 
 
-s1d.match <- function(score1, score2, labels = 1:NROW(score1), at = 0.5, facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
+s1d.match <- function(score1, score2, labels = 1:NROW(score1), at = 0.5, facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
 
   ## evaluation of some parameters
   thecall <- .expand.call(match.call())
@@ -167,7 +165,10 @@ s1d.match <- function(score1, score2, labels = 1:NROW(score1), at = 0.5, facets 
       warning(c("Unused parameters: ", paste(unique(names(sortparameters$rest)), " ", sep = "")), call. = FALSE)
     
     ## creation of the ADEg object
-    tmp_data <- list(score = call("c", thecall$score1, thecall$score2), labels = thecall$labels, at = thecall$at, frame = sys.nframe() + pos, storeData = storeData)
+    if(storeData)
+    	tmp_data <- list(score = c(score1, score2), labels = labels, at = at, frame = sys.nframe() + pos, storeData = storeData)
+    else
+      tmp_data <- list(score = call("c", thecall$score1, thecall$score2), labels = thecall$labels, at = thecall$at, frame = sys.nframe() + pos, storeData = storeData)
     object <- new(Class = "S1.match", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = sortparameters$g.args, Call = match.call())
     
     ## preparation

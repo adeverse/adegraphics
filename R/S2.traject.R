@@ -13,10 +13,6 @@ setMethod(
   signature = "S2.traject",
   definition = function(.Object, data = list(dfxy = NULL, fac = NULL, labels = NULL, xax = 1, yax = 2, frame = 0, storeData = TRUE), ...) {
     .Object <- callNextMethod(.Object, data = data, ...) ## ADEg.S2 initialize
-    if(data$storeData) {
-      data$labels <- eval(data$labels, envir = sys.frame(data$frame))
-      data$fac <- eval(data$fac, envir = sys.frame(data$frame))
-    }
     .Object@data$labels <- data$labels
     .Object@data$fac <- data$fac
     return(.Object)
@@ -126,7 +122,7 @@ setMethod(
   })
 
 
-s.traject <- function(dfxy, fac = gl(1, nrow(dfxy)), order, labels = levels(fac), xax = 1, yax = 2, col = NULL, facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
+s.traject <- function(dfxy, fac = gl(1, nrow(dfxy)), order, labels = levels(fac), xax = 1, yax = 2, col = NULL, facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
   
   ## evaluation of some parameters (required for multiplot)
   thecall <- .expand.call(match.call())
@@ -176,7 +172,10 @@ s.traject <- function(dfxy, fac = gl(1, nrow(dfxy)), order, labels = levels(fac)
     
     ## creation of the ADEg object
     g.args <- c(sortparameters$g.args, list(order = thecall$order, col = col))
-    tmp_data <- list(dfxy = thecall$dfxy, xax = xax, yax = yax, labels = thecall$labels, fac = thecall$fac, frame = sys.nframe() + pos, storeData = storeData)
+    if(storeData)
+    	tmp_data <- list(dfxy = dfxy, xax = xax, yax = yax, labels = labels, fac = fac, frame = sys.nframe() + pos, storeData = storeData)
+    else
+      tmp_data <- list(dfxy = thecall$dfxy, xax = xax, yax = yax, labels = thecall$labels, fac = thecall$fac, frame = sys.nframe() + pos, storeData = storeData)
     object <- new(Class = "S2.traject", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = g.args, Call = as.call(thecall))
     
     ## preparation

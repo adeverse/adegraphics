@@ -15,8 +15,6 @@ setMethod(
   signature = "C1.density",
   definition = function(.Object, data = list(score = NULL, fac = NULL, frame = 0, storeData = TRUE), ...) {
     .Object <- callNextMethod(.Object, data = data, ...) ## ADEg.C1 initialize
-    if(data$storeData)
-      data$fac <- eval(data$fac, envir = sys.frame(data$frame))
     .Object@data$fac <- data$fac
     return(.Object)
   })
@@ -197,7 +195,7 @@ setMethod(
 ## kernel, bandwidth and gridsize directly passed to the bkde function (for density calculation)
 ## if fill is FALSE, polygons density curves are transparent
 s1d.density <- function(score, fac = gl(1, NROW(score)), kernel = c("normal", "box", "epanech", "biweight", "triweight"), bandwidth = NULL, gridsize = 450, col = TRUE, fill = TRUE, facets = NULL,
-                        plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
+                        plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
 
 	thecall <- .expand.call(match.call())
   
@@ -232,7 +230,10 @@ s1d.density <- function(score, fac = gl(1, NROW(score)), kernel = c("normal", "b
     
     ## creation of the ADEg object
     g.args <- c(sortparameters$g.args, list(kernel = match.arg(kernel), bandwidth = bandwidth, gridsize = gridsize, fill = fill, col = col))
-    tmp_data <- list(score = thecall$score, fac = thecall$fac, frame = sys.nframe() + pos, storeData = storeData)
+    if(storeData)
+    	tmp_data <- list(score = score, fac = fac, frame = sys.nframe() + pos, storeData = storeData)
+    else
+      tmp_data <- list(score = thecall$score, fac = thecall$fac, frame = sys.nframe() + pos, storeData = storeData)
     object <- new(Class = "C1.density", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = g.args, Call = match.call())
 
     ## preparation

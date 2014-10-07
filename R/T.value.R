@@ -108,7 +108,7 @@ setMethod(
 
 
 table.value <- function(dftab, coordsx = 1:ncol(as.matrix(dftab)), coordsy = nrow(as.matrix(dftab)):1, labelsx, labelsy, maxsize = 0.4, breaks = NULL, method = c("size", "color"),
-                        symbol = c("square", "circle"), col = NULL, nclass = 3, center = 0, centerpar = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
+                        symbol = c("square", "circle"), col = NULL, nclass = 3, center = 0, centerpar = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
                         
   ## 4 different types can be used as tab :
   ## distance matrix (dist), contingency table (table), data.frame or matrix
@@ -124,10 +124,16 @@ table.value <- function(dftab, coordsx = 1:ncol(as.matrix(dftab)), coordsy = nro
   if(inherits(dftab, "dist")) {
     if(missing(labelsx))
       if(!is.null(attr(dftab, "Labels")))
-        thecall$labelsx <- call("attr", thecall$dftab, "Labels")
+        if(storeData)
+        	labelsx <- attr(dftab, "Labels")
+    		else
+          thecall$labelsx <- call("attr", thecall$dftab, "Labels")
     if(missing(labelsy))
       if(!is.null(attr(dftab, "Labels")))
-        thecall$labelsy <- call("attr", thecall$dftab, "Labels")
+        if(storeData)
+        	labelsy <- attr(dftab, "Labels")
+    		else
+          thecall$labelsy <- call("attr", thecall$dftab, "Labels")
     ## coordsx and coordsy should be identical for dist objects (symmetric)
     thecall$coordsx <- call(":", 1, call("attr", thecall$dftab, "Size"))
     thecall$coordsy <- call(":", call("attr", thecall$dftab, "Size"), 1)
@@ -135,17 +141,27 @@ table.value <- function(dftab, coordsx = 1:ncol(as.matrix(dftab)), coordsy = nro
   } else { ## data.frame, matrix, table
     if(missing(labelsy))
       if(!is.null(rownames(dftab)))
-        thecall$labelsy <- call("rownames", thecall$dftab)
+        if(storeData)
+        	labelsy <- rownames(dftab)
+    		else
+          thecall$labelsy <- call("rownames", thecall$dftab)
     if(missing(labelsx))
       if(!is.null(colnames(dftab)))
-        thecall$labelsx <- call("colnames", thecall$dftab)
+        if(storeData)
+        	labelsx <- colnames(dftab)
+    		else
+          thecall$labelsx <- call("colnames", thecall$dftab)
   }
+  
   
   ## parameters sorted
   sortparameters <- .specificpar(...)
   ## creation of the ADEg object
   g.args <- c(sortparameters$g.args, list(breaks = breaks, method = thecall$method, symbol = thecall$symbol, center = thecall$center, maxsize = maxsize, col = col, nclass = nclass, centerpar = centerpar))
-  tmp_data <- list(dftab = thecall$dftab, coordsx = thecall$coordsx, coordsy = thecall$coordsy, labelsx = thecall$labelsx, labelsy = thecall$labelsy, frame = sys.nframe() + pos, storeData = storeData)
+  if(storeData)
+	  tmp_data <- list(dftab = dftab, coordsx = coordsx, coordsy = coordsy, labelsx = labelsx, labelsy = labelsy, frame = sys.nframe() + pos, storeData = storeData)
+  else
+    tmp_data <- list(dftab = thecall$dftab, coordsx = thecall$coordsx, coordsy = thecall$coordsy, labelsx = thecall$labelsx, labelsy = thecall$labelsy, frame = sys.nframe() + pos, storeData = storeData)
   
   if(inherits(dftab, "table")) {
     condres <- pmatch(c("ablineX", "ablineY", "meanX", "meanY"), names(sortparameters$rest))

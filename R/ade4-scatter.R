@@ -1,5 +1,5 @@
 "scatter.dudi" <- function(x, xax = 1, yax = 2, permute = FALSE, posieig = "topleft", prop = FALSE, 
-  density.plot = ifelse(permute, ncol(x$tab) > 1000, nrow(x$tab) > 1000), plot = TRUE, storeData = FALSE, pos = -1, ...) {
+  density.plot = ifelse(permute, ncol(x$tab) > 1000, nrow(x$tab) > 1000), plot = TRUE, storeData = TRUE, pos = -1, ...) {
   if(!inherits(x, "dudi")) 
     stop("Object of class 'dudi' expected")
   if((xax == yax) || (x$nf == 1))
@@ -13,7 +13,7 @@
     stop("Non convenient yax")  
   
   position <- match.arg(posieig[1], choices = c("bottomleft", "bottomright", "topleft", "topright", "none"), several.ok = FALSE)
-
+  
   ## sort parameters for each graph
   graphsnames <- c("row", "col", "eig")
   sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
@@ -73,7 +73,7 @@
 }
 
 
-"scatter.coa" <- function(x, xax = 1, yax = 2, method = 1:3, posieig = "topleft", pos = -1, storeData = FALSE, plot = TRUE, ...) {
+"scatter.coa" <- function(x, xax = 1, yax = 2, method = 1:3, posieig = "topleft", pos = -1, storeData = TRUE, plot = TRUE, ...) {
   if(!inherits(x, "dudi"))
     stop("Object of class 'dudi' expected")
   if(!inherits(x, "coa"))
@@ -130,7 +130,7 @@
 }
 
 
-"plot.acm"  <- function(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, ...) {
+"plot.acm"  <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, ...) {
   if(!inherits(x, "dudi"))
     stop("Object of class 'dudi' expected")
   if(!inherits(x, "acm"))
@@ -163,7 +163,7 @@
 }
 
 
-"plot.fca" <- function(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, ...) {
+"plot.fca" <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, ...) {
   if(!inherits(x, "dudi"))
     stop("Object of class 'dudi' expected")
   if(!inherits(x, "fca"))
@@ -206,7 +206,7 @@
 }
 
 
-"scatter.pco" <- function(x, xax = 1, yax = 2, posieig = "topleft", pos = -1, storeData = FALSE, plot = TRUE, ...) {
+"scatter.pco" <- function(x, xax = 1, yax = 2, posieig = "topleft", pos = -1, storeData = TRUE, plot = TRUE, ...) {
   if(!inherits(x, "dudi"))
     stop("Object of class 'dudi' expected")
   if(!inherits(x, "pco"))
@@ -250,7 +250,7 @@
 }
 
 
-"scatter.nipals" <- function(x, xax = 1, yax = 2, posieig = "topleft", pos = -1, storeData = FALSE, plot = TRUE, ...) {
+"scatter.nipals" <- function(x, xax = 1, yax = 2, posieig = "topleft", pos = -1, storeData = TRUE, plot = TRUE, ...) {
   if(!inherits(x, "nipals"))
     stop("Object of class 'nipals' expected")
   
@@ -303,7 +303,7 @@
 }
 
 
-"score.acm" <- function (x, xax = 1, which.var = NULL, type = c("points", "boxplot"), pos = -1, storeData = FALSE, plot = TRUE, ...) {
+"score.acm" <- function (x, xax = 1, which.var = NULL, type = c("points", "boxplot"), pos = -1, storeData = TRUE, plot = TRUE, ...) {
   if(!inherits(x, "acm")) 
     stop("Object of class 'acm' expected")
   if(x$nf == 1) 
@@ -334,7 +334,7 @@
     scorecall <- substitute(x$l1[, xax])
     fac <- call("[", oritab, which.var)
     object <- do.call("s1d.boxplot", c(list(score = scorecall, fac = fac, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args, sortparameters$rest))
-      
+    
   } else if(type == "points") {
     ## parameter management
     params$adepar <- list(ppoints = list(pch = "|"), porigin = list(draw = FALSE), pgrid = list(draw = FALSE), psub = list(position = "topleft"), paxes = list(draw = TRUE), plabels = list(cex = 1.25))
@@ -374,7 +374,7 @@
 }
 
 
-#"score.coa" <- function (x, xax = 1, dotchart = FALSE, pos = -1, storeData = FALSE, plot = TRUE, ...) {
+#"score.coa" <- function (x, xax = 1, dotchart = FALSE, pos = -1, storeData = TRUE, plot = TRUE, ...) {
 #
 #  if(!inherits(x, "coa")) 
 #    stop("Object of class 'coa' expected")
@@ -513,7 +513,7 @@
 
 
 
-"score.mix" <- function (x, xax = 1, which.var = NULL, pos = -1, storeData = FALSE, plot = TRUE, ...) {
+"score.mix" <- function (x, xax = 1, which.var = NULL, pos = -1, storeData = TRUE, plot = TRUE, ...) {
   if(!inherits(x, "mix")) 
     stop("Object of class 'mix' expected")
   if(x$nf == 1) 
@@ -542,7 +542,7 @@
     ## parameters management
     sortparameters <- .specificpar(...)
     params <- list()
-
+    
     ## data management
     type.var <- index[i]
     col.var <- which(x$assign == i)
@@ -624,8 +624,7 @@
 }
 
 
-"score.pca" <- function (x, xax = 1, which.var = NULL, pos = -1, storeData = FALSE, plot = TRUE, ...) {
-  
+"score.pca" <- function (x, xax = 1, which.var = NULL, pos = -1, storeData = TRUE, plot = TRUE, ...) {
   if(!inherits(x, "pca")) 
     stop("Object of class 'pca' expected")
   if(x$nf == 1) 

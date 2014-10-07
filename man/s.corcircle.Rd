@@ -9,7 +9,7 @@
 
 \usage{
 s.corcircle(dfxy, xax = 1, yax = 2, labels = row.names(as.data.frame(dfxy)), 
-  fullcircle = TRUE, facets = NULL, plot = TRUE, storeData = FALSE, 
+  fullcircle = TRUE, facets = NULL, plot = TRUE, storeData = TRUE, 
   add = FALSE, pos = -1, ...)
 }
 

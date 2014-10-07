@@ -9,7 +9,7 @@
 
 \usage{
 s.logo(dfxy, logos, xax = 1, yax = 2, facets = NULL, 
-  plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...)
+  plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...)
 }
 
 \arguments{

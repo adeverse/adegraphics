@@ -84,7 +84,7 @@ setMethod(
 
 
 s1d.hist <- function(score, breaks = NULL, nclass = round(log2(length(score)) + 1), type = c("count", "density", "percent"), right = TRUE, 
-  facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
+  facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
   
   ## evaluation of some parameters
   thecall <- .expand.call(match.call())
@@ -113,7 +113,10 @@ s1d.hist <- function(score, breaks = NULL, nclass = round(log2(length(score)) + 
     
     ## creation of the ADEg object
     g.args <- c(sortparameters$g.args, list(type = match.arg(type), nclass = nclass, breaks = breaks, right = right))
-    tmp_data <- list(score = thecall$score, frame = sys.nframe() + pos, storeData = storeData)
+    if(storeData)
+    	tmp_data <- list(score = score, frame = sys.nframe() + pos, storeData = storeData)
+    else
+      tmp_data <- list(score = thecall$score, frame = sys.nframe() + pos, storeData = storeData)
     object <- new(Class = "C1.hist", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = g.args, Call = match.call())
     
     ## preparation

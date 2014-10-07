@@ -13,8 +13,6 @@ setMethod(
   signature  = "S1.boxplot",
   definition = function(.Object, data = list(score = NULL, fac = NULL, at = NULL, frame = 0, storeData = TRUE), ...) {
     .Object <- callNextMethod(.Object, data = data, ...) ## ADEg.S1 initialize
-    if(data$storeData)
-      data$fac <- eval(data$fac, envir = sys.frame(data$frame))
     .Object@data$fac <- data$fac
     return(.Object)
   })
@@ -189,7 +187,7 @@ setMethod(
   })
 
 
-s1d.boxplot <- function(score, fac = gl(1, NROW(score)), at = 1:nlevels(fac), col = NULL, facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
+s1d.boxplot <- function(score, fac = gl(1, NROW(score)), at = 1:nlevels(fac), col = NULL, facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
 
   ## evaluation of some parameters
   thecall <- .expand.call(match.call())
@@ -229,7 +227,10 @@ s1d.boxplot <- function(score, fac = gl(1, NROW(score)), at = 1:nlevels(fac), co
     
     ## creation of the ADEg object
     g.args <- c(sortparameters$g.args, list(col = col))
-    tmp_data <- list(score = thecall$score, fac = fac, at = thecall$at, frame = sys.nframe() + pos, storeData = storeData)
+    if(storeData)
+    	tmp_data <- list(score = score, fac = fac, at = at, frame = sys.nframe() + pos, storeData = storeData)
+    else
+      tmp_data <- list(score = thecall$score, fac = fac, at = thecall$at, frame = sys.nframe() + pos, storeData = storeData)
     object <- new(Class = "S1.boxplot", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = g.args, Call = match.call())
     
     ## preparation

@@ -24,7 +24,7 @@ setClass(
       stop("add matrix can only contain 0/1 values")
     for(i in 1:ng) {
       j <- 1:i
-      if(any(add[i,j] != 0))
+      if(any(add[i, j] != 0))
         stop("upper diagonal matrix expected for add, only 0 are allowed for xij, when j > = i")
     }
     return(TRUE)

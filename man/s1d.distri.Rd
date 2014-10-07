@@ -11,7 +11,7 @@ using an external table of weights}
 \usage{
 s1d.distri(score, dfdistri, labels = colnames(dfdistri), at = 1:NCOL(dfdistri), 
   yrank = TRUE, sdSize = 1, facets = NULL, plot = TRUE, 
-  storeData = FALSE, add = FALSE, pos = -1, ...)
+  storeData = TRUE, add = FALSE, pos = -1, ...)
 }
 
 \arguments{

@@ -10,7 +10,7 @@ This function represents a three dimensional scatter plot of paired coordinates.
 \usage{
 triangle.match(dfxyz1, dfxyz2, labels = row.names(as.data.frame(dfxyz1)), 
   min3d = NULL, max3d = NULL, adjust = TRUE, showposition = TRUE, facets = NULL, 
-  plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...)
+  plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...)
 }
 
 \arguments{

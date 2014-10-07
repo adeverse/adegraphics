@@ -9,7 +9,7 @@
 
 \usage{
 s1d.curve(score, at = 1:NROW(score), facets = NULL, plot = TRUE, 
-  storeData = FALSE, add = FALSE, pos = -1, ...)
+  storeData = TRUE, add = FALSE, pos = -1, ...)
 }
 
 \arguments{

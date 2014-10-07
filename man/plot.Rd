@@ -59,67 +59,67 @@
 
 \usage{
 \method{kplot}{foucart}(object, xax = 1, yax = 2, which.tab = 1:length(object$blo), pos = -1, 
-  storeData = FALSE, plot = TRUE, \dots)
+  storeData = TRUE, plot = TRUE, \dots)
 \method{kplot}{mcoa}(object, xax = 1, yax = 2, which.tab = 1:nrow(object$cov2), 
-  option = c("points", "axis", "columns"), pos = -1, storeData = FALSE, plot = TRUE, \dots)
+  option = c("points", "axis", "columns"), pos = -1, storeData = TRUE, plot = TRUE, \dots)
 \method{kplot}{mfa}(object, xax = 1, yax = 2, which.tab = 1:length(object$blo), traject = FALSE, 
-  permute = FALSE, pos = -1, storeData = FALSE, plot = TRUE, \dots)
+  permute = FALSE, pos = -1, storeData = TRUE, plot = TRUE, \dots)
 \method{kplot}{mbpcaiv}(object, xax = 1, yax = 2, which.tab =
-1:length(object$blo), pos = -1, storeData = FALSE, plot = TRUE, \dots)
+1:length(object$blo), pos = -1, storeData = TRUE, plot = TRUE, \dots)
 \method{kplot}{pta}(object, xax = 1, yax = 2, which.tab = 1:nrow(object$RV), which.graph = 1:4, 
-  pos = -1, storeData = FALSE, plot = TRUE, \dots)
+  pos = -1, storeData = TRUE, plot = TRUE, \dots)
 \method{kplot}{sepan}(object, xax = 1, yax = 2, which.tab = 1:length(object$blo), permute = FALSE, 
-  traject = FALSE, posieig = "bottomleft", pos = -1, storeData = FALSE, plot = TRUE, \dots)
+  traject = FALSE, posieig = "bottomleft", pos = -1, storeData = TRUE, plot = TRUE, \dots)
 \method{kplot}{sepan.coa}(object, xax = 1, yax = 2, which.tab = 1:length(object$blo), permute = FALSE, 
-  posieig = "bottomleft", pos = -1, storeData = FALSE, plot = TRUE, \dots)
+  posieig = "bottomleft", pos = -1, storeData = TRUE, plot = TRUE, \dots)
 \method{kplot}{statis}(object, xax = 1, yax = 2, which.tab = 1:length(object$tab.names), traject = FALSE, 
-  arrow = TRUE, class = NULL, pos = -1, storeData = FALSE, plot = TRUE, \dots)
+  arrow = TRUE, class = NULL, pos = -1, storeData = TRUE, plot = TRUE, \dots)
 
-\method{plot}{acm}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
-\method{plot}{betcoi}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
-\method{plot}{betrlq}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
-\method{plot}{between}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
-\method{plot}{coinertia}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
-\method{plot}{discrimin}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
-\method{plot}{dpcoa}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
-\method{plot}{fca}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
-\method{plot}{foucart}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE,
+\method{plot}{acm}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
+\method{plot}{betcoi}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
+\method{plot}{betrlq}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
+\method{plot}{between}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
+\method{plot}{coinertia}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
+\method{plot}{discrimin}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
+\method{plot}{dpcoa}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
+\method{plot}{fca}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
+\method{plot}{foucart}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE,
 plot = TRUE, \dots)
-\method{plot}{krandboot}(x, pos = -1, storeData = FALSE, plot = TRUE, \dots)
-\method{plot}{krandxval}(x, pos = -1, storeData = FALSE, plot = TRUE, \dots)
-\method{plot}{mcoa}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
-\method{plot}{mfa}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE,
+\method{plot}{krandboot}(x, pos = -1, storeData = TRUE, plot = TRUE, \dots)
+\method{plot}{krandxval}(x, pos = -1, storeData = TRUE, plot = TRUE, \dots)
+\method{plot}{mcoa}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
+\method{plot}{mfa}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE,
 plot = TRUE, \dots)
-\method{plot}{multiblock}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
-\method{plot}{multispati}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
-\method{plot}{niche}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
-\method{plot}{pcaiv}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
-\method{plot}{pta}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
+\method{plot}{multiblock}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
+\method{plot}{multispati}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
+\method{plot}{niche}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
+\method{plot}{pcaiv}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
+\method{plot}{pta}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
 \method{plot}{procuste}(x, xax = 1, yax = 2, pos = -1, storeData =
-FALSE, plot = TRUE, \dots)
-\method{plot}{randboot}(x, pos = -1, storeData = FALSE, plot = TRUE, \dots)
-\method{plot}{randxval}(x, pos = -1, storeData = FALSE, plot = TRUE, \dots)
-\method{plot}{rlq}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
-\method{plot}{sepan}(x, pos = -1, storeData = FALSE, plot = TRUE, \dots)
-\method{plot}{statis}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
-\method{plot}{witcoi}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
-\method{plot}{within}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
-\method{plot}{witrlq}(x, xax = 1, yax = 2, pos = -1, storeData = FALSE, plot = TRUE, \dots)
+TRUE, plot = TRUE, \dots)
+\method{plot}{randboot}(x, pos = -1, storeData = TRUE, plot = TRUE, \dots)
+\method{plot}{randxval}(x, pos = -1, storeData = TRUE, plot = TRUE, \dots)
+\method{plot}{rlq}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
+\method{plot}{sepan}(x, pos = -1, storeData = TRUE, plot = TRUE, \dots)
+\method{plot}{statis}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
+\method{plot}{witcoi}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
+\method{plot}{within}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
+\method{plot}{witrlq}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
 
 \method{scatter}{dudi}(x, xax = 1, yax = 2, permute = FALSE, posieig = "topleft", prop = FALSE, 
   density.plot = ifelse(permute, ncol(x$tab) > 1000, nrow(x$tab) > 1000), plot = TRUE, 
-  storeData = FALSE, pos = -1, \dots)
+  storeData = TRUE, pos = -1, \dots)
 \method{scatter}{coa}(x, xax = 1, yax = 2, method = 1:3, posieig = "topleft", pos = -1, 
-  storeData = FALSE, plot = TRUE, \dots)
-\method{scatter}{pco}(x, xax = 1, yax = 2, posieig = "topleft", pos = -1, storeData = FALSE, 
+  storeData = TRUE, plot = TRUE, \dots)
+\method{scatter}{pco}(x, xax = 1, yax = 2, posieig = "topleft", pos = -1, storeData = TRUE, 
   plot = TRUE, \dots)
-\method{scatter}{nipals}(x, xax = 1, yax = 2, posieig = "topleft", pos = -1, storeData = FALSE, 
+\method{scatter}{nipals}(x, xax = 1, yax = 2, posieig = "topleft", pos = -1, storeData = TRUE, 
   plot = TRUE, \dots)
 
 \method{score}{acm}(x, xax = 1, which.var = NULL, type = c("points", "boxplot"), pos = -1, 
-  storeData = FALSE, plot = TRUE, \dots)
-\method{score}{mix}(x, xax = 1, which.var = NULL, pos = -1, storeData = FALSE, plot = TRUE, \dots)
-\method{score}{pca}(x, xax = 1, which.var = NULL, pos = -1, storeData = FALSE, plot = TRUE, \dots)
+  storeData = TRUE, plot = TRUE, \dots)
+\method{score}{mix}(x, xax = 1, which.var = NULL, pos = -1, storeData = TRUE, plot = TRUE, \dots)
+\method{score}{pca}(x, xax = 1, which.var = NULL, pos = -1, storeData = TRUE, plot = TRUE, \dots)
 
 \method{screeplot}{dudi}(x, col.kept = "grey", col = "white", pos = -1, plot = TRUE, \dots)
 

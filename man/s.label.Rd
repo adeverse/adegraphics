@@ -9,7 +9,7 @@
 
 \usage{
 s.label(dfxy, labels = rownames(dfxy), xax = 1, yax = 2,
-  facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, 
+  facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, 
   pos = -1, ...)
 }
 

@@ -11,7 +11,7 @@
 table.image(dftab, coordsx = 1:ncol(as.matrix(dftab)), coordsy =
   nrow(as.matrix(dftab)):1, labelsx, labelsy, nclass = 3,
   breaks = NULL, col = NULL, plot = TRUE, storeData =
-  FALSE, add = FALSE, pos = -1, ...)
+  TRUE, add = FALSE, pos = -1, ...)
 }
 
 \arguments{

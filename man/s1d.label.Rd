@@ -10,7 +10,7 @@
 \usage{
 s1d.label(score, labels = 1:NROW(score), at = 0.5, poslabel = c("regular",
   "value"), facets = NULL, plot = TRUE, storeData =
-  FALSE, add = FALSE, pos = -1, ...)
+  TRUE, add = FALSE, pos = -1, ...)
 }
 
 \arguments{

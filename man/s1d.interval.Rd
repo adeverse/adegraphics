@@ -9,7 +9,7 @@
 
 \usage{
 s1d.interval(score1, score2, at = 1:NROW(score1), method = c("bars", "area"), 
-  facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...)
+  facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...)
 }
 
 \arguments{

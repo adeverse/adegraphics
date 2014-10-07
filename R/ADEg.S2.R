@@ -9,10 +9,7 @@ setMethod(
   f = "initialize",
   signature = "ADEg.S2",
   definition = function(.Object, data = list(dfxy = NULL, xax = 1, yax = 2, frame = 0, storeData = TRUE), ...) {
-    ## import the data in @data$dfxy if storeData = TRUE
     .Object <- callNextMethod(.Object, ...) ## ADEg initialize
-    if(data$storeData)
-      data$dfxy <- as.data.frame(eval(data$dfxy, envir = sys.frame(data$frame)))
     .Object@data <- data
     return(.Object)
   })
@@ -287,11 +284,11 @@ setMethod(
 setMethod(
   f = "addhist",
   signature = "ADEg.S2",
-  definition = function(object, bandwidth, gridsize = 60, kernel = "normal", cbreaks = 2, storeData = FALSE, plot = TRUE, pos = -1, ...) {
+  definition = function(object, bandwidth, gridsize = 60, kernel = "normal", cbreaks = 2, storeData = TRUE, plot = TRUE, pos = -1, ...) {
     if(!(inherits(object, "ADEg.S2")))
       stop("Only implemented for 'ADEg.S2' object")
     
-    if(object@data$storeData) {
+    if(storeData) {
       dfxy <- object@data$dfxy
       xax <- object@data$xax
       yax <- object@data$yax
@@ -360,13 +357,16 @@ setMethod(
   f = "gettrellis",
   signature = "ADEg.S2",
   definition = function(object) {
-    if(object@data$storeData)
-      dfxy <- object@data$dfxy
-    else
+    if(object@data$storeData) {
+      dfxy <- as.matrix(object@data$dfxy)
+      xax <- object@data$xax
+      yax <- object@data$yax
+    } else {
       dfxy <- as.matrix(eval(object@data$dfxy, envir = sys.frame(object@data$frame)))
+      yax <- eval(object@data$yax, envir = sys.frame(object@data$frame))
+      xax <- eval(object@data$xax, envir = sys.frame(object@data$frame))
+    }
     
-    yax <- eval(object@data$yax, envir = sys.frame(object@data$frame))
-    xax <- eval(object@data$xax, envir = sys.frame(object@data$frame))
     tmptrellis <- do.call(what = object@lattice.call$graphictype, args = c(formula(dfxy[, yax] ~ dfxy[, xax]), object@lattice.call$arguments, environment()))
     return(tmptrellis)
   })

@@ -13,11 +13,6 @@ setMethod(
   signature = "S1.class",
   definition = function(.Object, data = list(score = NULL, fac = NULL, wt = NULL, labels = NULL, at = NULL, frame = 0, storeData = TRUE), ...) {
     .Object <- callNextMethod(.Object, data = data, ...) ## ADEg.S1 initialize
-    if(data$storeData) {
-      data$fac <- eval(data$fac, envir = sys.frame(data$frame))
-      data$labels <- eval(data$labels, envir = sys.frame(data$frame))
-      data$wt <- eval(data$wt, envir = sys.frame(data$frame))
-    }
     .Object@data$fac <- data$fac
     .Object@data$wt <- data$wt
     .Object@data$labels <- data$labels
@@ -158,7 +153,7 @@ setMethod(
 
 
 s1d.class <- function(score, fac, wt = rep(1, NROW(fac)), labels = levels(fac), at = 0.5, poslabel = c("regular", "value"), col = NULL, 
-  										facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
+  										facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
   
   ## evaluation of some parameters
   thecall <- .expand.call(match.call())
@@ -204,7 +199,10 @@ s1d.class <- function(score, fac, wt = rep(1, NROW(fac)), labels = levels(fac), 
     
     ## creation of the ADEg object
     g.args <- c(sortparameters$g.args, list(poslabel = match.arg(poslabel), col = col))
-    tmp_data <- list(score = thecall$score, wt = thecall$wt, fac = thecall$fac, labels = thecall$labels, at = thecall$at, frame = sys.nframe() + pos, storeData = storeData)
+    if(storeData)
+    	tmp_data <- list(score = score, wt = wt, fac = fac, labels = labels, at = at, frame = sys.nframe() + pos, storeData = storeData)
+    else
+      tmp_data <- list(score = thecall$score, wt = thecall$wt, fac = thecall$fac, labels = thecall$labels, at = thecall$at, frame = sys.nframe() + pos, storeData = storeData)
     object <- new(Class = "S1.class", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = g.args, Call = match.call())
 
     ## preparation

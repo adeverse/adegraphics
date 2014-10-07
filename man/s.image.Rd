@@ -11,7 +11,7 @@
 \usage{
 s.image(dfxy, z, xax = 1, yax = 2, span = 0.5, gridsize = c(80L, 80L), 
   contour = TRUE, region = TRUE, outsideLimits = NULL, col = NULL, facets = NULL, 
-  plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...)
+  plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...)
 }
 
 \arguments{

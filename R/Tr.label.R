@@ -13,8 +13,6 @@ setMethod(
   signature  = "Tr.label",
   definition = function(.Object, data = list(dfxyz = NULL, labels = NULL, frame = 0, storeData = TRUE), ...) {
     .Object <- callNextMethod(.Object, data = data, ...) ## ADEg.Tr initialize
-    if(data$storeData)
-      data$labels <- eval(data$labels, envir = sys.frame(data$frame))
     .Object@data$labels <- data$labels
     return(.Object)
   })
@@ -149,7 +147,7 @@ setMethod(
 
 
 triangle.label <- function(dfxyz, labels = rownames(dfxyz), adjust = TRUE, min3d = NULL, max3d = NULL, addaxes = FALSE, addmean = FALSE, meanpar = NULL, axespar = NULL, 
-  												 showposition = TRUE, facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
+  												 showposition = TRUE, facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
   ## dfxyz: matrix/data.frame with 3 columns
   ## min3d, max3d: limits by default: c(0,0,0), c(1,1,1)
   ## addaxes: should we draw pca axes
@@ -172,7 +170,10 @@ triangle.label <- function(dfxyz, labels = rownames(dfxyz), adjust = TRUE, min3d
     
     ## creation of the ADEg object
     g.args <- c(sortparameters$g.args, list(adjust = adjust, min3d = min3d, max3d = max3d, addaxes = addaxes, addmean = addmean, meanpar = meanpar, axespar = axespar))
-    tmp_data <- list(dfxyz = thecall$dfxyz, labels = thecall$labels, frame = sys.nframe() + pos, storeData = storeData)
+    if(storeData)
+    	tmp_data <- list(dfxyz = dfxyz, labels = labels, frame = sys.nframe() + pos, storeData = storeData)
+    else
+      tmp_data <- list(dfxyz = thecall$dfxyz, labels = thecall$labels, frame = sys.nframe() + pos, storeData = storeData)
     object <- new(Class = "Tr.label", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = g.args, Call = match.call())
     
     ## preparation

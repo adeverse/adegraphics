@@ -11,7 +11,7 @@
 \usage{
 s1d.class(score, fac, wt = rep(1, NROW(fac)), labels = levels(fac), at = 0.5, 
   poslabel = c("regular", "value"), col = NULL, facets = NULL, plot = TRUE, 
-  storeData = FALSE, add = FALSE, pos = -1, ...)
+  storeData = TRUE, add = FALSE, pos = -1, ...)
 }
 
 \arguments{

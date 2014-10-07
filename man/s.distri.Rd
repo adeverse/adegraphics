@@ -11,7 +11,7 @@
 \usage{
 s.distri(dfxy, dfdistri, xax = 1, yax = 2, starSize = 1, 
   ellipseSize = 1.5, col = NULL, facets = NULL, plot = TRUE, 
-  storeData = FALSE, add = FALSE, pos = -1, ...)
+  storeData = TRUE, add = FALSE, pos = -1, ...)
 }
 
 \arguments{

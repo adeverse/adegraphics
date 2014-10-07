@@ -14,7 +14,7 @@
 
 \usage{
 addhist(object, bandwidth, gridsize = 60, kernel = "normal", cbreaks = 2, 
-  storeData = FALSE, plot = TRUE, pos = -1, ...)
+  storeData = TRUE, plot = TRUE, pos = -1, ...)
 }
 
 \arguments{

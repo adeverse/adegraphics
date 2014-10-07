@@ -11,7 +11,7 @@
 triangle.class(dfxyz, fac, wt = rep(1, NROW(fac)), labels = levels(fac), 
   col = NULL, ellipseSize = 1, starSize = 1, chullSize = NULL, adjust = TRUE, 
   min3d = NULL, max3d = NULL, showposition = TRUE, facets = NULL, plot = TRUE, 
-  storeData = FALSE, add = FALSE, pos = -1, ...)
+  storeData = TRUE, add = FALSE, pos = -1, ...)
 }
 
 \arguments{

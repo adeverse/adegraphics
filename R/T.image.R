@@ -121,8 +121,8 @@ setMethod(
 ## a faire: verifier espacement correct de coordsx et coordsy
 ## que faire de la sous grille?
 ## attention, coordsx et coordsy ne serve qu'a donner l'ordre de trace, ils seront considere comme egalement espace, sinon fonction a revoir
-table.image <- function(dftab, coordsx = 1:ncol(as.matrix(dftab)), coordsy = nrow(as.matrix(dftab)):1, labelsx, labelsy, nclass = 3, breaks = NULL, col = NULL, plot = TRUE, 
-  storeData = FALSE, add = FALSE, pos = -1, ...) {
+table.image <- function(dftab, coordsx = 1:ncol(as.matrix(dftab)), coordsy = nrow(as.matrix(dftab)):1, labelsx = NULL, labelsy = NULL, nclass = 3, breaks = NULL, col = NULL, plot = TRUE, 
+  storeData = TRUE, add = FALSE, pos = -1, ...) {
   
   ## 4 different types can be used as tab :
   ## distance matrix (dist), contingency table (table), data.frame or matrix
@@ -161,7 +161,10 @@ table.image <- function(dftab, coordsx = 1:ncol(as.matrix(dftab)), coordsy = nro
     warning(c("Unused parameters: ", paste(unique(names(sortparameters$rest)), " ", sep = "")), call. = FALSE)
   
   g.args <- c(sortparameters$g.args, list(breaks = breaks, nclass = nclass, col = col))
-  tmp_data <- list(dftab = thecall$dftab, coordsx = thecall$coordsx, coordsy = thecall$coordsy, labelsx = thecall$labelsx, labelsy = thecall$labelsy, frame = sys.nframe() + pos, storeData = storeData)
+  if(storeData)
+  	tmp_data <- list(dftab = dftab, coordsx = coordsx, coordsy = coordsy, labelsx = labelsx, labelsy = labelsy, frame = sys.nframe() + pos, storeData = storeData)
+  else
+    tmp_data <- list(dftab = thecall$dftab, coordsx = thecall$coordsx, coordsy = thecall$coordsy, labelsx = thecall$labelsx, labelsy = thecall$labelsy, frame = sys.nframe() + pos, storeData = storeData)
   object <- new(Class = "T.image", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = g.args, Call = match.call())
 
   ## preparation of the graph

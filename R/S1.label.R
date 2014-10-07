@@ -13,8 +13,6 @@ setMethod(
   signature = "S1.label",
   definition = function(.Object, data = list(score = NULL, labels = NULL, at = NULL, frame = 0, storeData = TRUE), ...) {
     .Object <- callNextMethod(.Object, data = data, ...) ## ADEg.C1 initialize
-    if(data$storeData)
-      data$labels <- eval(data$labels, envir = sys.frame(data$frame))
     .Object@data$labels <- data$labels
     return(.Object)
   })
@@ -114,7 +112,7 @@ setMethod(
   })
 
 
-s1d.label <- function(score, labels = 1:NROW(score), at = 0.5, poslabel = c("regular", "value"), facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
+s1d.label <- function(score, labels = 1:NROW(score), at = 0.5, poslabel = c("regular", "value"), facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
   
   ## evaluation of some parameters
   thecall <- .expand.call(match.call())
@@ -143,7 +141,10 @@ s1d.label <- function(score, labels = 1:NROW(score), at = 0.5, poslabel = c("reg
     
     ## creation of the ADEg object
     g.args <- c(sortparameters$g.args, list(poslabel = match.arg(poslabel)))
-    tmp_data <- list(score = thecall$score, labels = thecall$labels, at = thecall$at, frame = sys.nframe() + pos, storeData = storeData)
+    if(storeData)
+    	tmp_data <- list(score = score, labels = labels, at = at, frame = sys.nframe() + pos, storeData = storeData)
+    else
+      tmp_data <- list(score = thecall$score, labels = thecall$labels, at = thecall$at, frame = sys.nframe() + pos, storeData = storeData)
     object <- new(Class = "S1.label", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = g.args, Call = match.call())
     
     ## preparation

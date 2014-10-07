@@ -9,8 +9,6 @@ setMethod(
   signature = "Tr.match",
   definition = function(.Object, data = list(dfxyz = NULL, labels = NULL, frame = 0, storeData = TRUE), ...) {
     .Object <- callNextMethod(.Object, data = data, ...) ## ADEg.Tr initialize
-    if(data$storeData)
-      data$labels <- eval(data$labels, envir = sys.frame(data$frame))
     .Object@data$labels <- data$labels
     return(.Object)
   })
@@ -84,7 +82,7 @@ setMethod(
 
 
 triangle.match <- function(dfxyz1, dfxyz2, labels = row.names(as.data.frame(dfxyz1)), min3d = NULL, max3d = NULL, adjust = TRUE, 
-  showposition = TRUE, facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
+  showposition = TRUE, facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
                            
   ## evaluation of some parameters
   thecall <- .expand.call(match.call())
@@ -108,7 +106,10 @@ triangle.match <- function(dfxyz1, dfxyz2, labels = row.names(as.data.frame(dfxy
     
     ## creation of the ADEg object
     g.args <- c(sortparameters$g.args, list(adjust = adjust, min3d = min3d, max3d = max3d))
-    tmp_data <- list(dfxyz = call("rbind", thecall$dfxyz1, thecall$dfxyz2), labels = thecall$labels, frame = sys.nframe() + pos, storeData = storeData)
+    if(storeData)
+    	tmp_data <- list(dfxyz = rbind(dfxyz1, dfxyz2), labels = labels, frame = sys.nframe() + pos, storeData = storeData)
+    else
+      tmp_data <- list(dfxyz = call("rbind", thecall$dfxyz1, thecall$dfxyz2), labels = thecall$labels, frame = sys.nframe() + pos, storeData = storeData)
     object <- new(Class = "Tr.match", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = g.args, Call = match.call())
     
     ## preparation

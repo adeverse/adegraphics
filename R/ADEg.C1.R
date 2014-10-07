@@ -12,10 +12,7 @@ setMethod(
   f = "initialize",
   signature  = "ADEg.C1",
   definition = function(.Object, data = list(score = NULL, frame = 0, storeData = TRUE), ...) {
-    ## import the data in @data$score if storeData = TRUE
     .Object <- callNextMethod(.Object, ...) ## ADEg initialize
-    if(data$storeData)
-      data$score <- eval(data$score, envir = sys.frame(data$frame))
     .Object@data <- data
     return(.Object)
   })

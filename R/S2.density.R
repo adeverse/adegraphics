@@ -98,7 +98,7 @@ setMethod(
 
 
 s.density <- function(dfxy, xax = 1, yax = 2, bandwidth = NULL, gridsize = c(450L, 450L), nrpoints = 300, threshold = 0.1, col = NULL, 
-  contour = FALSE, region = !contour, nclass = 8, facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
+  contour = FALSE, region = !contour, nclass = 8, facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
   
   ## evaluation of some parameters
   thecall <- .expand.call(match.call())
@@ -129,7 +129,10 @@ s.density <- function(dfxy, xax = 1, yax = 2, bandwidth = NULL, gridsize = c(450
     
     ## creation of the ADEg object
     g.args <- c(sortparameters$g.args, list(bandwidth = bandwidth, gridsize = gridsize, threshold = threshold, col = col, nrpoints = nrpoints, contour = contour, region = region, nclass = nclass))
-    tmp_data <- list(dfxy = thecall$dfxy, xax = xax, yax = yax, frame = sys.nframe() + pos, storeData = storeData)
+    if(storeData)
+    	tmp_data <- list(dfxy = dfxy, xax = xax, yax = yax, frame = sys.nframe() + pos, storeData = storeData)
+    else
+      tmp_data <- list(dfxy = thecall$dfxy, xax = xax, yax = yax, frame = sys.nframe() + pos, storeData = storeData)
     object <- new(Class = "S2.density", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = g.args, Call = as.call(thecall))
     
     ## preparation

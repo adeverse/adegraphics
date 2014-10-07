@@ -14,10 +14,7 @@ setMethod(
   f = "initialize",
   signature = "S2.match",
   definition = function(.Object, data = list(dfxy = NULL, xax = 1, yax = 2, labels = NULL, frame = 0, storeData = TRUE), ...) {
-    ## import the data in @data$dfxy if storeData = TRUE (i.e. $frame is NULL)
     .Object <- callNextMethod(.Object, data = data, ...) ## ADEg.S2 initialize
-    if(data$storeData)
-      data$labels <- eval(data$labels, envir = sys.frame(data$frame))
     .Object@data$labels <- data$labels
     return(.Object)
   })
@@ -80,7 +77,7 @@ setMethod(
 
 ## if arrows= TRUE arrows are plotted, otherwise only the segments are drawn
 s.match <- function(dfxy1, dfxy2, xax = 1, yax = 2, labels = row.names(as.data.frame(dfxy1)), arrows = TRUE, facets = NULL, plot = TRUE,
-  storeData = FALSE, add = FALSE, pos = -1, ...) {
+  storeData = TRUE, add = FALSE, pos = -1, ...) {
 
   ## evaluation of some parameters
   thecall <- .expand.call(match.call())
@@ -121,7 +118,10 @@ s.match <- function(dfxy1, dfxy2, xax = 1, yax = 2, labels = row.names(as.data.f
     
     ## creation of the ADEg object
     g.args <- c(sortparameters$g.args, list(arrows = arrows))
-    tmp_data <- list(dfxy = call("rbind", thecall$dfxy1, thecall$dfxy2), xax = xax, yax = yax, labels = thecall$labels, frame = sys.nframe() + pos, storeData = storeData)
+    if(storeData)
+    	tmp_data <- list(dfxy = rbind(dfxy1, dfxy2), xax = xax, yax = yax, labels = labels, frame = sys.nframe() + pos, storeData = storeData)
+    else
+      tmp_data <- list(dfxy = call("rbind", thecall$dfxy1, thecall$dfxy2), xax = xax, yax = yax, labels = thecall$labels, frame = sys.nframe() + pos, storeData = storeData)
     object <- new(Class = "S2.match", data = tmp_data , adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = g.args, Call = as.call(thecall))
     
     ## preparation

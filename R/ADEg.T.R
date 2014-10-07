@@ -13,15 +13,7 @@ setMethod(
   f = "initialize",
   signature  = "ADEg.T",
   definition = function(.Object, data = list(dftab = NULL, coordsx = NULL, coordsy = NULL, labelsx = NULL, labelsy = NULL, frame = 0, storeData = TRUE), ...) {
-    ## import the data in @data if storeData = TRUE
     .Object <- callNextMethod(.Object, ...) ## ADEg initialize
-    if(data$storeData){
-      data$dftab <- eval(data$dftab, envir = sys.frame(data$frame))
-      data$coordsx <- eval(data$coordsx, envir = sys.frame(data$frame))
-      data$coordsy <- eval(data$coordsy, envir = sys.frame(data$frame))
-      data$labelsx <- eval(data$labelsx, envir = sys.frame(data$frame))
-      data$labelsy <- eval(data$labelsy, envir = sys.frame(data$frame))
-    }
     .Object@data <- data
     return(.Object)
   })

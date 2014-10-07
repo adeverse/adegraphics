@@ -9,8 +9,6 @@ setMethod(
   signature = "C1.barchart",
   definition = function(.Object, data = list(score = NULL, labels = NULL, frame = 0, storeData = TRUE), ...) {
     .Object <- callNextMethod(.Object, data = data, ...) ## ADEg.C1 initialize
-    if(data$storeData)
-      data$labels <- eval(data$labels, envir = sys.frame(data$frame))
     .Object@data$labels <- data$labels
     return(.Object)
   })
@@ -128,7 +126,7 @@ setMethod(
   })
 
 
-s1d.barchart <- function(score, labels = NULL, facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
+s1d.barchart <- function(score, labels = NULL, facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
   
   ## evaluation of some parameters
   thecall <- .expand.call(match.call())
@@ -156,7 +154,10 @@ s1d.barchart <- function(score, labels = NULL, facets = NULL, plot = TRUE, store
       warning(c("Unused parameters: ", paste(unique(names(sortparameters$rest)), " ", sep = "")), call. = FALSE)
     
     ## creation of the ADEg object
-    tmp_data <- list(score = thecall$score, labels = thecall$labels, frame = sys.nframe() + pos, storeData = storeData)
+    if(storeData)
+    	tmp_data <- list(score = score, labels = labels, frame = sys.nframe() + pos, storeData = storeData)
+    else
+      tmp_data <- list(score = thecall$score, labels = thecall$labels, frame = sys.nframe() + pos, storeData = storeData)
     object <- new(Class = "C1.barchart", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = sortparameters$g.args, Call = match.call())
     
     ## preparation

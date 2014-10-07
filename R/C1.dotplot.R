@@ -9,8 +9,6 @@ setMethod(
   signature = "C1.dotplot",
   definition = function(.Object, data = list(score = NULL, at = NULL, frame = 0, storeData = TRUE), ...) {
     .Object <- callNextMethod(.Object, data = data, ...) ## ADEg.C1 initialize
-    if(data$storeData)
-      data$at <- eval(data$at, envir = sys.frame(data$frame))
     .Object@data$at <- data$at
     validObject(.Object)
     return(.Object)
@@ -83,7 +81,7 @@ setMethod(
   })
 
 
-s1d.dotplot <- function(score, at = 1:NROW(score), facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
+s1d.dotplot <- function(score, at = 1:NROW(score), facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
   
   ## evaluation of some parameters
   thecall <- .expand.call(match.call())
@@ -109,7 +107,10 @@ s1d.dotplot <- function(score, at = 1:NROW(score), facets = NULL, plot = TRUE, s
       warning(c("Unused parameters: ", paste(unique(names(sortparameters$rest)), " ", sep = "")), call. = FALSE)
     
     ## creation of the ADEg object
-    tmp_data <- list(score = thecall$score, at = thecall$at, frame = sys.nframe() + pos, storeData = storeData)
+    if(storeData)
+    	tmp_data <- list(score = score, at = at, frame = sys.nframe() + pos, storeData = storeData)
+    else
+      tmp_data <- list(score = thecall$score, at = thecall$at, frame = sys.nframe() + pos, storeData = storeData)
     object <- new(Class = "C1.dotplot", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = sortparameters$g.args, Call = match.call())
     
     ## preparation

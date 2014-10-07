@@ -10,7 +10,7 @@
 \usage{
 s1d.hist(score, breaks = NULL, nclass = round(log2(length(score)) + 1), 
   type = c("count", "density", "percent"), right = TRUE, facets = NULL, 
-  plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...)
+  plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...)
 }
 
 \arguments{

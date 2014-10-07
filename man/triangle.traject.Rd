@@ -10,7 +10,7 @@ This function represents a three dimensional scatter plot with trajectories.
 \usage{
 triangle.traject(dfxyz, fac = gl(1, nrow(dfxyz)), order, labels = levels(fac), 
   col = NULL, adjust = TRUE, min3d = NULL, max3d = NULL, showposition = TRUE, 
-  facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...)
+  facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...)
 }
 
 \arguments{

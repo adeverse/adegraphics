@@ -15,7 +15,7 @@ setGeneric("zoom", function(object, zoom, center) {standardGeneric("zoom")})
 setGeneric("prepare", function(object) {standardGeneric("prepare")})
 setGeneric("setlatticecall", function(object) {standardGeneric("setlatticecall")})
 
-setGeneric("addhist", function(object, bandwidth, gridsize = 60, kernel = "normal", cbreaks = 2, storeData = FALSE, plot = TRUE, pos = -1, ...) {standardGeneric("addhist")})
+setGeneric("addhist", function(object, bandwidth, gridsize = 60, kernel = "normal", cbreaks = 2, storeData = TRUE, plot = TRUE, pos = -1, ...) {standardGeneric("addhist")})
 
 setGeneric("getpositions", function(object) {standardGeneric("getpositions")})
 setGeneric("getstats", function(object) {standardGeneric("getstats")})

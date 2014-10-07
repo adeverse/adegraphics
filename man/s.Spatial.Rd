@@ -8,7 +8,7 @@
 
 \usage{
 s.Spatial(spObj, col = TRUE, nclass = 5, plot = TRUE, 
-  storeData = FALSE, pos = -1, ...)
+  storeData = TRUE, pos = -1, ...)
 }
 
 \arguments{

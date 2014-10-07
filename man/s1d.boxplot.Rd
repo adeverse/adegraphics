@@ -9,7 +9,7 @@
 
 \usage{
 s1d.boxplot(score, fac = gl(1, NROW(score)), at = 1:nlevels(fac), col = NULL, 
-  facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...)
+  facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...)
 }
 
 \arguments{

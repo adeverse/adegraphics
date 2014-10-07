@@ -13,10 +13,6 @@ setMethod(
   signature = "C1.gauss",
   definition = function(.Object, data = list(score = NULL, fac = NULL, wt = NULL, frame = 0, storeData = TRUE), ...) {
     .Object <- callNextMethod(.Object, data = data, ...) ## ADEg.C1 initialize
-    if(data$storeData) {
-      data$fac <- eval(data$fac, envir = sys.frame(data$frame))
-      data$wt <- eval(data$wt, envir = sys.frame(data$frame))
-    } 
     .Object@data$fac <- data$fac
     .Object@data$wt <- data$wt
     return(.Object)
@@ -132,7 +128,7 @@ setMethod(
     lims <- current.panel.limits(unit = "native")
     
     if(object@data$storeData)
-      fac <- object@data$factor
+      fac <- object@data$fac
     else
       fac <- eval(object@data$fac, envir = sys.frame(object@data$frame))
     nlev <- nlevels(as.factor(fac))
@@ -199,7 +195,7 @@ setMethod(
 
 
 s1d.gauss <- function(score, fac = gl(1, NROW(score)), wt = rep(1, NROW(score)), steps = 200, col = TRUE, fill = TRUE, facets = NULL,
-                      plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
+                      plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
                       
   thecall <- .expand.call(match.call())
   
@@ -234,7 +230,10 @@ s1d.gauss <- function(score, fac = gl(1, NROW(score)), wt = rep(1, NROW(score)),
     
     ## creation of the ADEg object
     g.args <- c(sortparameters$g.args, list(steps = steps, fill = fill, col = col))
-    tmp_data <- list(score = thecall$score, fac = thecall$fac, wt = thecall$wt, frame = sys.nframe() + pos, storeData = storeData)
+    if(storeData)
+    	tmp_data <- list(score = score, fac = fac, wt = wt, frame = sys.nframe() + pos, storeData = storeData)
+    else
+      tmp_data <- list(score = thecall$score, fac = thecall$fac, wt = thecall$wt, frame = sys.nframe() + pos, storeData = storeData)
     object <- new(Class = "C1.gauss", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = g.args, Call = match.call())
 
     ## preparation

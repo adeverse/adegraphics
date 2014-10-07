@@ -1,4 +1,4 @@
-s.Spatial <- function(spObj, col = TRUE, nclass = 5, plot = TRUE, storeData = FALSE, pos = -1, ...) {
+s.Spatial <- function(spObj, col = TRUE, nclass = 5, plot = TRUE, storeData = TRUE, pos = -1, ...) {
   oldparamadeg <- adegpar()
   on.exit(adegpar(oldparamadeg))
   sortparameters <- .specificpar(...)

@@ -13,11 +13,6 @@ setMethod(
   signature = "S2.class",
   definition = function(.Object, data = list(dfxy = NULL, xax = 1, yax = 2, fac = NULL, wt = NULL, labels = NULL, frame = 0, storeData = TRUE),  ...) {
     .Object <- callNextMethod(.Object, data = data, ...)
-    if(data$storeData) {
-      data$fac <- eval(data$fac, envir = sys.frame(data$frame))
-      data$labels <- eval(data$labels, envir = sys.frame(data$frame))
-      data$wt <- eval(data$wt, envir = sys.frame(data$frame))
-    }
     .Object@data$fac <- data$fac
     .Object@data$wt <- data$wt
     .Object@data$labels <- data$labels
@@ -189,7 +184,7 @@ setMethod(
 
   
 s.class <- function(dfxy, fac, xax = 1, yax = 2, wt = rep(1, NROW(fac)), labels = levels(fac), ellipseSize = 1.5, starSize = 1, 
-  									chullSize = NULL, col = NULL, facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
+  									chullSize = NULL, col = NULL, facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
   
   ## evaluation of some parameters (required for multiplot)
   thecall <- .expand.call(match.call())
@@ -238,7 +233,10 @@ s.class <- function(dfxy, fac, xax = 1, yax = 2, wt = rep(1, NROW(fac)), labels 
     
     ## creation of the ADEg object
     g.args <- c(sortparameters$g.args, list(ellipseSize = ellipseSize, starSize = starSize, chullSize = chullSize, col = col))
-    tmp_data <- list(dfxy = thecall$dfxy, xax = xax, yax = yax, fac = thecall$fac, wt = thecall$wt, labels = thecall$labels, frame = sys.nframe() + pos, storeData = storeData)
+    if(storeData)
+    	tmp_data <- list(dfxy = dfxy, fac = fac, xax = xax, yax = yax, wt = wt, labels = labels, frame = sys.nframe() + pos, storeData = storeData)
+    else
+      tmp_data <- list(dfxy = thecall$dfxy, fac = thecall$fac, xax = xax, yax = yax, wt = thecall$wt, labels = thecall$labels, frame = sys.nframe() + pos, storeData = storeData)
     object <- new(Class = "S2.class", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = g.args, Call = as.call(thecall))
 
     ## preparation of the graph

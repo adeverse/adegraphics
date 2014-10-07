@@ -13,8 +13,6 @@ setMethod(
   signature = "S2.logo",
   definition = function(.Object, data = list(dfxy = NULL, logos = NULL, xax = 1, yax = 2, frame = 0, storeData = TRUE), ...) {
     .Object <- callNextMethod(.Object, data = data, ...) ## ADEg.S2 initialize
-    if(data$storeData)
-      data$logos <- eval(data$logos, envir = sys.frame(data$frame))
     .Object@data$logos <- data$logos
     return(.Object)
   })
@@ -57,7 +55,7 @@ setMethod(
   })
 
 
-s.logo <- function(dfxy, logos, xax = 1, yax = 2, facets = NULL, plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...) {
+s.logo <- function(dfxy, logos, xax = 1, yax = 2, facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
   
   ## evaluation of some parameters
   thecall <- .expand.call(match.call())
@@ -90,7 +88,10 @@ s.logo <- function(dfxy, logos, xax = 1, yax = 2, facets = NULL, plot = TRUE, st
       warning(c("Unused parameters: ", paste(unique(names(sortparameters$rest)), " ", sep = "")), call. = FALSE)
     
     ## creation of the ADEg object
-    tmp_data <- list(dfxy = thecall$dfxy, xax = xax, yax = yax, logos = thecall$logos, frame = sys.nframe() + pos, storeData = storeData)
+    if(storeData)
+    	tmp_data <- list(dfxy = dfxy, xax = xax, yax = yax, logos = logos, frame = sys.nframe() + pos, storeData = storeData)
+    else
+      tmp_data <- list(dfxy = thecall$dfxy, xax = xax, yax = yax, logos = thecall$logos, frame = sys.nframe() + pos, storeData = storeData)
     object <- new(Class = "S2.logo", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = sortparameters$g.args, Call =  as.call(thecall))
     
     ## preparation

@@ -11,7 +11,7 @@
 \usage{
 s.class(dfxy, fac, xax = 1, yax = 2, wt = rep(1, NROW(fac)), labels = levels(fac),
   ellipseSize = 1.5, starSize = 1, chullSize = NULL, col = NULL, facets = NULL,
-  plot = TRUE, storeData = FALSE, add = FALSE, pos = -1, ...)
+  plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...)
 }
 
 \arguments{

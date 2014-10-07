@@ -7,16 +7,16 @@ setClass(
   contains = "ADEg.S2",
 )
 
+
 setMethod(
   f = "initialize",
   signature = "S2.distri",
   definition = function(.Object, data = list(dfxy = NULL, dfdistri = NULL, xax = 1, yax = 2, frame = 0, storeData = TRUE), ...) {
     .Object <- callNextMethod(.Object, data = data, ...)
-    if(data$storeData)
-      data$dfdistri <- eval(data$dfdistri, envir = sys.frame(data$frame))
     .Object@data$dfdistri <- data$dfdistri
     return(.Object)
   })
+
 
 setMethod(
   ## prepare computations for ellipses, stars and labels
@@ -151,7 +151,7 @@ setMethod(
   
 
 s.distri <- function(dfxy, dfdistri, xax = 1, yax = 2, starSize = 1, ellipseSize = 1.5, col = NULL, facets = NULL, plot = TRUE, 
-  storeData = FALSE, add = FALSE, pos = -1, ...) {
+  storeData = TRUE, add = FALSE, pos = -1, ...) {
   
   ## evaluation of some parameters (required for multiplot)
   thecall <- .expand.call(match.call())
@@ -181,8 +181,11 @@ s.distri <- function(dfxy, dfdistri, xax = 1, yax = 2, starSize = 1, ellipseSize
       warning(c("Unused parameters: ", paste(unique(names(sortparameters$rest)), " ", sep = "")), call. = FALSE)
     
     ## creation of the ADEg object
-    g.args <- c(sortparameters$g.args, list(ellipseSize = ellipseSize, starSize = starSize, col = col)) 
-    tmp_data <- list(dfxy = thecall$dfxy, dfdistri = thecall$dfdistri, xax = xax, yax = yax, frame = sys.nframe() + pos, storeData = storeData)
+    g.args <- c(sortparameters$g.args, list(ellipseSize = ellipseSize, starSize = starSize, col = col))
+    if(storeData)
+      tmp_data <- list(dfxy = dfxy, dfdistri = dfdistri, xax = xax, yax = yax, frame = sys.nframe() + pos, storeData = storeData)
+    else
+    	tmp_data <- list(dfxy = thecall$dfxy, dfdistri = thecall$dfdistri, xax = xax, yax = yax, frame = sys.nframe() + pos, storeData = storeData)
     object <- new(Class = "S2.distri", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = g.args, Call = as.call(thecall))
 
     ## preparation of the graph

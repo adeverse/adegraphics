@@ -9,10 +9,7 @@ setMethod(
   f = "initialize",
   signature  = "ADEg.Tr",
   definition = function(.Object, data = list(dfxyz = NULL, frame = 0, storeData = TRUE), ...) {
-    ## import the data in @data if storeData = TRUE
     .Object <- callNextMethod(.Object, ...) ## ADEg initialize
-    if(data$storeData)
-      data$dfxyz <- eval(data$dfxyz, envir = sys.frame(data$frame))
     .Object@data <- data
     return(.Object)
   })
