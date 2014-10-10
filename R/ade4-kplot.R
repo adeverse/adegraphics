@@ -147,7 +147,7 @@
     stop("Non convenient yax")
   
   ## sort parameters for each graph
-  graphsnames <- c("axis", "row", "col", "components")[which.graph]
+  graphsnames <- c("axis", "row", "col", "components")
   sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
   
   ## parameters management
