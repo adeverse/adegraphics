@@ -4,7 +4,7 @@ s.Spatial <- function(spObj, col = TRUE, nclass = 5, plot = TRUE, storeData = TR
   sortparameters <- .specificpar(...)
   adegtot <- adegpar(sortparameters$adepar)
   
-  xy <- coordinates(spObj)[1, , drop = FALSE]  ## to access 'coordinates' in the 'imports' environment of 'adegraphics'
+  xy <- coordinates(spObj)[, , drop = FALSE]  ## to access 'coordinates' in the 'imports' environment of 'adegraphics'
   
   ## default values for non-used parameters
   defaultpar <- list(plabels = list(cex = 0), pgrid = list(draw = FALSE), ppoints = list(cex = 0), porigin = list(include = FALSE))
