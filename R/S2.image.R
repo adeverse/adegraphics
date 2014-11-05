@@ -29,13 +29,10 @@ setMethod(
     oldparamadeg <- adegpar()
     on.exit(adegpar(oldparamadeg))
     adegtot <- adegpar(object@adeg.par)
+   
     object@g.args$gridsize <- rep(object@g.args$gridsize, length.out = 2)
     if(is.null(object@adeg.par$porigin$include) & (any(names(object@g.args) %in% c("Sp", "nbobject", "outsideLimits"))))
       adegtot$porigin$include <- FALSE
-    
-    ## object modification before calling inherited method
-    object@adeg.par <- adegtot
-    callNextMethod() ## prepare graph
 
     if(object@data$storeData) {
       dfxy <- object@data$dfxy
@@ -45,8 +42,26 @@ setMethod(
       z <- eval(object@data$z, envir = sys.frame(object@data$frame))
     }
     
-    if(is.null(object@g.args$col))
-      object@g.args$col <- object@adeg.par$ppalette$quanti(255)
+    if(is.null(object@g.args$breaks))
+        object@s.misc$breaks.update <- pretty(z, object@g.args$nclass)
+    else
+        object@s.misc$breaks.update <- object@g.args$breaks
+    
+    object@s.misc$breaks.update <- breakstest(object@s.misc$breaks.update, z, n = length(object@s.misc$breaks.update))
+    n <- length(object@s.misc$breaks.update)
+    
+    if(!is.null(object@g.args$col)) {
+        if(length(object@g.args$col) < (n - 1))
+            stop(paste("not enough colors defined, at least ", (n - 1), " colors expected", sep = ""), call. = FALSE)
+        adegtot$ppoints$col <- object@g.args$col[1:(n - 1)]  ## color given by the user
+    } else {
+        if(is.null(object@adeg.par$ppoints$col))
+            adegtot$ppoints$col <- adegtot$ppalette$quanti(n - 1)
+    }
+
+    ## object modification before calling inherited method
+    object@adeg.par <- adegtot
+    callNextMethod() ## prepare graph (provide limits that are used below)
     
     ## create a sp grid
     minX <- object@g.args$xlim[1]
@@ -78,7 +93,7 @@ setMethod(
     newgrid <- newgrid[tokeep, ]
     object@stats$value <- predictval
     object@s.misc$newgrid <- newgrid
-    
+      
     assign(name_obj, object, envir = parent.frame())
   })
 
@@ -88,7 +103,7 @@ setMethod(
   signature = "S2.image",
   definition = function(object, x, y) {
     zvalue <- object@stats$value
-    col <- object@g.args$col
+    col <- object@adeg.par$ppoints$col
     xx <- object@s.misc$newgrid[, 1]
     yy <- object@s.misc$newgrid[, 2]
     panel.levelplot(x = xx, y = yy, z = zvalue, subscripts = TRUE, col.regions = col, contour = object@g.args$contour, region = object@g.args$region, labels = object@adeg.par$plabels,
@@ -96,7 +111,7 @@ setMethod(
   })
 
 
-s.image <- function(dfxy, z, xax = 1, yax = 2, span = 0.5, gridsize = c(80L, 80L), contour = TRUE, region = TRUE, outsideLimits = NULL,  
+s.image <- function(dfxy, z, xax = 1, yax = 2, span = 0.5, gridsize = c(80L, 80L), contour = TRUE, region = TRUE, outsideLimits = NULL, breaks = NULL, nclass = 8, 
   									col = NULL, facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
  
   if(!is.null(outsideLimits)) {
@@ -143,7 +158,8 @@ s.image <- function(dfxy, z, xax = 1, yax = 2, span = 0.5, gridsize = c(80L, 80L
       warning(c("Unused parameters: ", paste(unique(names(sortparameters$rest)), " ", sep = "")), call. = FALSE)
     
     ## creation of the ADEg object
-    g.args <- c(sortparameters$g.args, list(span = span, gridsize = gridsize, outsideLimits = outsideLimits, contour = contour, region = region, col = col))
+    g.args <- c(sortparameters$g.args, list(breaks = breaks, nclass = nclass, span = span, gridsize = gridsize, outsideLimits = outsideLimits,
+                                            contour = contour, region = region, col = col))
     if(storeData)
     	tmp_data <- list(dfxy = dfxy, xax = xax, yax = yax, z = z, frame = sys.nframe() + pos, storeData = storeData)
     else

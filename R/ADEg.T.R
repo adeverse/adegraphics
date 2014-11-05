@@ -194,20 +194,12 @@ setMethod(
     
     arguments <- list(
       par.settings = object@trellis.par,
-      scales = list(draw = FALSE),
+        key = createkey(object),
+        legend = createcolorkey(object),
+        scales = list(draw = FALSE),
       panel = function(...) {
         panelbase(object,...)
         panel(object,...)
-        
-        if(object@adeg.par$plegend$draw)
-          setvalueskey(
-            method = ifelse(inherits(object, "T.value"), object@g.args$method, "color"),
-            breaks = object@s.misc$breaks.update,
-            ppoints = object@adeg.par$ppoints,
-            plegend = object@adeg.par$plegend,
-            symbol = ifelse(inherits(object, "T.value"), object@g.args$symbol, "square"),
-            center = object@g.args$center,
-            type = "T")
       })
     
     object@lattice.call$arguments <- arguments

@@ -8,11 +8,11 @@
 }
 
 \usage{
-table.value(dftab, coordsx = 1:ncol(as.matrix(dftab)), coordsy = 
-  nrow(as.matrix(dftab)):1, labelsx, labelsy, maxsize = 0.4, breaks = NULL, 
-  method = c("size", "color"), symbol = c("square", "circle"), col = NULL, 
-  nclass = 3, center = 0, centerpar = NULL, plot = TRUE, storeData = TRUE, 
-  add = FALSE, pos = -1, ...)
+table.value(dftab, coordsx = 1:ncol(as.matrix(dftab)), coordsy =
+nrow(as.matrix(dftab)):1, labelsx, labelsy, breaks = NULL, method =
+c("size", "color"), symbol = c("square", "circle", "diamond",
+"uptriangle", "downtriangle"), col = NULL, nclass = 3, center = 0,
+centerpar = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...)
 }
 
 \arguments{
@@ -26,8 +26,6 @@ table.value(dftab, coordsx = 1:ncol(as.matrix(dftab)), coordsy =
   
   \item{labelsy}{rows labels}
 
-  \item{maxsize}{a number to adjust symbols' size}
-  
   \item{breaks}{a vector of values to split \code{dftab}. If \code{NULL}, \code{pretty(dftab, nclass)} is used.}
   
   \item{method}{\code{color} or \code{size} value for represent \code{z}.   
@@ -35,7 +33,7 @@ table.value(dftab, coordsx = 1:ncol(as.matrix(dftab)), coordsy =
     If \code{size}, symbols of proportional area are used. Area is 0 for values
     equals to center (default 0). Two colors are used, for values less than center and larger than center.}
   
-  \item{symbol}{\code{square} or \code{circle} value for symbol type}
+  \item{symbol}{value for symbol type}
   
   \item{col}{a color or a colors vector to color symbols.
     If \code{method} is \code{size}, a 2-length vector of color is expected. 
@@ -96,11 +94,11 @@ data(olympic, package = "ade4")
 w <- olympic$tab
 w <- data.frame(scale(w))
 wpca <- ade4::dudi.pca(w, scann = FALSE)
-g1 <- table.value(w, maxsi = 0.5, axis.line = list(col = "darkblue"), 
+g1 <- table.value(w, ppoints.cex = 0.5, axis.line = list(col = "darkblue"), 
   axis.text = list(col = "darkgrey"))
-g2 <- table.value(w, coordsy = rank(wpca$li[, 1]), maxsi = 0.5, 
+g2 <- table.value(w, coordsy = rank(wpca$li[, 1]), ppoints.cex = 0.5, 
   axis.line = list(col = "darkblue"), axis.text = list(col = "darkgrey"))
-g3 <- table.value(w, coordsy = wpca$li[, 1], coordsx = wpca$co[, 1], maxsi = 0.5, 
+g3 <- table.value(w, coordsy = wpca$li[, 1], coordsx = wpca$co[, 1], ppoints.cex = 0.5, 
   axis.line = list(col = "darkblue"), axis.text = list(col = "darkgrey"))
 
 ## distance
@@ -113,7 +111,7 @@ data(rpjdl, package = "ade4")
 w <- data.frame(t(rpjdl$fau))
 wcoa <- ade4::dudi.coa(w, scann = FALSE)
 g6 <- table.value(as.table(as.matrix(w)), meanY = TRUE, coordsx = wcoa$c1[,1], 
-  coordsy = rank(wcoa$l1[,1]), maxsize = 0.2, labelsx = "", col = "black")
+  coordsy = rank(wcoa$l1[,1]), ppoints.cex = 0.2, labelsx = "", col = "black")
 }
 }
 

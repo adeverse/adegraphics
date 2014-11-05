@@ -27,7 +27,7 @@
       \item{\code{coordsy}: an integer or a vector indicating the rows of \code{dftab} kept}
       \item{\code{labelsx}: the columns' labels}
       \item{\code{labelsy}: the rows' labels}
-      \item{"\code{frame}: a positive or null integer. It is the number of the frame containing the data (used 
+      \item{\code{frame}: a positive or null integer. It is the number of the frame containing the data (used 
         with \code{sys.frame(..., env = data$frame)}). Only if the data are not stored (i.e. \code{data$storeData = FALSE}).}
       \item{\code{storeData}: a logical indicating if the data should be stored in the returned object. 
         If \code{FALSE}, only the names of the data arguments are stored.}
@@ -51,7 +51,6 @@
       \item{\code{center}: a center value for method \code{size}.}
       \item{\code{centerpar}: a logical or a list to represent center value using elements in the 
         \code{adegpar("ppoints")} list.}
-      \item{\code{maxsize}: a number to adjust symbols' size.}
     }}
 
     \item{\code{stats}}{a list of internal preliminary calculations}

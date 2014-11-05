@@ -16,7 +16,20 @@ repList <- function(x, times) {
   sizes <- (abs(z) / maxz) ^ 0.57
   return(sizes) 
 }
-
+.symbol2pch <- function(symbol){
+    ## give the pch associated to some symbol names (used in *.value)
+    res <- 22 ## square by default
+    if(symbol == "circle"){
+        res <- 21
+    }  else if(symbol == "diamond"){
+        res <- 23
+    } else if(symbol == "uptriangle"){
+        res <- 24
+    } else if(symbol == "downtriangle"){
+        res <- 25
+    }
+    return(res)
+}
 
 .textpos <- function(xx, yy, origin = c(0, 0), n = length(xx)) {
   ## justification for labels and positions used in s.arrow and s.corcircle
@@ -229,10 +242,10 @@ repList <- function(x, times) {
       adegpar <- select[[1L]]
       rest <- select[[2L]]
     }
-
+  
     ## removing g.args items
     if(length(rest)) {
-      pattern.g.args <- c("xlim", "ylim", "main", "sub", "xlab", "ylab", "Sp", "nbobject", "samelimits", "scales")
+      pattern.g.args <- c("xlim", "ylim", "main", "sub", "xlab", "ylab", "Sp", "nbobject", "samelimits", "scales", "key", "colorkey")
       pmatch.g.args <- pmatch(names(rest), pattern.g.args)
       indix <- which(!is.na(pmatch.g.args))
       pmatch.g.args <- pmatch.g.args[!is.na(pmatch.g.args)]
@@ -381,47 +394,6 @@ repList <- function(x, times) {
   return(xy)
 }
 
-
-##### Not used, to remove ###
-.justsrt <- function(x, y , labels, srt, pos) {
-  ## for all labels, srt conversion
-	## the rotation is included in height and width calculuation
-  ## tan + cos or sinus : to improve, problems in calculations must appear
-  nblab <- length(labels)
-  w1 <- convertWidth(stringWidth(labels), unitTo = "native", valueOnly = TRUE)
-  h1 <- convertHeight(stringHeight(labels), unitTo = "native", valueOnly = TRUE)
-  ## newstr <- 180 - srt
-  newstr <- srt
-  alpha <- pi / 180 * sapply(newstr, FUN=function(x) {sign(x) * (abs(x) - abs(x) %/% 180 * 180)})
-  
-  nn <- w1 + mapply(FUN = function(x, alpha) {
-      if(alpha != 0)
-        return(x / (2 * tan(alpha)))
-      else 
-        return(x)}, h1, rep(alpha, length.out = nblab))
-  alpha0 <- rep((alpha == 0), lenght.out = nblab)
-  h2 <- rep(sin(alpha), length.out = nblab) * nn
-  w2 <- rep(cos(alpha), length.out = nblab) * nn
-  h2[alpha0] <- h1[alpha0]
-  w2[alpha0] <- w1[alpha0]
-  
-  if(!(length(h2) == length(labels)) || length(w2) != length(labels))
-    stop("error in .justsrt")
-  
-  if(pos == "top")
-    yy <- mapply(FUN = function(yi, hi) {return(yi + hi / 2)}, y, h2)
-  else if(pos == "bottom")
-    yy <- mapply(FUN = function(yi, hi) {return(yi - hi / 2)}, y, h2)
-  else yy <- y
-  
-  if(pos == "left")
-    xx <- mapply(FUN = function(xi, wi) {return(xi - wi / 2)}, x, w2)
-  else if(pos=="right")
-    xx <- mapply(FUN = function(xi, wi) {return(xi + wi / 2)}, x, w2)
-  else xx <- x
-  
-  return(list(x = xx, y = yy))       
-}
 
 
 ## check if z is included in breaks

@@ -41,7 +41,7 @@ ad11 <- adegpar(paxes = list("x"), pgrid = list("nint", "col"))
 ad12 <- adegpar(list(pellip = list(col = "red"), grid.nint = 8, plines = list(lwd = c(1:5))))
 ad13 <- adegpar(paxes = list("x"), pgrid = list("nint", "col"), "plines", "pellipse")
 
-ad14 <- adegpar(plegend.horizontal = F)
+ad14 <- adegpar(plegend.drawKey = FALSE)
 ad15 <- adegpar(list(paxes = list(col = "white"), pgrid.nint = 6, plines = list(lwd = c(1:5))))
 ad16 <- adegpar(paxes = list(x = list(draw = TRUE)))
 

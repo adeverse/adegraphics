@@ -44,14 +44,43 @@ setMethod(
     
     if(is.null(object@adeg.par$porigin$include) & (any(names(object@g.args) %in% c("Sp", "nbobject"))))
       adegtot$porigin$include <- FALSE
-    
+
+    if(any(adegtot$plabels$cex > 0) & is.null(object@adeg.par$plegend$drawKey)) ## if labels, no legend
+        adegtot$plegend$drawKey <- FALSE
     ## setting colors 
-    if(!is.null(object@g.args$col))
-      if(is.logical(object@g.args$col)) {
-        if(object@g.args$col)
-          adegtot$ppoints$col <- adegtot$ppoints$fill <- adegtot$pellipses$border <- adegtot$plabels$col <- adegtot$plabels$boxes$border <- adegtot$ppolygons$border <- adegtot$ppolygons$col <- adegtot$plines$col <- adegtot$ppalette$quali(nlevels(fac))
-      } else
-        adegtot$ppoints$col <- adegtot$ppoints$fill <- adegtot$pellipses$border <- adegtot$plabels$col <- adegtot$plabels$boxes$border <- adegtot$ppolygons$border <- adegtot$ppolygons$col <- adegtot$plines$col <- object@g.args$col[1:nlevels(fac)]
+    if(!is.null(object@g.args$col)){
+        col.idx <- FALSE
+        if(is.logical(object@g.args$col)) {
+            if(object@g.args$col){
+                colT <- adegtot$ppalette$quali(nlevels(fac))
+                col.idx <- TRUE
+            }
+        } else {
+            colT <- rep(object@g.args$col, length.out = nlevels(fac))
+            col.idx <- TRUE
+        }
+        
+        if(col.idx){
+            if(is.null(object@adeg.par$ppoints$col))
+                adegtot$ppoints$col <- colT
+            if(is.null(object@adeg.par$ppoints$fill))
+                adegtot$ppoints$fill <- colT
+            if(is.null(object@adeg.par$pellipses$border))
+                adegtot$pellipses$border <- colT
+            if(is.null(object@adeg.par$pellipses$col))
+                adegtot$pellipses$col <- colT
+            if(is.null(object@adeg.par$plabels$col))
+                adegtot$plabels$col <- colT
+            if(is.null(object@adeg.par$plabels$boxes$border))
+                adegtot$plabels$boxes$border <- colT
+            if(is.null(object@adeg.par$ppolygons$border))
+                adegtot$ppolygons$border <- colT
+            if(is.null(object@adeg.par$ppolygons$col))
+                adegtot$ppolygons$col <- colT
+            if(is.null(object@adeg.par$plines$col))
+                adegtot$plines$col <- colT
+        }
+    }
     
     ## preliminary computations
     object@stats$means <- matrix(meanfacwt(dfxy[, c(object@data$xax, object@data$yax)], fac, wt), nrow = nlevels(fac))

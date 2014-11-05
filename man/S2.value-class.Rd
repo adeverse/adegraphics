@@ -49,7 +49,7 @@
         \item{\code{breaks}: a vector containing the breaks used for splitting \code{z} value. If \code{NULL}, \code{pretty(z, n)} is used.}
         \item{\code{nclass}: an integer for the number of desired intervals, ignored if \code{breaks} is not missing.}
         \item{\code{col}: a \code{NULL} value, a color or a colors vector to color symbols.}
-        \item{\code{maxsize}: a coefficient number to adjust symbols' size.}
+     
     }}
 
     \item{\code{stats}}{a list of internal preliminary calculations}

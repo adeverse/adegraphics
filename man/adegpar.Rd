@@ -113,24 +113,14 @@ adegpar(...)
     }}
     
     \item{\code{plegend}:}{legend's drawing parameters (used for object of class inherited from \code{T.value} and \code{S2.value}) \itemize{
-      \item{\code{addspace}: regulates supplementary space in the drawing panel. Limits are expanded in order to avoid 
-        overlap between drawings and legends}
-    	\item{\code{draw}: a logical indicating if the legend is drawn}
-    	\item{\code{rect}: a logical indicating if the legend is framed}
-    	\item{\code{border}: legend's border color}
-    	\item{\code{horizontal}: a logical indicating if the legend is drawn horizontally or vertically}
-    	\item{\code{position}: a character string (\code{topright}, \code{topleft}, \code{bottomleft}, \code{bottomright}) or a vector of length 2 
-          indicating text position of grid legend. If it is a vector, the default unit is \code{npc} (normalized parent coordinates).}
-    	\item{\code{text}: a list dedicated to legend text \itemize{
-    	  \item{\code{cex}: text size of legend}
-    	  \item{\code{col}: text color of legend}
-    	}}
-    	\item{\code{hspace}, \code{vspace}: horizontal and vertical space between symbols and text, influencing height and width 
-        of the legend's box. Default unit is \code{npc}}
-    	\item{\code{lty}: line type of the rectangle framing the legend}
-    	\item{\code{lwd}: line width of the rectangle framing the legend}
-    	\item{\code{alpha}: a value between 0 and 1 controlling transparency of the rectangle framing the legend}
-    	\item{\code{col}: background color of the rectangle framing the legend}
+        \item{\code{drawKey}: a logical indicating if the legend should
+        be drawn. Legend can be provided by the \code{key} argument or
+        is automatically generated for \code{*.class} and \code{*.value}
+        functions}
+    	\item{\code{drawColorKey}: a logical indicating if the color
+        legend should be drawn (only for \code{*.image} functions)}
+    	\item{\code{size}: size of the legend}
+
     }}
     
     \item{\code{plines}:}{lines' drawing parameters \itemize{

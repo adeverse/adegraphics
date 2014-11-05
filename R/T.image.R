@@ -14,7 +14,7 @@ setMethod(
     oldparamadeg <- adegpar()
     on.exit(adegpar(oldparamadeg))
     adegtot <- adegpar(object@adeg.par)
-    
+
     if(object@data$storeData) {
       coordsx <- object@data$coordsx
       coordsy <- object@data$coordsy
@@ -47,10 +47,11 @@ setMethod(
       if(is.null(object@adeg.par$ppoints$col))
         adegtot$ppoints$col <- adegtot$ppalette$quanti(n - 1)
     }
-    
+  
     ## inspired by level.colors from lattice
-    if(is.null(object@adeg.par$ppoints$cex))
-      adegtot$ppoints$cex <- 0.5 ## influence legend size
+
+    if(adegtot$plegend$drawColorKey)
+      adegtot$ptable$y$pos <- "left"
     if(is.null(object@adeg.par$pgrid$col))
       adegtot$pgrid$col <- "black"
     if(is.null(object@adeg.par$pgrid$lwd))

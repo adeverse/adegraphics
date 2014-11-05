@@ -128,8 +128,9 @@ separation <- function(... , pattern = 0, split = TRUE) {
     else {
       if(pattern == 1)
       	listpat <- trellis.par.get()
-      else
-        listpat <- get("padegraphic", envir = .ADEgEnv)
+      else{
+          listpat <- get("padegraphic", envir = .ADEgEnv)
+      }
     }
   }
   ## splitting list keys

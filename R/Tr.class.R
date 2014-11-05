@@ -42,15 +42,43 @@ setMethod(
     oldparamadeg <- adegpar()
     on.exit(adegpar(oldparamadeg))
     adegtot <- adegpar(object@adeg.par)
+    if(any(adegtot$plabels$cex > 0) & is.null(object@adeg.par$plegend$drawKey)) ## if labels, no legend
+        adegtot$plegend$drawKey <- FALSE
     
-    ## change default for some parameters
-    if(!is.null(object@g.args$col))
-      if(is.logical(object@g.args$col)) {
-        if(object@g.args$col)
-          adegtot$ppoints$col <- adegtot$ppoints$fill <- adegtot$pellipses$border <- adegtot$plabels$col <- adegtot$plabels$boxes$border <- adegtot$ppolygons$border <- adegtot$ppolygons$col <- adegtot$plines$col <- adegtot$ppalette$quali(nlevels(fac))
-      }  
-      else
-        adegtot$ppoints$col <- adegtot$ppoints$fill <- adegtot$pellipses$border <- adegtot$plabels$col <- adegtot$plabels$boxes$border <- adegtot$ppolygons$border <- adegtot$ppolygons$col <- adegtot$plines$col <- rep(object@g.args$col, length.out = nlevels(fac))
+    ## setting colors 
+    if(!is.null(object@g.args$col)){
+        col.idx <- FALSE
+        if(is.logical(object@g.args$col)) {
+            if(object@g.args$col){
+                colT <- adegtot$ppalette$quali(nlevels(fac))
+                col.idx <- TRUE
+            }
+        } else {
+            colT <- rep(object@g.args$col, length.out = nlevels(fac))
+            col.idx <- TRUE
+        }
+        
+        if(col.idx){
+            if(is.null(object@adeg.par$ppoints$col))
+                adegtot$ppoints$col <- colT
+            if(is.null(object@adeg.par$ppoints$fill))
+                adegtot$ppoints$fill <- colT
+            if(is.null(object@adeg.par$pellipses$border))
+                adegtot$pellipses$border <- colT
+            if(is.null(object@adeg.par$pellipses$col))
+                adegtot$pellipses$col <- colT
+            if(is.null(object@adeg.par$plabels$col))
+                adegtot$plabels$col <- colT
+            if(is.null(object@adeg.par$plabels$boxes$border))
+                adegtot$plabels$boxes$border <- colT
+            if(is.null(object@adeg.par$ppolygons$border))
+                adegtot$ppolygons$border <- colT
+            if(is.null(object@adeg.par$ppolygons$col))
+                adegtot$ppolygons$col <- colT
+            if(is.null(object@adeg.par$plines$col))
+                adegtot$plines$col <- colT
+        }
+    }
     
     ## object modification before calling inherited method
     object@adeg.par <- adegtot

@@ -326,7 +326,7 @@
   if(type == "boxplot") {
     ## parameter management
     params$adepar <- list(plabels = list(boxes = list(draw = FALSE)), p1d = list(rug = list(draw = TRUE)), paxes = list(draw = TRUE, y = list(draw = FALSE)), 
-      plegend = list(draw = FALSE), pgrid = list(text = list(cex = 0)), psub = list(position = "topleft"))
+      plegend = list(drawKey = FALSE), pgrid = list(text = list(cex = 0)), psub = list(position = "topleft"))
     params$g.args <- list(samelimits = FALSE)
     sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
     

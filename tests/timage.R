@@ -6,7 +6,7 @@ x <- 1:4
 y <- 1:4
 df <- data.frame(as.matrix(cbind(x, y)))
 g1 <- table.image(df, col = 2:4)
-update(g1, plegend.pos = c(0.2, -0.035))
+update(g1, plegend.drawColorKey = TRUE)
 
 ## ex2
 df <- matrix(0, 10, 10)

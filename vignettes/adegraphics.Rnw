@@ -656,7 +656,7 @@ adegpar("ppoints")
 adegpar()$ppoints
 @
 
-The full list of available parameters is summarized in Figure \ref{fig:3}. The ordinate represents the different sublists and the abscissa gives the name of the parameters available in each sublist. Note that some row names have two keys separated by a dot: the first key indicates the first level of the sublist, etc. For example \texttt{plegend.text} is the sublist \texttt{text} of the sublist \texttt{plegend}. The parameters \texttt{col} and \texttt{cex} in \texttt{plegend.text} allow to control the aspect of the text of the legend.
+The full list of available parameters is summarized in Figure \ref{fig:3}. The ordinate represents the different sublists and the abscissa gives the name of the parameters available in each sublist. Note that some row names have two keys separated by a dot: the first key indicates the first level of the sublist, etc. For example \texttt{plabels.boxes} is the sublist \texttt{boxes} of the sublist \texttt{plabels}. The parameters \texttt{border},\texttt{col}, \texttt{alpha}, \texttt{lwd}, \texttt{lty} and \texttt{draw} in \texttt{plabels.boxes} allow to control the aspect of the boxes around labels.
 
 <<label=paramVSparam, include=FALSE, fig=TRUE, echo=FALSE, width=10, height=8>>=
 source("paramVSparam.R")
@@ -810,9 +810,9 @@ ADEgS(c(g18, g19, g20, g21), layout = c(2, 2))
 data(rpjdl)
 coa2 <- dudi.coa(rpjdl$fau, scannf = FALSE, nf = 3)
 g22 <- s.value(coa2$li, coa2$li[,3], plot = FALSE)
-g23 <- s.value(coa2$li, coa2$li[,3], method = "color", maxsize = 0.8, plegend.text.cex = 0.8, plot = FALSE)
-g24 <- s.value(coa2$li, coa2$li[,3], plegend.text.cex = 0.8, maxsize = 0.8, symbol = "square", method = "color", plegend.horizontal = FALSE, plegend.text.cex = 0.8, col = colorRampPalette(c("yellow", "blue"))(6), plot = FALSE)
-g25 <- s.value(coa2$li, coa2$li[, 3], center = 0, method = "size", maxsize = 0.6, symbol = "circle", col = c("yellow", "red"), plot = FALSE)
+g23 <- s.value(coa2$li, coa2$li[,3], method = "color", ppoints.cex = 0.8, plegend.size= 0.8, plot = FALSE)
+g24 <- s.value(coa2$li, coa2$li[,3], plegend.size = 0.8, ppoints.cex = 0.8, symbol = "square", method = "color", key = list(columns = 1), col = colorRampPalette(c("yellow", "blue"))(6), plot = FALSE)
+g25 <- s.value(coa2$li, coa2$li[, 3], center = 0, method = "size", ppoints.cex = 0.6, symbol = "circle", col = c("yellow", "red"), plot = FALSE)
 ADEgS(c(g22, g23, g24, g25), layout = c(2, 2))
 @
 \begin{figure}[H]
@@ -919,15 +919,15 @@ This appendix summarizes the main changes between \texttt{ade4} and \texttt{adeg
   \hline \texttt{clabel} & \texttt{table.dist} & & & \texttt{axis.text = list()}, \texttt{lattice} parameter\\
   \hline \texttt{clabel.col} & \texttt{table.cont}, \texttt{table.value}, \texttt{table.paint} & & & \texttt{axis.text = list()}, \texttt{lattice} parameter\\ 
   \hline \texttt{clabel.row} & \texttt{table.cont}, \texttt{table.value}, \texttt{table.paint} & & & \texttt{axis.text = list()}, \texttt{lattice} parameter\\ 
-  \hline \texttt{clegend} & \texttt{s.value}, \texttt{table.cont}, \texttt{table.value} & & \texttt{plegend.text.cex} \texttt{plegend.hspace} \texttt{plegend.vspace} & various parameters setting the legend size\\
-  \hline \texttt{clegend} & \texttt{table.image} & & \texttt{ppoints.cex} &\\
+  \hline \texttt{clegend} & \texttt{s.value}, \texttt{table.cont}, \texttt{table.value} & & \texttt{plegend.size}  \texttt{ppoints.cex}& parameters setting the legend size\\
+  \hline \texttt{clegend} & \texttt{table.image} & & \texttt{plegend.size} &\\
   \hline \texttt{clogo} & \texttt{s.logo} & & \texttt{ppoints.cex} &\\
   \hline \texttt{cneig} & \texttt{s.label}, \texttt{s.kde2d}, \texttt{s.logo}, \texttt{s.value} &  & \texttt{pnb.edge.lwd} &\\
   \hline \texttt{col.labels} & \texttt{table.cont}, \texttt{table.value}, \texttt{table.paint} & \texttt{labelsy} & & \\   
   \hline \texttt{contour} & \texttt{s.label}, \texttt{s.class}, \texttt{s.traject}, \texttt{s.kde2d}, \texttt{s.logo}, \texttt{s.image}, \texttt{s.match}, \texttt{s.value}, \texttt{s.chull} & \texttt{Sp} & & a \texttt{Sp} object \\
   \hline \texttt{contour.plot} & \texttt{s.image} & \texttt{region} & & \\
   \hline \texttt{cpoints}, \texttt{cpoint} & \texttt{s.label}, \texttt{s.class}, \texttt{s.traject}, \texttt{s.kde2d}, \texttt{s.match}, \texttt{s.value}, \texttt{s.chull}, \texttt{sco.class}, \texttt{sco.label}, \texttt{sco.match}, \texttt{triangle.plot} &  & \texttt{ppoints.cex} &\\
-  \hline \texttt{csize} & \texttt{s.value} & \texttt{maxsize} & & \\
+  \hline \texttt{csize} & \texttt{s.value} & \texttt{ppoints.cex} & & \\
   \hline \texttt{csize} & \texttt{sco.distri} & \texttt{sdSize} & & \\ 
   \hline \texttt{cstar} & \texttt{s.class}, \texttt{s.distri} & \texttt{starSize} & & \\
   \hline \texttt{csub} & \texttt{s.label}, \texttt{s.class}, \texttt{s.image}, \texttt{s.traject}, \texttt{s.kde2d}, \texttt{s.logo}, \texttt{s.match}, \texttt{s.value}, \texttt{s.chull}, \texttt{s.corcircle}, \texttt{sco.boxplot}, \texttt{sco.class}, \texttt{sco.distri}, \texttt{sco.label}, \texttt{sco.gauss}, \texttt{sco.match}, \texttt{triangle.plot} & & \texttt{psub.cex} &\\

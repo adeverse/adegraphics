@@ -10,7 +10,8 @@
 
 \usage{
 s.image(dfxy, z, xax = 1, yax = 2, span = 0.5, gridsize = c(80L, 80L), 
-  contour = TRUE, region = TRUE, outsideLimits = NULL, col = NULL, facets = NULL, 
+  contour = TRUE, region = TRUE, outsideLimits = NULL, breaks = NULL,
+  nclass = 8, col = NULL, facets = NULL, 
   plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...)
 }
 
@@ -30,6 +31,11 @@ s.image(dfxy, z, xax = 1, yax = 2, span = 0.5, gridsize = c(80L, 80L),
   \item{contour}{a logical to draw contour lines}
   
   \item{region}{a logical to fill inter-contour regions}
+
+  \item{breaks}{a vector of values to split \code{z}. If \code{NULL}, \code{pretty(z, nclass)} is used.}
+  
+  \item{nclass}{an integer for the number of desired intervals, ignored
+    if \code{breaks} is not missing.}
   
   \item{outsideLimits}{specific limits for the surface as a set of polygons. It must be an \code{SpatialPolygons} object. Hole are authorized.}
   

@@ -35,25 +35,16 @@ setMethod(
         object@s.misc$breaks.update <- breakstest(object@s.misc$breaks.update, z, n = length(object@s.misc$breaks.update))
         n <- length(object@s.misc$breaks.update)
         
-        adegtot$ppoints$cex <- object@g.args$maxsize ## used as reference
+        if(is.null(object@adeg.par$ppoints$cex))
+            adegtot$ppoints$cex <- 1
+        
         if(is.null(object@adeg.par$ppoints$alpha))
             adegtot$ppoints$alpha <- 1
         
-        if(inherits(dftab, "dist")) {
-            if(is.null(attr(dftab, "Labels")) && is.null(labelsx))
-                adegtot$ptable$x$tck <- 0
-            if(is.null(attr(dftab, "Labels")) && is.null(labelsy))
-                adegtot$ptable$y$tck <- 0
-            ## by default, no legend
-            if(is.null(object@adeg.par$plegend$draw))
-                adegtot$plegend$draw <- FALSE
-        } else {
-            ## data.frame, matrix, table
-            if(is.null(rownames(dftab)))
-                adegtot$ptable$y$tck <- 0
-            if(is.null(colnames(dftab)))
-                adegtot$ptable$x$tck <- 0
-        }
+        if(is.null(labelsx))
+            adegtot$ptable$x$tck <- 0
+        if(is.null(labelsy))
+            adegtot$ptable$y$tck <- 0
         
         ## symbols for z = center
         if(!is.null(object@g.args$centerpar)) {
@@ -107,8 +98,9 @@ setMethod(
     })
 
 
-table.value <- function(dftab, coordsx = 1:ncol(as.matrix(dftab)), coordsy = nrow(as.matrix(dftab)):1, labelsx, labelsy, maxsize = 0.4, breaks = NULL, method = c("size", "color"),
-                        symbol = c("square", "circle"), col = NULL, nclass = 3, center = 0, centerpar = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
+table.value <- function(dftab, coordsx = 1:ncol(as.matrix(dftab)), coordsy = nrow(as.matrix(dftab)):1, labelsx, labelsy, breaks = NULL, method = c("size", "color"),
+                        symbol = c("square", "circle", "diamond", "uptriangle", "downtriangle"), col = NULL, nclass = 3, center = 0, centerpar = NULL, plot = TRUE,
+                        storeData = TRUE, add = FALSE, pos = -1, ...) {
     
     ## 4 different types can be used as tab :
     ## distance matrix (dist), contingency table (table), data.frame or matrix
@@ -167,7 +159,7 @@ table.value <- function(dftab, coordsx = 1:ncol(as.matrix(dftab)), coordsy = nro
     ## parameters sorted
     sortparameters <- .specificpar(...)
     ## creation of the ADEg object
-    g.args <- c(sortparameters$g.args, list(breaks = breaks, method = thecall$method, symbol = thecall$symbol, center = thecall$center, maxsize = maxsize, col = col, nclass = nclass, centerpar = centerpar))
+    g.args <- c(sortparameters$g.args, list(breaks = breaks, method = thecall$method, symbol = thecall$symbol, center = thecall$center, col = col, nclass = nclass, centerpar = centerpar))
     if(storeData)
         tmp_data <- list(dftab = dftab, coordsx = coordsx, coordsy = coordsy, labelsx = labelsx, labelsy = labelsy, frame = sys.nframe() + pos, storeData = storeData)
     else

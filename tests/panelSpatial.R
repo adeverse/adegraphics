@@ -22,7 +22,7 @@ text21 <- list("sp.text", c(180400, 329700), "500 m")
 arrow1 <- list("SpatialPolygonsRescale", offset = c(178750, 332500), scale = 400, layout.north.arrow())
 river <- list("sp.polygons", meuse.sr, fill = "lightblue")
 dfxy2 <- as.data.frame(coordinates(meuse))
-g2 <- s.value(dfxy2, z = meuse[, 1]$cadmium, sp.layout = list(scale1, text11, text21, arrow1, river), Sp = m, maxsize = 0.5)
+g2 <- s.value(dfxy2, z = meuse[, 1]$cadmium, sp.layout = list(scale1, text11, text21, arrow1, river), Sp = m)
 
 fac <- meuse@data$ffreq
 levels(fac)[1] <- "1 in 2 years"

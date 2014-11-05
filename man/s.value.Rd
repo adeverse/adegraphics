@@ -8,10 +8,10 @@
 }
 
 \usage{
-s.value(dfxy, z, breaks = NULL, xax = 1, yax = 2, method = c("size", "color"), 
-  symbol = c("square", "circle"), col = NULL, maxsize = 1, nclass = 4, 
-  center = 0, centerpar = NULL, facets = NULL, plot = TRUE, storeData = TRUE, 
-  add = FALSE, pos = -1, ...)
+s.value(dfxy, z, breaks = NULL, xax = 1, yax = 2, method = c("size",
+"color"), symbol = c("square", "circle", "diamond", "uptriangle", "downtriangle"),
+col = NULL, nclass = 4, center = 0, centerpar = NULL, facets = NULL,
+plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...)
 }
 
 \arguments{
@@ -30,14 +30,13 @@ s.value(dfxy, z, breaks = NULL, xax = 1, yax = 2, method = c("size", "color"),
     If \code{size}, symbols of proportional area are used. Area is 0 for values
     equals to center (default 0). Two colors are used, for values less than center and larger than center.}
     
-  \item{symbol}{\code{square} or \code{circle} value for symbol type}
+  \item{symbol}{value for symbol type}
   
   \item{col}{a color or a colors vector to color symbols.
     If \code{method} is \code{size}, a 2-length vector of color is expected. 
     If \code{method} is \code{color}, it must have as many colors as the number of class.}
     
-  \item{maxsize}{a coefficient number to adjust symbols' size}
-
+  
   \item{nclass}{an integer for the number of desired intervals, ignored if \code{breaks} is not missing.}
   
   \item{center}{a center value for method \code{size}}
@@ -92,12 +91,12 @@ s.value(dfxy, z, breaks = NULL, xax = 1, yax = 2, method = c("size", "color"),
 \examples{ 
 data(rpjdl, package = "ade4")
 fau.coa <- ade4::dudi.coa(rpjdl$fau, scan = FALSE, nf = 3)
-g1 <- s.value(fau.coa$li, fau.coa$li[,3], maxsize = 0.75, plegend.text.cex = 0.75)
-g2 <- s.value(fau.coa$li, fau.coa$li[,3], method = "color", maxsize = 0.8, plegend.text.cex = 0.8)
-g3 <- s.value(fau.coa$li, fau.coa$li[,3], plegend.text.cex = 0.8, maxsize = 0.8, symbol = "square",
-   method = "color", plegend.horizontal = FALSE, col = colorRampPalette(c("yellow", "blue"))(6))
+g1 <- s.value(fau.coa$li, fau.coa$li[,3])
+g2 <- s.value(fau.coa$li, fau.coa$li[,3], method = "color", plegend.size = 0.8)
+g3 <- s.value(fau.coa$li, fau.coa$li[,3], plegend.size = 0.8, symbol = "square",
+   method = "color",  col = colorRampPalette(c("yellow", "blue"))(6))
 g4 <- s.value(fau.coa$li, fau.coa$li[,3], plot = FALSE)
-g5 <- s.value(fau.coa$li, fau.coa$li[, 3], center = 0, method = "size", maxsize = 0.6, 
+g5 <- s.value(fau.coa$li, fau.coa$li[, 3], center = 0, method = "size", 
   symbol = "circle", col = c("yellow", "red"), plot = FALSE)
 g6 <- ADEgS(c(g4, g5), positions = layout2position(matrix(c(1, 2), 1, 2)), 
   add = matrix(0, ncol = 2, nrow = 2))  

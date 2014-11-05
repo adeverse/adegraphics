@@ -10,13 +10,13 @@ Depends: R (>= 3.0.2)
 License: GPL (>=2)
 Imports: ade4, grid, KernSmooth, lattice, methods, RColorBrewer, sp
 Suggests: Guerry, maptools, pixmap, spdep, splancs
-Collate: adeGsenv.R parameter.R utils.R utilsvalues.R 
-  utilstriangle.R genericMethod.R utilsclass.R panelfunctions.R ADEg.R ADEgS.R utilsADEgS.R 
+Collate: adeGsenv.R parameter.R utils.R
+  utilstriangle.R genericMethod.R utilsclass.R panelfunctions.R ADEg.R ADEgS.R utilsADEgS.R
   ADEg.C1.R C1.barchart.R C1.curve.R C1.density.R C1.gauss.R C1.dotplot.R C1.hist.R C1.interval.R
   ADEg.S1.R S1.boxplot.R S1.class.R S1.distri.R S1.label.R S1.match.R
   ADEg.S2.R S2.arrow.R S2.class.R S2.corcircle.R S2.density.R S2.distri.R S2.image.R S2.label.R S2.logo.R S2.match.R S2.traject.R S2.value.R 
   ADEg.T.R T.image.R T.value.R T.cont.R 
   ADEg.Tr.R Tr.class.R Tr.label.R Tr.match.R Tr.traject.R
-  ade4-kplot.R ade4-scatter.R ade4-plot.R s.hist.R multiplot.R s.Spatial.R
+  ade4-kplot.R ade4-scatter.R ade4-plot.R s.hist.R multiplot.R s.Spatial.R utilskey.R
 URL: http://pbil.univ-lyon1.fr/ADE-4, Mailing list: http://listes.univ-lyon1.fr/wws/info/adelist
 Encoding: UTF-8

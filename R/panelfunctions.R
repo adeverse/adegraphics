@@ -73,58 +73,6 @@ adeg.panel.label <- function(x, y, labels, plabels, pos = NULL) {
 }
 
 
-## symbol="circle" or "square"
-## sizes = vecteur de taille (calculee par rapport a la surface d'un cercle
-symbolschoice <- function(symbol, sizes) {
-  switch(symbol,
-         circle = {n <- 50
-                   adj <- 0
-                   sizes <- sizes
-                  },
-         square = {n <- 4
-                   adj <- pi / 4
-                   sizes <- sizes
-                  })
-  return(list(npolygon = n, adj = adj, sizes = sizes))
-}
-
-
-## draw symbol according information and for various sizes, used in panel.value graphics
-## length(xx)==length(yy)==length(sizes)
-## unit: inches mandatory
-panel.symbols.grid <- function(xx, yy, sizes, symbol = "circle", ...) {
-  
-  adeggridpolygon <- function(x, y, size, col, border, alpha, symbol) {
-    coord <- getpoly(n = whichis$npolygon, radius = size / 2, angle = whichis$adj) ## defaultwhichis$npolygon,radius=size/2,angle =whichis$adj)
-    points <- list(x = x + coord[, 1], y = y + coord[, 2])
-    do.call(grid.polygon, args = c(points, list(gp = gpar(fill = col, col = border, alpha = alpha), default.units = "inches"))) ## lpolygon slower 
-  }
-  
-  dots <- list(...) ## recuperer info type couleur, border...
-  ## choose symbol
-  whichis <- symbolschoice(symbol, sizes) ## size ne sert plus a rien
-  ## apply col, alpha and border
-  selection <- lapply(dots[c("col", "border", "alpha")], FUN = function(x) {rep(x, length.out = length(xx))})
-  ## show
-  do.call(mapply, list(FUN = "adeggridpolygon", x = xx, y = yy, size = rep(sizes, length.out = length(xx)), col = selection$col, border = selection$border, alpha = selection$alpha, symbol = symbol))
-}
-
-
-## sizes will be given in "native" units
-## a tester : la vitesse entre panel.symbols et panel.symbols.grid....
-## a tester aussi: si bien pas de difference de taille
-getpoly <- function(n = 4, radius = 1, angle = 0) {
-  sequence <- seq(0, 2 * pi, length.out = n + 1) + angle
-  return(cbind(cos(sequence), sin(sequence)) * radius)
-}
-
-
-
-#############################################
-### Utiliser objet NB: neighbouring graph ###
-### nb object: nb object, "liste"
-### coord, coordonnees des points
-### fonction tres inspire de plot.nb in spdep
 adeg.panel.nb <- function(nbobject, coords, col.edge = "black", lwd = 1, lty = 1, pch = 20, cex = 1, col.node = "black", alpha = 1) {
   if(class(nbobject) != "nb")
     stop("nb object is not class nb") ## prevoir dans les fonctions user une selection de l element neighbourght si object de type listw
@@ -201,56 +149,37 @@ adeg.panel.Spatial <- function(SpObject, sp.layout = NULL, col = 1, border = 1, 
 }
 
 
-################ pour les value (s comme t) ##################
-## x, y: coordonnees des symboles
-## zcenter: z centre sur valeur center (par defaut 0): si method = color, changement de couleur,
-## penser a resoudre 
 adeg.panel.values <- function(x, y, z, method, symbol, ppoints, breaks, centerpar = NULL, center = 0) {
   if((length(x) != length(y)) | (length(y) != length(z)))
     stop("error in panel.values, not equal length for x, y, and z")
   
-  maxsize <- max(abs(breaks))  ## toujours la meme reference, valeur max de division cad la valeur max que peut atteindre z
-  zcenter <- z - center
-  switch(method,
-         size = { ## tailles proportionnelles aux valeurs de z (centre sur center)
-           z <- zcenter[order(abs(zcenter), decreasing = TRUE)]
-           x <- x[order(abs(zcenter), decreasing = TRUE)]
-           y <- y[order(abs(zcenter), decreasing = TRUE)]
-           if(!missing(center) & !is.null(centerpar)) {
-             xnull <- x[z == 0]
-             ynull <- y[z == 0]
-           }
-           sizes <- .proportional_map(z, maxsize) * ppoints$cex[1] ## une seule valeur prise en compte
-           colorsymb <- sapply(z, FUN = function(x) {
-             if(x < 0)
-               return(ppoints$col[1])
-             else
-               return(ppoints$col[2])
-           })
-           borduresymb <- sapply(z, FUN = function(x) {
-             if(x < 0)
-               return(ppoints$col[2])
-             else
-               return(ppoints$col[1])})
-         },
-         color = { ## col va du plus fonce au plus clair (correspond des classe supe au inf)
-           sizes <- ppoints$cex[1]
-           breaks <- sort(breaks) ## breaks remis dans l'ordre croissant (z inf a sup)
-           colorsymb <- ppoints$col[as.numeric(cut(zcenter, breaks, include.lowest = TRUE))]
-           if(any(is.null(colorsymb)) | any(is.na(colorsymb)))
-             stop("error while preparing color symbol", call. = FALSE)
-           borduresymb <- "black"
-         })
-  cstnormal <- diff(current.panel.limits(unit = "inches")$xlim) / 10 ## normaliser/taille panel, cst 10 au hasard
+  maxsize <- max(abs(breaks))  ## biggest value
+  z <- z - center
 
-  x <- convertUnit(unit(x, "native"), axisFrom = "x", axisTo = "x", typeFrom = "location", typeTo = "location", unitTo = "inches")
-  y <- convertUnit(unit(y, "native"), axisFrom = "y", axisTo = "y", typeFrom = "location", typeTo = "location", unitTo = "inches")
+  if(!missing(center) & !is.null(centerpar)) {
+      xnull <- x[abs(z) < sqrt(.Machine$double.eps)]
+      ynull <- y[abs(z) < sqrt(.Machine$double.eps)]
+  }
   
-  ## rm size always in inches
-  panel.symbols.grid(xx = x, yy = y, sizes = sizes * cstnormal, symbol = symbol, col = rep(colorsymb, length.out = length(x))[1:length(x)], border = rep(borduresymb, length.out = length(x))[1:length(x)], alpha = ppoints$alpha)
+  if(method == "size"){
+      size <- .proportional_map(z, maxsize) * ppoints$cex[1]
+      colfill <- ifelse(z < 0, ppoints$col[1], ppoints$col[2])
+      colborder <- ifelse(z < 0, ppoints$col[2], ppoints$col[1])
+      
+  } else if(method == "color"){
+      size <- ppoints$cex[1]
+      breaks <- sort(breaks)
+      colfill <- ppoints$col[as.numeric(cut(z, breaks, include.lowest = TRUE))]
+      if(any(is.null(colfill)) | any(is.na(colfill)))
+             stop("error in the definition of color symbol", call. = FALSE)
+      colborder <- "black"
+  }
+  
+  cstnormal <- 5 ## same value in createkey
+  panel.points(x = x, y = y, cex = size * cstnormal, pch = .symbol2pch(symbol), fill = colfill, col = colborder, alpha = ppoints$alpha)
   if(!missing(center) && !is.null(centerpar))
     panel.points(x = xnull, y = ynull, pch = centerpar$pch, col = centerpar$col, cex = centerpar$cex)
-  return(cstnormal) ## renvoye a fonction panel si necessaire pour ajouter dans la legende. a stoker dans s.misc$maxvalue
+  return(cstnormal) 
 }
 
 

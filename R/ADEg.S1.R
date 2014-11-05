@@ -245,7 +245,7 @@ setMethod(
     arguments <- list(
                    par.settings = object@trellis.par,
                    scales = object@g.args$scales,
-                   ## skipt aspect ratio 
+                   key = createkey(object),                   
                    axis = axis.L, ## see utils.R
                    panel = function(...) {
                      panelbase(object,...) ## grid,

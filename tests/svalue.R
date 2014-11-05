@@ -12,24 +12,23 @@ val3 <- s.value(xy, z, method = "size", symbol = "circle", plot = F)
 val4 <- s.value(xy, z, method = "color", symbol = "circle", plot = F)
 g1 <- ADEgS(c(val1, val2, val3, val4), positions = layout2position(matrix(c(1, 2, 3, 4), 2, 2)), add = matrix(0, ncol = 4, nrow = 4))
 g2 <- s.value(xy, z, method = "color", symbol = "square", breaks = c(-3, -1, -0.5, 0, 0.5, 1, 3))
-g3 <- s.value(xy, z, method = "color", col = colorRampPalette(c("yellow", "blue"))(6), maxsize = 0.7)
-g4 <- s.value(xy, z, method = "size", symbol = "circle", plegend = list(border = "black", horizontal = FALSE, 
-    position = "topleft", col = "antiquewhite", alpha = 0.7, text = list(col = "purple", cex = 0.9), lty = "dotted", lwd = 2), paxes.draw = FALSE)
+g3 <- s.value(xy, z, method = "color", col = colorRampPalette(c("yellow", "blue"))(6))
+g4 <- s.value(xy, z, method = "size", symbol = "circle", paxes.draw = FALSE)
 
 ## ex2
 xx <- runif(100) * 100
 yy <- 1:100 
 zz <- 1:100
 breaks <- c(0, 25, 50, 75, 100)
-g5 <- s.value(data.frame(xx, yy), zz, breaks = breaks, method = "color", paxes.draw = TRUE, maxsize = 0.8, porigin.include = FALSE)
-g6 <- s.value(data.frame(xx, yy), cbind(zz, rev(zz)), breaks = breaks, method = "color", col = c("blue", "red", "green", "yellow"), paxes.draw = TRUE, maxsize = 0.8)
-g7 <- s.value(data.frame(xx, yy), cbind(zz, rev(zz)), nclass = c(2, 6), method = "color", col = c("blue", "red", "pink", "green", "yellow"), paxes.draw = TRUE, maxsize = 0.8)
+g5 <- s.value(data.frame(xx, yy), zz, breaks = breaks, method = "color", paxes.draw = TRUE,  porigin.include = FALSE)
+g6 <- s.value(data.frame(xx, yy), cbind(zz, rev(zz)), breaks = breaks, method = "color", col = c("blue", "red", "green", "yellow"), paxes.draw = TRUE)
+g7 <- s.value(data.frame(xx, yy), cbind(zz, rev(zz)), nclass = c(2, 6), method = "color", col = c("blue", "red", "pink", "green", "yellow"), paxes.draw = TRUE)
 
 ## ex3
 data(rpjdl, package = "ade4")
 fau.coa <- ade4::dudi.coa(rpjdl$fau, scan = FALSE, nf = 3)
 val5 <- s.value(fau.coa$li, fau.coa$li[,3], plot = FALSE)
-val6 <- s.value(fau.coa$li, fau.coa$li[, 3], center = 0, method = "size", maxsize = 0.6, symbol = "circle", col = c("yellow", "red"), plot = FALSE)
+val6 <- s.value(fau.coa$li, fau.coa$li[, 3], center = 0, method = "size", symbol = "circle", col = c("yellow", "red"), plot = FALSE)
 g8 <- ADEgS(c(val5, val6), positions = layout2position(matrix(c(1, 2), 1, 2)), add = matrix(0, ncol = 2, nrow = 2))
 
 ## ex3
