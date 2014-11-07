@@ -155,6 +155,17 @@
   return(result)
 }
 
+.n2mfrow <- function (nr.plots) 
+{
+    ## inspired by n2mfrow but we change the default when the number of graphs is <6
+    if (nr.plots <= 3) 
+        c(1, nr.plots)
+    else if (nr.plots <= 6) 
+        c(2, (nr.plots + 1)%/%2)
+    else if (nr.plots <= 12) 
+        c((nr.plots + 2)%/%3, 3)
+    else c(nrow <- ceiling(sqrt(nr.plots)), ceiling(nr.plots/nrow))
+}
 
 ## Get positions matrix for ADEgs according  a given layout
 ## strongly inspired by the layout function
@@ -181,8 +192,8 @@ layout2position <- function(mat, widths = rep(1, NCOL(mat)), heights = rep(1, NR
     wi <- widths / max(length(widths), length(heights))
   	hi <- heights / max(length(widths), length(heights))
   } else {    
-  	wi <- widths / length(widths)
-  	hi <- heights / length(heights)
+  	wi <- widths / sum(widths)
+  	hi <- heights / sum(heights)
   }
   
   ## layout from left to right, up to bottom 

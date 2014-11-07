@@ -77,7 +77,7 @@ s.Spatial <- function(spObj, col = TRUE, nclass = 5, plot = TRUE, storeData = TR
       listGraph <- c(listGraph, do.call("s.label", c(list(dfxy = xy, Sp = substitute(spObj[, i]), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args)))
     }
     names(listGraph) <- names(spObj)
-    posmatrix <- layout2position(n2mfrow(nvar), ng = nvar)
+    posmatrix <- layout2position(.n2mfrow(nvar), ng = nvar)
     object <- new(Class = "ADEgS", ADEglist = listGraph, positions = posmatrix, add = matrix(0, ncol = nvar, nrow = nvar), Call = match.call())
   }
   

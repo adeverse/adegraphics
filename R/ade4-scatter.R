@@ -198,7 +198,7 @@
   l <- sapply(1:length(levels(indica)), function(i) {do.call("s.distri", c(list(dfxy = substitute(x$l1, env = sys.frame(-3)), dfdistri = call("[", oritab, call(":", 1, nrow(evTab)), which(indica == levels(indica)[i])), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[i]]))})
   
   ## ADEgS creation
-  object <- new(Class = "ADEgS", ADEglist = l, positions = layout2position(n2mfrow(ng), ng  = ng), add = matrix(0, ncol = ng, nrow = ng), Call = match.call())
+  object <- new(Class = "ADEgS", ADEglist = l, positions = layout2position(.n2mfrow(ng), ng  = ng), add = matrix(0, ncol = ng, nrow = ng), Call = match.call())
   names(object) <- graphsnames
   if(plot)
     print(object)
@@ -362,7 +362,7 @@
     ADEglist <- ADEglist[which.var]
     
     ## ADEgS creation
-    posmatrix <- layout2position(n2mfrow(length(which.var)), ng = length(which.var))
+    posmatrix <- layout2position(.n2mfrow(length(which.var)), ng = length(which.var))
     object <- new(Class = "ADEgS", ADEglist = ADEglist, positions = posmatrix, add = matrix(0, ncol = length(which.var), nrow = length(which.var)), Call = match.call())
   } 
   
@@ -614,7 +614,7 @@
   ADEglist <- ADEglist[which.var]
   
   ## ADEgS creation
-  posmatrix <- layout2position(n2mfrow(length(which.var)), ng = length(which.var))
+  posmatrix <- layout2position(.n2mfrow(length(which.var)), ng = length(which.var))
   object <- new(Class = "ADEgS", ADEglist = ADEglist, positions = posmatrix, add = matrix(0, ncol = length(which.var), nrow = length(which.var)), Call = match.call())
   names(object) <- colnames(evTab)[which.var]
   object@Call <- match.call()
@@ -655,7 +655,7 @@
   ADEglist <- ADEglist[which.var]
   
   ## ADEgS creation
-  posmatrix <- layout2position(n2mfrow(length(which.var)), ng = length(which.var))
+  posmatrix <- layout2position(.n2mfrow(length(which.var)), ng = length(which.var))
   object <- new(Class = "ADEgS", ADEglist = ADEglist, positions = posmatrix, add = matrix(0, ncol = length(which.var), nrow = length(which.var)), Call = match.call())
   names(object) <- colnames(evTab)[which.var]
   object@Call <- match.call()

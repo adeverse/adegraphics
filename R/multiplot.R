@@ -32,7 +32,7 @@ multi.ax.S2 <- function(thecall) {
 
   ## create the multiplot ADEgS
   names(listGraph) <- paste("x", apply(expand.grid(xax, yax), 1, paste, collapse = "y"), sep = "")
-  posmatrix <- layout2position(c(length(yax), length(xax)), ng = length(listGraph), square = TRUE)
+  posmatrix <- layout2position(c(length(yax), length(xax)), ng = length(listGraph), square = FALSE)
   object <- new(Class = "ADEgS", ADEglist = listGraph, positions = posmatrix, add = matrix(0, ncol = length(listGraph), nrow = length(listGraph)), Call = as.call(thecall))
   return(object)
 }
@@ -134,7 +134,7 @@ multi.facets.S2 <- function(thecall, adepar, samelimits = TRUE) {
 
   ## creation of the multi-plot (ADEgS object)
   names(listGraph) <- levels(facets)
-  posmatrix <- layout2position(n2mfrow(nlevels(facets)), ng = nlevels(facets), square = TRUE)
+  posmatrix <- layout2position(.n2mfrow(nlevels(facets)), ng = nlevels(facets), square = FALSE)
   object <- new(Class = "ADEgS", ADEglist = listGraph, positions = posmatrix, add = matrix(0, ncol = nlevels(facets), nrow = nlevels(facets)), Call = as.call(thecall))
   ## change pos et frame a posteriori ??
   return(object)
@@ -176,7 +176,7 @@ multi.variables.S2 <- function(thecall, arg.vary) {
   
   ## create the multiplot ADEgS
   names(listGraph) <- colnames(dfvary)
-  posmatrix <- layout2position(n2mfrow(ncol(dfvary)), ng = ncol(dfvary), square = TRUE)
+  posmatrix <- layout2position(.n2mfrow(ncol(dfvary)), ng = ncol(dfvary), square = FALSE)
   object <- new(Class = "ADEgS", ADEglist = listGraph, positions = posmatrix, add = matrix(0, ncol = ncol(dfvary), nrow = ncol(dfvary)), Call = as.call(thecall))
   return(object)
 }
@@ -226,7 +226,7 @@ multi.score.C1 <- function(thecall) {
 
   ## create the multiplot ADEgS
   names(listGraph) <- colnames(score)
-  posmatrix <- layout2position(n2mfrow(nc), ng = nc)
+  posmatrix <- layout2position(.n2mfrow(nc), ng = nc)
   object <- new(Class = "ADEgS", ADEglist = listGraph, positions = posmatrix, add = matrix(0, ncol = length(listGraph), nrow = length(listGraph)), Call = as.call(thecall))
   return(object)
 }
@@ -303,7 +303,7 @@ multi.facets.C1 <- function(thecall, adepar, samelimits = TRUE) {
 
   ## creation of the multi-plot (ADEgS object)
   names(listGraph) <- levels(facets)
-  posmatrix <- layout2position(n2mfrow(nlevels(facets)), ng = nlevels(facets))
+  posmatrix <- layout2position(.n2mfrow(nlevels(facets)), ng = nlevels(facets))
   object <- new(Class = "ADEgS", ADEglist = listGraph, positions = posmatrix, add = matrix(0, ncol = nlevels(facets), nrow = nlevels(facets)), Call = as.call(thecall))
   ## change pos et frame a posteriori ??
   return(object)
@@ -337,7 +337,7 @@ multi.variables.C1 <- function(thecall, arg.vary) {
   
   ## create the multiplot ADEgS
   names(listGraph) <- colnames(dfvary)
-  posmatrix <- layout2position(n2mfrow(ncol(dfvary)), ng = ncol(dfvary))
+  posmatrix <- layout2position(.n2mfrow(ncol(dfvary)), ng = ncol(dfvary))
   object <- new(Class = "ADEgS", ADEglist = listGraph, positions = posmatrix, add = matrix(0, ncol = ncol(dfvary), nrow = ncol(dfvary)), Call = as.call(thecall))
   return(object)
 }
@@ -384,7 +384,7 @@ multi.score.S1 <- function(thecall) {
  
   ## create the multiplot ADEgS
   names(listGraph) <- colnames(score)
-  posmatrix <- layout2position(n2mfrow(nc), ng = nc)
+  posmatrix <- layout2position(.n2mfrow(nc), ng = nc)
   object <- new(Class = "ADEgS", ADEglist = listGraph, positions = posmatrix, add = matrix(0, ncol = length(listGraph), nrow = length(listGraph)), Call = as.call(thecall))
   return(object)
 }
@@ -458,7 +458,7 @@ multi.facets.S1 <- function(thecall, adepar, samelimits = TRUE) {
 
   ## creation of the multi-plot (ADEgS object)
   names(listGraph) <- levels(facets)
-  posmatrix <- layout2position(n2mfrow(nlevels(facets)), ng = nlevels(facets))
+  posmatrix <- layout2position(.n2mfrow(nlevels(facets)), ng = nlevels(facets))
   object <- new(Class = "ADEgS", ADEglist = listGraph, positions = posmatrix, add = matrix(0, ncol = nlevels(facets), nrow = nlevels(facets)), Call = as.call(thecall))
   ## change pos et frame a posteriori ??
   return(object)
@@ -498,7 +498,7 @@ multi.variables.S1 <- function(thecall, arg.vary) {
   
   ## create the multiplot ADEgS
   names(listGraph) <- colnames(dfvary)
-  posmatrix <- layout2position(n2mfrow(ncol(dfvary)), ng = ncol(dfvary), square = FALSE)
+  posmatrix <- layout2position(.n2mfrow(ncol(dfvary)), ng = ncol(dfvary), square = FALSE)
   object <- new(Class = "ADEgS", ADEglist = listGraph, positions = posmatrix, add = matrix(0, ncol = ncol(dfvary), nrow = ncol(dfvary)), Call = as.call(thecall))
   return(object)
 }
@@ -563,7 +563,7 @@ multi.facets.Tr <- function(thecall, samelimits = TRUE) {
 
   ## creation of the multi-plot (ADEgS object)
   names(listGraph) <- levels(facets)
-  posmatrix <- layout2position(n2mfrow(nlevels(facets)), ng = nlevels(facets))
+  posmatrix <- layout2position(.n2mfrow(nlevels(facets)), ng = nlevels(facets))
   object <- new(Class = "ADEgS", ADEglist = listGraph, positions = posmatrix, add = matrix(0, ncol = nlevels(facets), nrow = nlevels(facets)), Call = as.call(thecall))
   ## change pos et frame a posteriori ??
   return(object)
@@ -599,7 +599,7 @@ multi.variables.Tr <- function(thecall, arg.vary) {
   
   ## create the multiplot ADEgS
   names(listGraph) <- colnames(dfvary)
-  posmatrix <- layout2position(n2mfrow(ncol(dfvary)), ng = ncol(dfvary))
+  posmatrix <- layout2position(.n2mfrow(ncol(dfvary)), ng = ncol(dfvary))
   object <- new(Class = "ADEgS", ADEglist = listGraph, positions = posmatrix, add = matrix(0, ncol = ncol(dfvary), nrow = ncol(dfvary)), Call = as.call(thecall))
   return(object)
 }
