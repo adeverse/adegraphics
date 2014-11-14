@@ -164,7 +164,7 @@
   params[[4]]$l2 <- list(xlim = limdefault$xlim, ylim = limdefault$ylim, chullSize = 1, ppoints = list(pch = 15, cex = 0.5), plines = list(lwd = 1), plabels = list(alpha = 0, boxes = list(draw = FALSE)), ppolygon = list(lwd = 0.5, alpha = 0.2), pellipses = list(alpha = 0.0, axes = list(draw = FALSE)), col = adegpar()$ppalette$quali(nlevels(fac)))
   params[[4]]$l3 <- list(xlim = limdefault$xlim, ylim = limdefault$ylim, ppoints = list(cex = 0.7), plines = list(lwd = 2), plabels = list(alpha = 1, boxes = list(draw = TRUE), cex = 1.25))
   params[[5]] <- list(psub = list(text = "Y loadings"), plabels = list(cex = 1.25))
-  params[[6]] <- list(psub = list(text = "X loadingss"), plabels = list(cex = 1.25))
+  params[[6]] <- list(psub = list(text = "X loadings"), plabels = list(cex = 1.25))
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
@@ -518,20 +518,29 @@
     stop("Non convenient xax")
   if(yax > x$nf) 
     stop("Non convenient yax")
+
+  appel <- as.list(x$call)
+  dfX <- appel$df
   
   ## sort parameters for each graph
-  graphsnames <- c("axes", "categories", "collections", "div")
+  graphsnames <- c("axes", "categories", "collections")
+  if(!is.null(x$RaoDiv))
+      graphsnames <- c(graphsnames, "div")
   sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
-  sortparameters <- mapply(repList, sortparameters, c(2, 1, 1, 1))
+  vec <- c(2, 1, 1)
+  if(!is.null(x$RaoDiv))
+      vec <- c(vec, 1)
+  sortparameters <- mapply(repList, sortparameters, vec)
   
   ## default values for parameters
   params <- list()
   params[[1]] <- list()
   params[[1]]$l1 <- list(psub = list(text = "Principal axes", position = "topleft"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
   params[[1]]$l2 <- list(psub = list(text = "Eigenvalues"), pbackground = list(box = TRUE))
-  params[[2]] <- list(psub = list(text = "Categories"), plabels = list(cex = 1.25))
-  params[[3]] <- list(psub = list(text = "Collections"), ppoints = list(pch = 16, cex = 2), plines = list(col = "transparent"), pellipses = list(axes = list(draw = FALSE)), ellipseSize = 1, plabels = list(cex = 1.25))
-  params[[4]] <- list(psub = list(text = "Rao Divcs", position = "topleft"))
+  params[[2]] <- list(psub = list(text = "Collections"), plabels = list(cex = 1.25))
+  params[[3]] <- list(psub = list(text = "Categories & Collections"), ppoints = list(pch = 16, cex = 1.2), plines = list(col = "transparent"), pellipses = list(axes = list(draw = FALSE)), ellipseSize = 1, plabels = list(cex = 1.25))
+  if(!is.null(x$RaoDiv))
+      params[[4]] <- list(psub = list(text = "Rao Divcs", position = "topleft"))
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
@@ -539,13 +548,18 @@
   g11 <- do.call("s.corcircle", c(list(dfxy = substitute(x$c1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]][[1]]))
   g12 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[1]][[2]]))
   g1 <- do.call("insert", list(g12@Call, g11@Call, posi = "bottomleft", plot = FALSE, ratio = 0.25, inset = 0))
-  g2 <- do.call("s.label", c(list(dfxy = substitute(x$l2), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
-  g3 <- do.call("s.distri", c(list(dfxy = substitute(x$l1), dfdistri = as.list(x$call)[[2]], xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]]))
-  g4 <- do.call("s.value", c(list(dfxy = substitute(x$l2), z = substitute(x$RaoDiv), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
+  g2 <- do.call("s.label", c(list(dfxy = substitute(x$li), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
+  g3 <- do.call("s.distri", c(list(dfxy = substitute(x$dls), dfdistri = substitute(t(dfX)), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]]))
+  if(!is.null(x$RaoDiv))
+      g4 <- do.call("s.value", c(list(dfxy = substitute(x$li), z = substitute(x$RaoDiv), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
   
   ## ADEgS creation
-  lay <- matrix(c(1, 2, 3, 4), 2, 2)
-  object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4), positions = layout2position(lay), add = matrix(0, ncol = 4, nrow = 4), Call = match.call())
+  if(!is.null(x$RaoDiv)){
+      object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4), positions = layout2position(matrix(c(1, 2, 3, 4), 2, 2)), add = matrix(0, ncol = 4, nrow = 4), Call = match.call())
+  } else {
+      object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3), positions = layout2position(matrix(c(1, 2, 3, 0), 2, 2)), add = matrix(0, ncol = 3, nrow = 3), Call = match.call())
+  }
+  
   names(object) <- graphsnames
   if(plot)
     print(object)
