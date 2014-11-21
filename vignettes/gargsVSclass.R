@@ -1,5 +1,5 @@
 library(grid)
-t <- read.csv("gargsVSclass.csv",  sep = "\t", quote = "", header = TRUE, check.names = FALSE)
+t <- read.csv("gargsVSclass.csv",  sep = ",", header = TRUE, check.names = FALSE)
 row.names(t) <- t[, 1]
 t <- t[, -1]
 t[is.na(t)] <- 0
