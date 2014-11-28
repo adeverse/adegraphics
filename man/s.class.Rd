@@ -90,7 +90,7 @@ s.class(xy, fac = posi, facets = posi, ppoints.cex = 1.5, ellipseSize = 0, starS
   chullSize = c(1, 0.5))
   
 \dontrun{ 
-data(banque)
+data(banque, package = "ade4")
 dudi1 <- ade4::dudi.acm(banque, scannf = FALSE)
 col <- rainbow(length(levels(banque[, 20])))
 g1 <- s.label(dudi1$li, psub = list(text = "Factorial map from ACM", cex = 1.5, 

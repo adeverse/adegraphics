@@ -155,16 +155,17 @@
   return(result)
 }
 
-.n2mfrow <- function (nr.plots) 
-{
-    ## inspired by n2mfrow but we change the default when the number of graphs is <6
-    if (nr.plots <= 3) 
-        c(1, nr.plots)
-    else if (nr.plots <= 6) 
-        c(2, (nr.plots + 1)%/%2)
-    else if (nr.plots <= 12) 
-        c((nr.plots + 2)%/%3, 3)
-    else c(nrow <- ceiling(sqrt(nr.plots)), ceiling(nr.plots/nrow))
+.n2mfrow <- function(nr.plots) {
+  ## inspired by n2mfrow but we change the default when the number of graphs is <6
+  if (nr.plots <= 3) 
+    c(1, nr.plots)
+  else if (nr.plots <= 6) 
+    c(2, (nr.plots + 1) %/% 2)
+  else if (nr.plots <= 9)
+    c((nr.plots + 2) %/% 3, 3)
+  else if (nr.plots <= 12)
+    c((nr.plots + 3) %/% 4, 4)
+  else c(nrow <- ceiling(sqrt(nr.plots)), ceiling(nr.plots / nrow))
 }
 
 ## Get positions matrix for ADEgs according  a given layout
