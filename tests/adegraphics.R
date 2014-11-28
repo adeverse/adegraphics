@@ -10,6 +10,7 @@ g2 <- s.corcircle(pca$co, lab = names(olympic$tab))
 
 g3 <- ADEgS(list(g1, g2), rbind(c(0, 0, 0.5, 1), c(0.5, 0, 1, 1)))
 g4 <- ADEgS(list(g1, g2), layout = c(1, 2)) ## the same as g3
+g4b <- ADEgS(list(g1, g2)) ## the same as g3
 g5 <- s.label(xy, plabels.cex = 0, paxes.draw = TRUE)
 
 g6 <- superpose(g1, g5, plot = TRUE)
