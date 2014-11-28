@@ -36,6 +36,9 @@ setMethod(
       adegtot$plabels$orientation <- 0
     adegtot$p1d$rug$ticksize <- 0
     
+    if(is.null(object@g.args$ylim))
+      object@g.args$ylim <- c(0, 1)
+    
     ## object modification before calling inherited method
     object@adeg.par <- adegtot
     callNextMethod() ## prepare graph
@@ -61,7 +64,7 @@ setMethod(
     nval <- length(y) %/% 2
     score2 <- y[(nval + 1):length(y)]
     score1 <- y[1 : nval]
-
+    
     pscore <- object@adeg.par$p1d
     plabels <- object@adeg.par$plabels
     plboxes <- plabels$boxes
@@ -73,7 +76,7 @@ setMethod(
       w <- test$w
       h <- test$h
     }
-
+    
     lead <- ifelse(pscore$reverse, -1, 1)
     
     if(pscore$horizontal) {
@@ -82,7 +85,7 @@ setMethod(
       spacelab <- diff(lims$xlim) / (nval + 1)
       xlab <- seq(from = lims$xlim[1] + spacelab, by = spacelab, length.out = nval)[rank(score1, ties.method = "first")]
       ylab <- rep(at, length.out = nval)
-
+      
       ypoints <- rep(object@s.misc$rug, length.out = nval)
       ypoints2 <- rep(ypoints + lead * 0.05 * abs(diff(object@g.args$ylim)), length.out = nval)
       
@@ -110,7 +113,7 @@ setMethod(
       
       xpoints <- rep(object@s.misc$rug, length.out = nval)
       xpoints2 <- rep(xpoints + lead * 0.05 * abs(diff(object@g.args$xlim)), length.out = nval)
-
+      
       ## vertical line
       if(pscore$rug$draw & pscore$rug$line) 
         panel.abline(v = xpoints2,  col = porigin$col, lwd = porigin$lwd, lty = porigin$lty, alpha = porigin$alpha)
@@ -118,7 +121,7 @@ setMethod(
       do.call("panel.segments", c(list(x0 = xpoints, y0 = score1, x1 =  xpoints2, y1 = score2), object@adeg.par$plines))
       ## segments linking labels to second score
       do.call("panel.segments", c(list(x0 = xpoints2, y0 = score2, x1 = xlab, y1 = ylab), object@adeg.par$plines))
-
+      
       ## drawing labels
       if(!is.null(labels) & any(plabels$cex > 0))
         adeg.panel.label(x = xlab + lead * w / 2 , y = ylab, labels = labels, plabels = plabels)
@@ -130,7 +133,7 @@ setMethod(
 
 
 s1d.match <- function(score1, score2, labels = 1:NROW(score1), at = 0.5, facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
-
+  
   ## evaluation of some parameters
   thecall <- .expand.call(match.call())
   score1 <- eval(thecall$score1, envir = sys.frame(sys.nframe() + pos))
@@ -142,7 +145,7 @@ s1d.match <- function(score1, score2, labels = 1:NROW(score1), at = 0.5, facets 
   
   if((is.data.frame(score1) & NCOL(score1) == 1) | (is.data.frame(score2) & NCOL(score2) == 1)) 
     stop("Not yet implemented for data.frame with only one column, please convert into vector")
-    
+  
   ## parameters sorted
   sortparameters <- .specificpar(...)
   
@@ -166,7 +169,7 @@ s1d.match <- function(score1, score2, labels = 1:NROW(score1), at = 0.5, facets 
     
     ## creation of the ADEg object
     if(storeData)
-    	tmp_data <- list(score = c(score1, score2), labels = labels, at = at, frame = sys.nframe() + pos, storeData = storeData)
+      tmp_data <- list(score = c(score1, score2), labels = labels, at = at, frame = sys.nframe() + pos, storeData = storeData)
     else
       tmp_data <- list(score = call("c", thecall$score1, thecall$score2), labels = thecall$labels, at = thecall$at, frame = sys.nframe() + pos, storeData = storeData)
     object <- new(Class = "S1.match", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = sortparameters$g.args, Call = match.call())

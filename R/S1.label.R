@@ -35,6 +35,9 @@ setMethod(
     else if(!adegtot$p1d$horizontal & is.null(object@adeg.par$plabels$orientation))
       adegtot$plabels$orientation <- 0
     
+    if(is.null(object@g.args$ylim))
+      object@g.args$ylim <- c(0, 1)
+    
     ## object modification before calling inherited method
     object@adeg.par <- adegtot
     callNextMethod() ## prepare graph
@@ -47,10 +50,10 @@ setMethod(
   f = "panel",
   signature = "S1.label",
   definition = function(object, x, y) {
-
+    
     if(object@data$storeData) {
       labels <- object@data$labels
-    	at <- object@data$at
+      at <- object@data$at
     } else {
       labels <- eval(object@data$labels, envir = sys.frame(object@data$frame))
       at <- eval(object@data$at, envir = sys.frame(object@data$frame))
@@ -68,9 +71,9 @@ setMethod(
       w <- test$w
       h <- test$h
     }        
-
+    
     lead <- ifelse(pscore$reverse, -1, 1)
-
+    
     if(pscore$horizontal) {
       ## horizontal plot
       xpoints <- y
@@ -142,7 +145,7 @@ s1d.label <- function(score, labels = 1:NROW(score), at = 0.5, poslabel = c("reg
     ## creation of the ADEg object
     g.args <- c(sortparameters$g.args, list(poslabel = match.arg(poslabel)))
     if(storeData)
-    	tmp_data <- list(score = score, labels = labels, at = at, frame = sys.nframe() + pos, storeData = storeData)
+      tmp_data <- list(score = score, labels = labels, at = at, frame = sys.nframe() + pos, storeData = storeData)
     else
       tmp_data <- list(score = thecall$score, labels = thecall$labels, at = thecall$at, frame = sys.nframe() + pos, storeData = storeData)
     object <- new(Class = "S1.label", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = g.args, Call = match.call())
