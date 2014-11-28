@@ -415,7 +415,7 @@
   mat <- rbind(x$msX, x$msY, x$mX)
   minmat <- apply(mat, 2, min)
   maxmat <- apply(mat, 2, max)
-  limdefault <- .setlimits(minmat[1], maxmat[1], minmat[2], maxmat[2], origin = c(0,0), includeOr = TRUE)     
+  limdefault <- .setlimits(minmat[1], maxmat[1], minmat[2], maxmat[2], origin = c(0, 0), includeOr = TRUE)     
   
   ## default values for parameters
   params <- list()

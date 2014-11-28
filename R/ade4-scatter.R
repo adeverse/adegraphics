@@ -90,6 +90,17 @@
     stop("Non convenient yax")
   
   position <- match.arg(posieig[1], choices = c("bottomleft", "bottomright", "topleft", "topright", "none"), several.ok = FALSE)
+  method <- method[1]
+  
+  ## limits management
+  if(method == 1)
+    x.global <- rbind(as.matrix(x$li), as.matrix(x$co))
+  else if(method == 2)
+    x.global <- rbind(as.matrix(x$c1), as.matrix(x$li))
+  else if(method == 3)
+    x.global <- rbind(as.matrix(x$l1), as.matrix(x$co))
+  adegtot <- adegpar()
+  lim.global <- .setlimits(minX = min(x.global[, xax]), maxX = max(x.global[, xax]), minY = min(x.global[, yax]), maxY = max(x.global[, yax]), origin = adegtot$porigin$origin, aspect.ratio = adegtot$paxes$aspectratio, includeOr = adegtot$porigin$include)
   
   ## sort parameters for each graph
   graphsnames <- c("row", "col", "eig")
@@ -97,14 +108,13 @@
   
   ## parameters management
   params <- list()
-  params$row <- list(plabels = list(cex = 0.75))
-  params$col <- list()
+  params$row <- list(plabels = list(cex = 0.75), xlim = lim.global$xlim, ylim = lim.global$ylim)
+  params$col <- list(xlim = lim.global$xlim, ylim = lim.global$ylim)
   params$eig <- list(pbackground = list(box = TRUE), psub = list(text = "Eigenvalues"))
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
   ## creation of each individual ADEg and of the final ADEgS
-  method <- method[1]
   if(method == 1) {
     g1 <- do.call("s.label", c(list(dfxy = substitute(x$li), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$row))
     g2 <- do.call("s.label", c(list(dfxy = substitute(x$co), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$col))
