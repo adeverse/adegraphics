@@ -607,15 +607,15 @@ setMethod(
 
 ADEgS <- function(adeglist, positions, layout, add = NULL, plot = TRUE) {
   
-  if(missing(layout))
-    layout <- .n2mfrow(length(adeglist))
-  
-  if(missing(positions)) {
+  if(missing(positions) & !missing(layout)) {
     if(is.list(layout)) ## in layout: width and heights informations, layout is a list
       positions <- do.call("layout2position", layout)
     else
       positions <- layout2position(layout, ng = length(adeglist))
   }
+
+  if(missing(layout) & missing(add))
+    layout <- .n2mfrow(length(adeglist))
   
   if(missing(positions)) 
     positions <- matrix(rep(c(0, 0, 1, 1), length.out = length(adeglist) * 4), byrow = TRUE, ncol = 4)

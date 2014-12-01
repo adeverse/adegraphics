@@ -856,12 +856,12 @@ ADEgS(c(g30, g31), layout = c(1, 2))
 \end{figure}
 
 
-<<label=plot32b, include = FALSE, fig = TRUE, echo = TRUE, keep.source = FALSE, width = 4, height = 6>>=
+<<label=plot32b, include = FALSE, fig = TRUE, echo = TRUE, keep.source = FALSE, width = 5, height = 4>>=
 s.Spatial(gfrance85[,7:12])
 @
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.6\textwidth]{fig-plot32b.pdf}
+\includegraphics[width=1\textwidth]{fig-plot32b.pdf}
 \end{figure}
 
 
