@@ -4,12 +4,12 @@ library(adegraphics)
 ## ex1
 data(eurodist)
 g1 <- table.value(eurodist)
-g2 <- table.value(eurodist, ptable = list(x = list(cstmargin = 17), y = list(cstmargin = 17)))
-g3 <- table.value(eurodist, ptable.x = list(cstmargin = 17, pos = "bottom"), ptable.y = list(cstmargin = 17))
+g2 <- table.value(eurodist, ptable = list(x = list(margin = 17), y = list(margin = 17)))
+g3 <- table.value(eurodist, ptable.x = list(margin = 17, pos = "bottom"), ptable.y = list(margin = 17))
 
 ## ex2
 d <- as.dist(matrix(rep(1:5, 5), 5), upper = TRUE)
-attr(d, "Labels") <-c ("A", "B", "C", "D", "E")
+attr(d, "Labels") <- c ("A", "B", "C", "D", "E")
 g4 <- table.value(d)
 
 ## ex3
