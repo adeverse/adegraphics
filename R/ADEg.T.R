@@ -37,18 +37,18 @@ setMethod(
     object@s.misc$axes$dy <- ifelse(length(coordsy) == 1, 1, diff(range(coordsy)) / length(coordsy))
     
     ## ll, rr, tt, bb: right, left, top, bottom margins
-    if(length(object@adeg.par$ptable$y$margin) == 1)
-      ll <- rr <- object@adeg.par$ptable$y$margin
+    if(length(object@adeg.par$ptable$x$margin) == 1)
+      ll <- rr <- object@adeg.par$ptable$x$margin
     else {
-      ll <- object@adeg.par$ptable$y$margin[1]
-      rr <- object@adeg.par$ptable$y$margin[2]
+      ll <- object@adeg.par$ptable$x$margin[1]
+      rr <- object@adeg.par$ptable$x$margin[2]
     }
     
-    if(length(object@adeg.par$ptable$x$margin) == 1)
-      bb <- tt <- object@adeg.par$ptable$x$margin
+    if(length(object@adeg.par$ptable$y$margin) == 1)
+      bb <- tt <- object@adeg.par$ptable$y$margin
     else {
-      bb <- object@adeg.par$ptable$x$margin[1]
-      tt <- object@adeg.par$ptable$x$margin[2]
+      bb <- object@adeg.par$ptable$y$margin[1]
+      tt <- object@adeg.par$ptable$y$margin[2]
     }
     
     object@g.args$xlim <- range(coordsx) + c(-1, 1) * object@s.misc$axes$dx
@@ -102,21 +102,61 @@ setMethod(
     ## get parameters
     linespar <- modifyList(as.list(object@trellis.par$axis.line), trellis.par.get()$axis.line, keep.null = TRUE)
     textspar <- modifyList(as.list(object@trellis.par$axis.text), trellis.par.get()$axis.text, keep.null = TRUE)
-        
-    if(textspar$cex > 0 & dxticks > 0) {
+    
+    if(textspar$cex > 0 & dyticks > 0) {
       ## draw ticks for x
-      ## same x if top or bottom
+      y0axes <- ypos
+      y1axes <- seq(from = min(ypos), to = max(ypos), length.out = ny)[rank(ypos, ties.method = "first")]
+      yylab <- y1axes
+      drawing <- FALSE
+      
+      if(any(object@adeg.par$ptable$x$pos == "right")) {
+        if(any(is.na(object@adeg.par$ptable$x$adj)))
+          adj <- c(0, 0.5)
+        else
+          adj <- object@adeg.par$ptable$x$adj
+        x0axes <- limis$xlim[2]
+        x1axes <- limis$xlim[2] + dyticks
+        if(textspar$cex)
+          xxlab <- limis$xlim[2] + 1.1 * dyticks
+        drawing <- TRUE
+      }
+      
+      if(any(object@adeg.par$ptable$x$pos == "left")) {
+        if(any(is.na(object@adeg.par$ptable$x$adj)))
+          adj <- c(1, 0.5)
+        else
+          adj <- object@adeg.par$ptable$x$adj
+        x0axes <- limis$xlim[1]
+        x1axes <- limis$xlim[1] - dyticks
+        if(textspar$cex)
+          xxlab <- limis$xlim[1] - 1.1 * dyticks
+        drawing <- TRUE
+      }
+      if(drawing) {
+        panel.segments(x0 = x0axes, y0 = y0axes, x1 = x1axes, y1 = y1axes,
+                       lwd = linespar$lwd, lty = linespar$lty, alpha = linespar$alpha, col = linespar$col)
+        if(textspar$cex)
+          panel.text(labels = labelsy, x = xxlab, y = yylab, cex = textspar$cex, col = textspar$col, font = textspar$font,
+                     lineheight = textspar$lineheight, alpha = textspar$alpha, adj = adj, srt = object@adeg.par$ptable$x$srt)
+      }
+    }
+    
+    
+    if(textspar$cex > 0 & dxticks > 0) {
+      ## draw ticks for y
+      ## same y if top or bottom
       x0axes <- xpos
       ## regular positions
       x1axes <- seq(from = min(xpos), to = max(xpos), length.out = nx)[rank(xpos, ties.method = "first")]
       xxlab <- x1axes
       drawing <- FALSE
       
-      if(any(object@adeg.par$ptable$x$pos == "top")) {
-        if(any(is.na(object@adeg.par$ptable$x$adj)))
+      if(any(object@adeg.par$ptable$y$pos == "top")) {
+        if(any(is.na(object@adeg.par$ptable$y$adj)))
           adj <- c(0, 0.5)
         else
-          adj <- object@adeg.par$ptable$x$adj
+          adj <- object@adeg.par$ptable$y$adj
         y0axes <- limis$ylim[2]
         y1axes <- limis$ylim[2] + dxticks
         if(textspar$cex > 0)
@@ -124,11 +164,11 @@ setMethod(
         drawing <- TRUE
       }
       
-      if(any(object@adeg.par$ptable$x$pos == "bottom")) {
-        if(any(is.na(object@adeg.par$ptable$x$adj)))
+      if(any(object@adeg.par$ptable$y$pos == "bottom")) {
+        if(any(is.na(object@adeg.par$ptable$y$adj)))
           adj <- c(1, 0.5)
         else
-          adj <- object@adeg.par$ptable$x$adj
+          adj <- object@adeg.par$ptable$y$adj
         y0axes <- limis$ylim[1]
         y1axes <- limis$ylim[1] - dxticks
         if(textspar$cex > 0)
@@ -141,44 +181,6 @@ setMethod(
                        lwd = linespar$lwd, lty = linespar$lty, alpha = linespar$alpha, col = linespar$col)
         if(textspar$cex)
           panel.text(labels = labelsx, x = xxlab, y = yylab, cex = textspar$cex, col = textspar$col, font = textspar$font,
-                     lineheight = textspar$lineheight, alpha = textspar$alpha, adj = adj, srt = object@adeg.par$ptable$x$srt)
-      }
-    }
-    
-    if(textspar$cex > 0 & dyticks > 0){
-      ## draw ticks for y
-      y0axes <- ypos
-      y1axes <- seq(from = min(ypos),to = max(ypos), length.out = ny)[rank(ypos, ties.method = "first")]
-      yylab <- y1axes
-      drawing <- FALSE
-      
-      if(any(object@adeg.par$ptable$y$pos == "right")) {
-        if(any(is.na(object@adeg.par$ptable$y$adj)))
-          adj <- c(0, 0.5)
-        else
-          adj <- object@adeg.par$ptable$y$adj
-        x0axes <- limis$xlim[2]
-        x1axes <- limis$xlim[2] + dyticks
-        if(textspar$cex)
-          xxlab <- limis$xlim[2] + 1.1 * dyticks
-        drawing <- TRUE
-      }
-      if(any(object@adeg.par$ptable$y$pos == "left")) {
-        if(any(is.na(object@adeg.par$ptable$y$adj)))
-          adj <- c(1, 0.5)
-        else
-          adj <- object@adeg.par$ptable$y$adj
-        x0axes <- limis$xlim[1]
-        x1axes <- limis$xlim[1] - dyticks
-        if(textspar$cex)
-          xxlab <- limis$xlim[1] - 1.1 * dyticks
-        drawing <- TRUE
-      }
-      if(drawing) {
-        panel.segments(x0 = x0axes, y0 = y0axes, x1 = x1axes, y1 = y1axes,
-                       lwd = linespar$lwd, lty = linespar$lty, alpha = linespar$alpha, col = linespar$col)
-        if(textspar$cex)
-          panel.text(labels = labelsy, x = xxlab, y = yylab, cex = textspar$cex, col = textspar$col, font = textspar$font,
                      lineheight = textspar$lineheight, alpha = textspar$alpha, adj = adj, srt = object@adeg.par$ptable$y$srt)
       }
     }
