@@ -22,7 +22,7 @@ mat <- matrix(0, ncol = 1, nrow = 8)
 mat[c(2), ] <- 1
 mat[c(3:8), ] <- 2
 mat[1, ] <- 3
-g6 <- ADEgS(c(g3, g4, s1d.label(c(w1, w2, w3), p1d = list(rug = list(ticksize = 0.8), rev = TRUE), ppoints.cex = 0, plabels.cex = 0, plot = F, pgrid.draw = F)), 
+g6 <- ADEgS(c(g3, g4, s1d.label(c(w1, w2, w3), p1d = list(rug = list(tck = 0.8), rev = TRUE), ppoints.cex = 0, plabels.cex = 0, plot = F, pgrid.draw = F)), 
   layout = matrix((rev(mat)), ncol = 1))
 g7 <- s1d.boxplot(c(w1, w2, w3), data.frame(f1, f2))
 

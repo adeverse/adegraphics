@@ -829,7 +829,7 @@ fac1 <- rep(c("A", "B"), each = 1000)
 g26 <- s1d.density(score1, fac1, pback.col = "grey75", plot = FALSE)
 g27 <- s1d.density(score1, fac1, col = c(2, 4), plot = FALSE)
 g28 <- s1d.density(score1, fac1, col = c(2, 4), p1d.reverse = TRUE, p1d.horizontal = FALSE, p1d.rug.draw = FALSE, plot = FALSE)
-g29 <- s1d.density(score1, fac1, col = c(2, 4), ppolygons.alpha = 0.2, p1d = list(rug = list(ticksize = 1, line = FALSE)), plot = FALSE)
+g29 <- s1d.density(score1, fac1, col = c(2, 4), ppolygons.alpha = 0.2, p1d = list(rug = list(tck = 1, line = FALSE)), plot = FALSE)
 ADEgS(c(g26, g27, g28, g29), layout = c(2, 2))
 @
 \begin{figure}[H]

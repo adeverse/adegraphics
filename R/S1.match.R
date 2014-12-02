@@ -34,7 +34,7 @@ setMethod(
       adegtot$plabels$orientation <- 90
     else if(!adegtot$p1d$horizontal & is.null(object@adeg.par$plabels$orientation))
       adegtot$plabels$orientation <- 0
-    adegtot$p1d$rug$ticksize <- 0
+    adegtot$p1d$rug$tck <- 0
     
     if(is.null(object@g.args$ylim))
       object@g.args$ylim <- c(0, 1)

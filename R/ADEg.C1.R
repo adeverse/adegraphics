@@ -143,7 +143,7 @@ setMethod(
         lims <- current.panel.limits(unit = "native")
         
         ## for rugs
-        if(pscore$rug$draw & (pscore$rug$ticksize != 0)) {
+        if(pscore$rug$draw & (pscore$rug$tck != 0)) {
             plines <- object@adeg.par$plines
             if(!is.null(object@data$fac)) {
                 ## C1.density or C1.gauss (different colors for rugs)
@@ -176,10 +176,10 @@ setMethod(
                 col = porigin$col, lwd = porigin$lwd, lty = porigin$lty, alpha = porigin$alpha)
             
             ## draw rug
-            if(pscore$rug$draw & (pscore$rug$ticksize != 0)) {
+            if(pscore$rug$draw & (pscore$rug$tck != 0)) {
                 ## tick end and starting points
                 start <- ref + lead * margin
-                end <- (start - pscore$rug$ticksize * lead * abs(start - ref))
+                end <- (start - pscore$rug$tck * lead * abs(start - ref))
                 start <- convertUnit(unit(start, "native"), unitTo = "npc", axisFrom = "y", valueOnly = TRUE)
                 end <- convertUnit(unit(end, "native"), unitTo = "npc", axisFrom = "y", valueOnly = TRUE)
                 
@@ -206,10 +206,10 @@ setMethod(
                 col = porigin$col, lwd = porigin$lwd, lty = porigin$lty, alpha = porigin$alpha)
 
             ## draw rug
-            if(pscore$rug$draw && pscore$rug$ticksize != 0) {
+            if(pscore$rug$draw && pscore$rug$tck != 0) {
                 ## tick end and starting points
                 start <- ref + lead * margin
-                end <- (start - pscore$rug$ticksize * lead * abs(start - ref))
+                end <- (start - pscore$rug$tck * lead * abs(start - ref))
                 start <- convertUnit(unit(start, "native"), unitTo = "npc", axisFrom = "x", valueOnly =TRUE)
                 end <- convertUnit(unit(end, "native"), unitTo = "npc", axisFrom = "x", valueOnly =TRUE)
                 do.call("panel.rug", c(list(y = y, start = start, end = end), plines))
