@@ -74,7 +74,7 @@ setMethod(
                             y = rep(densit$x2, each = length(densit$x1)), 
                             z = densityy,
                             labels = object@adeg.par$plabels, 
-                            label.style = if(object@adeg.par$plabels$orientation == "horizontal") "flat" else "align",  ## also exist "mixed" not used here
+                            label.style = if(object@adeg.par$plabels$srt == "horizontal") "flat" else "align",  ## also exist "mixed" not used here
                             at = c(-.Machine$double.eps, seq(from = max(densit$fhat) * object@g.args$threshold + .Machine$double.eps, 
                                 to = 1.01 * max(densit$fhat), length = object@g.args$nclass + 1)), 
                             col.regions = c("transparent", col), 

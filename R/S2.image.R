@@ -107,7 +107,7 @@ setMethod(
     xx <- object@s.misc$newgrid[, 1]
     yy <- object@s.misc$newgrid[, 2]
     panel.levelplot(x = xx, y = yy, z = zvalue, subscripts = TRUE, col.regions = col, contour = object@g.args$contour, region = object@g.args$region, labels = object@adeg.par$plabels,
-                    label.style = if(object@adeg.par$plabels$orientation == "horizontal") "flat" else "align")
+                    label.style = if(object@adeg.par$plabels$srt == "horizontal") "flat" else "align")
   })
 
 

@@ -138,12 +138,12 @@ setMethod(
 
     ## manage string rotation
     srt <- 0
-    if(is.numeric(plabels$orientation[1]))
-      srt <- plabels$orientation[1]
+    if(is.numeric(plabels$srt[1]))
+      srt <- plabels$srt[1]
     else {
-      if(plabels$orientation[1] == "horizontal")
+      if(plabels$srt[1] == "horizontal")
         srt <- 0
-      else if(plabels$orientation[1] == "vertical")
+      else if(plabels$srt[1] == "vertical")
         srt <- 90
     }
     

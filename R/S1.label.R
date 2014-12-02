@@ -30,10 +30,10 @@ setMethod(
     adegtot <- adegpar(object@adeg.par)
     
     ## change default for some parameters
-    if(adegtot$p1d$horizontal & is.null(object@adeg.par$plabels$orientation))
-      adegtot$plabels$orientation <- 90
-    else if(!adegtot$p1d$horizontal & is.null(object@adeg.par$plabels$orientation))
-      adegtot$plabels$orientation <- 0
+    if(adegtot$p1d$horizontal & is.null(object@adeg.par$plabels$srt))
+      adegtot$plabels$srt <- 90
+    else if(!adegtot$p1d$horizontal & is.null(object@adeg.par$plabels$srt))
+      adegtot$plabels$srt <- 0
     
     if(is.null(object@g.args$ylim))
       object@g.args$ylim <- c(0, 1)

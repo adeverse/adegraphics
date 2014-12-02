@@ -19,7 +19,7 @@
                 
                 pgrid = list(col = "grey", draw = TRUE, lty = 1, lwd = 1, nint = 5, text = list(cex = 1, col = "black", pos = "topright")),
                 
-                plabels = list(alpha = 1, cex = 1, col = "black", orientation = "horizontal", optim = FALSE, 
+                plabels = list(alpha = 1, cex = 1, col = "black", srt = "horizontal", optim = FALSE, 
                     boxes = list(alpha = 1, border = "black", col = "white", draw = TRUE, lwd = 1, lty = 1)),
                 
                 plegend = list(drawKey = TRUE, drawColorKey = FALSE, size = 1), 

@@ -33,10 +33,10 @@ setMethod(
     score <- as.matrix(score)[, 1]  ## to manage 'score' when it is a data.frame with only one column
     
     ## change default for some parameters
-    if(adegtot$p1d$horizontal && is.null(object@adeg.par$plabels$orientation))
-      adegtot$plabels$orientation <- 0
-    else if(!adegtot$p1d$horizontal && is.null(object@adeg.par$plabels$orientation))
-      adegtot$plabels$orientation <- 90
+    if(adegtot$p1d$horizontal && is.null(object@adeg.par$plabels$srt))
+      adegtot$plabels$srt <- 0
+    else if(!adegtot$p1d$horizontal && is.null(object@adeg.par$plabels$srt))
+      adegtot$plabels$srt <- 90
     if(is.null(object@adeg.par$plabels$boxes$draw))
       adegtot$plabels$boxes$draw <- FALSE
     adegtot$p1d$rug$draw <- FALSE
@@ -74,12 +74,12 @@ setMethod(
         
     ## manage string rotation
     srt <- 0
-    if(is.numeric(plabels$orientation[1]))
-      srt <- plabels$orientation[1]
+    if(is.numeric(plabels$srt[1]))
+      srt <- plabels$srt[1]
     else {
-      if(plabels$orientation[1] == "horizontal")
+      if(plabels$srt[1] == "horizontal")
         srt <- 0
-      else if(plabels$orientation[1] == "vertical")
+      else if(plabels$srt[1] == "vertical")
         srt <- 90
     }
      

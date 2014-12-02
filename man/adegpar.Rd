@@ -100,7 +100,7 @@ adegpar(...)
       \item{\code{alpha}: a value between 0 and 1 controlling label transparency}
       \item{\code{cex}: labels' text size}
       \item{\code{col}: labels' text color}
-      \item{\code{orientation}: labels' text orientation. It can be \code{horizontal}, \code{vertical} or an angle indication in degrees}
+      \item{\code{srt}: labels' text orientation. It can be \code{horizontal}, \code{vertical} or an angle indication in degrees}
       \item{\code{optim}: a logical indicating if an algorithm is used to avoid labels' overlapping or outside limits}
       \item{\code{boxes}: label's boxes parameters \itemize{
         \item{\code{draw}: a logical indicating if labels are framed}

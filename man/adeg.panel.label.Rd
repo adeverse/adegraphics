@@ -24,7 +24,7 @@ adeg.panel.label(x, y, labels, plabels, pos = NULL)
     Each value can be a vector and will be recycled if necessary:
     \itemize{
       \item{\code{alpha}, \code{cex}, \code{col}: drawing parameters for the text}
-      \item{\code{orientation}: orientation of the labels, \code{horizontal}, \code{vertical} or an angle indication (in degrees). 
+      \item{\code{srt}: orientation of the labels, \code{horizontal}, \code{vertical} or an angle indication (in degrees). 
         Boxes are not rotated. If the orientation is not near to \code{horizontal}/\code{vertical} (0/90), it is best not to draw the boxes}
       \item{\code{optim}: logical. If TRUE, uses an algorithm trying to avoid labels' overlapping and outside limits}
       \item{\code{boxes}: concerns the label's boxes. a list: \itemize{
