@@ -38,7 +38,7 @@ for(i in 1:length(Adegpar)) {
 }
 
 table.value(t(paramVSsub), axis.text = list(cex = 1), symbol = "circle", plegend.drawKey = FALSE, ppoints.cex = 0.2, 
-  ptable.x = list(srt = 60, adj = c(0., 0.), margin = c(12, 2)), ptable.y = list(pos = "left", margin = c(17, 2)))
+  ptable.x = list(srt = 60, adj = c(0., 0.), margin = c(2, 12)), ptable.y = list(pos = "left", margin = c(17, 2)))
 
 
 

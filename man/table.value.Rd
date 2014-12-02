@@ -103,7 +103,8 @@ g3 <- table.value(w, coordsy = wpca$li[, 1], coordsx = wpca$co[, 1], ppoints.cex
 
 ## distance
 data(eurodist)
-g5 <- table.value(eurodist, symbol = "circle")
+g5 <- table.value(eurodist, symbol = "circle", ptable.x.margin = c(5, 16), 
+  ptable.y.margin = c(5, 16))
 
 \dontrun{
 ## table

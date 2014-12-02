@@ -37,17 +37,21 @@ setMethod(
     object@s.misc$axes$dy <- ifelse(length(coordsy) == 1, 1, diff(range(coordsy)) / length(coordsy))
     
     ## ll, rr, tt, bb: right, left, top, bottom margins
-    ll <- rr <- rep(object@adeg.par$ptable$y$margin, length.out = 2)[2]
-    tt <- bb <- rep(object@adeg.par$ptable$x$margin, length.out = 2)[2]
-    if(object@adeg.par$ptable$y$pos == "left")
+    if(length(object@adeg.par$ptable$y$margin) == 1)
+      ll <- rr <- object@adeg.par$ptable$y$margin
+    else {
       ll <- object@adeg.par$ptable$y$margin[1]
-    else if(object@adeg.par$ptable$y$pos == "right")
-      rr <- object@adeg.par$ptable$y$margin[1] 
-    object@g.args$xlim <- range(coordsx) + c(-1, 1) * object@s.misc$axes$dx
-    if(object@adeg.par$ptable$x$pos == "top")
-      tt <- object@adeg.par$ptable$x$margin[1]
-    else if(object@adeg.par$ptable$x$pos == "bottom")
+      rr <- object@adeg.par$ptable$y$margin[2]
+    }
+    
+    if(length(object@adeg.par$ptable$x$margin) == 1)
+      bb <- tt <- object@adeg.par$ptable$x$margin
+    else {
       bb <- object@adeg.par$ptable$x$margin[1]
+      tt <- object@adeg.par$ptable$x$margin[2]
+    }
+    
+    object@g.args$xlim <- range(coordsx) + c(-1, 1) * object@s.misc$axes$dx
     object@g.args$ylim <- range(coordsy) + c(-1, 1) * object@s.misc$axes$dy
     
     object@trellis.par <- c(object@trellis.par, list(clip = list(panel = "off"),

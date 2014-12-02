@@ -198,13 +198,13 @@ adegpar(...)
         \item{\code{srt}: text rotation}
         \item{\code{pos}: position of the axis. It can be \code{top} or \code{bottom}. Otherwise axis and labels' axis are not drawn}
         \item{\code{tck}: ticks size, by default in mm, but other units can be used}
-        \item{\code{margin}: margin surrounding the drawing panel. Two numbers, one indicating the margin for the side where axis and labels are
-          drawn, the second one is for the margin without axis and labels. Result are obtained passing \code{margin} to
-          padding argument in \code{lattice}. Please see \code{layout.heights} and \code{layout.widths} parameters in
-          \code{lattice} package for more information}
+        \item{\code{margin}: margin surrounding the drawing panel. The two numbers indicate the bottom and top margins.
+          Results are obtained passing \code{margin} to padding argument in \code{lattice}. Please see 
+          \code{layout.heights} and \code{layout.widths} parameters in \code{lattice} package for more information}
       }}
       \item{\code{y}: same as \code{x} list, but for y-axis \itemize{
-        \item{\code{str}, \code{tck}, \code{margin}}
+        \item{\code{str}, \code{tck}}
+        \item{\code{margin}: The two numbers indicate the left and right margins.}
         \item{\code{pos}: \code{left} or \code{right}}
       }}
     }}
