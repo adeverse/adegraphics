@@ -4,8 +4,9 @@ library(adegraphics)
 ## ex1
 data(eurodist)
 g1 <- table.value(eurodist)
-g2 <- table.value(eurodist, ptable = list(x = list(margin = 17), y = list(margin = 17)))
-g3 <- table.value(eurodist, ptable.x = list(margin = 17, pos = "bottom"), ptable.y = list(margin = 17))
+g2 <- table.value(eurodist, ptable.margin = list(b = 17, t = 17, l = 17, r = 17))
+g3 <- table.value(eurodist, ptable.x = list(pos = "bottom"),
+                  ptable.margin = list(b = 17, t = 17, l = 17, r = 17))
 
 ## ex2
 d <- as.dist(matrix(rep(1:5, 5), 5), upper = TRUE)

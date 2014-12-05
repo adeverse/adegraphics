@@ -42,7 +42,7 @@ adegpar(...)
       \item{\code{rug}: a list dedicated to tick marks \itemize{
         \item{\code{draw}: a logical indicating if the rugs are drawn}
         \item{\code{tck}: size of the rug (ticks) in proportion from the reference line and the origin of the device}
-        \item{\code{margin}: where to draw the reference line (in \code{npc} unit)}
+        \item{\code{margin}: where to draw the reference line}
         \item{\code{line}: a logical indicating if the reference line is drawn using \code{porigin} arguments}
       }}
     }}
@@ -197,16 +197,16 @@ adegpar(...)
       \item{\code{x}: x-axis parameters \itemize{ 
         \item{\code{srt}: text rotation}
         \item{\code{pos}: position of the axis. It can be \code{top} or \code{bottom}. Otherwise axis and labels' axis are not drawn}
-        \item{\code{tck}: ticks size, by default in mm, but other units can be used}
-        \item{\code{margin}: margin surrounding the drawing panel. The two numbers indicate the bottom and top margins.
-          Results are obtained passing \code{margin} to padding argument in \code{lattice}. Please see 
-          \code{layout.heights} and \code{layout.widths} parameters in \code{lattice} package for more information}
+        \item{\code{tck}: ticks size}
+        \item{\code{adj}: justification of labels}
       }}
       \item{\code{y}: same as \code{x} list, but for y-axis \itemize{
-        \item{\code{str}, \code{tck}}
-        \item{\code{margin}: The two numbers indicate the left and right margins.}
-        \item{\code{pos}: \code{left} or \code{right}}
+        \item{\code{str}, \code{tck}, \code{adj}}
+        \item{\code{pos}: position of the axis. It can be \code{left} or \code{right}. Otherwise axis and labels' axis are not drawn}
       }}
+      \item{\code{margin}: margin surrounding the drawing panel. The numbers indicate the \code{bottom}, \code{left}, \code{top} and \code{right} margins.
+        Results are obtained passing \code{margin} to padding argument in \code{lattice}. Please see 
+        \code{layout.heights} and \code{layout.widths} parameters in \code{lattice} package for more information}
     }}
 }}
 

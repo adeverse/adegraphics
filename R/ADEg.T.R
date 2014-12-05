@@ -36,27 +36,23 @@ setMethod(
     object@s.misc$axes$dx <- ifelse(length(coordsx) == 1, 1, diff(range(coordsx)) / length(coordsx))
     object@s.misc$axes$dy <- ifelse(length(coordsy) == 1, 1, diff(range(coordsy)) / length(coordsy))
     
-    ## ll, rr, tt, bb: right, left, top, bottom margins
-    if(length(object@adeg.par$ptable$x$margin) == 1)
-      ll <- rr <- object@adeg.par$ptable$x$margin
-    else {
-      ll <- object@adeg.par$ptable$x$margin[1]
-      rr <- object@adeg.par$ptable$x$margin[2]
-    }
+    ## default margins
+    if(object@adeg.par$ptable$x$pos == "top" & object@adeg.par$ptable$margin$top <= 5)
+      object@adeg.par$ptable$margin$top <- 12
+    if(object@adeg.par$ptable$x$pos == "bottom" & object@adeg.par$ptable$margin$bottom <= 5)
+      object@adeg.par$ptable$margin$bottom <- 12
     
-    if(length(object@adeg.par$ptable$y$margin) == 1)
-      bb <- tt <- object@adeg.par$ptable$y$margin
-    else {
-      bb <- object@adeg.par$ptable$y$margin[1]
-      tt <- object@adeg.par$ptable$y$margin[2]
-    }
+    if(object@adeg.par$ptable$y$pos == "right" & object@adeg.par$ptable$margin$right <= 5)
+      object@adeg.par$ptable$margin$right <- 12
+    if(object@adeg.par$ptable$y$pos == "left" & object@adeg.par$ptable$margin$left <= 5)
+      object@adeg.par$ptable$margin$left <- 12
     
     object@g.args$xlim <- range(coordsx) + c(-1, 1) * object@s.misc$axes$dx
     object@g.args$ylim <- range(coordsy) + c(-1, 1) * object@s.misc$axes$dy
     
     object@trellis.par <- c(object@trellis.par, list(clip = list(panel = "off"),
-        layout.heights = list(top.padding = tt, bottom.padding = bb),
-        layout.widths = list(left.padding = ll, right.padding = rr)))
+        layout.heights = list(top.padding = object@adeg.par$ptable$margin$top, bottom.padding = object@adeg.par$ptable$margin$bottom),
+        layout.widths = list(left.padding = object@adeg.par$ptable$margin$left, right.padding = object@adeg.par$ptable$margin$right)))
     assign(name_obj, object, envir = parent.frame())
   })
 
@@ -104,17 +100,18 @@ setMethod(
     textspar <- modifyList(as.list(object@trellis.par$axis.text), trellis.par.get()$axis.text, keep.null = TRUE)
     
     if(textspar$cex > 0 & dyticks > 0) {
-      ## draw ticks for x
+      ## draw ticks for y
       y0axes <- ypos
+      ## regular positions
       y1axes <- seq(from = min(ypos), to = max(ypos), length.out = ny)[rank(ypos, ties.method = "first")]
       yylab <- y1axes
       drawing <- FALSE
       
-      if(any(object@adeg.par$ptable$x$pos == "right")) {
-        if(any(is.na(object@adeg.par$ptable$x$adj)))
+      if(any(object@adeg.par$ptable$y$pos == "right")) {
+        if(any(is.na(object@adeg.par$ptable$y$adj)))
           adj <- c(0, 0.5)
         else
-          adj <- object@adeg.par$ptable$x$adj
+          adj <- object@adeg.par$ptable$y$adj
         x0axes <- limis$xlim[2]
         x1axes <- limis$xlim[2] + dyticks
         if(textspar$cex)
@@ -122,11 +119,11 @@ setMethod(
         drawing <- TRUE
       }
       
-      if(any(object@adeg.par$ptable$x$pos == "left")) {
-        if(any(is.na(object@adeg.par$ptable$x$adj)))
+      if(any(object@adeg.par$ptable$y$pos == "left")) {
+        if(any(is.na(object@adeg.par$ptable$y$adj)))
           adj <- c(1, 0.5)
         else
-          adj <- object@adeg.par$ptable$x$adj
+          adj <- object@adeg.par$ptable$y$adj
         x0axes <- limis$xlim[1]
         x1axes <- limis$xlim[1] - dyticks
         if(textspar$cex)
@@ -142,21 +139,19 @@ setMethod(
       }
     }
     
-    
     if(textspar$cex > 0 & dxticks > 0) {
-      ## draw ticks for y
-      ## same y if top or bottom
+      ## draw ticks for x
       x0axes <- xpos
       ## regular positions
       x1axes <- seq(from = min(xpos), to = max(xpos), length.out = nx)[rank(xpos, ties.method = "first")]
       xxlab <- x1axes
       drawing <- FALSE
       
-      if(any(object@adeg.par$ptable$y$pos == "top")) {
-        if(any(is.na(object@adeg.par$ptable$y$adj)))
+      if(any(object@adeg.par$ptable$x$pos == "top")) {
+        if(any(is.na(object@adeg.par$ptable$x$adj)))
           adj <- c(0, 0.5)
         else
-          adj <- object@adeg.par$ptable$y$adj
+          adj <- object@adeg.par$ptable$x$adj
         y0axes <- limis$ylim[2]
         y1axes <- limis$ylim[2] + dxticks
         if(textspar$cex > 0)
@@ -164,11 +159,11 @@ setMethod(
         drawing <- TRUE
       }
       
-      if(any(object@adeg.par$ptable$y$pos == "bottom")) {
-        if(any(is.na(object@adeg.par$ptable$y$adj)))
+      if(any(object@adeg.par$ptable$x$pos == "bottom")) {
+        if(any(is.na(object@adeg.par$ptable$x$adj)))
           adj <- c(1, 0.5)
         else
-          adj <- object@adeg.par$ptable$y$adj
+          adj <- object@adeg.par$ptable$x$adj
         y0axes <- limis$ylim[1]
         y1axes <- limis$ylim[1] - dxticks
         if(textspar$cex > 0)
@@ -176,7 +171,7 @@ setMethod(
         drawing <- TRUE
       }
       
-      if(drawing){
+      if(drawing) {
         panel.segments(x0 = x0axes, y0 = y0axes, x1 = x1axes, y1 = y1axes,
                        lwd = linespar$lwd, lty = linespar$lty, alpha = linespar$alpha, col = linespar$col)
         if(textspar$cex)
@@ -190,9 +185,9 @@ setMethod(
 setMethod(
   f = "setlatticecall",
   signature = "ADEg.T",
-  definition = function(object){
+  definition = function(object) {
     name_obj <- deparse(substitute(object))
-
+    
     ## background and box
     object@trellis.par$panel.background$col <- object@adeg.par$pbackground$col
     if(!object@adeg.par$pbackground$box)
@@ -200,12 +195,12 @@ setMethod(
     
     arguments <- list(
       par.settings = object@trellis.par,
-        key = createkey(object),
-        legend = createcolorkey(object),
-        scales = list(draw = FALSE),
+      key = createkey(object),
+      legend = createcolorkey(object),
+      scales = list(draw = FALSE),
       panel = function(...) {
-        panelbase(object,...)
-        panel(object,...)
+        panelbase(object, ...)
+        panel(object, ...)
       })
     
     object@lattice.call$arguments <- arguments
@@ -220,7 +215,7 @@ setMethod(
       largs["xlim"] <- object@g.args["xlim"]
     if("ylim" %in% names(object@g.args))
       largs["ylim"] <- object@g.args["ylim"]
-      
+    
     object@lattice.call$arguments <- c(object@lattice.call$arguments, largs, list(strip = FALSE))
     assign(name_obj, object, envir = parent.frame())
   })

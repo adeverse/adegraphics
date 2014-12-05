@@ -48,8 +48,9 @@
                 
                 psub = list(cex = 1, col = "black", position = "bottomleft", text = ""),
                 
-                ptable = list(x = list(srt = 0, pos = "right", tck = unit(8, "mm"), margin = c(5, 12), adj = NA),
-                              y = list(srt = 90, pos = "top", tck = unit(8, "mm"), margin = c(5, 12), adj = NA))
+                ptable = list(x = list(srt = 0, pos = "top", tck = 8, adj = NA),
+                              y = list(srt = 90, pos = "right", tck = 8, adj = NA),
+                              margin = list(bottom = 5, left = 5, top = 5, right = 5))
                 
                 ),
            envir = .ADEgEnv)

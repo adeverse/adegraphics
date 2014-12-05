@@ -123,7 +123,7 @@ table.value <- function(dftab, coordsx = 1:ncol(as.matrix(dftab)), coordsy = nro
                     thecall$labelsx <- call("attr", thecall$dftab, "Labels")
         } 
         
-        if(missing(labelsy)){
+        if(missing(labelsy)) {
             thecall$labelsy <- labelsy <- NULL
             if(!is.null(attr(dftab, "Labels")))
                 if(storeData)
@@ -136,7 +136,7 @@ table.value <- function(dftab, coordsx = 1:ncol(as.matrix(dftab)), coordsy = nro
         thecall$coordsy <- call(":", call("attr", thecall$dftab, "Size"), 1)
         
     } else { ## data.frame, matrix, table
-        if(missing(labelsy)){
+        if(missing(labelsy)) {
             thecall$labelsy <- labelsy <- NULL
             if(!is.null(rownames(dftab)))
                 if(storeData)
@@ -145,7 +145,7 @@ table.value <- function(dftab, coordsx = 1:ncol(as.matrix(dftab)), coordsy = nro
                     thecall$labelsy <- call("rownames", thecall$dftab)
         }
         
-        if(missing(labelsx)){
+        if(missing(labelsx)) {
             thecall$labelsx <- labelsx <- NULL
             if(!is.null(colnames(dftab)))
                 if(storeData)

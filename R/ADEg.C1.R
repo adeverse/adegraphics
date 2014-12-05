@@ -182,7 +182,6 @@ setMethod(
                 end <- (start - pscore$rug$tck * lead * abs(start - ref))
                 start <- convertUnit(unit(start, "native"), unitTo = "npc", axisFrom = "y", valueOnly = TRUE)
                 end <- convertUnit(unit(end, "native"), unitTo = "npc", axisFrom = "y", valueOnly = TRUE)
-                
                 do.call("panel.rug", c(list(x = y, start = start, end = end), plines))
             }
             
@@ -210,8 +209,8 @@ setMethod(
                 ## tick end and starting points
                 start <- ref + lead * margin
                 end <- (start - pscore$rug$tck * lead * abs(start - ref))
-                start <- convertUnit(unit(start, "native"), unitTo = "npc", axisFrom = "x", valueOnly =TRUE)
-                end <- convertUnit(unit(end, "native"), unitTo = "npc", axisFrom = "x", valueOnly =TRUE)
+                start <- convertUnit(unit(start, "native"), unitTo = "npc", axisFrom = "x", valueOnly = TRUE)
+                end <- convertUnit(unit(end, "native"), unitTo = "npc", axisFrom = "x", valueOnly = TRUE)
                 do.call("panel.rug", c(list(y = y, start = start, end = end), plines))
             }
         }
