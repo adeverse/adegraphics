@@ -240,7 +240,7 @@
   ## parameters management
   params <- list()
   params$row <- list(psub = list(position = "bottomright"), samelimits = FALSE)
-  params$traj <- list(psub = list(cex = 0, position = "bottomright"), plabels = list(cex = 0), samelimits = FALSE)
+  params$traj <- list(psub = list(position = "bottomright"), plabels = list(cex = 0), samelimits = FALSE)
   params$col <- list(psub = list(cex = 0, position = "bottomright"), plabels = list(cex = 1.25))
   params$eig <- list(psub = list(text = ""), pbackground = list(box = TRUE), samelimits = FALSE)
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)

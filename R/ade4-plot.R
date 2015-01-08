@@ -839,12 +839,12 @@
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
   ## creation of each individual ADEg
-  g1 <- do.call("s.arrow", c(list(dfxy = substitute(x$load1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
-  g2 <- do.call("s.arrow", c(list(dfxy = substitute(x$load2), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
+  g1 <- do.call("s.arrow", c(list(dfxy = substitute(x$loadX), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
+  g2 <- do.call("s.arrow", c(list(dfxy = substitute(x$loadY), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
   g3 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$d^2), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[3]])) 
-  g4 <- do.call("s.match", c(list(dfxy1 = substitute(x$scor1), dfxy2 = substitute(x$scor2), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
-  g5 <- do.call("s.label", c(list(dfxy = substitute(x$scor1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]]))
-  g6 <- do.call("s.label", c(list(dfxy = substitute(x$scor2), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
+  g4 <- do.call("s.match", c(list(dfxy1 = substitute(x$scorX), dfxy2 = substitute(x$scorY), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
+  g5 <- do.call("s.label", c(list(dfxy = substitute(x$scorX), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]]))
+  g6 <- do.call("s.label", c(list(dfxy = substitute(x$scorY), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
   
   ## ADEgS creation
   lay <- matrix(c(1, 2, 3, 4, 4, 5, 4, 4, 6), 3, 3)
@@ -1072,7 +1072,7 @@
   g5 <- do.call("s.arrow", c(list(dfxy = substitute(x$faX), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]]))
   
   ## ADEgS creation
-  lay <-  matrix(c(rep(c(0, 0, 2, 2, 3, 3), 2), rep(c(rep(1, 4), 4, 4), 2), rep(c(rep(1, 4), 5, 5), 2)), 6, 6)
+  lay <- matrix(c(rep(c(0, 0, 2, 2, 3, 3), 2), rep(c(rep(1, 4), 4, 4), 2), rep(c(rep(1, 4), 5, 5), 2)), 6, 6)
   object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4, g5), positions = layout2position(lay), add = matrix(0, ncol = 5, nrow = 5), Call = match.call())
   names(object) <- graphsnames
   if(plot)
