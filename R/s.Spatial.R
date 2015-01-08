@@ -9,9 +9,14 @@ s.Spatial <- function(spObj, col = TRUE, nclass = 5, plot = TRUE, storeData = TR
   ## default values for non-used parameters
   defaultpar <- list(plabels = list(cex = 0), pgrid = list(draw = FALSE), ppoints = list(cex = 0), porigin = list(include = FALSE))
   sortparameters$adepar <- modifyList(defaultpar, sortparameters$adepar, keep.null = TRUE)
-  if(is.logical(col))
-    if(!col)
-      colnew <- "transparent"	## col == FALSE
+  if(is.logical(col)){
+      if(col)
+          colnew <- adegtot$pSp$col
+      else
+          colnew <- "transparent"	## col == FALSE
+  } else{
+      colnew <- col
+  }
   
   nvar <- 0
   if(length(grep("DataFrame", class(spObj))) > 0)
@@ -39,13 +44,8 @@ s.Spatial <- function(spObj, col = TRUE, nclass = 5, plot = TRUE, storeData = TR
           } else
             colnew <- adegtot$ppalette$quali(nlevels(as.factor(spObj@data[, 1])))
         }
-      } else {
-        colnew <- col
-      }
-    } else {
-      ## Spatial object (no data)
-      colnew <- adegtot$pSp$col
-    }
+      } 
+    } 
     
     sortparameters$adepar$pSp$col <- colnew
 
