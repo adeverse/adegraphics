@@ -13,6 +13,8 @@
 \alias{plot.acm}
 \alias{plot.betcoi}
 \alias{plot.betrlq}
+\alias{plot.betdpcoa}
+\alias{plot.betwitdpcoa}
 \alias{plot.between}
 \alias{plot.coinertia}
 \alias{plot.discrimin}
@@ -35,6 +37,7 @@
 \alias{plot.sepan}
 \alias{plot.statis}
 \alias{plot.witcoi}
+\alias{plot.witdpcoa}
 \alias{plot.within}
 \alias{plot.witrlq}
 \alias{scatter}
@@ -77,6 +80,8 @@
 
 \method{plot}{acm}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
 \method{plot}{betcoi}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
+\method{plot}{betdpcoa}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
+\method{plot}{betwitdpcoa}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
 \method{plot}{betrlq}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
 \method{plot}{between}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
 \method{plot}{coinertia}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
@@ -103,6 +108,7 @@ TRUE, plot = TRUE, \dots)
 \method{plot}{sepan}(x, pos = -1, storeData = TRUE, plot = TRUE, \dots)
 \method{plot}{statis}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
 \method{plot}{witcoi}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
+\method{plot}{witdpcoa}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
 \method{plot}{within}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
 \method{plot}{witrlq}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
 
