@@ -1289,7 +1289,7 @@ plot.betwitdpcoa <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, pl
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
   ## creation of each individual ADEg
-  g1 <- do.call("s1d.curve", c(list(score = substitute(x$statsRMSEc[, 1]), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
+  g1 <- do.call("s1d.curve", c(list(score = substitute(x$statsRMSEc[, 1]), key = list(corner = c(0,1), text = list(c("RMSEc", "RMSEv"), col = c(sortparameters[[1]]$plines.col, sortparameters[[3]]$plines.col))), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
   g2 <- do.call("s1d.interval", c(list(score1 = substitute(x$statsRMSEc[, 2]), score2 = substitute(x$statsRMSEc[, 3]), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
   g3 <- do.call("s1d.curve", c(list(score = substitute(x$statsRMSEv[, 1]), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]]))
   g4 <- do.call("s1d.interval", c(list(score1 = substitute(x$statsRMSEv[, 2]), score2 = substitute(x$statsRMSEv[, 3]), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
@@ -1358,9 +1358,11 @@ plot.randboot <- function(x, pos = -1, storeData = TRUE, plot = TRUE, ...) {
   params[[2]] <- list(p1d.horizontal = FALSE, paxes.draw = TRUE, method = "bars")
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
-  
+
+  lab <- list(list(labels = rownames(x$stats), rot = 90))
+  names(lab) <- ifelse(sortparameters[[1]]$p1d.horizontal == FALSE, "x", "y")
   ## creation of each individual ADEg
-  g1 <- do.call("s1d.curve", c(list(score = substitute(x$obs), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
+  g1 <- do.call("s1d.curve", c(list(score = substitute(x$obs), scales = lab, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
   g2 <- do.call("s1d.interval", c(list(score1 = substitute(x$stats[, 1]), score2 = substitute(x$stats[, 2]), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
   
   ## ADEgS creation
