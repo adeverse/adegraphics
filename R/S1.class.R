@@ -70,8 +70,11 @@ setMethod(
       }
     }
     
-    if(is.null(object@g.args$ylim))
+    if(adegtot$p1d$horizontal & is.null(object@g.args$ylim))
       object@g.args$ylim <- c(0, 1)
+    
+    if(!adegtot$p1d$horizontal & is.null(object@g.args$xlim))
+      object@g.args$xlim <- c(0, 1)
     
     ## object modification before calling inherited method
     object@adeg.par <- adegtot
