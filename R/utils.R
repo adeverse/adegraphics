@@ -126,6 +126,14 @@ repList <- function(x, times) {
   if((origin[2] - cgrid.y >= minY))
     h0 <- c(h0, seq(origin[2] - cgrid.y, minY, by = -cgrid.y))
   h0 <- sort(h0[h0 >= minY & h0 <= maxY])
+
+  ## clean near-zero values
+  delta <- diff(range(v0))/nbgrid
+  if (any(small <- abs(v0) < 1e-14 * delta)) 
+      v0[small] <- 0
+  delta <- diff(range(h0))/nbgrid
+  if (any(small <- abs(h0) < 1e-14 * delta)) 
+      h0[small] <- 0
   
   res <- list(x0 = c(v0, rep(NA, length.out = length(h0))), x1 = c(v0, rep(NA, length.out = length(h0)))
     , y0 = c(rep(NA, length.out = length(v0)), h0), y1 = c(rep(NA, length.out = length(v0)), h0), d = signif(cgrid.x, 3))

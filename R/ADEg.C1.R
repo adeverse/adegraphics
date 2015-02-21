@@ -65,7 +65,7 @@ setMethod(
 
         origin <- object@adeg.par$porigin
         lim <- .setlimits1D(minX, maxX, origin = origin$origin[1], includeOr = origin$include)
-        
+
         ## compute grid size
         tmp <- pretty(lim, n = object@adeg.par$pgrid$nint)
         if(!origin$include)
@@ -82,6 +82,12 @@ setMethod(
         if((origin$origin[1] - cgrid >= lim[1]))
             v0 <- c(v0, seq(origin$origin[1] - cgrid, lim[1], by = -cgrid))
         v0 <- sort(v0[v0 >= lim[1] & v0 <= lim[2]])
+
+        ## clean near-zero values
+        delta <- diff(range(v0))/object@adeg.par$pgrid$nint
+        if (any(small <- abs(v0) < 1e-14 * delta)) 
+            v0[small] <- 0
+
         object@s.misc$backgrid <- list(x = v0, d = cgrid)
 
         ## object@adeg.par$paxes has priority over object@g.args$scales

@@ -76,8 +76,14 @@ setMethod(
     if((origin$origin[1] - cgrid >= lim[1]))
       v0 <- c(v0, seq(origin$origin[1] - cgrid, lim[1], by = -cgrid))
     v0 <- sort(v0[v0 >= lim[1] & v0 <= lim[2]])
-    object@s.misc$backgrid <- list(x = v0, d = cgrid)
 
+    ## clean near-zero values
+    delta <- diff(range(v0))/object@adeg.par$pgrid$nint
+    if (any(small <- abs(v0) < 1e-14 * delta)) 
+        v0[small] <- 0
+    
+    object@s.misc$backgrid <- list(x = v0, d = cgrid)
+    
     ## object@adeg.par$paxes has priority over object@g.args$scales
     scalesandlab <- modifyList(as.list(object@g.args$scales), object@adeg.par$paxes, keep.null = TRUE)
     
