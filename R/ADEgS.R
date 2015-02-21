@@ -606,26 +606,26 @@ setMethod(
 ##############################################
 
 ADEgS <- function(adeglist, positions, layout, add = NULL, plot = TRUE) {
-  
-  if(missing(positions) & !missing(layout)) {
-    if(is.list(layout)) ## in layout: width and heights informations, layout is a list
-      positions <- do.call("layout2position", layout)
-    else
-      positions <- layout2position(layout, ng = length(adeglist))
-  }
+    
+    if(missing(layout) & is.null(add) & missing(positions))
+        layout <- .n2mfrow(length(adeglist))
 
-  if(missing(layout) & missing(add))
-    layout <- .n2mfrow(length(adeglist))
-  
-  if(missing(positions)) 
-    positions <- matrix(rep(c(0, 0, 1, 1), length.out = length(adeglist) * 4), byrow = TRUE, ncol = 4)
-
-  if(missing(add))
-    add <- matrix(0, length(adeglist), length(adeglist))
-  
-  ADEgObject <- new(Class = "ADEgS", ADEglist = adeglist, positions = positions, add = add, Call = match.call())
-  if(plot)
-    print(ADEgObject)
-  invisible(ADEgObject)
+    if(missing(positions) & !missing(layout)) {
+        if(is.list(layout)) ## in layout: width and heights informations, layout is a list
+            positions <- do.call("layout2position", layout)
+        else
+            positions <- layout2position(layout, ng = length(adeglist))
+    }
+    
+    if(missing(positions)) 
+        positions <- matrix(rep(c(0, 0, 1, 1), length.out = length(adeglist) * 4), byrow = TRUE, ncol = 4)
+    
+    if(missing(add))
+        add <- matrix(0, length(adeglist), length(adeglist))
+    
+    ADEgObject <- new(Class = "ADEgS", ADEglist = adeglist, positions = positions, add = add, Call = match.call())
+    if(plot)
+        print(ADEgObject)
+    invisible(ADEgObject)
 }
 
