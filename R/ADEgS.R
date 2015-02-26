@@ -42,10 +42,10 @@ setMethod(
     superpose <- list()
     ng <- length(ADEglist)
     for(i in 1:ng) {
-      superpose <- c(superpose, list(which(add[,i] == 1)))  ## where i is superposed to 1
+      superpose <- c(superpose, list(which(add[, i] == 1)))  ## where i is superposed to 1
       if(length((superpose[[i]]))) {
         for(j in superpose[[i]]) {
-          add[superpose[[j]],i] <- 1
+          add[superpose[[j]], i] <- 1
           superpose[[i]] <- c(superpose[[i]], superpose[[j]])
         }}}
     .Object@add <- add
@@ -208,7 +208,7 @@ setMethod(
     addi[which, ngraph + 1] <- 1  ## new graph superpose to which
     ADEgS <- new(Class = "ADEgS", ADEglist = c(g1@ADEglist, g2), positions = rbind(g1@positions, g1@positions[which,]), add = addi, Call = match.call())
     if(plot) 
-      printSuperpose(g1 = g2, refg = g1[[which, drop = FALSE]], position = g1@positions[which, ])
+      print(ADEgS)
     invisible(ADEgS)
   })
 
@@ -220,7 +220,7 @@ setMethod(
     objectnew <- superpose(g1, g2, which = which, plot = FALSE)
     objectnew@Call <- match.call()
     if(plot)
-      printSuperpose(g1 = g2, refg = g1[[which]], position = g1@positions[which, ])
+      print(objectnew)
     invisible(objectnew)            
   })
 
@@ -233,8 +233,8 @@ setMethod(
       stop("superposition is only available between two ADEg")
     objectnew <- superpose(g1, g2, which = length(g1), plot = FALSE)
     objectnew@Call <- match.call()
-    if(plot) 
-      printSuperpose(g1 = g2, refg = g1[[length(g1)]], position = g1@positions[length(g1), ])
+    if(plot)
+      print(objectnew)
     invisible(objectnew)
   })
 
@@ -606,26 +606,27 @@ setMethod(
 ##############################################
 
 ADEgS <- function(adeglist, positions, layout, add = NULL, plot = TRUE) {
-    
-    if(missing(layout) & is.null(add) & missing(positions))
-        layout <- .n2mfrow(length(adeglist))
-
-    if(missing(positions) & !missing(layout)) {
-        if(is.list(layout)) ## in layout: width and heights informations, layout is a list
-            positions <- do.call("layout2position", layout)
-        else
-            positions <- layout2position(layout, ng = length(adeglist))
-    }
-    
-    if(missing(positions)) 
-        positions <- matrix(rep(c(0, 0, 1, 1), length.out = length(adeglist) * 4), byrow = TRUE, ncol = 4)
-    
-    if(missing(add))
-        add <- matrix(0, length(adeglist), length(adeglist))
-    
-    ADEgObject <- new(Class = "ADEgS", ADEglist = adeglist, positions = positions, add = add, Call = match.call())
-    if(plot)
-        print(ADEgObject)
-    invisible(ADEgObject)
+  
+  m <- matrix(0, length(adeglist), length(adeglist))
+  
+  if(missing(layout) & (is.null(add) | identical(add, m)) & missing(positions))
+    layout <- .n2mfrow(length(adeglist))
+  
+  if(missing(positions) & !missing(layout)) {
+    if(is.list(layout)) ## in layout: width and heights informations, layout is a list
+      positions <- do.call("layout2position", layout)
+    else
+      positions <- layout2position(layout, ng = length(adeglist))
+  }
+  
+  if(missing(positions)) 
+    positions <- matrix(rep(c(0, 0, 1, 1), length.out = length(adeglist) * 4), byrow = TRUE, ncol = 4)
+  
+  if(is.null(add))
+    add <- m
+  
+  ADEgObject <- new(Class = "ADEgS", ADEglist = adeglist, positions = positions, add = add, Call = match.call())
+  if(plot)
+    print(ADEgObject)
+  invisible(ADEgObject)
 }
-
