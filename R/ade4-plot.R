@@ -209,7 +209,7 @@
   fac <- eval.parent(appel$fac)
   
   ## sort parameters for each graph
-  graphsnames <- c("Rrow", "Qrow", "Rax", "Rloadings", "Qax", "Qloadings", "eig")
+  graphsnames <- c("Rrow", "Qrow", "Rax", "Rloadings", "Qloadings", "Qax", "eig")
   sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
   
   ## default values for parameters
@@ -218,8 +218,8 @@
   params[[2]] <- list(psub = list(text = "Q row scores"), plabels = list(cex = 1.25))
   params[[3]] <- list(psub = list(text = "Unconstrained axes (R)"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
   params[[4]] <- list(psub = list(text = "R loadings"), plabels = list(cex = 1.25))
-  params[[5]] <- list(psub = list(text = "Unconstrained axes (Q)"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
-  params[[6]] <- list(psub = list(text = "Q loadings"), plabels = list(cex = 1.25))
+  params[[5]] <- list(psub = list(text = "Q loadings"), plabels = list(cex = 1.25))
+  params[[6]] <- list(psub = list(text = "Unconstrained axes (Q)"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
   params[[7]] <- list(psub = list(text = "Eigenvalues"))
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
@@ -229,8 +229,8 @@
   g2 <- do.call("s.label", c(list(dfxy = substitute(x$lQ), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
   g3 <- do.call("s.corcircle", c(list(dfxy = substitute(x$aR), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]]))
   g4 <- do.call("s.arrow", c(list(dfxy = substitute(x$l1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
-  g5 <- do.call("s.corcircle", c(list(dfxy = substitute(x$aQ), xax, yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]]))
-  g6 <- do.call("s.arrow", c(list(dfxy = substitute(x$c1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
+  g5 <- do.call("s.arrow", c(list(dfxy = substitute(x$c1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
+  g6 <- do.call("s.corcircle", c(list(dfxy = substitute(x$aQ), xax, yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]]))
   g7 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[7]])) 
   
   ## ADEgS creation
@@ -472,7 +472,7 @@
   fac <- eval.parent(appel$fac)
   
   ## sort parameters for each graph
-  graphsnames <- c("Rrow", "Qrow", "Rax", "Rloadings", "Qax", "Qloadings", "eig")
+  graphsnames <- c("Rrow", "Qrow", "Rax", "Rloadings", "Qloadings", "Qax", "eig")
   sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
   
   ## default values for parameters
@@ -481,8 +481,8 @@
   params[[2]] <- list(psub = list(text = "Q row scores"), plabels = list(cex = 1.25))
   params[[3]] <- list(psub = list(text = "Unconstrained axes (R)"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
   params[[4]] <- list(psub = list(text = "R loadings"), plabels = list(cex = 1.25))
-  params[[5]] <- list(psub = list(text = "Unconstrained axes (Q)"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
-  params[[6]] <- list(psub = list(text = "Q loadings"), plabels = list(cex = 1.25))
+  params[[5]] <- list(psub = list(text = "Q loadings"), plabels = list(cex = 1.25))
+  params[[6]] <- list(psub = list(text = "Unconstrained axes (Q)"), pbackground = list(box = FALSE), plabels = list(cex = 1.25))
   params[[7]] <- list(psub = list(text = "Eigenvalues"))
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
@@ -492,8 +492,8 @@
   g2 <- do.call("s.label", c(list(dfxy = substitute(x$lQ), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
   g3 <- do.call("s.corcircle", c(list(dfxy = substitute(x$aR), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]]))
   g4 <- do.call("s.arrow", c(list(dfxy = substitute(x$l1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
-  g5 <- do.call("s.corcircle", c(list(dfxy = substitute(x$aQ), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]]))
-  g6 <- do.call("s.arrow", c(list(dfxy = substitute(x$c1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
+  g5 <- do.call("s.arrow", c(list(dfxy = substitute(x$c1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
+  g6 <- do.call("s.corcircle", c(list(dfxy = substitute(x$aQ), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]]))
   g7 <- do.call(".add.scatter.eig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters[[7]])) 
   
   ## ADEgS creation
@@ -1019,7 +1019,7 @@ plot.betwitdpcoa <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, pl
   fac <- eval.parent(appel$fac)
   
   ## sort parameters for each graph
-  graphsnames <- c("Rrow", "Qrow", "Rax", "Rloadings", "Qax", "Qloadings", "eig")
+  graphsnames <- c("Rrow", "Qrow", "Rax", "Rloadings","Qloadings", "Qax", "eig")
   sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
   
   ## default values for parameters
@@ -1045,7 +1045,7 @@ plot.betwitdpcoa <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, pl
   
   ## ADEgS creation
   lay <- matrix(c(1, 1, 3, 1, 1, 4, 2, 2, 5, 2, 2, 6, 0, 0, 7), 3, 5)
-  object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4, g5, g6, g7), positions = layout2position(lay), add = matrix(0, ncol = 7, nrow = 7), Call = match.call())
+  object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3, g4, g6, g5, g7), positions = layout2position(lay), add = matrix(0, ncol = 7, nrow = 7), Call = match.call())
   names(object) <- graphsnames
   if(plot)
     print(object)
