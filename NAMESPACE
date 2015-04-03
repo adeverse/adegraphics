@@ -102,7 +102,7 @@ export(
   s1d.match,
   s1d.boxplot,
   kplot,
-  kplot.sepan.coa,
+  kplotsepan.coa,
   biplot,
   plot,
   scatter,

@@ -278,7 +278,7 @@
 } 
 
 
-"kplot.sepan.coa" <- function(object, xax = 1, yax = 2, which.tab = 1:length(object$blo), permute = FALSE, posieig = "bottomleft", pos = -1, storeData = TRUE, plot = TRUE, ...) {
+"kplotsepan.coa" <- function(object, xax = 1, yax = 2, which.tab = 1:length(object$blo), permute = FALSE, posieig = "bottomleft", pos = -1, storeData = TRUE, plot = TRUE, ...) {
   if(!inherits(object, "sepan")) 
     stop("Object of class 'sepan' expected")
   if((xax == yax) || (length(object$Eig) == 1))

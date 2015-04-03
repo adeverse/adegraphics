@@ -7,7 +7,7 @@
 \alias{kplot.mbpcaiv}
 \alias{kplot.pta}
 \alias{kplot.sepan}
-\alias{kplot.sepan.coa}
+\alias{kplotsepan.coa}
 \alias{kplot.statis}
 \alias{plot}
 \alias{plot.acm}
@@ -73,7 +73,7 @@
   pos = -1, storeData = TRUE, plot = TRUE, \dots)
 \method{kplot}{sepan}(object, xax = 1, yax = 2, which.tab = 1:length(object$blo), permute = FALSE, 
   traject = FALSE, posieig = "bottomleft", pos = -1, storeData = TRUE, plot = TRUE, \dots)
-\method{kplot}{sepan.coa}(object, xax = 1, yax = 2, which.tab = 1:length(object$blo), permute = FALSE, 
+kplotsepan.coa(object, xax = 1, yax = 2, which.tab = 1:length(object$blo), permute = FALSE, 
   posieig = "bottomleft", pos = -1, storeData = TRUE, plot = TRUE, \dots)
 \method{kplot}{statis}(object, xax = 1, yax = 2, which.tab = 1:length(object$tab.names), traject = FALSE, 
   arrow = TRUE, class = NULL, pos = -1, storeData = TRUE, plot = TRUE, \dots)
@@ -153,14 +153,14 @@ TRUE, plot = TRUE, \dots)
     \code{3} the projections of the columns,
     \code{4} the projections of the principal components onto the planes of the compromise.}
   
-  \item{permute}{a logical value (used in \code{kplot.sepan}, \code{kplot.sepan.coa} and \code{scatter.dudi}).
+  \item{permute}{a logical value (used in \code{kplot.sepan}, \code{kplotsepan.coa} and \code{scatter.dudi}).
     If \code{FALSE}, the rows are plotted by points or density surface and the columns by arrows. If \code{TRUE}, it is the opposite.}
     
   \item{traject}{a logical value (used in \code{kplot.sepan} and \code{kplot.statis}) 
     indicating whether the trajectories between rows should be drawn in a natural order}
   
   \item{posieig}{a character value or a two-length numeric vector (in normalized parent coordinates \code{npc} from 0 to 1) 
-    or \code{none} value indicating the position of the eigenvalues bar plot (used in \code{kplot.sepan}, \code{kplot.sepan.coa} and \code{scatter.*}).}
+    or \code{none} value indicating the position of the eigenvalues bar plot (used in \code{kplot.sepan}, \code{kplotsepan.coa} and \code{scatter.*}).}
 
   \item{arrow}{a logical value (only used in \code{kplot.statis}) indicating whether the column factorial diagrams should be plotted}
   
