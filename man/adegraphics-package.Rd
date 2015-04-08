@@ -34,10 +34,10 @@
   \tabular{ll}{
     Package: \tab adegraphics\cr
     Type: \tab Package\cr
-    Version: \tab 0.9\cr
-    Date: \tab 2013-07-08\cr
+    Version: \tab 1.0-0\cr
+    Date: \tab 2015-04-08\cr
     License: \tab GPL (>=2)\cr
-    Depends: \tab methods, utils, grDevices, grid, lattice, KernSmooth
+    Depends: \tab ade4, grDevices, grid, KernSmooth, lattice, methods, RColorBrewer, sp
   }
   
   A lot of classes were implemented.
@@ -56,7 +56,7 @@
     \item{\code{ADEg.S2}: bi-dimensional plot}
     \item{\code{ADEg.C1}: one-dimensional data plotted in 2-D}
     \item{\code{ADEg.T}: table plot}
-    \item{\code{ADEg.T}: triangle plot}
+    \item{\code{ADEg.Tr}: triangle plot}
   }
 }
 

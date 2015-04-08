@@ -139,7 +139,7 @@
   if(length(xax) > 1 | length(yax) > 1)
     stop("Not implemented for multiple xax/yax")
   if(!is.numeric(which.graph) || any(which.graph < 1) || any(which.graph > 4)) 
-    stop("`which' must be in 1:4")
+    stop("'which' must be in 1:4")
   
   if(xax > object$nf)
     stop("Non convenient xax")
