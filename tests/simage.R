@@ -1,12 +1,12 @@
-graphics.off()
 library(adegraphics)
 library(sp)
+pdf("simage.pdf")
 
 ## ex1
 xy <- data.frame(expand.grid(-3:3, -3:3))
 names(xy) <- c("x", "y")
 z <- (1 / sqrt(2)) * exp(-(xy$x ^ 2 + xy$y ^ 2) / 2)
-s.image(xy, z, plot = FALSE)
+s.image(xy, z)
 s.image(xy, z, grid = 20)
 s.image(xy, z, grid = 500)
 

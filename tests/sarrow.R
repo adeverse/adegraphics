@@ -1,5 +1,5 @@
-graphics.off()
 library(adegraphics)
+pdf("sarrow.pdf")
 
 ## ex1 : from tdr641
 data(doubs, package = "ade4") 

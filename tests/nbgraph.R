@@ -1,8 +1,9 @@
-graphics.off()
 library(adegraphics)
 library(spdep)
 library(maptools)
 library(lattice)
+pdf("nbgraph.pdf")
+
 columbus <- readShapePoly(system.file("etc/shapes/columbus.shp", package = "spdep")[1])
 coords <- coordinates(columbus)
 col.gal.nb <- read.gal(system.file("etc/weights/columbus.gal", package = "spdep")[1])

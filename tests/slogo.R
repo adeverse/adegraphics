@@ -1,6 +1,5 @@
-graphics.off()
 library(adegraphics)
-
+pdf("slogo.pdf")
 
 ## ex1
 data(ggtortoises, package = "ade4")

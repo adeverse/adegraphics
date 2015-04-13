@@ -1,5 +1,5 @@
-graphics.off()
 library(adegraphics)
+pdf("timage.pdf")
 
 ## ex1
 x <- 1:4
@@ -21,6 +21,6 @@ Y <- data.frame(t(rpjdl$mil))
 coa1 <- ade4::dudi.coa(X, scan = FALSE)
 x <- rank(coa1$co[, 1])
 y <- rank(coa1$li[, 1])
-g4 <- table.image(Y, coordsx = x, coordsy = 1:8, axis.text = list(alpha = 0), pgrid.col = "black", pgrid.lwd = 0.8, col = c("white", "black"), plegend.draw = FALSE)
-g5 <- table.image(X, coordsx = x, coordsy = y, ptable = list(x = list(tck = 0), y = list(tck = 4)), pleg.draw = FALSE, labelsy = paste(" ", row.names(X), sep = ""))
+g4 <- table.image(Y, coordsx = x, coordsy = 1:8, axis.text = list(alpha = 0), pgrid.col = "black", pgrid.lwd = 0.8, col = c("white", "black"), plegend.drawKey = FALSE)
+g5 <- table.image(X, coordsx = x, coordsy = y, ptable = list(x = list(tck = 0), y = list(tck = 4)), pleg.drawKey = FALSE, labelsy = paste(" ", row.names(X), sep = ""))
 g6 <- ADEgS(list(g4, g5), positions = rbind(c(0, 0, 1, 0.3), c(0, 0.4, 1, 1)))

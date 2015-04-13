@@ -1,5 +1,5 @@
-graphics.off()
 library(adegraphics)
+pdf("straject.pdf")
 
 rw <- function(a){
   x <- 0

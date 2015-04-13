@@ -1,6 +1,6 @@
-graphics.off()
 library(adegraphics)
 library(maptools)
+pdf("panelSpatial.pdf")
 
 ## ex1
 nc <- readShapePoly(system.file("shapes/sids.shp", package = "maptools")[1], proj4string = CRS("+proj=longlat +datum=NAD27"))
@@ -33,7 +33,8 @@ scale2 <- list("SpatialPolygonsRescale", layout.scale.bar(), offset =  c(178050,
 text12 <- list("sp.text", c(178050, 333700), "0")
 text22 <- list("sp.text", c(178550, 333700), "500 m")
 g3 <- s.class(dfxy2, fac = fac, sp.layout = list(scale2, text12, text22, arrow2, river), starSize = 1, col = c(1, 2, 4), pellipses.col = c(1, 2, 4), 
-  pellipses.alpha = 0.7, plines.lty = 3, psub.text = "Flooding frequency \n near the Meuse river", psub.pos = c(0.2, 0.88), pgrid.text.cex = 0)
+  pellipses.alpha = 0.7, plines.lty = 3, psub.text = "Flooding frequency \n near the Meuse river", psub.pos = c(0.2, 0.88), pgrid.text.cex = 0,
+  porigin.include = FALSE)
 
 
 ## ex3
@@ -70,9 +71,10 @@ spoints <- SpatialPoints(jv73$xy)
 g14 <- s.label(jv73$xy, Sp = spoints, plab.cex = 0, ppoin.cex = 0, pSp.col = 1)
 
 sgrid <- SpatialGrid(GridTopology(c(0, 0), c(1, 1), c(3, 5)))
-g15 <- xyplot(0:5 ~ 0:3, panel = function(...) sp.grid(sgrid, col = 1:2))
+xyplot(0:5 ~ 0:3, panel = function(...) sp.grid(sgrid, col = 1:2))
 
 nc <- SpatialGridDataFrame(getGridTopology(sgrid), data = data.frame(matrix(1:15, ncol = 1)))
-g16 <- xyplot(0:5 ~ 0:3, panel = function(...) sp.grid(nc, col = 1, at = pretty(rnorm(15), 2), col.region = 2:3))
-g17 <- xyplot(0:5 ~ 0:3, panel = function(...) adeg.panel.Spatial(nc, col = 1:3))
-g18 <- xyplot(0:5 ~ 0:3, panel = function(...) adeg.panel.Spatial(nc, col = 1:2))
+xyplot(0:5 ~ 0:3, panel = function(...) sp.grid(nc, col = 1, at = pretty(rnorm(15), 2), col.region = 2:3))
+xyplot(0:5 ~ 0:3, panel = function(...) adeg.panel.Spatial(nc, col = 1:3))
+xyplot(0:5 ~ 0:3, panel = function(...) adeg.panel.Spatial(nc, col = 1:2))
+

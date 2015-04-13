@@ -1,5 +1,5 @@
-graphics.off()
 library(adegraphics)
+pdf("s1d.gauss.pdf")
 
 data(meau, package= "ade4")
 envpca <- ade4::dudi.pca(meau$env, scannf = FALSE)

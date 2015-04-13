@@ -1,5 +1,5 @@
-graphics.off()
 library(adegraphics)
+pdf("s1d.boxplot.pdf")
 
 ## ex1
 x <- c(rnorm(10), rnorm(10))
@@ -17,7 +17,6 @@ g3 <- s1d.boxplot(c(w1, w2, w3), f1)
 g4 <- s1d.boxplot(c(w1, w2, w3), f2)
 g5 <- s1d.boxplot(c(w1, w2, w3), f2, p1d.rug.draw = FALSE)
 
-adegpar("porigin.draw" = FALSE)
 mat <- matrix(0, ncol = 1, nrow = 8)
 mat[c(2), ] <- 1
 mat[c(3:8), ] <- 2

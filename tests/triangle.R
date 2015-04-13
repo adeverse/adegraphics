@@ -1,5 +1,5 @@
-graphics.off()
 library(adegraphics)
+pdf("triangle.pdf")
 
 ## ex1
 data(euro123, package = "ade4")

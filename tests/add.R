@@ -1,5 +1,5 @@
-graphics.off()
 library(adegraphics)
+pdf("add.pdf")
 
 data(granulo, package = "ade4")
 df <- data.frame(t(apply(granulo$tab, 1, function(x) x / sum(x))))

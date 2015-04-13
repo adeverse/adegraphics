@@ -1,5 +1,5 @@
-graphics.off()
 library(adegraphics)
+pdf("adegraphics.pdf")
 
 xy <- cbind.data.frame(runif(7), runif(7))
 g1 <- s.label(xy)

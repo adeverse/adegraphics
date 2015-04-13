@@ -1,5 +1,5 @@
-graphics.off()
 library(adegraphics)
+pdf("shist.pdf")
 
 dfxy1 <- matrix(rnorm(200), ncol = 2)
 g1 <- s.label(dfxy1)

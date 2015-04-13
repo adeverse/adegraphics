@@ -1,6 +1,7 @@
-graphics.off()
 library(adegraphics)
+pdf("parameter.pdf")
 
+adegparold <- adegpar()
 b1 <- length(adegraphics:::separation(plines = list(col = "blue"), plab.bo.dra = FALSE, plab = list(orien = F))$rest) == 0
 b2 <- length(adegraphics:::separation(plines = list(col = "blue", lwd = c(1:5)), parr.end = NA, plab.boxes.dr = FALSE)$rest) == 0
 b3 <- length(adegraphics:::separation(plot.li = list(col = "blue", lwd = c(1:5)), par.end = NA, pl.boxes.draw = FALSE, pattern = 1)$rest) == 2
@@ -45,6 +46,7 @@ ad14 <- adegpar(plegend.drawKey = FALSE)
 ad15 <- adegpar(list(paxes = list(col = "white"), pgrid.nint = 6, plines = list(lwd = c(1:5))))
 ad16 <- adegpar(paxes = list(x = list(draw = TRUE)))
 
+adegpar(adegparold)
 
 ## merging list
 l3 <- list(plabels = list(boxes = list(col = "white", alpha = 1)), plabels = list(cex = 2), plabels = list(col = "red"))
@@ -68,7 +70,7 @@ update(g2, plabels.cex = 0, ppoints = list(alpha = 0.4, cex = 2, col = "red", fi
 
 
 ## from tdr641
-data(doubs, package = "ade4") 
+data(doubs, package = "ade4")
 dudi1 <- ade4::dudi.pca(doubs$env, scale = T, scannf = F, nf = 3)
 dudi2 <- ade4::dudi.pca(doubs$fish, scale = T, scannf = F, nf = 2)
 coin1 <- ade4::coinertia(dudi1, dudi2, scannf = F, nf = 2)
@@ -81,3 +83,4 @@ nc <- readShapePoly(system.file("shapes/sids.shp", package = "maptools")[1], pro
 xy <- coordinates(nc)
 g4 <- s.label(xy, label = as.character(1:nrow(xy)), porigin.include = FALSE, Sp = nc, pSp.col = colorRampPalette(c("yellow", "blue"))(52), pgrid.draw = TRUE)
 update(g4, pSp = list(col = "yellow", border = "blue", lwd = 2, lty = 5, alpha = 0.01)) ## don't match : to solve
+

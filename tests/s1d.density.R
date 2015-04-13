@@ -1,5 +1,5 @@
-graphics.off()
 library(adegraphics)
+pdf("s1d.density.pdf")
 
 x1 <- rnorm(1000)
 g1 <- s1d.density(x1)

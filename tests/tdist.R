@@ -1,5 +1,5 @@
-graphics.off()
 library(adegraphics)
+pdf("tdist.pdf")
 
 ## ex1
 data(eurodist)

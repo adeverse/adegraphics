@@ -1,5 +1,5 @@
-graphics.off()
 library(adegraphics)
+pdf("s1dclass.pdf")
 data(meau, package = "ade4")
 
 ## ex1

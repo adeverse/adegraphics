@@ -1,5 +1,5 @@
-graphics.off()
 library(adegraphics)
+pdf("scorcircle.pdf")
 data(olympic, package = "ade4")
 
 dudi1 <- ade4::dudi.pca(olympic$tab, scan = FALSE) # a normed PCA
