@@ -546,16 +546,16 @@ setMethod(
       listG <- adegobject@ADEglist
       
       ## create the list of viewport and push it
-      square.vpL <- "npc"
+      unit.vpL <- "npc"
       if(isTRUE(square))
-      	square.vpL <- "snpc"
+        unit.vpL <- "snpc"
       
-      vpL <- do.call("vpList", lapply(1:length(listG), function(i) do.call("viewport", args = list(x = positions[i, 1], y = positions[i, 2], width = positions[i, 3] - positions[i, 1], height = positions[i, 4] - positions[i, 2], just = c(0, 0), name = names(listG)[i], xscale = getxscale(listG[[i]]), yscale = getyscale(listG[[i]]), default.units = square.vpL))))
+      vpL <- do.call("vpList", lapply(1:length(listG), function(i) do.call("viewport", args = list(x = positions[i, 1], y = positions[i, 2], width = positions[i, 3] - positions[i, 1], height = positions[i, 4] - positions[i, 2], just = c(0, 0), name = names(listG)[i], xscale = getxscale(listG[[i]]), yscale = getyscale(listG[[i]]), default.units = unit.vpL))))
       pushViewport(vpL)
       
       upViewport(0)
-      width.root <- convertWidth(unit(1, "snpc"), "inches", valueOnly = TRUE)
-      height.root <- convertHeight(unit(1, "snpc"), "inches", valueOnly = TRUE)
+      width.root <- convertWidth(unit(1, unit.vpL), "inches", valueOnly = TRUE)
+      height.root <- convertHeight(unit(1, unit.vpL), "inches", valueOnly = TRUE)
       
       for(i in 1:length(listG)) {
         object <- listG[[i]]
@@ -568,11 +568,15 @@ setMethod(
             trobject <- object
           
           square.i <- ifelse(is.null(square), !trobject$aspect.fill, square)
-          vp <- viewport(x = 0, y = 0, width = 1, height = 1, just = c(0, 0), name = "current", xscale = getxscale(listG[[i]]), yscale = getyscale(listG[[i]]), default.units = ifelse(square.i, "snpc", "npc"))
+          unit.vpi <- "npc"
+          if(isTRUE(square.i))
+            unit.vpi <- "snpc"
+          
+          vp <- viewport(x = 0, y = 0, width = 1, height = 1, just = c(0, 0), name = "current", xscale = getxscale(listG[[i]]), yscale = getyscale(listG[[i]]), default.units = unit.vpi)
           pushViewport(vp)
 
-          width.current <- convertWidth(unit(1, "snpc"), "inches", valueOnly = TRUE)
-          height.current <- convertHeight(unit(1, "snpc"), "inches", valueOnly = TRUE)
+          width.current <- convertWidth(unit(1, unit.vpi), "inches", valueOnly = TRUE)
+          height.current <- convertHeight(unit(1, unit.vpi), "inches", valueOnly = TRUE)
           ratio.width <- width.current / width.root
           ratio.height <- height.current / height.root
           
