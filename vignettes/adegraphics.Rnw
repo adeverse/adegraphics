@@ -894,7 +894,7 @@ ADEgS(c(g34, g35), layout = c(1, 2))
 
 
 \bibliographystyle{apalike}
-\bibliography{adegraphics.bib}
+\bibliography{adegraphics}
 
 
 \appendix
