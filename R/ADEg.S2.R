@@ -177,7 +177,7 @@ setMethod(
         }
         else  ## no Sp but sp.layout
             if(any(names(object@g.args) == "sp.layout"))
-                sp.panel.layout(lst = object@g.args$sp.layout)
+              sppanel(lst = object@g.args$sp.layout)
         
         ## neighbouring object management
         if(any(names(object@g.args) == "nbobject")) {

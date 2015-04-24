@@ -131,7 +131,7 @@ adeg.panel.Spatial <- function(SpObject, sp.layout = NULL, col = 1, border = 1, 
   }
 
    if(!is.null(sp.layout))
-    sp.panel.layout(lst = sp.layout)
+     sppanel(lst = sp.layout)
   
   if(inherits(SpObject, what = "SpatialPoints")) {
     ## insert ppoints.parameters for pch and cex

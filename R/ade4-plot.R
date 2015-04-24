@@ -10,7 +10,7 @@
   ## default values for parameters 
   sortparameters <- .specificpar(...)
   params <- list()
-  params$adepar <- list(ppolygons = list(col = col), porigin = list(origin = c(0,0)), pgrid = list(draw = FALSE), p1d = list(horizontal = FALSE), paxes = list(draw = TRUE, x = list(draw = FALSE)))
+  params$adepar <- list(ppolygons = list(col = col), porigin = list(origin = c(0, 0)), pgrid = list(draw = FALSE), p1d = list(horizontal = FALSE), paxes = list(draw = TRUE, x = list(draw = FALSE)))
   params$g.args <- list(main = deparse(substitute(x)), xlab = "Axis", ylab = "Inertia", ylim = c(min(0, min(x$eig)), max(x$eig) * 1.1))
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
