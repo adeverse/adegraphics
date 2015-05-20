@@ -107,7 +107,7 @@ s.density <- function(dfxy, xax = 1, yax = 2, bandwidth = NULL, gridsize = c(450
     stop("non convenient selection for dfxy (can not be converted to dataframe)")
 
   ## parameters sorted
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
   
   ## facets
   if(!is.null(facets)) { 

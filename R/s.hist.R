@@ -1,7 +1,7 @@
 s.hist <- function(dfxy, xax = 1, yax = 2, bandwidth, gridsize = 60, kernel = "normal", cbreaks = 2, storeData = FALSE, plot = TRUE, pos = -1, ...) {
   graphsnames <- c("labels", "densX", "densY", "link") 
   ## sorting parameters
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   ## setting positions
   positions <- layout2position(matrix(c(2, 4, 1, 3), 2, 2, byrow = TRUE), c(3, 1) / 2, c(1, 3) / 2, TRUE)
   ## first graphical object

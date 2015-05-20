@@ -209,7 +209,7 @@ repList <- function(x, times) {
 ## the second to lattice parameters
 ## the third to graphics arguments
 ## the last to unused parameters
-.specificpar <- function(...) {
+sortparamADEg <- function(...) {
 
   if(try(is.list(...), silent = TRUE) == TRUE) 
     dots <- as.list(...)
@@ -218,7 +218,7 @@ repList <- function(x, times) {
   
   classtest <- try(list(...), silent = TRUE)
   if(class(classtest) == "try-error")
-    stop("wrong parameters list, error in .specificpar")
+    stop("wrong parameters list, error in sortparamADEg")
   
   trellis <- list()
   adegpar <- list()

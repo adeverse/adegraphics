@@ -8,7 +8,7 @@
   col[nf] <- col.kept
   
   ## default values for parameters 
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
   params <- list()
   params$adepar <- list(ppolygons = list(col = col), porigin = list(origin = c(0, 0)), pgrid = list(draw = FALSE), p1d = list(horizontal = FALSE), paxes = list(draw = TRUE, x = list(draw = FALSE)))
   params$g.args <- list(main = deparse(substitute(x)), xlab = "Axis", ylab = "Inertia", ylim = c(min(0, min(x$eig)), max(x$eig) * 1.1))
@@ -50,7 +50,7 @@
   
   ## sort parameters for each graph
   graphsnames <- c("Xax", "Yax", "eig", "XYmatch", "Yloadings", "Xloadings")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   
   ## default values for parameters
   params <- list()
@@ -96,7 +96,7 @@
   
   ## sort parameters for each graph
   graphsnames <- c("Xloadings", "Xcor", "eig", "XYmatch", "Yax", "Ycol")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   
   ## default values for parameters
   params <- list()
@@ -145,7 +145,7 @@
   
   ## sort parameters for each graph
   graphsnames <- c("Xax", "Yax", "eig", "XYmatch", "Yloadings", "Xloadings")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   sortparameters <- mapply(repList, sortparameters, c(1, 1, 1, 3, 1, 1))
   
   ## compute limits for the ADEgS 'XYmatch' (two s.class and one s.match)
@@ -210,7 +210,7 @@
   
   ## sort parameters for each graph
   graphsnames <- c("Rrow", "Qrow", "Rax", "Rloadings", "Qloadings", "Qax", "eig")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   
   ## default values for parameters
   params <- list()
@@ -261,7 +261,7 @@
   
   ## sort parameters for each graph
   graphsnames <- c("loadings", "col", "eig", "row", "Xax", "class")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   
   ## default values for parameters
   params <- list()
@@ -310,7 +310,7 @@
   
   ## sort parameters for each graph  
   graphsnames <- c("loadings", "col", "eig", "row", "Xax", "class")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   
   ## default values for parameters
   params <- list()
@@ -359,7 +359,7 @@
   
   ## sort parameters for each graph
   graphsnames <- c("loadings", "col", "eig", "row", "Xax", "ccrow")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   
   ## default values for parameters
   params <- list()
@@ -408,7 +408,7 @@
   
   ## sort parameters for each graph
   graphsnames <- c("Xax", "Yax", "eig", "XYmatch", "Yloadings", "Xloadings")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   sortparameters <- mapply(repList, sortparameters, c(1, 1, 1, 3, 1, 1))
   
   ## compute limits for the ADEgS (two s.class and one s.match)
@@ -473,7 +473,7 @@
   
   ## sort parameters for each graph
   graphsnames <- c("Rrow", "Qrow", "Rax", "Rloadings", "Qloadings", "Qax", "eig")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   
   ## default values for parameters
   params <- list()
@@ -526,7 +526,7 @@
   graphsnames <- c("axes", "collections", "categories")
   if(!is.null(x$RaoDiv))
       graphsnames <- c(graphsnames, "div")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   vec <- c(2, 1, 1)
   if(!is.null(x$RaoDiv))
       vec <- c(vec, 1)
@@ -566,7 +566,8 @@
   invisible(object)
 }
 
-plot.betdpcoa <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, ...) {
+
+"plot.betdpcoa" <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, ...) {
     if(!(inherits(x, "betdpcoa") | inherits(x, "betwitdpcoa"))) 
         stop("Object of class 'betdpcoa' expected")
     if((xax == yax) || (x$nf == 1))
@@ -584,7 +585,7 @@ plot.betdpcoa <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot 
     
     ## sort parameters for each graph
     graphsnames <- c("axes", "class", "categories", "Xax")
-    sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+    sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
     sortparameters <- mapply(repList, sortparameters, c(2, 1, 1, 1))
     
     ## default values for parameters
@@ -615,7 +616,8 @@ plot.betdpcoa <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot 
     invisible(object)
 }
 
-plot.witdpcoa <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, ...) {
+
+"plot.witdpcoa" <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, ...) {
     if(!inherits(x, "witdpcoa")) 
         stop("Object of class 'witdpcoa' expected")
     if((xax == yax) || (x$nf == 1))
@@ -633,7 +635,7 @@ plot.witdpcoa <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot 
     
     ## sort parameters for each graph
     graphsnames <- c("axes", "class", "categories", "Xax")  
-    sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+    sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
     sortparameters <- mapply(repList, sortparameters, c(2, 1, 1, 1))
     
     ## default values for parameters
@@ -664,7 +666,8 @@ plot.witdpcoa <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot 
     invisible(object)
 }
 
-plot.betwitdpcoa <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, ...) {
+
+"plot.betwitdpcoa" <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, ...) {
     if(!inherits(x, "betwitdpcoa")) 
         stop("Object of class 'betwitdpcoa' expected")
     if((xax == yax) || (x$nf == 1))
@@ -682,7 +685,7 @@ plot.betwitdpcoa <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, pl
     
     ## sort parameters for each graph
     graphsnames <- c("axes", "class", "categories", "Xax")  
-    sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+    sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
     sortparameters <- mapply(repList, sortparameters, c(2, 1, 1, 1))
     
     ## default values for parameters
@@ -712,6 +715,7 @@ plot.betwitdpcoa <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, pl
         print(object)
     invisible(object)
 }
+
 
 "plot.mcoa" <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, ...) {
   if(!inherits(x, "mcoa")) 
@@ -731,7 +735,7 @@ plot.betwitdpcoa <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, pl
   
   ## sort parameters for each graph
   graphsnames <- c("row", "axes", "col", "pseudoeig")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   sortparameters <- mapply(repList, sortparameters, c(2, 2, 1, 1))
   
   ## default values for parameters
@@ -783,7 +787,7 @@ plot.betwitdpcoa <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, pl
   
   ## sort parameters for each graph
   graphsnames <- c("rowB", "colB", "row", "col")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   
   ## compute limits
   df <- rbind(as.matrix(x$li), as.matrix(x$Tli), as.matrix(x$Tco))
@@ -830,7 +834,7 @@ plot.betwitdpcoa <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, pl
   
   ## sort parameters for each graph
   graphsnames <- c("row", "comp", "eig", "link")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   sortparameters <- mapply(repList, sortparameters, c(1, 2, 1, 1))
   
   ## default values for parameters
@@ -877,7 +881,7 @@ plot.betwitdpcoa <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, pl
   
   ## sort parameters for each graph
   graphsnames <- c("row", "eig", "loadings", "Xax")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   
   ## default values for parameters
   params <- list()
@@ -919,7 +923,7 @@ plot.betwitdpcoa <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, pl
   
   ## sort parameters for each graph
   graphsnames <- c("Xax", "var", "eig", "species", "samples", "niches")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   sortparameters <- mapply(repList, sortparameters, c(1, 1, 1, 2, 1, 1))
   
   ## default values for parameters
@@ -971,7 +975,7 @@ plot.betwitdpcoa <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, pl
   
   ## sort parameters for each graph
   graphsnames <- c("Xloadings", "Yloadings", "eig", "XYmatch", "Xrow", "Yrow")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   
   ## default values for parameters
   params <- list()
@@ -1020,7 +1024,7 @@ plot.betwitdpcoa <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, pl
   
   ## sort parameters for each graph
   graphsnames <- c("Rrow", "Qrow", "Rax", "Rloadings","Qloadings", "Qax", "eig")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   
   ## default values for parameters
   params <- list()
@@ -1071,7 +1075,7 @@ plot.betwitdpcoa <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, pl
   
   ## sort parameters for each graph
   graphsnames <- c("inter", "col", "row", "typo")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   sortparameters <- mapply(repList, sortparameters, c(2, 1, 2, 1))
   
   ## default values for parameters
@@ -1115,7 +1119,7 @@ plot.betwitdpcoa <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, pl
   facets <- substitute(reorder(as.factor(rep(x$tab.names, x$rank)), rep(1:length(x$rank), x$rank)))
   
   ## default values for parameters
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
   params <- list()
   params$adepar <- list(pbackground = list(box = TRUE), pgrid = list(draw = TRUE, text = list(cex = 0)), paxes = list(draw = TRUE, x = list(draw = FALSE)))
   if(isTRUE(sortparameters$adepar$p1d$horizontal))
@@ -1151,7 +1155,7 @@ plot.betwitdpcoa <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, pl
   
   ## sort parameters for each graph
   graphsnames <- c("inter", "typo", "row", "comp")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   sortparameters <- mapply(repList, sortparameters, c(1, 1, 2, 1))
   
   ## default values for parameters
@@ -1198,7 +1202,7 @@ plot.betwitdpcoa <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, pl
   
   ## sort parameters for each graph
   graphsnames <- c("Xrow", "eig", "cov2", "Ycol", "Xloadings")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   
   ## default values for parameters
   params <- list()
@@ -1233,7 +1237,7 @@ plot.betwitdpcoa <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, pl
   
   ## Plot results 
   graphsnames <- c("RMSEcMean", "RMSEcQuantiles", "RMSEvMean", "RMSEvQuantiles")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   
   ## compute common limits
   lim <- range(x$stats)
@@ -1272,7 +1276,7 @@ plot.betwitdpcoa <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, pl
   
   ## Plot results 
   graphsnames <- c("RMSEcMean", "RMSEcQuantiles", "RMSEvMean", "RMSEvQuantiles")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   
   ## compute common limits
   lim <- range(x$statsRMSEc[, -1], x$statsRMSEv[, -1])
@@ -1305,13 +1309,13 @@ plot.betwitdpcoa <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, pl
 }
 
 
-plot.randboot <- function(x, pos = -1, storeData = TRUE, plot = TRUE, ...) {
+"plot.randboot" <- function(x, pos = -1, storeData = TRUE, plot = TRUE, ...) {
   if(!inherits(x, "randboot")) 
     stop("Object of class 'randboot' expected")
   
   ## Plot results 
   graphsnames <- c("obs", "quantiles")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   
   ## compute common limits
   lim <- range(c(x$obs, x$stats))
@@ -1345,7 +1349,7 @@ plot.randboot <- function(x, pos = -1, storeData = TRUE, plot = TRUE, ...) {
   
   ## Plot results 
   graphsnames <- c("obs", "quantiles")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   
   ## compute common limits
   lim <- range(c(x$obs, range(x$stats)))

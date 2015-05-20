@@ -217,7 +217,7 @@ triangle.class <- function(dfxyz, fac, wt = rep(1, NROW(fac)), labels = levels(f
   thecall <- .expand.call(match.call())
   
   ## parameters sorted
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
 
   ## facets
   if(!is.null(facets)) {

@@ -169,7 +169,7 @@ table.image <- function(dftab, coordsx = 1:ncol(as.matrix(dftab)), coordsy = nro
     }
   
     ## parameters sorted
-    sortparameters <- .specificpar(...)
+    sortparameters <- sortparamADEg(...)
     
     ## creation of the ADEg object
     if(length(sortparameters$rest))

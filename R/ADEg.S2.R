@@ -300,7 +300,7 @@ setMethod(
         
         graphsnames <- c("object", "densX", "densY", "link") 
         ## sorting parameters
-        sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+        sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
         update(object, sortparameters[[1]], plot = FALSE)
         ## setting positions
         positions <- layout2position(matrix(c(2, 4, 1, 3), 2, 2, byrow = TRUE), c(3, 1) / 2, c(3, 1) / 2, FALSE)

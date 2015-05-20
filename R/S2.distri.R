@@ -160,7 +160,7 @@ s.distri <- function(dfxy, dfdistri, xax = 1, yax = 2, starSize = 1, ellipseSize
     stop("dfxy, can not be converted as dataframe or is NULL")
   
   ## parameters sorted
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
   
   ## facets
   if(!is.null(facets)) { 

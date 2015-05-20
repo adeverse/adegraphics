@@ -1,7 +1,7 @@
 s.Spatial <- function(spObj, col = TRUE, nclass = 5, plot = TRUE, storeData = TRUE, pos = -1, ...) {
   oldparamadeg <- adegpar()
   on.exit(adegpar(oldparamadeg))
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
   adegtot <- adegpar(sortparameters$adepar)
   
   xy <- coordinates(spObj)[, , drop = FALSE]  ## to access 'coordinates' in the 'imports' environment of 'adegraphics'

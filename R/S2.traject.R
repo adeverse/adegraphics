@@ -142,7 +142,7 @@ s.traject <- function(dfxy, fac = gl(1, nrow(dfxy)), order, labels = levels(fac)
   }
   
   ## parameters sorted
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
   
   ## facets
   if(!is.null(facets)) { 

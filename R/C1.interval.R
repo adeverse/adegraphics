@@ -119,7 +119,7 @@ s1d.interval <- function(score1, score2, at = 1:NROW(score1), method = c("bars",
     stop("Not yet implemented for data.frame with only one column, please convert into vector")
   
   ## parameters sorted
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
   
   ## facets
   if(!is.null(facets)) {

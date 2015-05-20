@@ -125,7 +125,7 @@ s1d.label <- function(score, labels = 1:NROW(score), at = 0.5, poslabel = c("reg
   score <- eval(thecall$score, envir = sys.frame(sys.nframe() + pos))
   
   ## parameters sorted
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
   
   ## facets
   if(!is.null(facets)) {

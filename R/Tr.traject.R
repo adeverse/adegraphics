@@ -138,7 +138,7 @@ triangle.traject <- function(dfxyz, fac = gl(1, nrow(dfxyz)), order, labels = le
   thecall <- .expand.call(match.call())
   
   ## parameters sorted
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
   
   ## facets
   if(!is.null(facets)) {

@@ -200,7 +200,7 @@ s1d.density <- function(score, fac = gl(1, NROW(score)), kernel = c("normal", "b
 	thecall <- .expand.call(match.call())
   
   ## parameters sorted
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
   
   ## facets
   if(!is.null(facets)) {

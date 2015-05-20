@@ -129,7 +129,7 @@ s.value <- function(dfxy, z, breaks = NULL, xax = 1, yax = 2, method = c("size",
         stop("dfxy and z should have the same number of rows", call. = FALSE)
     
     ## parameters sorted
-    sortparameters <- .specificpar(...)
+    sortparameters <- sortparamADEg(...)
     
     ## facets
     if(!is.null(facets)) {

@@ -271,7 +271,7 @@ setMethod(
     
     ## sort parameters
     sep <- separation(..., pattern = lpattern)
-    selection <- .specificpar(sep[[2]])
+    selection <- sortparamADEg(sep[[2]])
     selection$g.args <- c(selection$g.args, sep[[1]])
     
     if(length(selection$rest))

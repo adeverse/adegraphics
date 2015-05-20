@@ -129,7 +129,7 @@ s.image <- function(dfxy, z, xax = 1, yax = 2, span = 0.5, gridsize = c(80L, 80L
     stop("dfxy and z should have the same number of rows")
 
   ## parameters sorted
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
   
   ## facets
   if(!is.null(facets)) {

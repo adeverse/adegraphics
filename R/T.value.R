@@ -157,7 +157,7 @@ table.value <- function(dftab, coordsx = 1:ncol(as.matrix(dftab)), coordsy = nro
     
     
     ## parameters sorted
-    sortparameters <- .specificpar(...)
+    sortparameters <- sortparamADEg(...)
     ## creation of the ADEg object
     g.args <- c(sortparameters$g.args, list(breaks = breaks, method = thecall$method, symbol = thecall$symbol, center = thecall$center, col = col, nclass = nclass, centerpar = centerpar))
     if(storeData)

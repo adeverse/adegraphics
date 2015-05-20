@@ -70,6 +70,8 @@ export(
   as.raster.pixmapRGB, 	 
   as.raster.pixmapGrey,
   changelatticetheme,
+  sortparamADEg,
+  sortparamADEgS,
   ADEgS,
   s.label,
   s.corcircle,

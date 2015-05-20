@@ -96,7 +96,7 @@ s.match <- function(dfxy1, dfxy2, xax = 1, yax = 2, labels = row.names(as.data.f
     stop("non equal row numbers")
   
   ## parameters sorted
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
 
   ## facets
   if(!is.null(facets)) { 

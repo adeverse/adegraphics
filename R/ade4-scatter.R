@@ -16,7 +16,7 @@
   
   ## sort parameters for each graph
   graphsnames <- c("row", "col", "eig")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   
   ## parameters management
   params <- list()
@@ -104,7 +104,7 @@
   
   ## sort parameters for each graph
   graphsnames <- c("row", "col", "eig")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   
   ## parameters management
   params <- list()
@@ -160,7 +160,7 @@
   oritab <- as.list(x$call)[[2]]
   
   ## parameter management
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
   params <- list()
   params$g.args <- list(starSize = 0)
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
@@ -197,7 +197,7 @@
   
   ## parameter management
   graphsnames <- as.character(levels(indica))
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   params <- list()
   params <- lapply(1:length(graphsnames), function(i) {params[[i]] <- list(starSize = 0.5, ellipseSize = 0, plabels = list(cex = 1.25), psub = list(text = graphsnames[i]))})
   names(params) <- graphsnames
@@ -236,7 +236,7 @@
   
   ## sort parameters for each graph
   graphsnames <- c("row", "eig")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   
   ## parameters management
   params <- list()
@@ -278,7 +278,7 @@
   
   ## sort parameters for each graph
   graphsnames <- c("row", "col", "eig")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   
   ## parameters management
   params <- list()
@@ -330,7 +330,7 @@
   type <- match.arg(type)
   
   ## parameter management
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
   params <- list()
   
   if(type == "boxplot") {
@@ -550,7 +550,7 @@
   ADEglist <- list()
   for (i in which.var) {
     ## parameters management
-    sortparameters <- .specificpar(...)
+    sortparameters <- sortparamADEg(...)
     params <- list()
     
     ## data management
@@ -649,7 +649,7 @@
     which.var <- 1:ncol(evTab)
   
   ## parameter management
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
   params <- list()
   params$adepar <- list(paxes = list(aspectratio = "fill", draw = TRUE), porigin = list(include = FALSE), pgrid = list(draw = FALSE), plabels = list(cex = 0))
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)

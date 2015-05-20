@@ -67,7 +67,7 @@ s.logo <- function(dfxy, logos, xax = 1, yax = 2, facets = NULL, plot = TRUE, st
     stop("The argument 'logos' should be a list")
   
   ## parameters sorted
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
   
   ## facets
   if(!is.null(facets)) { 

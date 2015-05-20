@@ -75,7 +75,7 @@ s.label <- function(dfxy, labels = rownames(dfxy), xax = 1, yax = 2, facets = NU
     stop("non convenient selection for dfxy (can not be converted to dataframe)")
   
   ## parameters sorted
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
  
   ## facets
   if(!is.null(facets)) { 

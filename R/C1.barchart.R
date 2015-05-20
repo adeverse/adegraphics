@@ -133,7 +133,7 @@ s1d.barchart <- function(score, labels = NULL, facets = NULL, plot = TRUE, store
   score <- eval(thecall$score, envir = sys.frame(sys.nframe() + pos))
   
   ## parameters sorted
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
   
   ## facets
   if(!is.null(facets)) {

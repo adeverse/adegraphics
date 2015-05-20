@@ -200,7 +200,7 @@ s1d.gauss <- function(score, fac = gl(1, NROW(score)), wt = rep(1, NROW(score)),
   thecall <- .expand.call(match.call())
   
   ## parameters management
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
   
   ## facets
   if(!is.null(facets)) {

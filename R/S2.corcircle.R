@@ -86,7 +86,7 @@ s.corcircle <- function(dfxy, xax = 1, yax = 2, labels = row.names(as.data.frame
     stop("non convenient selection for dfxy (can not be converted to dataframe)")
   
   ## parameters sorted
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
   
   ## facets
   if(!is.null(facets)) { 

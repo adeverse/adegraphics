@@ -157,7 +157,7 @@ s1d.distri <- function(score, dfdistri, labels = colnames(dfdistri), at = 1:NCOL
     stop("dfdis and score must have the same number of rows")
   
   ## parameters sorted
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
   
   ## facets
   if(!is.null(facets)){

@@ -1,7 +1,7 @@
 ## projection dans triangle
 ## de la base e1=c(1,0,0), e2=c(0,1,0), e3=c(0,0,1)
 ## a c(1/sqrt(3), 1/sqrt(3), 1/sqrt(3)), c(-1/sqrt(2),1/sqrt(2),0), c(-1/sqrt(6),-1/sqrt(6),2/sqrt(6))
-.coordtotriangleUnity <-function(mdata3) {
+.coordtotriangleUnity <- function(mdata3) {
   x <- mdata3[, 1]
   y <- mdata3[, 2]
   z <- mdata3[, 3]

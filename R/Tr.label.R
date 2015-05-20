@@ -156,7 +156,7 @@ triangle.label <- function(dfxyz, labels = rownames(dfxyz), adjust = TRUE, min3d
   thecall <- .expand.call(match.call())
   
   ## parameters sorted
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
   
   ## facets
   if(!is.null(facets)) {

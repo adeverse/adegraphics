@@ -232,7 +232,7 @@ s.class <- function(dfxy, fac, xax = 1, yax = 2, wt = rep(1, NROW(fac)), labels 
   }
   
   ## parameters sorted
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
   
   ## facets
   if(!is.null(facets)) { 

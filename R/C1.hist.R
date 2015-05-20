@@ -91,7 +91,7 @@ s1d.hist <- function(score, breaks = NULL, nclass = round(log2(length(score)) + 
   score <- eval(thecall$score, envir = sys.frame(sys.nframe() + pos))
   
   ## parameters sorted
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
   
   ## facets
   if(!is.null(facets)) {

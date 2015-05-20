@@ -85,7 +85,7 @@ s1d.curve <- function(score, at = 1:NROW(score), facets = NULL, plot = TRUE, sto
   ## evaluation of some parameters
   thecall <- .expand.call(match.call())
   ## parameters sorted
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
   
   ## facets
   if(!is.null(facets)) {

@@ -197,7 +197,7 @@ s1d.class <- function(score, fac, wt = rep(1, NROW(fac)), labels = levels(fac), 
     stop("score and factor must have the same number of rows")
   
   ## parameters sorted
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
   
   ## facets
   if(!is.null(facets)) {

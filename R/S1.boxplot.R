@@ -197,7 +197,7 @@ s1d.boxplot <- function(score, fac = gl(1, NROW(score)), at = 1:nlevels(fac), co
     stop("fac and score must have the same number of rows")
   
   ## parameters sorted
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
   
   ## facets
   if(!is.null(facets)) {

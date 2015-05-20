@@ -150,7 +150,7 @@ s1d.match <- function(score1, score2, labels = 1:NROW(score1), at = 0.5, facets 
     stop("Not yet implemented for data.frame with only one column, please convert into vector")
   
   ## parameters sorted
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
   
   ## facets
   if(!is.null(facets)) {

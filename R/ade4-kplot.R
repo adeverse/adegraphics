@@ -14,7 +14,7 @@
   option <- match.arg(option)
   
   ## parameters management
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
   
   if(option == "points") {
     params1 <- list()
@@ -79,7 +79,7 @@
   
   ## sort parameters for each graph
   graphsnames <- c("row", "col", "traj")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   
   ## parameters management
   params <- list()
@@ -148,7 +148,7 @@
   
   ## sort parameters for each graph
   graphsnames <- c("axis", "row", "col", "components")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   
   ## parameters management
   params <- list()
@@ -235,7 +235,7 @@
   
   ## sort parameters for each graph
   graphsnames <- c("row", "col", "traj", "eig")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   
   ## parameters management
   params <- list()
@@ -310,7 +310,7 @@
   
   ## sort parameters for each graph
   graphsnames <- c("row", "col", "eig")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   
   ## parameters management
   params <- list()
@@ -356,7 +356,7 @@
   
   ## sort parameters for each graph
   graphsnames <- c("col", "traj", "class")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   
   ## parameters management
   params <- list()
@@ -419,7 +419,7 @@
   
   ## sort parameters for each graph
   graphsnames <- c("row", "col")
-  sortparameters <- .paramsADEgS(..., graphsnames = graphsnames)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   
   ## limits calcul
   df <- rbind(as.matrix(object$li), as.matrix(object$Tli), as.matrix(object$Tco))
@@ -460,7 +460,7 @@
   if(yax > object$nf)
     stop("Non convenient yax")
   
-  sortparameters <- .specificpar(...)
+  sortparameters <- sortparamADEg(...)
   
   obj <- do.call("s.label", c(list(dfxy = substitute(object$Tli), xax = xax, yax = yax, facets = substitute(object$TL[, 1]), plot = plot, storeData = storeData, pos = pos - 2), adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = sortparameters$g.args))[which.tab]
   
