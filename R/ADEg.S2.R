@@ -77,7 +77,7 @@ setMethod(
             }
         }
         
-        limits <- .setlimits(minX = minX, maxX = maxX, minY = minY, maxY = maxY, origin = rep(object@adeg.par$porigin$origin, le = 2),
+        limits <- setlimits2D(minX = minX, maxX = maxX, minY = minY, maxY = maxY, origin = rep(object@adeg.par$porigin$origin, le = 2),
                              aspect.ratio = object@adeg.par$paxes$aspectratio, includeOr = object@adeg.par$porigin$include)
         
         if(is.null(object@g.args$xlim) || !identical(object@s.misc$xfullcircle.update, object@g.args$fullcircle))

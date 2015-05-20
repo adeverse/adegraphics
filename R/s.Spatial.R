@@ -24,7 +24,7 @@ s.Spatial <- function(spObj, col = TRUE, nclass = 5, plot = TRUE, storeData = TR
   
   ## limits management 
   limsSp <- bbox(spObj)
-  lim.global <- .setlimits(minX = limsSp[1, 1], maxX = limsSp[1, 2], minY = limsSp[2, 1], maxY = limsSp[2, 2], includeOr = FALSE) 
+  lim.global <- setlimits2D(minX = limsSp[1, 1], maxX = limsSp[1, 2], minY = limsSp[2, 1], maxY = limsSp[2, 2], includeOr = FALSE) 
 	if(is.null(sortparameters$g.args$xlim))
   	sortparameters$g.args$xlim <- lim.global$xlim
   if(is.null(sortparameters$g.args$ylim))

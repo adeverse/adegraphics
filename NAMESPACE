@@ -72,6 +72,8 @@ export(
   changelatticetheme,
   sortparamADEg,
   sortparamADEgS,
+  setlimits2D,
+  setlimits1D,
   ADEgS,
   s.label,
   s.corcircle,

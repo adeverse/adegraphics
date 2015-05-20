@@ -424,7 +424,7 @@
   ## limits calcul
   df <- rbind(as.matrix(object$li), as.matrix(object$Tli), as.matrix(object$Tco))
   adegtot <- adegpar()
-  lim.global <- .setlimits(minX = min(df[,xax]), maxX = max(df[,xax]), minY = min(df[ ,yax]), maxY = max(df[ ,yax]), origin = adegtot$porigin$origin, aspect.ratio = adegtot$paxes$aspectratio, includeOr = adegtot$porigin$include)
+  lim.global <- setlimits2D(minX = min(df[, xax]), maxX = max(df[, xax]), minY = min(df[, yax]), maxY = max(df[, yax]), origin = adegtot$porigin$origin, aspect.ratio = adegtot$paxes$aspectratio, includeOr = adegtot$porigin$include)
   
   ## parameters management
   params <- list()

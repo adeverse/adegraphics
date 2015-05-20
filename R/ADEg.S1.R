@@ -58,7 +58,7 @@ setMethod(
     }
 
     origin <- object@adeg.par$porigin
-    lim <- .setlimits1D(minX, maxX, origin = origin$origin[1], includeOr = origin$include)
+    lim <- setlimits1D(minX, maxX, origin = origin$origin[1], includeOr = origin$include)
 
     ## compute grid size
     tmp <- pretty(lim, n = object@adeg.par$pgrid$nint)
@@ -103,7 +103,7 @@ setMethod(
         object@g.args$xlim <- lim
       
       if(is.null(object@g.args$ylim))
-        object@g.args$ylim <- .setlimits1D(min(at), max(at), 0, FALSE)
+        object@g.args$ylim <- setlimits1D(min(at), max(at), 0, FALSE)
       if(inherits(object, "S1.boxplot")) ## extend ylim for boxes
         object@g.args$ylim <- object@g.args$ylim + c(-1, 1) * abs(diff(range(at))) / (nlevels(fac) + 1)
       
@@ -123,7 +123,7 @@ setMethod(
         object@g.args$ylim <- lim
       
       if(is.null(object@g.args$xlim))
-        object@g.args$xlim <- .setlimits1D(min(at), max(at), 0, FALSE)
+        object@g.args$xlim <- setlimits1D(min(at), max(at), 0, FALSE)
       if(inherits(object, "S1.boxplot")) ## extend xlim for boxes
         object@g.args$xlim <- object@g.args$xlim + c(-1, 1) * abs(diff(range(at))) / (nlevels(fac) + 1)
       
@@ -335,7 +335,7 @@ setMethod(
       object@g.args$ylim <- c(minX, maxX)
     }
     
-    lim <- .setlimits1D(minX, maxX, origin = origin$origin[1], includeOr = origin$include)
+    lim <- setlimits1D(minX, maxX, origin = origin$origin[1], includeOr = origin$include)
     ## compute grid size
     tmp <- pretty(lim, n = object@adeg.par$pgrid$nint)
     if(!origin$include)

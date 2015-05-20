@@ -152,7 +152,7 @@
   mat <- rbind(x$msX, x$msY, x$mX)
   minmat <- apply(mat, 2, min)
   maxmat <- apply(mat, 2, max)
-  limdefault <- .setlimits(minmat[1], maxmat[1], minmat[2], maxmat[2], origin = c(0, 0), includeOr = TRUE)     
+  limdefault <- setlimits2D(minmat[1], maxmat[1], minmat[2], maxmat[2], origin = c(0, 0), includeOr = TRUE)     
   
   ## default values for parameters
   params <- list()
@@ -415,7 +415,7 @@
   mat <- rbind(x$msX, x$msY, x$mX)
   minmat <- apply(mat, 2, min)
   maxmat <- apply(mat, 2, max)
-  limdefault <- .setlimits(minmat[1], maxmat[1], minmat[2], maxmat[2], origin = c(0, 0), includeOr = TRUE)     
+  limdefault <- setlimits2D(minmat[1], maxmat[1], minmat[2], maxmat[2], origin = c(0, 0), includeOr = TRUE)     
   
   ## default values for parameters
   params <- list()
@@ -792,7 +792,7 @@
   ## compute limits
   df <- rbind(as.matrix(x$li), as.matrix(x$Tli), as.matrix(x$Tco))
   adegtot <- adegpar()
-  lim.global <- .setlimits(minX = min(df[, xax]), maxX = max(df[, xax]), minY = min(df[, yax]), maxY = max(df[, yax]), origin = adegtot$porigin$origin, aspect.ratio = adegtot$paxes$aspectratio, includeOr = adegtot$porigin$include)
+  lim.global <- setlimits2D(minX = min(df[, xax]), maxX = max(df[, xax]), minY = min(df[, yax]), maxY = max(df[, yax]), origin = adegtot$porigin$origin, aspect.ratio = adegtot$paxes$aspectratio, includeOr = adegtot$porigin$include)
   
   ## pdefault values for parameters
   params <- list()
@@ -1242,7 +1242,7 @@
   ## compute common limits
   lim <- range(x$stats)
   origin <- if(is.null(sortparameters[[1]]$porigin)) list(origin = 0, include = FALSE) else sortparameters[[1]]$porigin
-  lim <- .setlimits1D(lim[1], lim[2], origin = origin$origin[1], includeOr = origin$include)
+  lim <- setlimits1D(lim[1], lim[2], origin = origin$origin[1], includeOr = origin$include)
   
   ## default values for parameters
   params <- list()
@@ -1281,7 +1281,7 @@
   ## compute common limits
   lim <- range(x$statsRMSEc[, -1], x$statsRMSEv[, -1])
   origin <- if(is.null(sortparameters[[1]]$porigin)) list(origin = 0, include = FALSE) else sortparameters[[1]]$porigin
-  lim <- .setlimits1D(lim[1], lim[2], origin = origin$origin[1], includeOr = origin$include)
+  lim <- setlimits1D(lim[1], lim[2], origin = origin$origin[1], includeOr = origin$include)
   
   ## default values for parameters
   params <- list()
@@ -1320,7 +1320,7 @@
   ## compute common limits
   lim <- range(c(x$obs, x$stats))
   origin <- if(is.null(sortparameters[[1]]$porigin)) list(origin = 0, include = FALSE) else sortparameters[[1]]$porigin
-  lim <- .setlimits1D(lim[1], lim[2], origin = origin$origin[1], includeOr = origin$include)
+  lim <- setlimits1D(lim[1], lim[2], origin = origin$origin[1], includeOr = origin$include)
   
   ## default values for parameters
   params <- list()
@@ -1354,7 +1354,7 @@
   ## compute common limits
   lim <- range(c(x$obs, range(x$stats)))
   origin <- if(is.null(sortparameters[[1]]$porigin)) list(origin = 0, include = FALSE) else sortparameters[[1]]$porigin
-  lim <- .setlimits1D(lim[1], lim[2], origin = origin$origin[1], includeOr = origin$include)
+  lim <- setlimits1D(lim[1], lim[2], origin = origin$origin[1], includeOr = origin$include)
   
   ## default values for parameters
   params <- list()

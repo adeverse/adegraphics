@@ -64,7 +64,7 @@ setMethod(
         }
 
         origin <- object@adeg.par$porigin
-        lim <- .setlimits1D(minX, maxX, origin = origin$origin[1], includeOr = origin$include)
+        lim <- setlimits1D(minX, maxX, origin = origin$origin[1], includeOr = origin$include)
 
         ## compute grid size
         tmp <- pretty(lim, n = object@adeg.par$pgrid$nint)

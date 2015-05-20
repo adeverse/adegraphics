@@ -100,7 +100,7 @@
   else if(method == 3)
     x.global <- rbind(as.matrix(x$l1), as.matrix(x$co))
   adegtot <- adegpar()
-  lim.global <- .setlimits(minX = min(x.global[, xax]), maxX = max(x.global[, xax]), minY = min(x.global[, yax]), maxY = max(x.global[, yax]), origin = adegtot$porigin$origin, aspect.ratio = adegtot$paxes$aspectratio, includeOr = adegtot$porigin$include)
+  lim.global <- setlimits2D(minX = min(x.global[, xax]), maxX = max(x.global[, xax]), minY = min(x.global[, yax]), maxY = max(x.global[, yax]), origin = adegtot$porigin$origin, aspect.ratio = adegtot$paxes$aspectratio, includeOr = adegtot$porigin$include)
   
   ## sort parameters for each graph
   graphsnames <- c("row", "col", "eig")

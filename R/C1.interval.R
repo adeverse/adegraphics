@@ -45,9 +45,9 @@ setMethod(
     callNextMethod() ## prepare graph
     
     if(object@adeg.par$p1d$horizontal && is.null(object@g.args$ylim))
-      object@g.args$ylim <- .setlimits1D(min(at), max(at), 0, FALSE)
+      object@g.args$ylim <- setlimits1D(min(at), max(at), 0, FALSE)
     if(!object@adeg.par$p1d$horizontal && is.null(object@g.args$xlim))
-      object@g.args$xlim <- .setlimits1D(min(at), max(at), 0, FALSE)
+      object@g.args$xlim <- setlimits1D(min(at), max(at), 0, FALSE)
     
     assign(name_obj, object, envir = parent.frame())
   })

@@ -69,11 +69,11 @@ multi.facets.S2 <- function(thecall, adepar, samelimits = TRUE) {
     xax <- thenewcall$xax
     yax <- thenewcall$yax
     if(is.null(thenewcall$Sp))
-      lim.global <- .setlimits(minX = min(dfxy[, xax]), maxX = max(dfxy[, xax]), minY = min(dfxy[, yax]), maxY = max(dfxy[, yax]),
+      lim.global <- setlimits2D(minX = min(dfxy[, xax]), maxX = max(dfxy[, xax]), minY = min(dfxy[, yax]), maxY = max(dfxy[, yax]),
         origin = adegtot$porigin$origin, aspect.ratio = adegtot$paxes$aspectratio, includeOr = adegtot$porigin$include)
     else { ## Sp: ex map, alors par defaut on prend la bbox
       limsSp <- bbox(eval(thenewcall$Sp))
-      lim.global <- .setlimits(minX = limsSp[1, 1], maxX = limsSp[1, 2], minY = limsSp[2, 1], maxY = limsSp[2, 2], origin = rep(adegtot$porigin$origin, le = 2), aspect.ratio = adegtot$paxes$aspectratio, includeOr = adegtot$porigin$include) 
+      lim.global <- setlimits2D(minX = limsSp[1, 1], maxX = limsSp[1, 2], minY = limsSp[2, 1], maxY = limsSp[2, 2], origin = rep(adegtot$porigin$origin, le = 2), aspect.ratio = adegtot$paxes$aspectratio, includeOr = adegtot$porigin$include) 
     }
     if(is.null(thecall$xlim))
       thenewcall$xlim <- lim.global$xlim
@@ -263,7 +263,7 @@ multi.facets.C1 <- function(thecall, adepar, samelimits = TRUE) {
   
   ## same limits for all graphics
   if(isTRUE(samelimits) | is.null(samelimits)) {
-    lim.axe1 <- .setlimits1D(min(score), max(score), origin = adegtot$porigin$origin[1], includeOr = adegtot$porigin$include)
+    lim.axe1 <- setlimits1D(min(score), max(score), origin = adegtot$porigin$origin[1], includeOr = adegtot$porigin$include)
     if(adegtot$p1d$horizontal & is.null(thecall$xlim)) {
       thenewcall$xlim <- lim.axe1
     }
@@ -420,7 +420,7 @@ multi.facets.S1 <- function(thecall, adepar, samelimits = TRUE) {
   
   ## same limits for all graphics
   if(isTRUE(samelimits) | is.null(samelimits)) {
-    lim.global <- .setlimits1D(min(score), max(score), origin = adegtot$porigin$origin[1], includeOr = adegtot$porigin$include)
+    lim.global <- setlimits1D(min(score), max(score), origin = adegtot$porigin$origin[1], includeOr = adegtot$porigin$include)
     if(adegtot$p1d$horizontal & is.null(thecall$xlim))
       thenewcall$xlim <- lim.global
     if(!adegtot$p1d$horizontal & is.null(thecall$ylim))
