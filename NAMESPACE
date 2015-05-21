@@ -74,6 +74,7 @@ export(
   sortparamADEgS,
   setlimits2D,
   setlimits1D,
+  plotEig,
   ADEgS,
   s.label,
   s.corcircle,

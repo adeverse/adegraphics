@@ -1,4 +1,4 @@
-.add.scatter.eig <- function(eigvalue, nf, xax = 1, yax = 2, col.plot = "black", col.kept = "grey", col = "white", facets = NULL, storeData = FALSE, plot = TRUE, pos = -1, ...) {
+plotEig <- function(eigvalue, nf, xax = 1, yax = 2, col.plot = "black", col.kept = "grey", col = "white", facets = NULL, plot = TRUE, storeData = FALSE, pos = -1, ...) {
   ## prepare
   col <- rep(col, length(eigvalue))
   col[nf] <- col.kept
