@@ -145,8 +145,7 @@
   
   ## sort parameters for each graph
   graphsnames <- c("Xax", "Yax", "eig", "XYmatch", "Yloadings", "Xloadings")
-  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
-  sortparameters <- mapply(repList, sortparameters, c(1, 1, 1, 3, 1, 1))
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames, nbsubgraphs = c(1, 1, 1, 3, 1, 1))
   
   ## compute limits for the ADEgS 'XYmatch' (two s.class and one s.match)
   mat <- rbind(x$msX, x$msY, x$mX)
@@ -408,8 +407,7 @@
   
   ## sort parameters for each graph
   graphsnames <- c("Xax", "Yax", "eig", "XYmatch", "Yloadings", "Xloadings")
-  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
-  sortparameters <- mapply(repList, sortparameters, c(1, 1, 1, 3, 1, 1))
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames, nbsubgraphs = c(1, 1, 1, 3, 1, 1))
   
   ## compute limits for the ADEgS (two s.class and one s.match)
   mat <- rbind(x$msX, x$msY, x$mX)
@@ -525,12 +523,11 @@
   ## sort parameters for each graph
   graphsnames <- c("axes", "collections", "categories")
   if(!is.null(x$RaoDiv))
-      graphsnames <- c(graphsnames, "div")
-  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
+    graphsnames <- c(graphsnames, "div")
   vec <- c(2, 1, 1)
   if(!is.null(x$RaoDiv))
-      vec <- c(vec, 1)
-  sortparameters <- mapply(repList, sortparameters, vec)
+    vec <- c(vec, 1)
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames, nbsubgraphs = vec)
   
   ## default values for parameters
   params <- list()
@@ -585,8 +582,7 @@
     
     ## sort parameters for each graph
     graphsnames <- c("axes", "class", "categories", "Xax")
-    sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
-    sortparameters <- mapply(repList, sortparameters, c(2, 1, 1, 1))
+    sortparameters <- sortparamADEgS(..., graphsnames = graphsnames, nbsubgraphs = c(2, 1, 1, 1))
     
     ## default values for parameters
     params <- list()
@@ -635,8 +631,7 @@
     
     ## sort parameters for each graph
     graphsnames <- c("axes", "class", "categories", "Xax")  
-    sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
-    sortparameters <- mapply(repList, sortparameters, c(2, 1, 1, 1))
+    sortparameters <- sortparamADEgS(..., graphsnames = graphsnames, nbsubgraphs = c(2, 1, 1, 1))
     
     ## default values for parameters
     params <- list()
@@ -685,8 +680,7 @@
     
     ## sort parameters for each graph
     graphsnames <- c("axes", "class", "categories", "Xax")  
-    sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
-    sortparameters <- mapply(repList, sortparameters, c(2, 1, 1, 1))
+    sortparameters <- sortparamADEgS(..., graphsnames = graphsnames, nbsubgraphs = c(2, 1, 1, 1))
     
     ## default values for parameters
     params <- list()
@@ -735,8 +729,7 @@
   
   ## sort parameters for each graph
   graphsnames <- c("row", "axes", "col", "pseudoeig")
-  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
-  sortparameters <- mapply(repList, sortparameters, c(2, 2, 1, 1))
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames, nbsubgraphs = c(2, 2, 1, 1))
   
   ## default values for parameters
   params <- list()
@@ -834,8 +827,7 @@
   
   ## sort parameters for each graph
   graphsnames <- c("row", "comp", "eig", "link")
-  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
-  sortparameters <- mapply(repList, sortparameters, c(1, 2, 1, 1))
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames, nbsubgraphs = c(1, 2, 1, 1))
   
   ## default values for parameters
   params <- list()
@@ -923,8 +915,7 @@
   
   ## sort parameters for each graph
   graphsnames <- c("Xax", "var", "eig", "species", "samples", "niches")
-  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
-  sortparameters <- mapply(repList, sortparameters, c(1, 1, 1, 2, 1, 1))
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames, nbsubgraphs = c(1, 1, 1, 2, 1, 1))
   
   ## default values for parameters
   params <- list()
@@ -1075,8 +1066,7 @@
   
   ## sort parameters for each graph
   graphsnames <- c("inter", "col", "row", "typo")
-  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
-  sortparameters <- mapply(repList, sortparameters, c(2, 1, 2, 1))
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames, nbsubgraphs = c(2, 1, 2, 1))
   
   ## default values for parameters
   params <- list()
@@ -1155,8 +1145,7 @@
   
   ## sort parameters for each graph
   graphsnames <- c("inter", "typo", "row", "comp")
-  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
-  sortparameters <- mapply(repList, sortparameters, c(1, 1, 2, 1))
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames, nbsubgraphs = c(1, 1, 2, 1))
   
   ## default values for parameters
   params <- list()

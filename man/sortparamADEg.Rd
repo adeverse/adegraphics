@@ -13,13 +13,15 @@ Sort a sequence of graphical parameters in several lists.
 
 \usage{
 sortparamADEg(...)
-sortparamADEgS(..., graphsnames)
+sortparamADEgS(..., graphsnames, nbsubgraphs = rep(1, length(graphsnames)))
 }
 
 \arguments{
   \item{...}{a sequence of graphical parameters}
   
   \item{graphsnames}{a sequence containing the name of each simple graph of the ADEgS}
+  
+  \item{nbsubgraphs}{a sequence containing the number of sub-graphs in each graph named in \code{graphsnames}}
       
 }
 
@@ -44,6 +46,12 @@ l2 <- sortparamADEgS(xlab = "x-axis label", eig.main = "Eigenvalues", row.ppoint
   porigin.include = FALSE, graphsnames = c("row", "col", "eig"))
 names(l2)
 names(l2$row)
+
+l3 <- sortparamADEgS(xlab = "x-axis label", eig.main = "Eigenvalues", row.ppoints.col = "pink",
+  porigin.include = FALSE, graphsnames = c("row", "col", "eig"), nbsubgraphs = c(1, 2, 1))
+names(l3)
+length(l3$row)
+length(l3$col)
 }
 
 \keyword{aplot}

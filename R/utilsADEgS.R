@@ -219,7 +219,7 @@ layout2position <- function(mat, widths = rep(1, NCOL(mat)), heights = rep(1, NR
 
 
 ## For analysis plot (ADEgS creation)
-sortparamADEgS <- function(..., graphsnames) {
+sortparamADEgS <- function(..., graphsnames, nbsubgraphs = rep(1, length(graphsnames))) {
   seppara <- .partoadeg(..., pattern = graphsnames)
   sortparameters <- lapply(seppara, FUN = sortparamADEg)
   alist <- function(x) {
@@ -230,9 +230,8 @@ sortparamADEgS <- function(..., graphsnames) {
   }
   tomerge <- lapply(sortparameters, alist)
   oki <- lapply(tomerge, .mergingList)
-  ## aa <- .mergingList(aa) 
-  ## merging is some were doubled
-  ## return(lapply(sortparameters, alist))
+  if(!all(nbsubgraphs == rep(1, length(graphsnames))))
+    oki <- mapply(repList, oki, nbsubgraphs)
   return(oki)
 }
 
