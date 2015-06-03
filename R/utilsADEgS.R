@@ -231,7 +231,8 @@ sortparamADEgS <- function(..., graphsnames, nbsubgraphs = rep(1, length(graphsn
   tomerge <- lapply(sortparameters, alist)
   oki <- lapply(tomerge, .mergingList)
   if(!all(nbsubgraphs == rep(1, length(graphsnames))))
-    oki <- mapply(repList, oki, nbsubgraphs)
+    for (i in 1:length(nbsubgraphs))
+      oki[[i]] <- repList(oki[[i]], nbsubgraphs[i])
   return(oki)
 }
 
