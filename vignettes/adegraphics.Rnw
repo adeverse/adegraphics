@@ -19,6 +19,7 @@
 \title{The \texttt{adegraphics} package}
 \author{Alice Julien-Laferrière, Aurélie Siberchicot and Stéphane Dray}
 \begin{document}
+\SweaveOpts{concordance=TRUE}
 
 \SweaveOpts{keep.source = TRUE}
 \SweaveOpts{eps = FALSE, pdf = TRUE}
@@ -33,7 +34,7 @@
 \maketitle
 
 <<echo = FALSE>>=
-options(width = 90)
+options(width = 90, continue = " ")
 @ 
 
 \begin{abstract}
@@ -771,6 +772,124 @@ plot(coi1, XYmatch.pbackground.col = "steelblue",  XYmatch.pgrid.col = "red", ei
 \centering
 \includegraphics[width=0.8\textwidth]{fig-plot27.pdf}
 \end{figure}
+
+
+
+\section{Using adegraphics functions in your package}
+
+In this section, we illustrate how \texttt{adegraphics} functionalities can be used to implement graphical functions in your own package. We created an objet of class \texttt{track} that contains a vector of distance and time. 
+
+<<ownfunction1, fig=FALSE, echo=TRUE>>=
+tra1 <- list()
+tra1$time <- runif(300)
+tra1$distance <- tra1$time * 5 + rnorm(300)
+class(tra1) <- "track"
+@
+
+For an object of the class \texttt{track}, we wish to represent different components of the data:
+\begin{itemize}
+\item an histogram of distances
+\item an histogram of speeds (i.e., distance / time)
+\item a 2D plot representing the distance, the time and the line corresponding to the linear model that predict distance by time
+\end{itemize}
+
+The corresponding multiple plot can be done using \texttt{adegraphics} functions:
+
+<<ownfunction2, fig=TRUE, include=FALSE, echo=TRUE, width=9, height=3>>=
+g1 <- s1d.hist(tra1$distance, psub.text = "distance", ppolygons.col = "blue", 
+               pgrid.draw = FALSE, plot = FALSE)
+g2 <- s1d.hist(tra1$distance / tra1$time, psub.text = "speed", ppolygons.col = "red", 
+               plot = FALSE)
+g31 <- s.label(cbind(tra1$time, tra1$distance), paxes = list(aspectratio = "fill", 
+               draw = TRUE), plot = FALSE)
+g32 <- xyplot(tra1$distance ~ tra1$time, aspect = g31@adeg.par$paxes$aspectratio, 
+              panel = function(x, y) {panel.lmline(x, y)})
+g3 <- superpose(g31, g32)
+G <- ADEgS(list(g1, g2, g3))
+@
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{fig-ownfunction2.pdf}
+\end{figure}
+
+To facilitate the graphical representation of an object of class \texttt{track}, the simplest solution is to design a function \texttt{plot} for this class. We illustrate how to define such function with a particular emphasis on the management of graphical parameters. The function is provided below and we detail the different steps.
+
+<<ownfunction3, fig=FALSE, echo=TRUE>>=
+plot.track <- function(x, pos = -1, storeData = TRUE, plot = TRUE, ...) {
+ 
+ ## step 1 : sort parameters for each graph
+ graphsnames <- c("histDist", "histSpeed", "regression")
+ sortparameters <- sortparamADEgS(..., graphsnames = graphsnames, 
+                                  nbsubgraphs = c(1, 1, 2))
+ 
+ ## step 2 : define default values for graphical parameters
+ params <- list()
+ params[[1]] <- list(psub = list(text = "distance"), ppolygons = list(col = "blue"), 
+                     pgrid = list(draw = FALSE))
+ params[[2]] <- list(psub = list(text = "speed"), ppolygons = list(col = "red"), 
+                     pgrid = list(draw = FALSE))
+ params[[3]] <- list()
+ params[[3]]$l1 <- list(paxes = list(aspectratio = "fill", draw = TRUE))
+ params[[3]]$l2 <- list()
+ names(params) <- graphsnames
+ sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+ 
+ ## step 3 : create each individual plot (ADEg)
+ g1 <- do.call("s1d.hist", c(list(score = substitute(x$distance), plot = FALSE, 
+               storeData = storeData, pos = pos - 2), sortparameters[[1]]))
+ g2 <- do.call("s1d.hist", c(list(score = substitute(x$distance / x$time), 
+               plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
+ g31 <- do.call("s.label", c(list(dfxy = substitute(cbind(x$time, x$distance)), plot = 
+               FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]][[1]]))
+ g32 <- xyplot(x$distance ~ x$time, aspect = g31@adeg.par$paxes$aspectratio,
+               panel = function(x, y) {panel.lmline(x, y)})
+ g3 <- do.call("superpose", list(g31, g32))
+ g3@Call <- call("superpose", g31@Call, g32$call)
+ 
+ 
+ ## step 4 : create the multiple plot (ADEgS)
+ lay <- matrix(1:3, 1, 3)
+ object <- new(Class = "ADEgS", ADEglist = list(g1, g2, g3), positions = 
+               layout2position(lay), add = matrix(0, ncol = 3, nrow = 3), 
+               Call = match.call())
+ names(object) <- graphsnames
+ if(plot)
+   print(object)
+ invisible(object)
+}
+@
+
+In the first step, the arguments given by the user through the '\dots' argument are managed. A name is given to each sub-graph and stored in the vector \texttt{graphnames}. Then, the function \texttt{sortparamADEgS} associates the graphical parameters of the \dots argument to each sub-graph. If a prefix is specified and matches the name of a graph (e.g., \texttt{histDist.pbackground.col = "grey"}), the parameter is applied only to the graphic called \texttt{histDist}. If no prefix is specified (e.g., \texttt{pbackground.col = "grey"}), the parameter is applied to all sub-graphs. The function \texttt{sortparamADEgS} returns a list (length equal to the number of sub-graph) of lists of graphical parameters.
+
+In the second step, default values for some graphical parameters are modified. The default parameters are stored in a list which has the same structure that the one produced by \texttt{sortparamADEgS} (i.e., names corresponding to those contained in \texttt{graphsnames}). Then, the \texttt{modifyList} function is applied to merge user and defaults values of paramaters (if a parameter is specified by the user and in the default, the value given by the user is used).
+
+In the third step, each sub-graph is created. Here, we create two \texttt{C1.hist} objects and superpose a \texttt{S2.label} object and a \texttt{trellis} one. The functions \texttt{do.call} and \texttt{substitute} are used to provide a pretty call for each sub-graph (stored in the \texttt{Call} slot).
+
+In a final step, the multiple graph is build through the creation of a new \texttt{ADEgS} object and possibly plotted.
+
+The \texttt{plot.track} function can then be used by:
+
+<<ownfunction3, fig=TRUE, include=FALSE, echo=TRUE, width=9, height=3>>=
+plot(tra1)
+@
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{fig-ownfunction3.pdf}
+\end{figure}
+
+Graphical parameters can be modified by:
+<<ownfunction4, fig=TRUE, include=FALSE, echo=TRUE, width=9, height=3>>=
+plot(tra1, histDist.ppoly.col = "green", pbackground.col = "grey")
+@
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{fig-ownfunction4.pdf}
+\end{figure}
+
+
 
 \section{Examples}
 
