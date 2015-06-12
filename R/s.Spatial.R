@@ -40,9 +40,11 @@ s.Spatial <- function(spObj, col = TRUE, nclass = 5, plot = TRUE, storeData = TR
           if(is.numeric(spObj@data[, 1])) {
             nclasspretty <- length(pretty(spObj@data[, 1], nclass)) - 1
             nclasspretty <- length(pretty(spObj@data[, 1], nclasspretty)) - 1 ## repeated in order to have always the same number of class
-            colnew <- adegtot$ppalette$quanti(nclasspretty)
+            if(is.null(sortparameters$adepar$pSp$col))
+              colnew <- adegtot$ppalette$quanti(nclasspretty)
           } else
-            colnew <- adegtot$ppalette$quali(nlevels(as.factor(spObj@data[, 1])))
+            if(is.null(sortparameters$adepar$pSp$col))
+              colnew <- adegtot$ppalette$quali(nlevels(as.factor(spObj@data[, 1])))
         }
       } 
     } 
@@ -62,9 +64,11 @@ s.Spatial <- function(spObj, col = TRUE, nclass = 5, plot = TRUE, storeData = TR
           if(is.numeric(spObj@data[, i])) {
             nclasspretty <- length(pretty(spObj@data[, i], nclass)) - 1
             nclasspretty <- length(pretty(spObj@data[, i], nclasspretty)) - 1 ## repeated in order to have always the same number of class
-            colnew <- adegtot$ppalette$quanti(nclasspretty)
+            if(is.null(sortparameters$adepar$pSp$col))
+              colnew <- adegtot$ppalette$quanti(nclasspretty)
           } else
-            colnew <- adegtot$ppalette$quali(nlevels(as.factor(spObj@data[, i])))
+            if(is.null(sortparameters$adepar$pSp$col))
+              colnew <- adegtot$ppalette$quali(nlevels(as.factor(spObj@data[, i])))
         }
       } else {
         colnew <- col
