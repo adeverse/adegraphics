@@ -4,7 +4,7 @@ s.Spatial <- function(spObj, col = TRUE, nclass = 5, plot = TRUE, storeData = TR
   sortparameters <- sortparamADEg(...)
   adegtot <- adegpar(sortparameters$adepar)
   
-  xy <- coordinates(spObj)[, , drop = FALSE]  ## to access 'coordinates' in the 'imports' environment of 'adegraphics'
+  xy.spObj <- coordinates(spObj)[, , drop = FALSE]  ## to access 'coordinates' in the 'imports' environment of 'adegraphics'
   
   ## default values for non-used parameters
   defaultpar <- list(plabels = list(cex = 0), pgrid = list(draw = FALSE), ppoints = list(cex = 0), porigin = list(include = FALSE))
@@ -52,7 +52,7 @@ s.Spatial <- function(spObj, col = TRUE, nclass = 5, plot = TRUE, storeData = TR
     sortparameters$adepar$pSp$col <- colnew
 
     ## create map
-    object <- do.call("s.label", c(list(dfxy = xy, Sp = substitute(spObj), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args))
+    object <- do.call("s.label", c(list(dfxy = xy.spObj, Sp = substitute(spObj), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args))
     
   } else {
     ## Spatial*DataFrame object with several variables -> ADEgS
@@ -78,7 +78,7 @@ s.Spatial <- function(spObj, col = TRUE, nclass = 5, plot = TRUE, storeData = TR
       sortparameters$adepar$psub$text <- names(spObj)[i]
       
       ## create map
-      listGraph <- c(listGraph, do.call("s.label", c(list(dfxy = xy, Sp = substitute(spObj[, i]), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args)))
+      listGraph <- c(listGraph, do.call("s.label", c(list(dfxy = xy.spObj, Sp = substitute(spObj[, i]), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args)))
     }
     names(listGraph) <- names(spObj)
     posmatrix <- layout2position(.n2mfrow(nvar), ng = nvar)
