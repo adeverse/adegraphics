@@ -775,7 +775,7 @@ plot(coi1, XYmatch.pbackground.col = "steelblue",  XYmatch.pgrid.col = "red", ei
 
 
 
-\section{Using adegraphics functions in your package}
+\section{Using \texttt{adegraphics} functions in your package}
 
 In this section, we illustrate how \texttt{adegraphics} functionalities can be used to implement graphical functions in your own package. We created an objet of class \texttt{track} that contains a vector of distance and time. 
 
@@ -860,13 +860,13 @@ plot.track <- function(x, pos = -1, storeData = TRUE, plot = TRUE, ...) {
 }
 @
 
-In the first step, the arguments given by the user through the '\dots' argument are managed. A name is given to each sub-graph and stored in the vector \texttt{graphnames}. Then, the function \texttt{sortparamADEgS} associates the graphical parameters of the \dots argument to each sub-graph. If a prefix is specified and matches the name of a graph (e.g., \texttt{histDist.pbackground.col = "grey"}), the parameter is applied only to the graphic called \texttt{histDist}. If no prefix is specified (e.g., \texttt{pbackground.col = "grey"}), the parameter is applied to all sub-graphs. The function \texttt{sortparamADEgS} returns a list (length equal to the number of sub-graph) of lists of graphical parameters.
+In the first step, the arguments given by the user through the dots (\dots) argument are managed. A name is given to each subgraph and stored in the vector \texttt{graphnames}. Then, the function \texttt{sortparamADEgS} associates the graphical parameters of the dots (\dots) argument to each subgraph. If a prefix is specified and matches the name of a graph (e.g., \texttt{histDist.pbackground.col = "grey"}), the parameter is applied only to the graphic specified (e.g., called \texttt{histDist}). If no prefix is specified (e.g., \texttt{pbackground.col = "grey"}), the parameter is applied to all subgraphs. The function \texttt{sortparamADEgS} returns a list (length equal to the number of subgraph) of lists of graphical parameters.\\
 
-In the second step, default values for some graphical parameters are modified. The default parameters are stored in a list which has the same structure that the one produced by \texttt{sortparamADEgS} (i.e., names corresponding to those contained in \texttt{graphsnames}). Then, the \texttt{modifyList} function is applied to merge user and defaults values of paramaters (if a parameter is specified by the user and in the default, the value given by the user is used).
+In the second step, default values for some graphical parameters are modified. The default parameters are stored in a list which has the same structure that the one produced by \texttt{sortparamADEgS} (i.e., names corresponding to those contained in \texttt{graphsnames}). Then, the \texttt{modifyList} function is applied to merge user and defaults values of paramaters (if a parameter is specified by the user and in the default, the value given by the user is used).\\
 
-In the third step, each sub-graph is created. Here, we create two \texttt{C1.hist} objects and superpose a \texttt{S2.label} object and a \texttt{trellis} one. The functions \texttt{do.call} and \texttt{substitute} are used to provide a pretty call for each sub-graph (stored in the \texttt{Call} slot).
+In the third step, each subgraph is created. Here, we create two \texttt{C1.hist} objects and superpose a \texttt{S2.label} object and a \texttt{trellis} one. The functions \texttt{do.call} and \texttt{substitute} are used to provide a pretty call for each subgraph (stored in the \texttt{Call} slot).\\
 
-In a final step, the multiple graph is build through the creation of a new \texttt{ADEgS} object and possibly plotted.
+In a final step, the multiple graph is build through the creation of a new \texttt{ADEgS} object and possibly plotted.\\
 
 The \texttt{plot.track} function can then be used by:
 
