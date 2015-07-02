@@ -1,16 +1,18 @@
-import(utils)
-import(grDevices)
-import(lattice)
-import(grid)
-importMethodsFrom(sp, coordinates, "[", coerce, over, bbox)
-importFrom(sp, sp.points, sp.polygons, sp.lines, sp.grid, sppanel, SpatialGrid, GridTopology, SpatialPolygons, Polygons, Polygon)
-importClassesFrom(sp, Spatial, SpatialGrid, SpatialGridDataFrame, SpatialLines, SpatialLinesDataFrame, SpatialPoints, SpatialPointsDataFrame, SpatialPolygons, SpatialPolygonsDataFrame)
-importFrom(graphics, plot)
-importFrom(stats, biplot, screeplot)
-importFrom(ade4, covfacwt, covwt, meanfacwt, varfacwt, varwt, scatter, score, kplot, dudi.pca, inertia.dudi)
-importFrom(KernSmooth, bkde2D, bkde)
-importFrom(methods, show)
-importFrom(RColorBrewer, brewer.pal)
+import("utils")
+import("grDevices")
+import("lattice")
+import("grid")
+importMethodsFrom("sp", "coordinates", "[", "coerce", "over", "bbox")
+importFrom("sp", "sp.points", "sp.polygons", "sp.lines", "sp.grid", "sppanel", "SpatialGrid", "GridTopology", "SpatialPolygons", "Polygons", "Polygon")
+importClassesFrom("sp", "Spatial", "SpatialGrid", "SpatialGridDataFrame", "SpatialLines", "SpatialLinesDataFrame", "SpatialPoints", "SpatialPointsDataFrame", "SpatialPolygons", "SpatialPolygonsDataFrame")
+importFrom("graphics", "plot", "hist")
+importFrom("stats", "biplot", "screeplot")
+importFrom("ade4", "covfacwt", "covwt", "meanfacwt", "varfacwt", "varwt", "scatter", "score", "kplot", "dudi.pca", "inertia.dudi")
+importFrom("KernSmooth", "bkde2D", "bkde")
+importFrom("methods", "show", "callNextMethod", "new")
+importFrom("RColorBrewer", "brewer.pal")
+importFrom("stats", "as.formula", "dnorm", "formula", "lm", "loess", "predict", "quantile", "reorder", "runif", "weighted.mean")
+
 
 S3method("biplot", "dudi")
 S3method("kplot", "foucart")
@@ -60,59 +62,59 @@ S3method("score", "pca")
 S3method("screeplot", "dudi")
 
 export(
-  adegpar,
-  adeg.panel.label,
-  adeg.panel.edges,
-  adeg.panel.nb,
-  adeg.panel.Spatial,
-  adeg.panel.values,
-  layout2position,
-  as.raster.pixmapRGB, 	 
-  as.raster.pixmapGrey,
-  changelatticetheme,
-  sortparamADEg,
-  sortparamADEgS,
-  setlimits2D,
-  setlimits1D,
-  plotEig,
-  ADEgS,
-  s.label,
-  s.corcircle,
-  s.arrow,
-  s.class,
-  s.distri,
-  s.value,
-  s.image,
-  s.logo,
-  s.density,
-  s.match,
-  s.Spatial,
-  s.traject,
-  table.value,
-  table.image,
-  triangle.label,
-  triangle.match,
-  triangle.class,
-  triangle.traject,
-  s1d.label,
-  s1d.class,
-  s1d.curve,
-  s1d.density,
-  s1d.distri,
-  s1d.dotplot,
-  s1d.gauss,
-  s1d.hist,
-  s1d.barchart,
-  s1d.interval,
-  s1d.match,
-  s1d.boxplot,
-  kplot,
-  kplotsepan.coa,
-  biplot,
-  plot,
-  scatter,
-  score,
-  screeplot
+  "adegpar",
+  "adeg.panel.label",
+  "adeg.panel.edges",
+  "adeg.panel.nb",
+  "adeg.panel.Spatial",
+  "adeg.panel.values",
+  "layout2position",
+  "as.raster.pixmapRGB",
+  "as.raster.pixmapGrey",
+  "changelatticetheme",
+  "sortparamADEg",
+  "sortparamADEgS",
+  "setlimits2D",
+  "setlimits1D",
+  "plotEig",
+  "ADEgS",
+  "s.label",
+  "s.corcircle",
+  "s.arrow",
+  "s.class",
+  "s.distri",
+  "s.value",
+  "s.image",
+  "s.logo",
+  "s.density",
+  "s.match",
+  "s.Spatial",
+  "s.traject",
+  "table.value",
+  "table.image",
+  "triangle.label",
+  "triangle.match",
+  "triangle.class",
+  "triangle.traject",
+  "s1d.label",
+  "s1d.class",
+  "s1d.curve",
+  "s1d.density",
+  "s1d.distri",
+  "s1d.dotplot",
+  "s1d.gauss",
+  "s1d.hist",
+  "s1d.barchart",
+  "s1d.interval",
+  "s1d.match",
+  "s1d.boxplot",
+  "kplot",
+  "kplotsepan.coa",
+  "biplot",
+  "plot",
+  "scatter",
+  "score",
+  "screeplot"
   )
 
 exportMethods(
