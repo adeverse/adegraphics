@@ -145,7 +145,7 @@ setMethod(
     if(any(object@adeg.par$plabels$cex > 0)) {
       labX <- object@stats$means[, 1]
       labY <- object@stats$means[, 2]
-      adeg.panel.label(x = labX, y = labY, label = colnames(dfdistri), object@adeg.par$plabels)
+      adeg.panel.label(x = labX, y = labY, labels = colnames(dfdistri), object@adeg.par$plabels)
     }
   })
   
