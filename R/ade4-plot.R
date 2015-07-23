@@ -826,7 +826,7 @@
     stop("Non convenient yax")
   
   ## sort parameters for each graph
-  graphsnames <- c("row", "comp", "eig", "link")
+  graphsnames <- c("row", "comp", "col", "link")
   sortparameters <- sortparamADEgS(..., graphsnames = graphsnames, nbsubgraphs = c(1, 2, 1, 1))
   
   ## default values for parameters
