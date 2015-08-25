@@ -43,18 +43,18 @@ adeg.panel.label <- function(x, y, labels, plabels, pos = NULL) {
       srt <- rep(srt, length.out = length(ldraw))
       plabels <- lapply(plabels, FUN = function(x) {rep(x, length.out = n)[ldraw]})
       for(i in 1:length(newpos$x)) {
-        if(bdraw[i]) {
+        if(bdraw[ldraw][i]) {
           ## labels sizes
           panel.rect(
             x = unit(newpos$x[i], "native"),
             y = unit(newpos$y[i], "native"),
             width = width[i],
             height = height[i],
-            col = plboxes$col[i],
-            alpha = plboxes$alpha[i],
-            border = plboxes$border[i],
-            lty = plboxes$lty[i],
-            lwd = plboxes$lwd[i]
+            col = plboxes$col[ldraw][i],
+            alpha = plboxes$alpha[ldraw][i],
+            border = plboxes$border[ldraw][i],
+            lty = plboxes$lty[ldraw][i],
+            lwd = plboxes$lwd[ldraw][i]
           )
         }
         panel.text(labels = lab[i], x = unit(newpos$x[i], "native"), y = unit(newpos$y[i], "native"), col = plabels$col[i], cex = plabels$cex[i], alpha = plabels$alpha[i], srt = srt[i])

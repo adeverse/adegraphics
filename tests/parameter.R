@@ -84,3 +84,12 @@ xy <- coordinates(nc)
 g4 <- s.label(xy, label = as.character(1:nrow(xy)), porigin.include = FALSE, Sp = nc, pSp.col = colorRampPalette(c("yellow", "blue"))(52), pgrid.draw = TRUE)
 update(g4, pSp = list(col = "yellow", border = "blue", lwd = 2, lty = 5, alpha = 0.01)) ## don't match : to solve
 
+## plabels parameter
+data(tortues, package = "ade4")
+pturtles <- tortues
+names(pturtles) <- c("length", "width", "height", "sex")
+sex <- pturtles$sex
+sexcol <- ifelse(sex == "M", "blue", "red")
+measures <- pturtles[, 1:3]
+pca1 <- ade4::dudi.pca(measures, scann = FALSE, nf = 3)
+g5 <- scatter(pca1, row.plabel.cex = 0, col.plabel.cex = c(1, 2, 3), posieig = "none", col.plabel.col = c("red", "blue", "green"))
