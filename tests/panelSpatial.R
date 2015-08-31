@@ -34,8 +34,7 @@ text12 <- list("sp.text", c(178050, 333700), "0")
 text22 <- list("sp.text", c(178550, 333700), "500 m")
 g3 <- s.class(dfxy2, fac = fac, sp.layout = list(scale2, text12, text22, arrow2, river), starSize = 1, col = c(1, 2, 4), pellipses.col = c(1, 2, 4), 
   pellipses.alpha = 0.7, plines.lty = 3, psub.text = "Flooding frequency \n near the Meuse river", psub.pos = c(0.2, 0.88), pgrid.text.cex = 0,
-  porigin.include = FALSE)
-
+  porigin.include = FALSE, Sp = meuse.sr)
 
 ## ex3
 library(Guerry)
