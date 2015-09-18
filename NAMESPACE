@@ -9,9 +9,9 @@ importFrom("graphics", "plot", "hist")
 importFrom("stats", "biplot", "screeplot")
 importFrom("ade4", "covfacwt", "covwt", "meanfacwt", "varfacwt", "varwt", "scatter", "score", "kplot", "dudi.pca", "inertia.dudi")
 importFrom("KernSmooth", "bkde2D", "bkde")
-importFrom("methods", "show", "callNextMethod", "new")
+importFrom("methods", "show", "callNextMethod", "new", "validObject")
 importFrom("RColorBrewer", "brewer.pal")
-importFrom("stats", "as.formula", "dnorm", "formula", "lm", "loess", "predict", "quantile", "reorder", "runif", "weighted.mean")
+importFrom("stats", "as.formula", "coefficients", "dnorm", "formula", "lm", "loess", "predict", "quantile", "reorder", "runif", "weighted.mean")
 
 
 S3method("biplot", "dudi")
