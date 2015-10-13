@@ -29,9 +29,9 @@ changelatticetheme(...)
 }
 
 \seealso{
-  \code{\link{trellis.par.get}}
-  \code{\link{trellis.par.set}}
-  \code{\link{show.settings}}
+  \code{\link[lattice]{trellis.par.get}}
+  \code{\link[lattice]{trellis.par.set}}
+  \code{\link[lattice]{show.settings}}
 }
 
 \examples{
