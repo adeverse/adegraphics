@@ -366,7 +366,9 @@
       xlimg1 <- g1@g.args$xlim
       ylimg1 <- g1@g.args$ylim
       g2 <- xyplot(score ~ fac, xlab = "", ylab = "", scales = list(x = list(tck = c(1, 0)), y = list(tck = c(1, 0))), xlim = xlimg1, ylim = ylimg1, 
-        aspect = g1@adeg.par$paxes$aspectratio, panel = function(x, y) {panel.abline(h = as.numeric(tapply(y, x, mean)), a = 0, b = 1, lty = 1)})
+                   aspect = g1@adeg.par$paxes$aspectratio, panel = function(x, y) {panel.abline(h = as.numeric(tapply(y, x, mean)), a = 0, b = 1, lty = 1)})
+      g2$call <- call("xyplot", substitute(scorecall ~ faccall), xlab = "", ylab = "", scales = list(x = list(tck = c(1, 0)), y = list(tck = c(1, 0))), xlim = substitute(xlimg1), ylim = substitute(ylimg1),
+                      aspect = g1@adeg.par$paxes$aspectratio, panel = function(x, y) {panel.abline(h = as.numeric(tapply(y, x, mean)), a = 0, b = 1, lty = 1)})
       ADEglist[[i]] <- superpose(g2, g1, plot = FALSE)
     }
     ADEglist <- ADEglist[which.var]
@@ -568,17 +570,24 @@
       if(length(col.var) == 1) {
         g1 <- do.call("s.label", c(list(dfxy = call("cbind", scorecall, ycall), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args, sortparameters$rest))
         g2 <- xyplot(y ~ score, panel = function(x, y) {panel.abline(lm(y ~ x), lty = 1)})
+        g2$call <- call("xyplot", substitute(ycall ~ scorecall), panel = function(x, y) {panel.abline(lm(y ~ x), lty = 1)})
         ADEglist[[i]] <- superpose(g1, g2)
         
       } else {
         ## data management
         lm0 <- lm(as.formula(paste("reponse.generic ~ ", paste(names(y), collapse = "+"))), data = cbind.data.frame(reponse.generic = score, y), weights = rep(1, nrow(y))/nrow(y))
+        lm0call <- substitute(lm(as.formula(paste("reponse.generic ~ ", paste(names(ycall), collapse = "+"))), data = cbind.data.frame(reponse.generic = scorecall, ycall), weights = rep(1, nrow(ycall))/nrow(ycall)))
         score.est <- predict(lm0)
+        score.estcall <- substitute(predict(lm0call))
         ord0 <- order(y[, 1])
+        ord0call <- substitute(order(ycall[, 1]))
+        y1call <- call("[", ycall, ord0call, 1)
+        x1call <- call("[", score.estcall, ord0call)
         
         ## ADEgS creation
         g1 <- do.call("s.label", c(list(dfxy = call("cbind", scorecall, call("[", ycall, 1:NROW(y), 1)), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args, sortparameters$rest))
         g2 <- xyplot(y[ord0, 1] ~ score.est[ord0], panel = function(x, y) {panel.lines(x, y, lty = 1)})
+        g2$call <- call("xyplot", substitute(y1call ~ x1call), panel = function(x, y) {panel.lines(x, y, lty = 1)})
         ADEglist[[i]] <- superpose(g1, g2)
       }
     }
@@ -600,8 +609,10 @@
       xlimg1 <- g1@g.args$xlim
       ylimg1 <- g1@g.args$ylim
       g2 <- xyplot(score ~ fac, xlab = "", ylab = "", scales = list(x = list(tck = c(1, 0)), y = list(tck = c(1, 0))), xlim = xlimg1, ylim = ylimg1, 
-        aspect = g1@adeg.par$paxes$aspectratio, panel = function(x, y) {panel.abline(h = as.numeric(tapply(y, x, mean)), a = 0, b = 1, lty = 1)})
-      ADEglist[[i]] <- superpose(g2, g1)
+                   aspect = g1@adeg.par$paxes$aspectratio, panel = function(x, y) {panel.abline(h = as.numeric(tapply(y, x, mean)), a = 0, b = 1, lty = 1)})
+      g2$call <- call("xyplot", substitute(scorecall ~ faccall), xlab = "", ylab = "", scales = list(x = list(tck = c(1, 0)), y = list(tck = c(1, 0))), xlim = substitute(xlimg1), 
+                      ylim = substitute(ylimg1), aspect = g1@adeg.par$paxes$aspectratio, panel = function(x, y) {panel.abline(h = as.numeric(tapply(y, x, mean)), a = 0, b = 1, lty = 1)})
+      ADEglist[[i]] <- superpose(g1, g2)
     }
     
     ## type of variable : ordered
@@ -612,12 +623,18 @@
       
       ## data management
       lm0 <- lm(as.formula(paste("reponse.generic ~ ", paste(names(y), collapse = "+"))), data = cbind.data.frame(reponse.generic = score, y), weights = rep(1, nrow(y))/nrow(y))
+      lm0call <- substitute(lm(as.formula(paste("reponse.generic ~ ", paste(names(ycall), collapse = "+"))), data = cbind.data.frame(reponse.generic = scorecall, ycall), weights = rep(1, nrow(ycall))/nrow(ycall)))
       score.est <- predict(lm0)
+      score.estcall <- substitute(predict(lm0call))
       ord0 <- order(y[, 1])
+      ord0call <- substitute(order(ycall[, 1]))
+      y1call <- call("[", ycall, ord0call, 1)
+      x1call <- call("[", score.estcall, ord0call)
       
       ## ADEgS creation
       g1 <- do.call("s.label", c(list(dfxy = call("cbind", scorecall, call("[", ycall, 1:NROW(y), 1)), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args, sortparameters$rest))
       g2 <- xyplot(y[ord0, 1] ~ score.est[ord0], panel = function(x, y) {panel.lines(x, y)})
+      g2$call <- call("xyplot", substitute(y1call ~ x1call), panel = function(x, y) {panel.lines(x, y)})
       ADEglist[[i]] <- superpose(g1, g2)
     }
   }
@@ -658,8 +675,10 @@
   ADEglist <- list()
   for(i in which.var) {
     dfxy <- call("cbind", substitute(x$l1[, xax]), call("[", oritab, 1:NROW(evTab), i))
+    
     g1 <- do.call("s.label", c(list(dfxy = dfxy, plot = FALSE, storeData = storeData, pos = pos - 2), c(sortparameters$adepar, list(psub.text = colnames(evTab)[i])), sortparameters$trellis, sortparameters$g.args, sortparameters$rest))
     g2 <- xyplot(eval(dfxy)[, 2] ~ eval(dfxy)[, 1], aspect = g1@adeg.par$paxes$aspectratio, panel = function(x, y) {panel.abline(lm(y ~ x))})
+    g2$call <- call("xyplot", substitute(dfxy[, 2] ~ dfxy[, 1]), aspect = g1@adeg.par$paxes$aspectratio, panel = function(x, y) {panel.abline(lm(y ~ x))})
     ADEglist[[i]] <- superpose(g1, g2)
   }
   ADEglist <- ADEglist[which.var]
