@@ -183,14 +183,13 @@ adeg.panel.values <- function(x, y, z, method, symbol, ppoints, breaks, centerpa
 }
 
 
-adeg.panel.hist <- function(y, horizontal = TRUE, histValues, densi, drawLines, params = list(), ..., identifier = "histogramADEg") {
+adeg.panel.hist <- function(histValues, horizontal = TRUE, densi, drawLines, params = list(), identifier = "histogramADEg") {
   ## from panel.histogram of the lattice package
   plot.polygon <- modifyList(list(plot.polygon = trellis.par.get("plot.polygon")), params, keep.null = TRUE)[[1L]] ## hist params
   add.line <- modifyList(list(add.line = trellis.par.get("add.line")), params, keep.null = TRUE)[[1L]] ## backgroundlines
   plot.line <- modifyList(list(plot.line = trellis.par.get("plot.line")), params, keep.null = TRUE)[[1L]] ## density line
   
   h <- histValues
-  a <- diff(range(y))   
   breaks <- h$breaks
   heiBar <- h$counts
   nb <- length(breaks)
@@ -210,20 +209,22 @@ adeg.panel.hist <- function(y, horizontal = TRUE, histValues, densi, drawLines, 
     do.call("panel.lines", c(list(x = densi$x, y = densi$y * contdensi), plot.line))
   } else {
     if(nb > 1)
-      panel.rect(y = h$mids, x = 0, height = diff(breaks), width = heiBar, col = plot.polygon$col, alpha = plot.polygon$alpha, border = plot.polygon$border, lty = plot.polygon$lty, lwd = plot.polygon$lwd, just = c("left", "center"), identifier = identifier)
+      panel.rect(y = h$mids, x = 0, height = diff(breaks), width = heiBar,
+                 col = plot.polygon$col, alpha = plot.polygon$alpha, border = plot.polygon$border, lty = plot.polygon$lty, 
+                 lwd = plot.polygon$lwd, just = c("left", "center"), identifier = identifier)
     do.call("panel.lines", c(list(y = densi$x,  x = densi$y * contdensi), plot.line))
   }
 }
 
 
-adeg.panel.join <- function(drawLines, params, ...) {
+adeg.panel.join <- function(drawLines, params = list()) {
   ## circle from c(0,0)p, radius = drawLines
   plot.line <- modifyList(list(add.line = trellis.par.get("add.line")), params, keep.null = TRUE)[[1L]] ## density line
   ## number of seg = 200
   plabels <- modifyList(adegpar("plabels"), params, keep.null = TRUE)[[1L]]
   scaleX <- c(current.panel.limits()$xlim, current.panel.limits()$ylim)
   xlines <- seq(from = min(scaleX) - 0.1 * min(scaleX), to = max(scaleX) * 1.1, length.out = 200)
-  ylines <- lapply(drawLines, FUN = function(radius, x){
+  ylines <- lapply(drawLines, FUN = function(radius, x) {
     indx <- (x <= radius) ## x can be greated than radius
     return(c(sqrt(radius * radius - x[indx] * x[indx]), (- sqrt(abs(radius * radius - x[!indx] * x[!indx])))))
   }, x = xlines)

@@ -71,7 +71,9 @@ z <- rnorm(10)
 xyplot(1:10 ~ 1:10, panel = function(x, y, ...){
   adeg.panel.values(x, y, z, method = "size", symbol = "square", ppoints =
   param, breaks = pretty(z, 4))})
+}
 
+if(require(lattice, quiet = TRUE)) {
 param$col <- adegpar()$ppalette$quali((length(pretty(z, 2)) - 1))
 xyplot(1:10 ~ 1:10, panel = function(x, y, ...){
   adeg.panel.values(x, y, z, method = "color", symbol = "circle", 
