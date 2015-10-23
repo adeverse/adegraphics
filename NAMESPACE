@@ -68,6 +68,8 @@ export(
   "adeg.panel.nb",
   "adeg.panel.Spatial",
   "adeg.panel.values",
+  "adeg.panel.hist",
+  "adeg.panel.join",
   "layout2position",
   "as.raster.pixmapRGB",
   "as.raster.pixmapGrey",

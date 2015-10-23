@@ -285,6 +285,10 @@ setMethod(
     f = "addhist",
     signature = "ADEg.S2",
     definition = function(object, bandwidth, gridsize = 60, kernel = "normal", cbreaks = 2, storeData = TRUE, plot = TRUE, pos = -1, ...) {
+        thecall <- .expand.call(match.call())
+        dfcall <- thecall$object
+        dfxycall <- substitute(dfcall@data$dfxy)
+        
         if(!(inherits(object, "ADEg.S2")))
             stop("Only implemented for 'ADEg.S2' object")
         
@@ -324,8 +328,13 @@ setMethod(
             breaksY <- c(breaksY, (max(breaksY) + cgrid))
         
         ## limits and graduation
+        dfxaxcall <- call("[", dfxycall, 1:NROW(eval(dfxycall)), substitute(xax))
+        dfyaxcall <- call("[", dfxycall, 1:NROW(eval(dfxycall)), substitute(yax))
         limcalX <- hist(dfxy[, xax], breaksX, plot = FALSE)
+        limcalXcall <- call("hist", substitute(dfxaxcall), breaksX, plot = FALSE)
         limcalY <- hist(dfxy[, yax], breaksY, plot = FALSE)
+        limcalYcall <- call("hist", substitute(dfyaxcall), breaksY, plot = FALSE)
+        
         top <- 1.1 * max(c(limcalX$counts, limcalY$counts))
         xlimY <- ylimX <- c(0, top)
         drawLines <- pretty(0:top)
@@ -340,9 +349,26 @@ setMethod(
         }
         
         ## trellis creation 
-        g2 <- xyplot(dfxy[, xax] ~ 1, xlim = xlimX, ylim = ylimX, horizontal = TRUE, scales = list(draw = FALSE), xlab = NULL, ylab = NULL, histValues = limcalX, drawLines = drawLines, panel = function(x, y, histValues, horizontal, drawLines, ...) .adeg.panel.hist(y = y, histValues = histValues, horizontal = horizontal, drawLines = drawLines, densi = densiX, params = sortparameters[[2]], ...))
-        g3 <- xyplot(dfxy[, yax] ~ 1, xlim = xlimY, ylim = ylimY, horizontal = FALSE, scales = list(draw = FALSE), xlab = NULL, ylab = NULL, histValues = limcalY, drawLines = drawLines, panel = function(x, y, histValues, horizontal, drawLines, ...) .adeg.panel.hist(y = y, histValues = histValues, densi = densiY, horizontal = horizontal, drawLines = drawLines, params = sortparameters[[3]], ...))
-        g4 <- xyplot(1 ~ 1, xlim = xlimY, ylim = ylimX, scales = list(draw = F), xlab = NULL, ylab = NULL, drawLines = drawLines, panel = function(drawLines, ...) .adeg.panel.join(drawLines = drawLines, params = sortparameters[[4]], ...))
+        g2 <- xyplot(dfxy[, xax] ~ 1, xlim = xlimX, ylim = ylimX, horizontal = TRUE, scales = list(draw = FALSE), xlab = NULL, ylab = NULL, histValues = limcalX, drawLines = drawLines, 
+                     panel = function(histValues, horizontal, drawLines) adeg.panel.hist(histValues = histValues, horizontal = horizontal, 
+                                                                                         drawLines = drawLines, densi = densiX, params = sortparameters[[2]]))
+        g2$call <- call("xyplot", dfxaxcall, xlim = substitute(xlimX), ylim = substitute(ylimX), horizontal = TRUE, scales = list(draw = FALSE), xlab = NULL, ylab = NULL, 
+                        histValues = limcalXcall, drawLines = substitute(drawLines),
+                        panel = function(histValues, horizontal, drawLines) adeg.panel.hist(histValues = histValues, horizontal = horizontal, 
+                                                                                            drawLines = drawLines, densi = densiX, params = sortparameters[[2]]))
+
+        g3 <- xyplot(dfxy[, yax] ~ 1, xlim = xlimY, ylim = ylimY, horizontal = FALSE, scales = list(draw = FALSE), xlab = NULL, ylab = NULL, histValues = limcalY, drawLines = drawLines, 
+                     panel = function(histValues, horizontal, drawLines) adeg.panel.hist(histValues = histValues, densi = densiY, horizontal = horizontal, 
+                                                                                         drawLines = drawLines, params = sortparameters[[3]]))
+        g3$call <- call("xyplot", dfyaxcall ~ 1, xlim = substitute(xlimY), ylim = substitute(ylimY), horizontal = FALSE, scales = list(draw = FALSE), xlab = NULL, ylab = NULL, 
+                        histValues = limcalYcall, drawLines = substitute(drawLines), 
+                        panel = function(histValues, horizontal, drawLines) adeg.panel.hist(histValues = histValues, densi = densiY, horizontal = horizontal, 
+                                                                                            drawLines = drawLines, params = sortparameters[[3]]))
+        
+        g4 <- xyplot(1 ~ 1, xlim = xlimY, ylim = ylimX, scales = list(draw = FALSE), xlab = NULL, ylab = NULL, drawLines = drawLines, 
+                     panel = function(drawLines) adeg.panel.join(drawLines = drawLines, params = sortparameters[[4]]))
+        g4$call <- call("xyplot", 1 ~ 1, xlim = substitute(xlimY), ylim = substitute(ylimX), scales = list(draw = FALSE), xlab = NULL, ylab = NULL, 
+                        drawLines = substitute(drawLines), panel = function(drawLines) adeg.panel.join(drawLines = drawLines, params = sortparameters[[4]]))
         
         ## ADEgS creation and display
         obj <- new(Class = "ADEgS", ADEglist = list(object, g2, g3, g4), positions = positions, add = matrix(0, ncol = 4, nrow = 4), Call = match.call())
