@@ -142,17 +142,20 @@ Several user functions are available to create a simple graph (stored as an \tex
   \caption{\label{functionsADEgchanged} Changes in functions names between \texttt{ade4} and \texttt{adegraphics}}\\
         
       \hline Function in \texttt{ade4}  &  Equivalence in \texttt{adegraphics} \\
-      \hline \texttt{table.dist}, \texttt{table.cont}, \texttt{table.value} & \texttt{table.value} \footnote{The \texttt{table.value} function is now generic and can handle \texttt{dist} or \texttt{table} objects as arguments.} \\
+      \hline \texttt{table.cont}, \texttt{table.dist}, \texttt{table.value} & \texttt{table.value} \footnote{The \texttt{table.value} function is now generic and can handle \texttt{dist} or \texttt{table} objects as arguments.} \\
       \texttt{table.paint} & \texttt{table.image}  \\
-      \hline \texttt{sco.label} & \texttt{s1d.label}  \\
-      \texttt{sco.boxplot} & \texttt{s1d.boxplot}  \\
-      \texttt{sco.distri} & \texttt{s1d.distri}  \\
-      \texttt{sco.match} & \texttt{s1d.match}  \\
+      \hline \texttt{sco.boxplot} & \texttt{s1d.boxplot}  \\
       \texttt{sco.class} & \texttt{s1d.class} \\
-      \hline \texttt{s.kde2d} & \texttt{s.density}  \\
-      \texttt{s.chull} & \texttt{s.class}\footnote{Convex hulls are now drawn by the \texttt{s.class} function (argument \texttt{chullSize})}\\
-      \hline \texttt{triangle.plot} & \texttt{triangle.label}  \\
-      \texttt{triangle.biplot} & \texttt{triangle.match}  \\
+      \texttt{sco.distri} & \texttt{s1d.distri}  \\
+      \texttt{sco.gauss} & \texttt{s1d.gauss}  \\
+      \texttt{sco.label} & \texttt{s1d.label}  \\
+      \texttt{sco.match} & \texttt{s1d.match}  \\
+      \texttt{sco.quant} & no equivalence  \\      
+      \hline \texttt{s.chull} & \texttt{s.class}\footnote{Convex hulls are now drawn by the \texttt{s.class} function (argument \texttt{chullSize})}\\
+      \texttt{s.kde2d} & \texttt{s.density}  \\
+      \texttt{s.match.class} & no equivalence  \\
+      \hline \texttt{triangle.biplot} & \texttt{triangle.match}  \\
+      \texttt{triangle.plot} & \texttt{triangle.label}  \\
       \texttt{s.multinom} & \texttt{triangle.multinom}  \\
       \hline
 \end{longtable}
@@ -1027,54 +1030,55 @@ This appendix summarizes the main changes between \texttt{ade4} and \texttt{adeg
   \hline \texttt{abline.y} & \texttt{table.cont} & \texttt{ablineY} & & \\
   \hline \texttt{abmean.x} & \texttt{table.cont} & \texttt{meanX} & & \\
   \hline \texttt{abmean.y} & \texttt{table.cont} & \texttt{meanY} & & \\
-  \hline \texttt{addaxes} & \texttt{s.label}, \texttt{s.class}, \texttt{s.image}, \texttt{s.traject}, \texttt{s.kde2d}, \texttt{s.logo}, \texttt{s.match}, \texttt{s.value}, \texttt{s.chull} & & \texttt{paxes.draw} &\\
-  \hline \texttt{area} & \texttt{s.label}, \texttt{s.class}, \texttt{s.traject}, \texttt{s.kde2d}, \texttt{s.logo}, \texttt{s.image}, \texttt{s.match}, \texttt{s.value}, \texttt{s.chull} & \texttt{Sp} & & a \texttt{Sp} object \\
-  \hline \texttt{axesell} & \texttt{s.class}, \texttt{s.distri} & & \texttt{pellipses.axes.draw} &\\
-  \hline \texttt{boxe} & \texttt{s.corcircle}, \texttt{triangle.plot} &  & \texttt{pbackground.box} &\\
-  \hline \texttt{boxes} & \texttt{s.label}, \texttt{s.corcircle}, \texttt{sco.class}, \texttt{sco.label}, \texttt{sco.match} &  & \texttt{plabels.boxes.draw} &\\ 
-  \hline \texttt{cellipse} & \texttt{s.class}, \texttt{s.distri} & \texttt{ellipseSize} & & \\
-  \hline \texttt{cgrid} & \texttt{s.label}, \texttt{s.class}, \texttt{s.image}, \texttt{s.traject}, \texttt{s.kde2d}, \texttt{s.logo}, \texttt{s.match}, \texttt{s.value}, \texttt{s.corcircle}, \texttt{sco.boxplot}, \texttt{sco.class}, \texttt{sco.distri}, \texttt{sco.label}, \texttt{sco.gauss}, \texttt{sco.match} & & \texttt{pgrid.nint} & both play on the grid mesh, but they are not strictly equivalent\\ 
-  \hline \texttt{clabel} & \texttt{s.label}, \texttt{s.class}, \texttt{s.distri}, \texttt{s.traject}, \texttt{s.corcircle}, \texttt{sco.boxplot}, \texttt{sco.class}, \texttt{sco.gauss}, \texttt{sco.label}, \texttt{triangle.plot} & & \texttt{plabels.cex} &\\ 
+  \hline \texttt{addaxes} & \texttt{s.arrow}, \texttt{s.chull}, \texttt{s.class}, \texttt{s.distri}, \texttt{s.image}, \texttt{s.kde2d}, \texttt{s.label}, \texttt{s.logo}, \texttt{s.match}, \texttt{s.traject}, \texttt{s.value}, \texttt{triangle.class}, \texttt{triangle.plot} & & \texttt{paxes.draw} &\\
+  \hline \texttt{area} & \texttt{s.arrow}, \texttt{s.chull}, \texttt{s.class}, \texttt{s.distri}, \texttt{s.image}, \texttt{s.kde2d}, \texttt{s.label}, \texttt{s.logo}, \texttt{s.match}, \texttt{s.traject}, \texttt{s.value} & \texttt{Sp} & & a \texttt{Sp} object \\
+  \hline \texttt{axesell} & \texttt{s.class}, \texttt{s.distri}, \texttt{triangle.class} & & \texttt{pellipses.axes.draw} &\\
+  \hline \texttt{box} & \texttt{s.corcircle}, \texttt{triangle.plot} &  & \texttt{pbackground.box} &\\
+  \hline \texttt{boxes} & \texttt{s.arrow}, \texttt{s.label}, \texttt{sco.class}, \texttt{sco.label}, \texttt{sco.match} &  & \texttt{plabels.boxes.draw} &\\ 
+  \hline \texttt{cellipse} & \texttt{s.class}, \texttt{s.distri}, \texttt{triangle.class} & \texttt{ellipseSize} & & \\
+  \hline \texttt{cgrid} & \texttt{s.arrow}, \texttt{s.class}, \texttt{s.chull}, \texttt{s.corcircle}, \texttt{s.distri}, \texttt{s.image}, \texttt{s.kde2d}, \texttt{s.label}, \texttt{s.logo}, \texttt{s.match}, \texttt{s.traject}, \texttt{s.value}, \texttt{sco.boxplot}, \texttt{sco.class}, \texttt{sco.distri}, \texttt{sco.gauss}, \texttt{sco.label}, \texttt{sco.match} & & \texttt{pgrid.nint} & both play on the grid mesh, but they are not strictly equivalent\\
+  \hline \texttt{clabel} & \texttt{s.arrow}, \texttt{s.class}, \texttt{s.chull}, \texttt{s.corcircle}, \texttt{s.distri}, \texttt{s.kde2d}, \texttt{s.label}, \texttt{s.match}, \texttt{s.traject}, \texttt{sco.boxplot}, \texttt{sco.class}, \texttt{sco.distri}, \texttt{sco.gauss}, \texttt{sco.label}, \texttt{sco.match}, \texttt{triangle.plot} & & \texttt{plabels.cex} & \\ 
   \hline \texttt{clabel} & \texttt{table.dist} & & & \texttt{axis.text = list()}, \texttt{lattice} parameter\\
-  \hline \texttt{clabel.col} & \texttt{table.cont}, \texttt{table.value}, \texttt{table.paint} & & & \texttt{axis.text = list()}, \texttt{lattice} parameter\\ 
-  \hline \texttt{clabel.row} & \texttt{table.cont}, \texttt{table.value}, \texttt{table.paint} & & & \texttt{axis.text = list()}, \texttt{lattice} parameter\\ 
+  \hline \texttt{clabel.col} & \texttt{table.cont}, \texttt{table.paint}, \texttt{table.value} & & & \texttt{axis.text = list()}, \texttt{lattice} parameter\\ 
+  \hline \texttt{clabel.row} & \texttt{table.cont}, \texttt{table.paint}, \texttt{table.value} & & & \texttt{axis.text = list()}, \texttt{lattice} parameter\\ 
   \hline \texttt{clegend} & \texttt{s.value}, \texttt{table.cont}, \texttt{table.value} & & \texttt{plegend.size}  \texttt{ppoints.cex}& parameters setting the legend size\\
-  \hline \texttt{clegend} & \texttt{table.image} & & \texttt{plegend.size} &\\
+  \hline \texttt{clegend} & \texttt{table.paint} & & \texttt{plegend.size} &\\
   \hline \texttt{clogo} & \texttt{s.logo} & & \texttt{ppoints.cex} &\\
-  \hline \texttt{cneig} & \texttt{s.label}, \texttt{s.kde2d}, \texttt{s.logo}, \texttt{s.value} &  & \texttt{pnb.edge.lwd} &\\
-  \hline \texttt{col.labels} & \texttt{table.cont}, \texttt{table.value}, \texttt{table.paint} & \texttt{labelsy} & & \\   
-  \hline \texttt{contour} & \texttt{s.label}, \texttt{s.class}, \texttt{s.traject}, \texttt{s.kde2d}, \texttt{s.logo}, \texttt{s.image}, \texttt{s.match}, \texttt{s.value}, \texttt{s.chull} & \texttt{Sp} & & a \texttt{Sp} object \\
+  \hline \texttt{cneig} & \texttt{s.image}, \texttt{s.kde2d}, \texttt{s.label}, \texttt{s.logo}, \texttt{s.value} &  & \texttt{pnb.edge.lwd} &\\
+  \hline \texttt{col.labels} & \texttt{table.cont}, \texttt{table.paint}, \texttt{table.value} & \texttt{labelsy} & & \\   
+  \hline \texttt{contour} & \texttt{s.arrow}, \texttt{s.class}, \texttt{s.chull}, \texttt{s.distri}, \texttt{s.image}, \texttt{s.kde2d}, \texttt{s.label}, \texttt{s.logo}, \texttt{s.match}, \texttt{s.traject}, \texttt{s.value} & \texttt{Sp} & & a \texttt{Sp} object \\
   \hline \texttt{contour.plot} & \texttt{s.image} & \texttt{region} & & \\
-  \hline \texttt{cpoints}, \texttt{cpoint} & \texttt{s.label}, \texttt{s.class}, \texttt{s.traject}, \texttt{s.kde2d}, \texttt{s.match}, \texttt{s.value}, \texttt{s.chull}, \texttt{sco.class}, \texttt{sco.label}, \texttt{sco.match}, \texttt{triangle.plot} &  & \texttt{ppoints.cex} &\\
-  \hline \texttt{csize} & \texttt{s.value} & \texttt{ppoints.cex} & & \\
+  \hline \texttt{cpoints}, \texttt{cpoint} & \texttt{s.arrow}, \texttt{s.class}, \texttt{s.chull}, \texttt{s.distri}, \texttt{s.kde2d}, \texttt{s.label}, \texttt{s.match}, \texttt{s.traject}, \texttt{s.value}, \texttt{sco.class}, \texttt{sco.label}, \texttt{sco.match}, \texttt{triangle.class}, \texttt{triangle.plot} &  & \texttt{ppoints.cex} &\\
+  \hline \texttt{csize} & \texttt{s.value}, \texttt{table.cont}, \texttt{table.dist}, \texttt{table.paint}, \texttt{table.value} & \texttt{ppoints.cex} & & \\
   \hline \texttt{csize} & \texttt{sco.distri} & \texttt{sdSize} & & \\ 
-  \hline \texttt{cstar} & \texttt{s.class}, \texttt{s.distri} & \texttt{starSize} & & \\
-  \hline \texttt{csub} & \texttt{s.label}, \texttt{s.class}, \texttt{s.image}, \texttt{s.traject}, \texttt{s.kde2d}, \texttt{s.logo}, \texttt{s.match}, \texttt{s.value}, \texttt{s.chull}, \texttt{s.corcircle}, \texttt{sco.boxplot}, \texttt{sco.class}, \texttt{sco.distri}, \texttt{sco.label}, \texttt{sco.gauss}, \texttt{sco.match}, \texttt{triangle.plot} & & \texttt{psub.cex} &\\
-  \hline \texttt{draw.line} & \texttt{triangle.plot}, \texttt{triangle.biplot} & & \texttt{pgrid.draw} &\\
-  \hline \texttt{grid} & \texttt{s.label}, \texttt{s.class}, \texttt{s.image}, \texttt{s.traject}, \texttt{s.kde2d}, \texttt{s.logo}, \texttt{s.match}, \texttt{s.chull}, \texttt{s.corcircle}, \texttt{sco.boxplot}, \texttt{sco.class}, \texttt{sco.distri}, \texttt{sco.label}, \texttt{sco.gauss}, \texttt{sco.match}, \texttt{table.cont}, \texttt{table.dist}, \texttt{table.value} & & \texttt{pgrid.draw} &\\  
-  \hline \texttt{horizontal} & \texttt{sco.class}, \texttt{sco.label}, \texttt{sco.match} & & \texttt{p1d.horizontal} &\\
+  \hline \texttt{cstar} & \texttt{s.class}, \texttt{s.distri}, \texttt{triangle.class} & \texttt{starSize} & & \\
+  \hline \texttt{csub} & \texttt{s.arrow}, \texttt{s.chull}, \texttt{s.class}, \texttt{s.corcircle}, \texttt{s.distri}, \texttt{s.image}, \texttt{s.kde2d}, \texttt{s.label}, \texttt{s.logo}, \texttt{s.match}, \texttt{s.traject}, \texttt{s.value}, \texttt{sco.boxplot}, \texttt{sco.class}, \texttt{sco.distri}, \texttt{sco.gauss}, \texttt{sco.label}, \texttt{sco.match}, \texttt{triangle.class}, \texttt{triangle.plot} & & \texttt{psub.cex} &\\
+  \hline \texttt{draw.line} & \texttt{triangle.biplot}, \texttt{triangle.class}, \texttt{triangle.plot} & & \texttt{pgrid.draw} &\\
+  \hline \texttt{edge} & \texttt{s.arrow}, \texttt{s.match}, \texttt{s.traject} & & \texttt{parrows.length} & setting the length of the arrows to 0 is equivalent to \texttt{edge = FALSE}\\
+  \hline \texttt{grid} & \texttt{s.arrow}, \texttt{s.chull}, \texttt{s.class}, \texttt{s.corcircle}, \texttt{s.distri}, \texttt{s.image}, \texttt{s.kde2d}, \texttt{s.label}, \texttt{s.logo}, \texttt{s.match}, \texttt{s.traject}, \texttt{s.value}, \texttt{sco.boxplot}, \texttt{sco.class}, \texttt{sco.distri}, \texttt{sco.gauss}, \texttt{sco.label}, \texttt{sco.match}, \texttt{table.cont}, \texttt{table.dist}, \texttt{table.value} & & \texttt{pgrid.draw} &\\  
+  \hline \texttt{horizontal} & \texttt{sco.class}, \texttt{sco.gauss}, \texttt{sco.label}, \texttt{sco.match} & & \texttt{p1d.horizontal} &\\
   \hline \texttt{image.plot} & \texttt{s.image} & \texttt{contour} & & \\ 
-  \hline \texttt{includeorigin} \texttt{include.origin} & \texttt{s.label}, \texttt{s.class}, \texttt{s.image}, \texttt{s.traject}, \texttt{s.kde2d}, \texttt{s.logo}, \texttt{s.match}, \texttt{s.value}, \texttt{s.chull}, \texttt{sco.boxplot}, \texttt{sco.class}, \texttt{sco.distri}, \texttt{sco.label}, \texttt{sco.gauss}, \texttt{sco.match} & & \texttt{porigin.include} &\\
+  \hline \texttt{includeorigin} \texttt{include.origin} & \texttt{s.arrow}, \texttt{s.chull}, \texttt{s.class}, \texttt{s.distri}, \texttt{s.image}, \texttt{s.kde2d}, \texttt{s.label}, \texttt{s.logo}, \texttt{s.match}, \texttt{s.traject}, \texttt{s.value}, \texttt{sco.boxplot}, \texttt{sco.class}, \texttt{sco.distri}, \texttt{sco.gauss}, \texttt{sco.label}, \texttt{sco.match} & & \texttt{porigin.include} &\\
   \hline \texttt{kgrid} & \texttt{s.image} & \texttt{gridsize} & & \\
   \hline \texttt{klogo} & \texttt{s.logo} & & & no correspondence \\
-  \hline \texttt{labeltriangle} & \texttt{triangle.plot} & no correspondance & & \\
-  \hline \texttt{legen} & \texttt{sco.distri} & \texttt{labelplot} & & \\ 
-  \hline \texttt{neig} & \texttt{s.label}, \texttt{s.image}, \texttt{s.kde2d}, \texttt{s.logo}, \texttt{s.value} &  \texttt{nbobject} & & a \texttt{nb} object\\
+  \hline \texttt{labeltriangle} & \texttt{triangle.class}, \texttt{triangle.plot} & & & no correspondance  \\
+  \hline \texttt{legen} & \texttt{sco.gauss} & \texttt{labelplot} & & \\ 
+  \hline \texttt{neig} & \texttt{s.image}, \texttt{s.kde2d}, \texttt{s.label}, \texttt{s.logo}, \texttt{s.value} &  \texttt{nbobject} & & a \texttt{nb} object\\
   \hline \texttt{optchull} & \texttt{s.chull} & \texttt{chullSize} & & \\ 
-  \hline \texttt{origin} & \texttt{s.label}, \texttt{s.class}, \texttt{s.image}, \texttt{s.traject}, \texttt{s.kde2d}, \texttt{s.logo}, \texttt{s.match}, \texttt{s.value}, \texttt{s.chull}, \texttt{sco.boxplot}, \texttt{sco.class}, \texttt{sco.distri}, \texttt{sco.label}, \texttt{sco.gauss}, \texttt{sco.match} & & \texttt{porigin.origin} &\\
-  \hline \texttt{parrows.length} & \texttt{s.traject}, \texttt{s.match} & \texttt{edge} & & setting the length of the arrows to 0 is equivalent to \texttt{edge = FALSE}. \\
-  \hline \texttt{pch} & \texttt{s.label}, \texttt{s.class}, \texttt{s.traject}, \texttt{s.kde2d}, \texttt{s.match}, \texttt{s.value}, \texttt{sco.class}, \texttt{sco.label}, \texttt{sco.match} &  & \texttt{ppoints.pch} &\\ 
-  \hline \texttt{pixmap} & \texttt{s.label}, \texttt{s.class}, \texttt{s.traject}, \texttt{s.kde2d}, \texttt{s.logo}, \texttt{s.image}, \texttt{s.match}, \texttt{s.value}, \texttt{s.chull} & & & no correspondance \\
+  \hline \texttt{origin} & \texttt{s.arrow}, \texttt{s.chull}, \texttt{s.class}, \texttt{s.corcircle}, \texttt{s.distri}, \texttt{s.image}, \texttt{s.kde2d}, \texttt{s.label}, \texttt{s.logo}, \texttt{s.match}, \texttt{s.traject}, \texttt{s.value}, \texttt{sco.boxplot}, \texttt{sco.class}, \texttt{sco.distri}, \texttt{sco.gauss}, \texttt{sco.label}, \texttt{sco.match} & & \texttt{porigin.origin} &\\
+  \hline \texttt{pch} & \texttt{s.arrow}, \texttt{s.chull}, \texttt{s.class}, \texttt{s.distri}, \texttt{s.kde2d}, \texttt{s.label}, \texttt{s.match}, \texttt{s.traject}, \texttt{s.value}, \texttt{sco.boxplot}, \texttt{sco.class}, \texttt{sco.label}, \texttt{sco.match}, \texttt{triangle.class}, \texttt{triangle.plot}, \texttt{table.cont} &  & \texttt{ppoints.pch} &\\ 
+  \hline \texttt{pixmap} & \texttt{s.arrow}, \texttt{s.chull}, \texttt{s.class}, \texttt{s.distri}, \texttt{s.image}, \texttt{s.kde2d}, \texttt{s.label}, \texttt{s.logo}, \texttt{s.match}, \texttt{s.traject}, \texttt{s.value} & & & no correspondance \\
   \hline \texttt{pos.lab} & \texttt{sco.class}, \texttt{sco.label}, \texttt{sco.match} & & \texttt{p1d.labpos} &\\
-  \hline \texttt{possub} & \texttt{s.label}, \texttt{s.class}, \texttt{s.image}, \texttt{s.traject}, \texttt{s.kde2d}, \texttt{s.logo}, \texttt{s.match}, \texttt{s.value}, \texttt{s.chull}, \texttt{s.corcircle}, \texttt{sco.class}, \texttt{sco.label}, \texttt{sco.gauss}, \texttt{sco.match}, \texttt{triangle.plot} & & \texttt{psub.pos} &\\
+  \hline \texttt{possub} & \texttt{s.arrow}, \texttt{s.chull}, \texttt{s.class}, \texttt{s.corcircle}, \texttt{s.distri}, \texttt{s.image}, \texttt{s.kde2d}, \texttt{s.label}, \texttt{s.logo}, \texttt{s.match}, \texttt{s.traject}, \texttt{s.value}, \texttt{sco.class}, \texttt{sco.gauss}, \texttt{sco.label}, \texttt{sco.match}, \texttt{triangle.class}, \texttt{triangle.plot} & & \texttt{psub.pos} &\\
   \hline \texttt{rectlogo} & \texttt{s.logo} & \texttt{rect} & & \\
-  \hline \texttt{reverse} & \texttt{sco.class}, \texttt{sco.label}, \texttt{sco.match} & & \texttt{p1d.reverse} &\\
-  \hline \texttt{row.labels} & \texttt{table.cont}, \texttt{table.value}, \texttt{table.paint} & \texttt{labelsx} & & \\
-  \hline \texttt{scale} & \texttt{triangle.plot} & \texttt{adjust} & & \\
-  \hline \texttt{show.position} & \texttt{triangle.plot} & \texttt{showposition} & & \\ 
-  \hline \texttt{sub} & \texttt{s.label}, \texttt{s.class}, \texttt{s.image}, \texttt{s.traject}, \texttt{s.kde2d}, \texttt{s.logo}, \texttt{s.match}, \texttt{s.value}, \texttt{s.chull}, \texttt{s.corcircle}, \texttt{sco.boxplot}, \texttt{sco.class}, \texttt{sco.distri}, \texttt{sco.label}, \texttt{sco.gauss}, \texttt{sco.match}, \texttt{triangle.plot} & & \texttt{psub.text} &\\
+  \hline \texttt{reverse} & \texttt{sco.class}, \texttt{sco.gauss}, \texttt{sco.label}, \texttt{sco.match} & & \texttt{p1d.reverse} &\\
+  \hline \texttt{row.labels} & \texttt{table.cont}, \texttt{table.paint}, \texttt{table.value} & \texttt{labelsx} & & \\
+  \hline \texttt{scale} & \texttt{triangle.class}, \texttt{triangle.plot} & \texttt{adjust} & & \\
+  \hline \texttt{show.position} & \texttt{triangle.class}, \texttt{triangle.plot} & \texttt{showposition} & & \\ 
+  \hline \texttt{sub} & \texttt{s.arrow}, \texttt{s.chull}, \texttt{s.class}, \texttt{s.corcircle}, \texttt{s.distri}, \texttt{s.image}, \texttt{s.kde2d}, \texttt{s.label}, \texttt{s.logo}, \texttt{s.match}, \texttt{s.traject}, \texttt{s.value}, \texttt{sco.boxplot}, \texttt{sco.class}, \texttt{sco.distri}, \texttt{sco.gauss}, \texttt{sco.label} \texttt{sco.match}, \texttt{triangle.class}, \texttt{triangle.plot} & & \texttt{psub.text} &\\
+  
   \hline \texttt{y.rank} & \texttt{sco.distri} & \texttt{yrank} & & \\ 
-  \hline \texttt{zmax} & \texttt{s.value} & set to default max(abs(z)) & & \\  
+  \hline \texttt{zmax} & \texttt{s.value} & & & set to default max(abs(z)) \\  
   \hline
 \end{longtable}
 \end{landscape}
