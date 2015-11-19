@@ -162,7 +162,6 @@ Several user functions are available to create a simple graph (stored as an \tex
 
 
 \subsection{Arguments}
-\label{arguments}
 The list of arguments of a function are given by the \texttt{args} function.
 <<args, fig=FALSE, echo=TRUE>>=
 library(ade4)
@@ -456,7 +455,6 @@ More examples are available in the help page by typing \texttt{example(superpose
 
 
 \subsubsection{The \texttt{ADEgS} function}
-\label{ADEgSbyhand}
 
 The \texttt{ADEgS} function provides the most elementary and flexible way to create an \texttt{ADEgS} object. The different arguments of the function are:
 
@@ -516,7 +514,6 @@ ADEgS(list(g5, g3), add = matrix(c(0, 1, 0, 0), byrow = TRUE, ncol = 2))
 More examples are available in the help page by typing \texttt{example(ADEgS)} in the R session.
 
 \subsection{Automatic collections}
-\label{multiADEgS}
 The package \texttt{adegraphics} contains functionalities to create collections of graphs. These collections are based on a simple graph repeated for different groups of individuals, variables or axes. The building process of these collections is quite simple (definition of arguments in the call of a user function) and leads to the creation of an \texttt{ADEgS} object.
 
 \subsubsection{Partitioning the data (\texttt{facets})}
