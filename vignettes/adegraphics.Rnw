@@ -60,12 +60,12 @@ options(width = 90, continue = " ")
 
 
 \section{An overview of object classes}
-In \texttt{adegraphics}, a user-level function produces a plot that is stored (and returned) as an object. The class architecture of the objects created by \texttt{adegraphics} functions is described in Figure \ref{fig:1}. 
+In \texttt{adegraphics}, a user-level function produces a plot that is stored (and returned) as an object. The class architecture of the objects created by \texttt{adegraphics} functions is described in Figure \ref{classes}. 
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{classes.png}
-  \label{fig:1}
+  \label{classes}
   \caption{Classes structure and user-level functions}
 \end{figure}
 
@@ -92,7 +92,7 @@ In the \texttt{adegraphics} package, a graph is created by a call to a user func
 
 \subsection{User functions}
 \label{user-functions}
-Several user functions are available to create a simple graph (stored as an \texttt{ADEg} object in R). Each function creates an object of a given class (see Figure \ref{fig:1}). Table \ref{functionsADEg} lists the different functions, their corresponding classes and a short description. The \texttt{ade4} users would not be lost: many functions have kept their names in \texttt{adegraphics}. The main changes are listed in Table \ref{functionsADEgchanged}.
+Several user functions are available to create a simple graph (stored as an \texttt{ADEg} object in R). Each function creates an object of a given class (see Figure \ref{classes}). Table \ref{functionsADEg} lists the different functions, their corresponding classes and a short description. The \texttt{ade4} users would not be lost: many functions have kept their names in \texttt{adegraphics}. The main changes are listed in Table \ref{functionsADEgchanged}.
 
 \begin{longtable}{|a|p{3cm}|p{8cm}|}
   \caption{\label{functionsADEg} Graphical functions available in \texttt{adegraphics}}\\
@@ -163,7 +163,7 @@ Several user functions are available to create a simple graph (stored as an \tex
 
 \subsection{Arguments}
 The list of arguments of a function are given by the \texttt{args} function.
-<<args, fig=FALSE, echo=TRUE>>=
+<<chunk1, fig=FALSE, echo=TRUE>>=
 library(ade4)
 library(adegraphics)
 args(s.label)
@@ -197,7 +197,7 @@ The \texttt{ade4} users would note that the names of some arguments have been mo
 \label{slots}
 A call to a graphical function (see \ref{user-functions}) returns an \texttt{ADEg} object. Each object is defined by a number of slots and several methods are associated to this class. Let us consider the \texttt{olympic} data set available in the \texttt{ade4} package. A principal component analysis (PCA) is applied on the \texttt{olympic\$tab} table that contains the results for 33 participating athletes at the 1988 summer olympic games:
 
-<<include = FALSE, fig = FALSE, echo = TRUE, keep.source = TRUE>>=
+<<chunk2, include = FALSE, fig = FALSE, echo = TRUE, keep.source = TRUE>>=
 data(olympic)
 pca1 <- dudi.pca(olympic$tab, scannf = FALSE)
 @
@@ -213,13 +213,13 @@ g1 <- s1d.barchart(pca1$eig, p1d.horizontal = F, ppolygons.col = "white")
 \end{figure}
 
 The class of the \texttt{g1} object is \texttt{C1.barchart} which extends the  \texttt{ADEg} class:
-<<include = FALSE, fig = FALSE, echo = TRUE, keep.source = TRUE>>=
+<<chunk3, include = FALSE, fig = FALSE, echo = TRUE, keep.source = TRUE>>=
 class(g1)
 showClass("C1.barchart")
 @
 
 This object contains different slots:
-<<include = FALSE, fig = FALSE, echo = TRUE, keep.source = TRUE>>=
+<<chunk4, include = FALSE, fig = FALSE, echo = TRUE, keep.source = TRUE>>=
 slotNames(g1)
 @ 
 
@@ -239,7 +239,7 @@ These slots are defined for each \texttt{ADEg} object and contain different type
 
 These different slots can be extracted using the \texttt{\symbol{64}} operator:
 
-<<include = FALSE, fig = FALSE, echo = TRUE, keep.source = TRUE>>=
+<<chunk5, include = FALSE, fig = FALSE, echo = TRUE, keep.source = TRUE>>=
 g1@data
 @
 
@@ -255,7 +255,7 @@ g2 <- s.corcircle(pca1$co)
 \includegraphics[width=0.5\textwidth]{fig-plot2.pdf}
 \end{figure}
 
-<<include = FALSE, fig = FALSE, echo = TRUE, keep.source = TRUE>>=
+<<chunk6, include = FALSE, fig = FALSE, echo = TRUE, keep.source = TRUE>>=
 class(g2)
 g2@g.args
 @
@@ -285,7 +285,7 @@ Several other methods have been defined for the \texttt{ADEg} class allowing to 
 \end{itemize}
 
 For instance:
-<<include = FALSE, fig = FALSE, echo = TRUE, keep.source = TRUE>>=
+<<chunk7, include = FALSE, fig = FALSE, echo = TRUE, keep.source = TRUE>>=
 getcall(g1) ## equivalent to g1@Call
 @
 
@@ -350,7 +350,7 @@ The functions \texttt{superpose}, \texttt{+} and \texttt{add.ADEg} allow the sup
 
 The vector \texttt{olympic\$score} contains the total number of points computed  for each participant. This vector is used to generate a \texttt{factor} partitioning the participants in two groups according to their final result (more or less than 8000 points):
 
-<<include = FALSE, fig = FALSE, echo = TRUE, keep.source = TRUE>>=
+<<chunk8, include = FALSE, fig = FALSE, echo = TRUE, keep.source = TRUE>>=
 fac.score <- factor(olympic$score < 8000, labels = c("MT8000", "LT8000"))
 @
 
@@ -377,19 +377,19 @@ class(g6)
 
 In the case of a superposition, the graphical parameters (e.g., background and limits) of the first graph (the one below) are used as a reference and applied to the second one (the one above). Note that it is also possible to use the \texttt{add = TRUE} argument in the call of a simple user function (functions described in Table \ref{functionsADEg}) to perform a superposition. The graph \texttt{g6} can also be obtained by:
 
-<<label=plot8, include = FALSE, fig = FALSE, eval = FALSE, echo = TRUE, keep.source = FALSE, width = 5, height = 5>>=
+<<label=chunk9, include = FALSE, fig = FALSE, eval = FALSE, echo = TRUE, keep.source = FALSE, width = 5, height = 5>>=
 g5
 s.label(pca1$li, add = TRUE)
 @
 
 The functions \texttt{cbindADEg} and \texttt{rbindADEg} allows to combine several graphical objects (\texttt{ADEg}, \texttt{ADEgS} or \texttt{trellis}) by rows or by columns. The new created \texttt{ADEgS} contains the list of the reduced graphs:
 
-<<label=plot8b, include = FALSE, fig = TRUE, echo = TRUE, keep.source = TRUE, width = 8, height = 8>>=
+<<label=plot8, include = FALSE, fig = TRUE, echo = TRUE, keep.source = TRUE, width = 8, height = 8>>=
 rbindADEg(cbindADEg(g2, g3), cbindADEg(g5, g6), plot = TRUE)
 @
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{fig-plot8b.pdf}
+\includegraphics[width=0.8\textwidth]{fig-plot8.pdf}
 \end{figure}
 
 
@@ -408,7 +408,7 @@ class(g7)
 
 The different methods associated to the \texttt{ADEgS} class allow to obtain information and to modify the multiple graph:
 
-<<include = FALSE, fig = FALSE, echo = TRUE, keep.source = TRUE>>=
+<<chunk10, include = FALSE, fig = FALSE, echo = TRUE, keep.source = TRUE>>=
 length(g7)
 names(g7)
 names(g7) <- c("chulls", "labels", "cor")
@@ -533,7 +533,7 @@ s.label(pca2$li)
 \end{figure}
 
 The sites are located on 12 rivers (\texttt{jv73\$fac.riv}) and it is possible to represent the PCA scores for each river using the \texttt{facets} argument:
-<<label=plot18, include = FALSE, fig = TRUE, echo = TRUE, keep.source = TRUE, width = 8, height = 8>>=
+<<label=plot18, include = FALSE, fig = TRUE, echo = TRUE, keep.source = TRUE, width = 8, height = 6>>=
 g8 <- s.label(pca2$li, facets = jv73$fac.riv)
 length(g8)
 names(g8)
@@ -547,7 +547,7 @@ names(g8)
 
 The \texttt{ADEgS} returned object contains the 12 plots. It is then possible to focus on a given river (e.g., the Doubs river) by considering only a subplot (e.g., type \texttt{g8\$Doubs}). The \texttt{facets} functionality is very general and available for the majority of \texttt{adegraphics} functions. For instance, with the \texttt{s.class} function:
 
-<<label=plot19, include = FALSE, fig = TRUE, echo = TRUE, keep.source = TRUE, width = 8, height = 8>>=
+<<label=plot19, include = FALSE, fig = TRUE, echo = TRUE, keep.source = TRUE, width = 8, height = 6>>=
 s.class(pca2$li, fac = jv73$fac.riv, col = rainbow(12), facets = jv73$fac.riv)
 @
 
@@ -586,7 +586,7 @@ s1d.boxplot(pca1$li, fac.score, col = c("red", "blue"), psub = list(position = "
 \subsubsection{Multiple variable}
 Some user functions (\texttt{s1d.density}, \texttt{s1d.gauss}, \texttt{s1d.boxplot}, \texttt{s1d.class}, \texttt{s.class}, \texttt{s.image}, \texttt{s.traject}, \texttt{s.value}, \texttt{triangle.class}) have an argument named \texttt{fac} or \texttt{z}. This argument can have several columns (\texttt{data.frame} or \texttt{matrix}) so that each column is used to create a separate graph. For instance, we can represent the distribution of the 6 environmental variables on the PCA factorial map of the \texttt{jv73\$tab} data set:
 
-<<label=plot22, include = FALSE, fig = TRUE, echo = TRUE, keep.source = TRUE, width = 7, height = 7>>=
+<<label=plot22, include = FALSE, fig = TRUE, echo = TRUE, keep.source = TRUE, width = 6, height = 4>>=
 s.value(pca2$li, pca2$tab, symbol = "circle")
 @
 \begin{figure}[H]
@@ -623,7 +623,7 @@ Compared to the \texttt{ade4} package, the main advantage of \texttt{adegraphics
 \label{trellispar}
 The \texttt{trellis.par} slot is a list of parameters that are directly included in the call of functions of the \texttt{lattice} package. The name of parameters and their default value are given by the \texttt{trellis.par.get} function of \texttt{lattice}.
 
-<<fig = FALSE, echo = TRUE>>=
+<<chunk11, fig = FALSE, echo = TRUE>>=
 library(lattice)
 sort(names(trellis.par.get()))
 @
@@ -646,13 +646,13 @@ ADEgS(c(g11, g12), layout = c(1, 2))
 \subsection{Parameters in \texttt{adeg.par}}
 \label{adegpar}
 The \texttt{adeg.par} slot is a list of graphical parameters specific to the \texttt{adegraphics} package. The name of parameters and their default value are available using the \texttt{adegpar} function which is inspired by the \texttt{par} function of the \texttt{graphics} package.  
-<<fig = FALSE, echo = TRUE>>=
+<<chunk12, fig = FALSE, echo = TRUE>>=
 names(adegpar())
 @
 
 A description of these parameters is available in the help page of the function (\texttt{?adegpar}). Note that each \texttt{adeg.par} parameter starts by the letter 'p' and its name relates to the type of graphical element considered (\texttt{ptable} is for tables display, \texttt{ppoints} for points, \texttt{parrows} for arrows, etc). Each element of this list can contain one or more sublists. Details on a sublist are obtained using its name either as a parameter of the \texttt{adegpar} function or after the \texttt{\$} symbol. For example, if we want to know the different parameters to manage the display of points:
 
-<<fig = FALSE, echo = TRUE>>=
+<<chunk13, fig = FALSE, echo = TRUE>>=
 adegpar("ppoints")
 adegpar()$ppoints
 @
@@ -703,7 +703,7 @@ ADEgS(c(g13, g14), layout = c(1, 2))
 
 As the \texttt{adegpar} function can accept numerous graphical parameters, it can be used to define some graphical themes. The next releases of \texttt{adegraphics} will offer functionalities to easily create, edit and store graphical themes. Here, we reassign the original default parameters:
 
-<<fig = FALSE, echo = TRUE>>=
+<<chunk14, fig = FALSE, echo = TRUE>>=
 adegpar(oldadegpar)
 @ 
 
@@ -711,14 +711,14 @@ adegpar(oldadegpar)
 
 A second option is to update the graphical parameters locally so that the changes will only modify the object created. This is done using the dots (\texttt{...}) argument in the call to a user function. In this case, the default values of parameters in the global environment are not modified:
 
-<<label=plot25b, fig = TRUE, include = FALSE, echo = TRUE, keep.source = FALSE, width=5, height=5>>=
+<<label=plot26, fig = TRUE, include = FALSE, echo = TRUE, keep.source = FALSE, width=5, height=5>>=
 adegpar("ppoints")
 s.label(dfxy = pca1$li, plabels.cex = 0, ppoints = list(col = c(2, 4, 5), cex = 1.5, pch = 15))
 adegpar("ppoints")
 @
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.5\textwidth]{fig-plot25b.pdf}
+\includegraphics[width=0.5\textwidth]{fig-plot26.pdf}
 \end{figure}
 
 In the previous example, we can see that parameters can be either specified using a '\texttt{.}' separator or a list. For instance, using \texttt{plabels.cex = 0} or \texttt{plabels = list(cex = 0)} is strictly equivalent. Moreover, partial names can be used if there is no ambiguity (such as \texttt{plab.ce = 0} in our example).
@@ -741,36 +741,36 @@ The \texttt{ADEg.S2} objects can also contain spatial information (map stored as
 
 When the \texttt{facets} (see \ref{facets}) argument is used, users can modify the parameter \texttt{samelimits}: if it is \texttt{TRUE}, all graphs have the same limits whereas limits are computed for each subgraph independently when it is \texttt{FALSE}. 
 For example, considering the \texttt{jv73} data set, each subgraph is computed with its own limits and labels are then more scattered:
-<<label=plot25c, fig = TRUE, include = FALSE, echo = TRUE, keep.source = FALSE, width=8, height=8>>=
+<<label=plot27, fig = TRUE, include = FALSE, echo = TRUE, keep.source = FALSE, width=8, height=6>>=
 s.label(pca2$li, facets = jv73$fac.riv, samelimits = FALSE)
 @
 \begin{figure}[H]
 \centering
-\includegraphics[width=1\textwidth]{fig-plot25c.pdf}
+\includegraphics[width=1\textwidth]{fig-plot27.pdf}
 \end{figure}
 
 
-Several other \texttt{g.args} parameters can be updated according to the class of the created object (see Figure \ref{fig:2} in \ref{arguments}).
+Several other \texttt{g.args} parameters can be updated according to the class of the created object (see Figure \ref{fig:2}).
 
 \subsection{Parameters applied on a \texttt{ADEgS}}
 Users can either apply the changes to all graphs or to update only one graph. Of an \texttt{ADEgS}, to apply changes on all the graphs contained in an \texttt{ADEgS}, the syntax is similar to the one described for an \texttt{ADEg} object. For example, background color can be changed for all graphs in \texttt{g10} using the \texttt{pbackground.col} parameter.
-<<label=plot26, include = FALSE, fig = TRUE, echo = TRUE, keep.source = TRUE, width = 8, height = 8>>=
+<<label=plot28, include = FALSE, fig = TRUE, echo = TRUE, keep.source = TRUE, width = 8, height = 8>>=
 g15 <- plot(coi1, pbackground.col = "steelblue")
 @
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{fig-plot26.pdf}
+\includegraphics[width=0.8\textwidth]{fig-plot28.pdf}
 \end{figure}
 
 To change the parameters of a given graph, the name of the parameter must be preceded by the name of the subgraph. This supposes that the names of subgraphs are known. For example, to modify only two graphs:
 
-<<label=plot27, include = FALSE, fig = TRUE, echo = TRUE, keep.source = FALSE, width = 8, height = 8>>=
+<<label=plot29, include = FALSE, fig = TRUE, echo = TRUE, keep.source = FALSE, width = 8, height = 8>>=
 names(g15)
 plot(coi1, XYmatch.pbackground.col = "steelblue",  XYmatch.pgrid.col = "red", eig.ppolygons.col="orange")
 @
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{fig-plot27.pdf}
+\includegraphics[width=0.8\textwidth]{fig-plot29.pdf}
 \end{figure}
 
 
@@ -779,7 +779,7 @@ plot(coi1, XYmatch.pbackground.col = "steelblue",  XYmatch.pgrid.col = "red", ei
 
 In this section, we illustrate how \texttt{adegraphics} functionalities can be used to implement graphical functions in your own package. We created an objet of class \texttt{track} that contains a vector of distance and time. 
 
-<<ownfunction1, fig=FALSE, echo=TRUE>>=
+<<chunk15, fig=FALSE, echo=TRUE>>=
 tra1 <- list()
 tra1$time <- runif(300)
 tra1$distance <- tra1$time * 5 + rnorm(300)
@@ -795,7 +795,7 @@ For an object of the class \texttt{track}, we wish to represent different compon
 
 The corresponding multiple plot can be done using \texttt{adegraphics} functions:
 
-<<ownfunction2, fig=TRUE, include=FALSE, echo=TRUE, width=9, height=3>>=
+<<plot30, fig=TRUE, include=FALSE, echo=TRUE, width=9, height=3>>=
 g1 <- s1d.hist(tra1$distance, psub.text = "distance", ppolygons.col = "blue", 
                pgrid.draw = FALSE, plot = FALSE)
 g2 <- s1d.hist(tra1$distance / tra1$time, psub.text = "speed", ppolygons.col = "red", 
@@ -810,12 +810,12 @@ G <- ADEgS(list(g1, g2, g3))
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{fig-ownfunction2.pdf}
+\includegraphics[width=0.9\textwidth]{fig-plot30.pdf}
 \end{figure}
 
 To facilitate the graphical representation of an object of class \texttt{track}, the simplest solution is to design a function \texttt{plot} for this class. We illustrate how to define such function with a particular emphasis on the management of graphical parameters. The function is provided below and we detail the different steps.
 
-<<ownfunction3, fig=FALSE, echo=TRUE>>=
+<<chunk16, fig=FALSE, echo=TRUE>>=
 plot.track <- function(x, pos = -1, storeData = TRUE, plot = TRUE, ...) {
  
  ## step 1 : sort parameters for each graph
@@ -870,23 +870,23 @@ In a final step, the multiple graph is build through the creation of a new \text
 
 The \texttt{plot.track} function can then be used by:
 
-<<ownfunction3, fig=TRUE, include=FALSE, echo=TRUE, width=9, height=3>>=
+<<plot31, fig=TRUE, include=FALSE, echo=TRUE, width=9, height=3>>=
 plot(tra1)
 @
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{fig-ownfunction3.pdf}
+\includegraphics[width=0.9\textwidth]{fig-plot31.pdf}
 \end{figure}
 
 Graphical parameters can be modified by:
-<<ownfunction4, fig=TRUE, include=FALSE, echo=TRUE, width=9, height=3>>=
+<<plot32, fig=TRUE, include=FALSE, echo=TRUE, width=9, height=3>>=
 plot(tra1, histDist.ppoly.col = "green", pbackground.col = "grey")
 @
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{fig-ownfunction4.pdf}
+\includegraphics[width=0.9\textwidth]{fig-plot32.pdf}
 \end{figure}
 
 
@@ -895,7 +895,7 @@ plot(tra1, histDist.ppoly.col = "green", pbackground.col = "grey")
 
 \subsection{Labels customization}
 
-<<label=plot28, fig = TRUE, include = FALSE, echo = TRUE, keep.source = FALSE, width=8, height=4>>=
+<<label=plot33, fig = TRUE, include = FALSE, echo = TRUE, keep.source = FALSE, width=8, height=4>>=
 data(meaudret)
 g16 <- s.label(pca3$li, plot = FALSE)
 g17 <- s.label(pca3$li, ppoints.col= "red", plabels = list(box = list(draw = FALSE), optim = TRUE), plot = FALSE)
@@ -903,13 +903,13 @@ ADEgS(c(g16, g17), layout = c(1, 2))
 @
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{fig-plot28.pdf}
+\includegraphics[width=0.8\textwidth]{fig-plot33.pdf}
 \end{figure}
 
 
 \subsection{Ellipses, stars and convex hulls}
 
-<<label=plot29, include = FALSE, fig = TRUE, echo = TRUE, keep.source = FALSE, width = 8, height = 8>>=
+<<label=plot34, include = FALSE, fig = TRUE, echo = TRUE, keep.source = FALSE, width = 8, height = 8>>=
 g18 <- s.class(pca3$li, fac = meaudret$design$season, plot = FALSE)
 g19 <- s.class(pca3$li, fac = meaudret$design$season, ellipseSize = 0, chullSize = 1, starSize = 0.5, col = TRUE, plot = FALSE)
 g20 <- s.class(pca3$li, fac = meaudret$design$season, pellipses.lwd = 2, pellipses.border = 2:5, pellipses.col = 2:5, plot = FALSE)
@@ -919,13 +919,13 @@ ADEgS(c(g18, g19, g20, g21), layout = c(2, 2))
 @
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{fig-plot29.pdf}
+\includegraphics[width=0.8\textwidth]{fig-plot34.pdf}
 \end{figure}
 
 
 \subsection{Values and legend}
 
-<<label=plot30, include = FALSE, fig = TRUE, echo = TRUE, keep.source = FALSE, width = 8, height = 8>>=
+<<label=plot35, include = FALSE, fig = TRUE, echo = TRUE, keep.source = FALSE, width = 8, height = 8>>=
 data(rpjdl)
 coa2 <- dudi.coa(rpjdl$fau, scannf = FALSE, nf = 3)
 g22 <- s.value(coa2$li, coa2$li[,3], plot = FALSE)
@@ -936,13 +936,13 @@ ADEgS(c(g22, g23, g24, g25), layout = c(2, 2))
 @
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{fig-plot30.pdf}
+\includegraphics[width=0.8\textwidth]{fig-plot35.pdf}
 \end{figure}
 
 
 \subsection{1-D plot}
 
-<<label=plot31, include = FALSE, fig = TRUE, echo = TRUE, keep.source = FALSE, width = 8, height = 8>>=
+<<label=plot36, include = FALSE, fig = TRUE, echo = TRUE, keep.source = FALSE, width = 8, height = 8>>=
 score1 <- c(rnorm(1000, mean = -0.5, sd = 0.5), rnorm(1000, mean = 1))
 fac1 <- rep(c("A", "B"), each = 1000)
 g26 <- s1d.density(score1, fac1, pback.col = "grey75", plot = FALSE)
@@ -953,13 +953,13 @@ ADEgS(c(g26, g27, g28, g29), layout = c(2, 2))
 @
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{fig-plot31.pdf}
+\includegraphics[width=0.8\textwidth]{fig-plot36.pdf}
 \end{figure}
 
 
 \subsection{Maps and neighbor graphs}
 
-<<label=plot32, include = FALSE, fig = TRUE, echo = TRUE, keep.source = FALSE, width = 10, height = 5>>=
+<<label=plot37, include = FALSE, fig = TRUE, echo = TRUE, keep.source = FALSE, width = 10, height = 5>>=
 library(Guerry)
 library(sp)
 data(gfrance85)
@@ -971,20 +971,20 @@ ADEgS(c(g30, g31), layout = c(1, 2))
 @
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{fig-plot32.pdf}
+\includegraphics[width=0.8\textwidth]{fig-plot37.pdf}
 \end{figure}
 
 
-<<label=plot32b, include = FALSE, fig = TRUE, echo = TRUE, keep.source = FALSE, width = 5, height = 4>>=
+<<label=plot38, include = FALSE, fig = TRUE, echo = TRUE, keep.source = FALSE, width = 5, height = 4>>=
 s.Spatial(gfrance85[,7:12])
 @
 \begin{figure}[H]
 \centering
-\includegraphics[width=1\textwidth]{fig-plot32b.pdf}
+\includegraphics[width=1\textwidth]{fig-plot38.pdf}
 \end{figure}
 
 
-<<label=plot33, include = FALSE, fig = TRUE, echo = TRUE, keep.source = FALSE, width = 8, height = 4>>=
+<<label=plot39, include = FALSE, fig = TRUE, echo = TRUE, keep.source = FALSE, width = 8, height = 4>>=
 data(mafragh, package = "ade4")
 g32 <- s.label(mafragh$xy, nb = mafragh$nb, plot = FALSE)
 g33 <- s.label(mafragh$xy, nb = mafragh$nb, pnb.ed.col = "red", plab.cex = 0, pnb.node = list(cex = 3, col = "blue"), ppoints.col = "green", plot = FALSE)
@@ -992,13 +992,13 @@ ADEgS(c(g32, g33), layout = c(1, 2))
 @
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{fig-plot33.pdf}
+\includegraphics[width=0.8\textwidth]{fig-plot39.pdf}
 \end{figure}
 
 
 \subsection{Ternary plots}
 
-<<label=plot34, include = FALSE, fig = TRUE, echo = TRUE, keep.source = FALSE, width = 8, height = 4>>=
+<<label=plot40, include = FALSE, fig = TRUE, echo = TRUE, keep.source = FALSE, width = 8, height = 4>>=
 data(euro123, package = "ade4")
 df <- rbind.data.frame(euro123$in78, euro123$in86, euro123$in97)
 row.names(df) <- paste(row.names(euro123$in78), rep(c(1, 2, 3), rep(12, 3)), sep = "")
@@ -1008,7 +1008,7 @@ ADEgS(c(g34, g35), layout = c(1, 2))
 @
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{fig-plot34.pdf}
+\includegraphics[width=0.8\textwidth]{fig-plot40.pdf}
 \end{figure}
 
 
