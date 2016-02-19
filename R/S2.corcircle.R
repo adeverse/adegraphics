@@ -77,7 +77,7 @@ setMethod(
 
 
 s.corcircle <- function(dfxy, xax = 1, yax = 2, labels = row.names(as.data.frame(dfxy)), fullcircle = TRUE,
-                      	facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1,...) {
+                      	facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
                         
   ## evaluation of some parameters (required for multiplot)
   thecall <- .expand.call(match.call())

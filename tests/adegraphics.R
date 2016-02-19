@@ -14,6 +14,7 @@ g4b <- ADEgS(list(g1, g2)) ## the same as g3
 g5 <- s.label(xy, plabels.cex = 0, paxes.draw = TRUE, ppoints.col = "red")
 
 g6 <- superpose(g1, g5, plot = TRUE)
+g6b <- s.density(xy)
 g7 <- superpose(s.density(xy), g5, plot = TRUE)
  
 g8 <- superpose(s.label(xy, plabels.boxes.col = "orange", plot = FALSE), 
