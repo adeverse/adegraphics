@@ -9,6 +9,7 @@ repList <- function(x, times) {
   return(l)
 }
 
+
 .proportional_map <- function(z, maxz) {
   ## Proportional Symbol Mapping in R
   ## Susumu Tanimura, Chusi Kuroiwa, Tsutomu Mizota
@@ -16,6 +17,8 @@ repList <- function(x, times) {
   sizes <- (abs(z) / maxz) ^ 0.57
   return(sizes) 
 }
+
+
 .symbol2pch <- function(symbol){
     ## give the pch associated to some symbol names (used in *.value)
     res <- 22 ## square by default
@@ -30,6 +33,7 @@ repList <- function(x, times) {
     }
     return(res)
 }
+
 
 .textpos <- function(xx, yy, origin = c(0, 0), n = length(xx)) {
   ## justification for labels and positions used in s.arrow and s.corcircle

@@ -206,7 +206,7 @@ setMethod(
     addi <- cbind(rbind(g1@add, rep(0, ngraph)), rep(0, ngraph + 1))
     addi[which, ngraph + 1] <- 1  ## new graph superpose to which
     ADEglist <- g1@ADEglist
-    ADEglist[[ngraph+1]] <- g2
+    ADEglist[[ngraph + 1]] <- g2
     ADEgS <- new(Class = "ADEgS", ADEglist = ADEglist, positions = rbind(g1@positions, g1@positions[which,]), add = addi, Call = match.call())
     if(plot) 
       print(ADEgS)
