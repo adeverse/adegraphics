@@ -265,7 +265,7 @@
   ## prepare and create g3
   facets_eig <- reorder(as.factor(rep(levels(object$TL[, 1]), object$rank)), rep(1:length(object$rank), object$rank))
   if(!any(posieig == "none")) {
-    g3 <- do.call("plotEig", c(list(eigvalue = substitute(object$Eig), nf = 1:ncol(object$Li), facets = facets_eig, xax = xax, yax = yax, plot = FALSE), sortparameters$eig))[which.tab]
+    g3 <- do.call("plotEig", c(list(eigvalue = substitute(object$Eig), nf = 1:ncol(object$Li), facets = facets_eig, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$eig))[which.tab]
     obj <- do.call("insert", list(g3, obj, posi = posieig, plot = FALSE, ratio = 0.2, inset = 0, dispatch = TRUE))
   }
   
@@ -328,7 +328,7 @@
   ## prepare and create g3
   facets_eig <- reorder(as.factor(rep(levels(object$TL[, 1]), object$rank)), rep(1:length(object$rank), object$rank))
   if(!any(posieig == "none")) {
-    g3 <- do.call("plotEig", c(list(eigvalue = substitute(object$Eig), nf = 1:ncol(object$Li), facets = facets_eig, xax = xax, yax = yax, plot = FALSE), sortparameters$eig))[which.tab]
+    g3 <- do.call("plotEig", c(list(eigvalue = substitute(object$Eig), nf = 1:ncol(object$Li), facets = facets_eig, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$eig))[which.tab]
     obj <- do.call("insert", list(g3, obj, posi = posieig, plot = FALSE, ratio = 0.2, inset = 0, dispatch = TRUE))
   }
   
