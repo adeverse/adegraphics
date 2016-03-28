@@ -109,7 +109,7 @@ setMethod(
                 object@g.args$xlim <- lim
             
             if(inherits(object, "C1.curve") | inherits(object, "C1.dotplot") | inherits(object, "C1.interval"))
-                if(!is.null(at))
+                if(is.null(scalesandlab$y$at))
                     scalesandlab$y$at <- at
             
             if(is.null(scalesandlab$y$at))
@@ -124,7 +124,7 @@ setMethod(
                 object@g.args$ylim <- lim
             
             if(inherits(object, "C1.curve") | inherits(object, "C1.dotplot") | inherits(object, "C1.interval"))
-                if(!is.null(at))
+                if(is.null(scalesandlab$x$at))
                     scalesandlab$x$at <- at
             
             if(is.null(scalesandlab$x$at))
