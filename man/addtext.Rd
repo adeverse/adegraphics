@@ -60,7 +60,8 @@ addtext(g1, 1, 20, "A", plabels.srt = 45)
 
 xy <- cbind.data.frame(x = runif(200, -1, 1), y = runif(200, -1, 1))
 posi <- factor(xy$x > 0) : factor(xy$y > 0)
-g2 <- s.class(xy, fac = posi, facets = posi, pellipses.col = 1:4, plabels.cex = 0, plegend.drawKey = FALSE, psub.cex = 0, plot = FALSE)
+g2 <- s.class(xy, fac = posi, facets = posi, pellipses.col = 1:4, plabels.cex = 0, 
+  plegend.drawKey = FALSE, psub.cex = 0, plot = FALSE)
 addtext(g2, c(0.5, 0.5, -0.5, -0.5), c(0.5, -0.5), levels(posi), plabels.cex = 2, plabels.col = 1:4)
 }
 

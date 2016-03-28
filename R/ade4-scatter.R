@@ -61,7 +61,7 @@
   object <- do.call("superpose", list(g1, g2))
   object@Call <- call("superpose", g1@Call, g2@Call)
   if(position != "none") {
-    g3 <- do.call("plotEig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters$eig))
+    g3 <- do.call("plotEig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$eig))
     object <- do.call("insert", list(g3@Call, object@Call, posi = position, plot = FALSE, ratio = 0.25))
   }
   
@@ -128,7 +128,7 @@
   object <- do.call("superpose", list(g1, g2))
   object@Call <- call("superpose", g1@Call, g2@Call)
   if(position != "none") {
-    g3 <- do.call("plotEig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters$eig))
+    g3 <- do.call("plotEig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$eig))
     object <- do.call("insert", list(g3@Call, object@Call, posi = position, plot = FALSE, ratio = 0.25))
   }
   
@@ -248,7 +248,7 @@
   ## creation of each individual ADEg and of the final ADEgS
   object <- do.call("s.label", c(list(dfxy = substitute(x$li), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$row))
   if(position != "none") {
-    g2 <- do.call("plotEig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters$eig))
+    g2 <- do.call("plotEig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$eig))
     object <- do.call("insert", list(g2@Call, object@Call, posi = position, plot = FALSE, ratio = 0.25))
     names(object) <- graphsnames[1:length(object)]
   }
@@ -301,7 +301,7 @@
   object <- do.call("superpose", list(g1, g2))
   object@Call <- call("superpose", g1@Call, g2@Call)
   if(position != "none") {
-    g3 <- do.call("plotEig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE), sortparameters$eig))
+    g3 <- do.call("plotEig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$eig))
     object <- do.call("insert", list(g3@Call, object@Call, posi = position, plot = FALSE, ratio = 0.25))
   }
   
