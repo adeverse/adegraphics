@@ -29,7 +29,7 @@ addtext(g1, -1, c(1, 0.9), c("Data", "Granulo"), plabels.cex = c(1.5, 2), plabel
 data(dunedata, package = "ade4")
 afc1 <- ade4::dudi.coa(dunedata$veg, scannf = FALSE)
 g7 <- table.value(dunedata$veg, symbol = "circle", ppoints.cex = 0.5, plot = FALSE)
-addtext(g7, 1, 20, "A", plabels.srt = 45)
+addtext(g7, 1, 20, "A", plabels.srt = 45, plabels.boxes.draw = FALSE)
 
 # on a trellis
 library(lattice)
