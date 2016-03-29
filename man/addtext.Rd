@@ -14,7 +14,7 @@
 }
 
 \usage{
-addtext(object, xcoord, ycoord, label, which = 1, plot = TRUE, pos = -1, ...)
+addtext(object, xcoord, ycoord, label, plot = TRUE, ...)
 }
 
 \arguments{
@@ -26,17 +26,10 @@ addtext(object, xcoord, ycoord, label, which = 1, plot = TRUE, pos = -1, ...)
   }
   \item{label}{a character string (or a vector) containing the label(s) displayed on \code{object}
   }
-  \item{which}{if \code{object} is an \code{ADEgS}, which \code{ADEg} is used as the base of superposition 
-  }
   \item{plot}{a logical indicating if the graphics is displayed
   }
-  \item{pos}{an integer indicating the position of the
-    environment where the data are stored, relative to the environment
-    where the function is called. Useful only if \code{storeData} is
-    \code{FALSE}
-  }
-  \item{\dots}{Additional graphical parameters (see the \code{plabels} list in
-    \code{\link{adegpar}} and \code{\link[lattice]{trellis.par.get}})
+  \item{\dots}{Other arguments. Additional graphical parameters (see the \code{plabels} list in
+    \code{\link{adegpar}} and \code{\link[lattice]{trellis.par.get}}. If \code{object} is an \code{ADEgS}, the argument \code{which} identify which \code{ADEg} is/are used for superposition)
   }
 }
 
@@ -44,7 +37,7 @@ addtext(object, xcoord, ycoord, label, which = 1, plot = TRUE, pos = -1, ...)
    An object of class \code{"ADEgS"}.
 }
 
-\author{Aurelie Siberchicot \email{aurelie.siberchicot@univ-lyon1.fr}
+\author{Aurelie Siberchicot \email{aurelie.siberchicot@univ-lyon1.fr} and Stephane Dray
 }
 
 \seealso{
