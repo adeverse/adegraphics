@@ -21,12 +21,11 @@ setMethod(
       xlim <- object$x.limits
       ylim <- object$y.limits
     }
-    print(ycoord)
-    print(xcoord)
+
     textadded <- xyplot(ycoord ~ xcoord, panel = function(x, y, ...)
         adeg.panel.label(x, y, labels, plabels = params), plot = FALSE)
 
-    textadded$call <- call("xyplot", substitute(ycoord) ~ substitute(xcoord), xlim = substitute(xlim), ylim = substitute(ylim), labels = substitute(labels), 
+    textadded$call <- call("xyplot", ycoord ~ xcoord, xlim = substitute(xlim), ylim = substitute(ylim), labels = substitute(labels), 
                 
                            panel = function(x, y, labels, ...) adeg.panel.label(x, y, labels = labels, plabels = params))
     
@@ -43,7 +42,6 @@ setMethod(
   f = "addtext",
   signature = "ADEgS",
   definition = function(object, xcoord, ycoord, label, plot = TRUE, which = 1:length(object),...) {
-      print(which)
     ngraph <- length(object)
     if(max(which) > ngraph)
       stop("Values in 'which' should be lower than the length of object")
