@@ -118,6 +118,7 @@ Function            Class of the returned object    Description
 ---------           ------------------------------  --------------
 `s1d.barchart`      `C1.barchart`                   1-D plot of a numeric score by bars
 `s1d.curve`         `C1.curve`                      1-D plot of a numeric score linked by curves
+`s1d.curves`        `C1.curves`                     1-D plot of multiple scores linked by curves
 `s1d.density`       `C1.density`                    1-D plot of a numeric score by density curves
 `s1d.dotplot`       `C1.dotplot`                    1-D plot of a numeric score by dots
 `s1d.gauss`         `C1.gauss`                      1-D plot of a numeric score by Gaussian curves

@@ -5,17 +5,21 @@
 \alias{C1.curve-class}
 \alias{prepare,C1.curve-method}
 \alias{panel,C1.curve-method}
+\alias{C1.curves}
+\alias{C1.curves-class}
+\alias{panel,C1.curves-method}
 
 \title{Class \code{C1.curve}}
 
 \description{
   A class for the creation and display of a numeric score linked by curves.
+  The \code{C1.curves} allows to deal with multiple scores. 
 }
 
 \section{Objects from the Class}{
-  \code{C1.curve} objects can be created by calls of the form \code{new("C1.curve", ...)}.
+  \code{C1.curve} objects can be created by calls of the form \code{new("C1.curve", ...)}. The regular usage in this package is to use the \code{s1d.curve} function.
   
-  The regular usage in this package is to use the \code{s1d.curve} function.
+  \code{C1.curves} objects can be created by calls of the form \code{new("C1.curves", ...)}. The regular usage in this package is to use the \code{s1d.curves} function. Class \code{\linkS4class{C1.curves}} extends \code{C1.curve} directly.\cr
 }
 
 \section{Slots}{
@@ -56,12 +60,15 @@
 
 \section{Methods}{
   The methods of the father classes \code{"ADEg.C1"} and \code{"ADEg"} can be used by inheritance.
-  The specific methods for \code{C1.curve} are: 
+  The specific methods for \code{C1.curve} and \code{C1.curves} are: 
   \describe{
     \item{prepare}{\code{signature(object = "C1.curve")}: 
       calls the parent method (\code{prepare} for \code{ADEg.C1}) and modifies some graphical parameters used by default.}
       
     \item{panel}{\code{signature(object = "C1.curve")}: 
+      draws points and curves.}
+    
+    \item{panel}{\code{signature(object = "C1.curves")}: 
       draws points and curves.}
   }
 }
@@ -73,10 +80,12 @@
   \code{\linkS4class{ADEg}}    
   \code{\linkS4class{ADEg.C1}}
   \code{\link{s1d.curve}}
+  \code{\link{s1d.curves}}
 }
 
 \examples{
 showClass("C1.curve")
+showClass("C1.curves")
 }
 
 \keyword{classes}

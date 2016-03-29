@@ -16,6 +16,8 @@
       draws bar charts and labels}
     \item{\code{signature(object = "C1.curve")}}{
       draws points and curves}
+    \item{\code{signature(object = "C1.curves")}}{
+      draws multiple points and curves}
     \item{\code{signature(object = "C1.density")}}{
       draws density curves}
     \item{\code{signature(object = "C1.dotplot")}}{

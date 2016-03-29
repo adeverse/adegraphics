@@ -12,7 +12,7 @@ Imports: ade4, graphics, grid, KernSmooth, lattice, methods, RColorBrewer, sp (>
 Suggests: Guerry, knitr, maptools, pixmap, rmarkdown, spdep, splancs
 Collate: adeGsenv.R parameter.R utils.R
   utilstriangle.R genericMethod.R utilsclass.R panelfunctions.R ADEg.R ADEgS.R utilsADEgS.R
-  ADEg.C1.R C1.barchart.R C1.curve.R C1.density.R C1.gauss.R C1.dotplot.R C1.hist.R C1.interval.R
+  ADEg.C1.R C1.barchart.R C1.curve.R C1.curves.R C1.density.R C1.gauss.R C1.dotplot.R C1.hist.R C1.interval.R
   ADEg.S1.R S1.boxplot.R S1.class.R S1.distri.R S1.label.R S1.match.R
   ADEg.S2.R S2.arrow.R S2.class.R S2.corcircle.R S2.density.R S2.distri.R S2.image.R S2.label.R S2.logo.R S2.match.R S2.traject.R S2.value.R 
   ADEg.T.R T.image.R T.value.R T.cont.R 
