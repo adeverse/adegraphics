@@ -1363,3 +1363,167 @@
     print(object)
   invisible(object)
 }
+
+
+"plot.inertia" <- function(x, xax = 1, yax = 2, cont = 0.1, posieig = "none", addrowlab = c(), addcollab = c(), plot = TRUE, storeData = TRUE, pos = -1, ...) { 
+  
+  if(!inherits(x, "inertia")) 
+    stop("Object of class 'inertia' expected")
+  
+  ## data management
+  ori <- as.list(x$call)
+  evTab <- eval.parent(ori[[2]])
+  
+  if(length(xax) > 1)
+    stop("Not implemented for multiple xax")
+  if(xax > evTab$nf)
+    stop("Non convenient xax")
+  
+  if(length(yax) > 1)
+    stop("Not implemented for multiple yax")
+  if(yax > evTab$nf)
+    stop("Non convenient yax") 
+  
+  
+  adegtot <- adegpar()
+  position <- match.arg(posieig[1], choices = c("bottomleft", "bottomright", "topleft", "topright", "none"), several.ok = FALSE)
+  
+  ## sort parameters for each graph
+  graphsnames <- c("light_row", "heavy_row", "row_cont", "light_col", "heavy_col", "col_cont", "eig")
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
+  
+  ## parameters management
+  adegtot <- adegpar()
+  params <- list()
+  params$light_row <- list(plabels = list(cex = 0), ppoints = list(col = "grey20", alpha = 0.45, cex = 1.2, pch = 19))
+  params$heavy_row <- list(plabels = list(boxes = list(draw = FALSE), optim = TRUE, cex = 1.1), ppoints = list(cex = 0), ellipseSize = 0, plines = list(col = "red"))
+  
+  params$light_col <- list(plabels = list(cex = 0), ppoints = list(col = "grey20", alpha = 0.45, cex = 1.2, pch = 19))
+  params$heavy_col <- list(plabels = list(boxes = list(draw = FALSE), optim = TRUE, cex = 1.1), ppoints = list(cex = 0), ellipseSize = 0, plines = list(col = "blue"))
+  
+  params$row_cont <- list(ppoints = list(cex = 0), parrows = list(length = 0), plabels = list(cex = 0), plines = list(lwd = 2.5, col = "black"))
+  params$col_cont <- list(ppoints = list(cex = 0), parrows = list(length = 0), plabels = list(cex = 0), plines = list(lwd = 2.5, col = "grey35"))
+  params$eig <- list(pbackground = list(box = TRUE), psub = list(text = "Eigenvalues"))
+  sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+  
+  
+  # calcul des contributions
+  if(isTRUE(ori$row.inertia)) {
+    inertrow <- x$row.abs[, c(xax, yax)] / 100
+    # inertrowcall <- call("/", call("[", call("$", substitute(x), "row.abs"), call(":", 1, call("NROW", call("$", substitute(x), "row.abs"))), c(xax, yax)), 100)
+    light_row <- subset(evTab$li[, c(xax, yax)], inertrow[, 1] < cont & inertrow[, 2] < cont)
+    # light_rowcall <- call("subset", call("[", call("$", ori[[2]], "li"), call(":", 1, call("NROW", call("$", ori[[2]], "li"))), c(xax, yax)), call("&", call("<", call("[", inertrowcall, 1), cont), call("<", call("[", inertrowcall, 2), cont)))
+    
+    heavy_row <- subset(evTab$li[, c(xax, yax)], inertrow[, 1] >= cont | inertrow[, 2] >= cont)
+    heavy_row <- rbind(heavy_row, evTab$li[addrowlab, c(xax, yax)])
+    
+    heavy_inertrow <- subset(inertrow, inertrow[, 1] >= cont | inertrow[, 2] >= cont)
+    heavy_inertrow <- rbind(heavy_inertrow, inertrow[addrowlab, ])
+    cont_row <- cbind(c(heavy_row[, 1] - heavy_inertrow[, 1]/2, heavy_row[, 1] + heavy_inertrow[, 1]/2, heavy_row[, 1], heavy_row[, 1]), 
+                      c(heavy_row[, 2], heavy_row[, 2], heavy_row[, 2] - heavy_inertrow[, 2]/2, heavy_row[, 2] + heavy_inertrow[, 2]/2)) 
+    fac_row <- as.factor(rep(rownames(heavy_row), 4))
+  }
+  
+  if(isTRUE(ori$col.inertia)) {
+    inertcol <- x$col.abs[, c(xax, yax)] / 100
+    light_col <- subset(evTab$co[, c(xax, yax)], inertcol[, 1] < cont & inertcol[, 2] < cont)
+    
+    heavy_col <- subset(evTab$co[, c(xax, yax)], inertcol[, 1] >= cont | inertcol[, 2] >= cont)
+    heavy_col <- rbind(heavy_col, evTab$co[addcollab, c(xax, yax)])
+    
+    heavy_inertcol <- subset(inertcol, inertcol[, 1] >= cont | inertcol[, 2] >= cont)
+    heavy_inertcol <- rbind(heavy_inertcol, inertcol[addcollab, ])
+    cont_col <- cbind(c(heavy_col[, 1] - heavy_inertcol[, 1]/2, heavy_col[, 1] + heavy_inertcol[, 1]/2, heavy_col[, 1], heavy_col[, 1]), 
+                      c(heavy_col[, 2], heavy_col[, 2], heavy_col[, 2] - heavy_inertcol[, 2]/2, heavy_col[, 2] + heavy_inertcol[, 2]/2))  
+    fac_col <- as.factor(rep(rownames(heavy_col), 4))
+  }
+  
+  
+  if(position != "none")
+    geig <- do.call("plotEig", c(list(eigvalue = call("$", ori[[2]], "eig"), nf = 1:evTab$nf, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$eig))
+  
+  
+  f_row <- function(posi = "none", pos){
+    if(nrow(heavy_row) == 0)
+      stop("No points to draw, try lowering 'cont'")
+    
+    graphnames <- c("light_row", "heavy_row", if(posi != "none") {"eig"})
+    
+    lim.global <- setlimits2D(minX = min(c(cont_row[, 1], light_row[, 1])), maxX = max(c(cont_row[, 1], light_row[, 1])), 
+                              minY = min(c(cont_row[, 2], light_row[, 2])), maxY = max(c(cont_row[, 2], light_row[, 2])),
+                              origin = adegtot$porigin$origin, aspect.ratio = adegtot$paxes$aspectratio, includeOr = adegtot$porigin$include)
+    params <- list()
+    params$light_row <- list(xlim = lim.global$xlim, ylim = lim.global$ylim)
+    params$heavy_row <- list(xlim = lim.global$xlim, ylim = lim.global$ylim)
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+    
+    g1 <- do.call("s.label", c(list(dfxy = light_row, xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$light_row))
+    # g1@Call <- call("s.label", dfxy = light_rowcall, xax = 1, yax = 2, plot = FALSE, storeData = storeData)
+    g2 <- xyplot(cont_row[, 2] ~ cont_row[, 1], groups = fac_row, level = 0.5,
+                 aspect = "xy",
+                 panel = function(x, y, ...) {
+                   panel.ellipse(x, y, col = "red", center.pch = NULL, ...)
+                   panel.text(labels = rownames(heavy_row), x = heavy_row[, 1], y = heavy_row[, 2])
+                 })
+    
+    grow <- do.call("superpose", list(g1, g2))
+    grow@Call <- call("superpose", list(g1@Call, g2$call))
+    
+    if(posi != "none")
+      grow <- do.call("insert", list(geig, grow, posi = posi, plot = FALSE, ratio = 0.25))
+    names(grow) <- graphnames
+    return(grow)
+  }
+  
+  f_col <- function(posi = "none", pos) {
+    if(nrow(heavy_col) == 0)
+      stop("No points to draw, try lowering 'cont'")
+    
+    graphnames <- c("light_col", "heavy_col", if(posi != "none") {"eig"})
+    
+    lim.global <- setlimits2D(minX = min(c(cont_col[, 1], light_col[, 1])), maxX = max(c(cont_col[, 1], light_col[, 1])), 
+                              minY = min(c(cont_col[, 2], light_col[, 2])), maxY = max(c(cont_col[, 2], light_col[, 2])),
+                              origin = adegtot$porigin$origin, aspect.ratio = adegtot$paxes$aspectratio, includeOr = adegtot$porigin$include)
+    params <- list()
+    params$light_col <- list(xlim = lim.global$xlim, ylim = lim.global$ylim)
+    params$heavy_col <- list(xlim = lim.global$xlim, ylim = lim.global$ylim)
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+    
+    g3 <- do.call("s.label", c(list(dfxy = substitute(light_col), xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$light_col))
+    g4 <- xyplot(cont_col[, 2] ~ cont_col[, 1], groups = fac_col, level = 0.5,
+                 aspect = "xy",
+                 panel = function(x, y, ...) {
+                   panel.ellipse(x, y, col = "blue", center.pch = NULL, ...)
+                   panel.text(labels = rownames(heavy_col), x = heavy_col[, 1], y = heavy_col[, 2])
+                 })
+    
+    gcol <- do.call("superpose", list(g3, g4))
+    gcol@Call <- call("superpose", list(g3@Call, g4$call))
+    
+    if(posi != "none")
+      gcol <- do.call("insert", list(geig, gcol, posi = posi, plot = FALSE, ratio = 0.25))
+    names(gcol) <- graphnames
+    return(gcol)
+  }
+  
+  f_both <- function(posi = "none", pos) {
+    object <- do.call("cbindADEg", c(list(f_row(posi = "none", pos = pos - 1), f_col(posi = posi, pos = pos - 1))))
+    names(object) <- c("row", "col")
+    return(object)
+  }
+  
+  
+  if(isTRUE(ori$row.inertia) & !isTRUE(ori$col.inertia))
+    object <- f_row(posi = position, pos = pos)
+  if(isTRUE(ori$col.inertia) & !isTRUE(ori$row.inertia))
+    object <- f_col(posi = position, pos = pos)
+  if(isTRUE(ori$row.inertia) & isTRUE(ori$col.inertia))
+    object <- f_both(posi = position, pos = pos)
+  
+  
+  object@Call <- match.call()
+  
+  if(plot)
+    print(object)
+  invisible(object)
+}
