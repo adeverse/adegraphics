@@ -1384,9 +1384,23 @@
   if(yax > evTab$nf)
     stop("Non convenient yax") 
   
-  
   adegtot <- adegpar()
   position <- match.arg(posieig[1], choices = c("bottomleft", "bottomright", "topleft", "topright", "none"), several.ok = FALSE)
+  
+  
+  if(length(as.character(ori$row.inertia)) > 0)
+    ori$row.inertia <- as.logical(match.arg(as.character(ori$row.inertia), choices = c("TRUE", "FALSE")))
+  else 
+    ori$row.inertia <- FALSE
+  
+  if(length(as.character(ori$col.inertia)) > 0)
+    ori$col.inertia <- as.logical(match.arg(as.character(ori$col.inertia), choices = c("TRUE", "FALSE")))
+  else
+    ori$col.inertia <- FALSE
+  
+  if(!isTRUE(ori$col.inertia) & !isTRUE(ori$row.inertia))
+    stop(paste("No inertia was calculated in the ", substitute(x), " object", sep = ""))
+   
   
   ## sort parameters for each graph
   graphsnames <- c("light_row", "heavy_row", "row_cont", "light_col", "heavy_col", "col_cont", "eig")
@@ -1407,7 +1421,6 @@
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
   
-  # calcul des contributions
   if(isTRUE(ori$row.inertia)) {
     inertrow <- x$row.abs[, c(xax, yax)] / 100
     inertrowcall <- call("/", call("[", call("$", substitute(x), "row.abs"), call(":", 1, call("NROW", call("$", substitute(x), "row.abs"))), c(xax, yax)), 100)
