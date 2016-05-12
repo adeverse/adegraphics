@@ -1365,7 +1365,7 @@
 }
 
 
-"plot.inertia" <- function(x, xax = 1, yax = 2, cont = 0.1, posieig = "none", addrowlab = c(), addcollab = c(), plot = TRUE, storeData = TRUE, pos = -1, ...) { 
+"plot.inertia" <- function(x, xax = 1, yax = 2, cont = 0.1, posieig = "none", plot = TRUE, storeData = TRUE, pos = -1, ...) { 
   
   if(!inherits(x, "inertia")) 
     stop("Object of class 'inertia' expected")
@@ -1388,20 +1388,6 @@
   position <- match.arg(posieig[1], choices = c("bottomleft", "bottomright", "topleft", "topright", "none"), several.ok = FALSE)
   
   
-  if(length(as.character(ori$row.inertia)) > 0)
-    ori$row.inertia <- as.logical(match.arg(as.character(ori$row.inertia), choices = c("TRUE", "FALSE")))
-  else 
-    ori$row.inertia <- FALSE
-  
-  if(length(as.character(ori$col.inertia)) > 0)
-    ori$col.inertia <- as.logical(match.arg(as.character(ori$col.inertia), choices = c("TRUE", "FALSE")))
-  else
-    ori$col.inertia <- FALSE
-  
-  if(!isTRUE(ori$col.inertia) & !isTRUE(ori$row.inertia))
-    stop(paste("No inertia was calculated in the ", substitute(x), " object", sep = ""))
-   
-  
   ## sort parameters for each graph
   graphsnames <- c("light_row", "heavy_row", "row_cont", "light_col", "heavy_col", "col_cont", "eig")
   sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
@@ -1420,43 +1406,38 @@
   params$eig <- list(pbackground = list(box = TRUE), psub = list(text = "Eigenvalues"))
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
-  
-  if(isTRUE(ori$row.inertia)) {
+  if(!is.null(x$row.abs)) {
     inertrow <- x$row.abs[, c(xax, yax)] / 100
     inertrowcall <- call("/", call("[", call("$", substitute(x), "row.abs"), call(":", 1, call("NROW", call("$", substitute(x), "row.abs"))), c(xax, yax)), 100)
     light_row <- subset(evTab$li[, c(xax, yax)], inertrow[, 1] < cont & inertrow[, 2] < cont)
     light_rowcall <- call("subset", call("[", call("$", ori[[2]], "li"), call(":", 1, call("NROW", call("$", ori[[2]], "li"))), c(xax, yax)), call("&", call("<", call("[", inertrowcall, 1), cont), call("<", call("[", inertrowcall, 2), cont)))
     
     heavy_row <- subset(evTab$li[, c(xax, yax)], inertrow[, 1] >= cont | inertrow[, 2] >= cont)
-    heavy_row <- rbind(heavy_row, evTab$li[addrowlab, c(xax, yax)])
-    
     heavy_inertrow <- subset(inertrow, inertrow[, 1] >= cont | inertrow[, 2] >= cont)
-    heavy_inertrow <- rbind(heavy_inertrow, inertrow[addrowlab, ])
+    
     cont_row <- cbind(c(heavy_row[, 1] - heavy_inertrow[, 1]/2, heavy_row[, 1] + heavy_inertrow[, 1]/2, heavy_row[, 1], heavy_row[, 1]), 
                       c(heavy_row[, 2], heavy_row[, 2], heavy_row[, 2] - heavy_inertrow[, 2]/2, heavy_row[, 2] + heavy_inertrow[, 2]/2)) 
     fac_row <- as.factor(rep(rownames(heavy_row), 4))
   }
   
-  if(isTRUE(ori$col.inertia)) {
+  if(!is.null(x$col.abs)) {
     inertcol <- x$col.abs[, c(xax, yax)] / 100
     inertcolcall <- call("/", call("[", call("$", substitute(x), "col.abs"), call(":", 1, call("NROW", call("$", substitute(x), "col.abs"))), c(xax, yax)), 100)
     light_col <- subset(evTab$co[, c(xax, yax)], inertcol[, 1] < cont & inertcol[, 2] < cont)
     light_colcall <- call("subset", call("[", call("$", ori[[2]], "co"), call(":", 1, call("NROW", call("$", ori[[2]], "co"))), c(xax, yax)), call("&", call("<", call("[", inertcolcall, 1), cont), call("<", call("[", inertcolcall, 2), cont)))
     
     heavy_col <- subset(evTab$co[, c(xax, yax)], inertcol[, 1] >= cont | inertcol[, 2] >= cont)
-    heavy_col <- rbind(heavy_col, evTab$co[addcollab, c(xax, yax)])
-    
     heavy_inertcol <- subset(inertcol, inertcol[, 1] >= cont | inertcol[, 2] >= cont)
-    heavy_inertcol <- rbind(heavy_inertcol, inertcol[addcollab, ])
+
     cont_col <- cbind(c(heavy_col[, 1] - heavy_inertcol[, 1]/2, heavy_col[, 1] + heavy_inertcol[, 1]/2, heavy_col[, 1], heavy_col[, 1]), 
                       c(heavy_col[, 2], heavy_col[, 2], heavy_col[, 2] - heavy_inertcol[, 2]/2, heavy_col[, 2] + heavy_inertcol[, 2]/2))  
     fac_col <- as.factor(rep(rownames(heavy_col), 4))
   }
   
   
+  ## creation of each individual ADEg
   if(position != "none")
     geig <- do.call("plotEig", c(list(eigvalue = call("$", ori[[2]], "eig"), nf = 1:evTab$nf, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$eig))
-  
   
   f_row <- function(posi = "none", pos){
     if(nrow(heavy_row) == 0)
@@ -1528,14 +1509,14 @@
     return(object)
   }
   
-  
-  if(isTRUE(ori$row.inertia) & !isTRUE(ori$col.inertia))
+  if(!is.null(x$row.abs) & is.null(x$col.abs))
     object <- f_row(posi = position, pos = pos)
-  if(isTRUE(ori$col.inertia) & !isTRUE(ori$row.inertia))
+  if(!is.null(x$col.abs) & is.null(x$row.abs))
     object <- f_col(posi = position, pos = pos)
-  if(isTRUE(ori$row.inertia) & isTRUE(ori$col.inertia))
+  if(!is.null(x$row.abs) & !is.null(x$col.abs))
     object <- f_both(posi = position, pos = pos)
-  
+  if(is.null(x$row.abs) & is.null(x$col.abs))
+    stop(paste("No inertia was calculated in the ", substitute(x), " object", sep = ""))
   
   object@Call <- match.call()
   
