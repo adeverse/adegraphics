@@ -1410,9 +1410,9 @@
   # calcul des contributions
   if(isTRUE(ori$row.inertia)) {
     inertrow <- x$row.abs[, c(xax, yax)] / 100
-    # inertrowcall <- call("/", call("[", call("$", substitute(x), "row.abs"), call(":", 1, call("NROW", call("$", substitute(x), "row.abs"))), c(xax, yax)), 100)
+    inertrowcall <- call("/", call("[", call("$", substitute(x), "row.abs"), call(":", 1, call("NROW", call("$", substitute(x), "row.abs"))), c(xax, yax)), 100)
     light_row <- subset(evTab$li[, c(xax, yax)], inertrow[, 1] < cont & inertrow[, 2] < cont)
-    # light_rowcall <- call("subset", call("[", call("$", ori[[2]], "li"), call(":", 1, call("NROW", call("$", ori[[2]], "li"))), c(xax, yax)), call("&", call("<", call("[", inertrowcall, 1), cont), call("<", call("[", inertrowcall, 2), cont)))
+    light_rowcall <- call("subset", call("[", call("$", ori[[2]], "li"), call(":", 1, call("NROW", call("$", ori[[2]], "li"))), c(xax, yax)), call("&", call("<", call("[", inertrowcall, 1), cont), call("<", call("[", inertrowcall, 2), cont)))
     
     heavy_row <- subset(evTab$li[, c(xax, yax)], inertrow[, 1] >= cont | inertrow[, 2] >= cont)
     heavy_row <- rbind(heavy_row, evTab$li[addrowlab, c(xax, yax)])
@@ -1426,7 +1426,9 @@
   
   if(isTRUE(ori$col.inertia)) {
     inertcol <- x$col.abs[, c(xax, yax)] / 100
+    inertcolcall <- call("/", call("[", call("$", substitute(x), "col.abs"), call(":", 1, call("NROW", call("$", substitute(x), "col.abs"))), c(xax, yax)), 100)
     light_col <- subset(evTab$co[, c(xax, yax)], inertcol[, 1] < cont & inertcol[, 2] < cont)
+    light_colcall <- call("subset", call("[", call("$", ori[[2]], "co"), call(":", 1, call("NROW", call("$", ori[[2]], "co"))), c(xax, yax)), call("&", call("<", call("[", inertcolcall, 1), cont), call("<", call("[", inertcolcall, 2), cont)))
     
     heavy_col <- subset(evTab$co[, c(xax, yax)], inertcol[, 1] >= cont | inertcol[, 2] >= cont)
     heavy_col <- rbind(heavy_col, evTab$co[addcollab, c(xax, yax)])
@@ -1458,9 +1460,9 @@
     sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
     
     g1 <- do.call("s.label", c(list(dfxy = light_row, xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$light_row))
-    # g1@Call <- call("s.label", dfxy = light_rowcall, xax = 1, yax = 2, plot = FALSE, storeData = storeData)
+    g1@Call <- call("s.label", dfxy = light_rowcall, xax = 1, yax = 2, plot = FALSE, storeData = storeData, paste(paste(names(substitute(sortparameters)$light_row), unlist(substitute(sortparameters)$light_row), sep="="), collapse = ",", quote = FALSE))
     g2 <- xyplot(cont_row[, 2] ~ cont_row[, 1], groups = fac_row, level = 0.5,
-                 aspect = "xy",
+                 aspect = "xy", 
                  panel = function(x, y, ...) {
                    panel.ellipse(x, y, col = "red", center.pch = NULL, ...)
                    panel.text(labels = rownames(heavy_row), x = heavy_row[, 1], y = heavy_row[, 2])
@@ -1489,7 +1491,8 @@
     params$heavy_col <- list(xlim = lim.global$xlim, ylim = lim.global$ylim)
     sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
     
-    g3 <- do.call("s.label", c(list(dfxy = substitute(light_col), xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$light_col))
+    g3 <- do.call("s.label", c(list(dfxy = light_col, xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$light_col))
+    g3@Call <- call("s.label", dfxy = light_colcall, xax = 1, yax = 2, plot = FALSE, storeData = storeData)
     g4 <- xyplot(cont_col[, 2] ~ cont_col[, 1], groups = fac_col, level = 0.5,
                  aspect = "xy",
                  panel = function(x, y, ...) {
