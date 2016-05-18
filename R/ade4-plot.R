@@ -1403,8 +1403,8 @@
     params$heavy_row <- list(plabels = list(box = list(draw = FALSE), col = "red"), ppoints = list(cex = 0))
     params$heavy_col <- list(plabels = list(box = list(draw = FALSE), col = "blue"), ppoints = list(cex = 0))
   } else if(type == "cross") {
-    params$heavy_row <- list(ellipseSize = ellipseSize, plabels = list(box = list(draw = FALSE), col = "red"), ppoints = list(cex = 0), pellipses = list(lwd = 0, axes = list(col = "red", lty = 1)), plines = list(lwd = 0))
-    params$heavy_col <- list(ellipseSize = ellipseSize, plabels = list(box = list(draw = FALSE), col = "blue"), ppoints = list(cex = 0), pellipses = list(lwd = 0, axes = list(col = "blue", lty = 1)), plines = list(lwd = 0))
+    params$heavy_row <- list(ellipseSize = ellipseSize, plabels = list(box = list(draw = FALSE), col = "red"), ppoints = list(cex = 0), pellipses = list(lwd = 0, axes = list(col = "red", lty = 1)), plines = list(lwd = 0), plegend = list(drawKey = FALSE))
+    params$heavy_col <- list(ellipseSize = ellipseSize, plabels = list(box = list(draw = FALSE), col = "blue"), ppoints = list(cex = 0), pellipses = list(lwd = 0, axes = list(col = "blue", lty = 1)), plines = list(lwd = 0), plegend = list(drawKey = FALSE))
   } else if(type == "ellipse") {
     params$heavy_row <- list(ellipseSize = ellipseSize, plabels = list(box = list(draw = FALSE), col = "red"), ppoints = list(cex = 0), pellipses = list(border = "red", axes = list(lwd = 0)), plines = list(col = 0))
     params$heavy_col <- list(ellipseSize = ellipseSize, plabels = list(box = list(draw = FALSE), col = "blue"), ppoints = list(cex = 0), pellipses = list(border = "blue", axes = list(lwd = 0)), plines = list(lwd = 0))
