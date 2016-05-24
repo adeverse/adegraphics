@@ -8,12 +8,12 @@ rw <- function(a){
   x
 }
 
-x <- unlist(lapply(1:5, rw))
-y <- unlist(lapply(1:5, rw))
+x <- unlist(lapply(1:5, rw), use.names = FALSE)
+y <- unlist(lapply(1:5, rw), use.names = FALSE)
 z <- gl(5, 50)
 g1 <- s.traject(data.frame(x, y), z, ppoints.pch = 19:23, plines.col = rainbow(5))
 
-x <- unlist(lapply(1:2, rw))
-y <- unlist(lapply(1:2, rw))
+x <- unlist(lapply(1:2, rw), use.names = FALSE)
+y <- unlist(lapply(1:2, rw), use.names = FALSE)
 z <- gl(2, 50)
 g2 <- s.traject(data.frame(x, y), z, ppoints.pch = 21:20, plines.col = 1:2)
