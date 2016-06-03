@@ -9,7 +9,7 @@ g2 <- s.label(ggtortoises$pop, add = TRUE, plabels = list(boxes = list(alpha = 0
 
 ## ex2
 data(capitales, package = "ade4")
-index <- unlist(lapply(1:15, function(i) which(names(capitales$logo) == tolower(rownames(capitales$xy)[i]))))
+index <- unlist(lapply(1:15, function(i) which(names(capitales$logo) == tolower(rownames(capitales$xy)[i]))), use.names = FALSE)
 g3 <- s.logo(capitales$xy, capitales$logo[index])
 
 x <- c(0, max(capitales$area$x))
