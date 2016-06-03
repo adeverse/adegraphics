@@ -909,7 +909,7 @@ as a `Spatial` object or neighborhood stored as a `nb` object):
     objects, `Sp` for maps and `sp.layout` for spatial widgets as a
     North arrow, scale, etc.
 
--   `nbobject`: object of class `nb` to display neighbor graphs.
+-   `nbobject`: object of class `nb` or `listw` to display neighbor graphs.
 
 When the `facets` (see the [Partitioning the data (`facets`)](#facets) section) argument is used, users can modify the
 parameter `samelimits`: if it is `TRUE`, all graphs have the same limits

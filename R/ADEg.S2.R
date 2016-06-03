@@ -182,7 +182,7 @@ setMethod(
         ## neighbouring object management
         if(any(names(object@g.args) == "nbobject")) {
             nbobj <- object@g.args$nbobject
-            if(class(nbobj) != "nb")
+            if(!inherits(nbobj, "nb") | !inherits(nbobj, "listw"))
                 stop("wrong class for the nb object")
             pnb <- object@adeg.par$pnb
             do.call("adeg.panel.nb", args = list(nbobject = nbobj, coords = cbind(x, y), col.edge = pnb$edge$col, lwd = pnb$edge$lwd, lty = pnb$edge$lty, pch = pnb$node$pch, cex = pnb$node$cex, col.node = pnb$node$col, alpha = pnb$node$alpha))

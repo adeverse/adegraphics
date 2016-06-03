@@ -140,7 +140,7 @@
     \item{limits, main and sub title, and axes labels can be changed using the keys 
       \code{xlim}, \code{ylim}, \code{main}, \code{sub}, \code{xlab} and \code{ylab}.}
     
-    \item{a neighbouring graph (object of class \code{nb}) and a spatial one (object of
+    \item{a neighbouring graph (object of class \code{nb} or \code{listw}) and a spatial one (object of
       class \code{sp}) can be display in the background using the keys \code{nbobject}, \code{Sp} and \code{sp.layout}.}
   }
 }

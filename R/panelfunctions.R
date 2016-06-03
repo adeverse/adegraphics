@@ -74,7 +74,10 @@ adeg.panel.label <- function(x, y, labels, plabels, pos = NULL) {
 
 
 adeg.panel.nb <- function(nbobject, coords, col.edge = "black", lwd = 1, lty = 1, pch = 20, cex = 1, col.node = "black", alpha = 1) {
-  if(class(nbobject) != "nb")
+  
+    if(inherits(nbobject, "listw"))
+        nbobject <- nbobject$neighbours
+    if(!inherits(nbobject, "nb"))
     stop("nb object is not class nb") ## prevoir dans les fonctions user une selection de l element neighbourght si object de type listw
   if(length(nbobject) != nrow(coords))
     stop("error for nb object, not the same numbers of nodes and coordinates", call. = FALSE)

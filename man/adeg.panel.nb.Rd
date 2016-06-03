@@ -6,7 +6,7 @@
 
 \description{
   Panel function for representing a graph into a \code{trellis} graphic (\code{lattice} package).\cr
-  Two types of graph objects can be used: \code{nb} object (\code{spdep} package) or simple edges informations.\cr
+  Two types of graph objects can be used: \code{nb} or \code{listw} object (\code{spdep} package) or simple edges informations.\cr
   Directions associated with the edges are not displayed.\cr
 }
 
@@ -19,7 +19,7 @@ adeg.panel.edges(edges, coords, col.edge = "black", lwd = 1, lty = 1, pch = 20,
 }
 
 \arguments{
-  \item{nbobject}{a object of class \code{nb}}
+  \item{nbobject}{a object of class \code{nb} or \code{listw}}
   
   \item{edges}{a two columns matrix, representing the edges between the
     nodes. For a row i, x[i, 1] and x[i, 2] are linked, x[i, 1] and x[i, 2] being vertices number.}
