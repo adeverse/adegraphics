@@ -81,6 +81,10 @@ df1 <- data.frame(expand.grid(-3:3, -3:3))
 names(df1) <- c("x", "y")
 z1 <- (1 / sqrt(2)) * exp(-(df1$x ^ 2 + df1$y ^ 2) / 2)
 g1 <- s.image(df1, z1)
+
+# add a continuous color bar as legend
+# update(g1, plegend.drawColorKey = TRUE)
+
 g2 <- s.image(df1, z1, gridsize = 50)
 
 g3 <- s.image(df1, z1, gridsize = 100)

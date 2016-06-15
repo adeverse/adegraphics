@@ -81,6 +81,9 @@ g1 <- s1d.class(envpca$li[, 1], meau$design$season, poslabel = "value", col = 1:
 g2 <- s1d.class(envpca$li[, 1], meau$design$season, poslabel = "regular", col = 1:6, 
   p1d.reverse = TRUE, plot = FALSE)
 ADEgS(c(g1, g2), layout = c(2, 1))
+
+g3 <- s1d.class(envpca$li[, 1], meau$design$season, poslabel = "value", col = 1:4, 
+  plabels.cex = 0, key = list(space = "bottom"))
 }
 
 \keyword{aplot}

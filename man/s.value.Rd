@@ -92,6 +92,7 @@ plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...)
 data(rpjdl, package = "ade4")
 fau.coa <- ade4::dudi.coa(rpjdl$fau, scan = FALSE, nf = 3)
 g1 <- s.value(fau.coa$li, fau.coa$li[,3])
+update(g1, key = list(space = "right", columns = 1))
 g2 <- s.value(fau.coa$li, fau.coa$li[,3], method = "color", plegend.size = 0.8)
 g3 <- s.value(fau.coa$li, fau.coa$li[,3], plegend.size = 0.8, symbol = "square",
    method = "color",  col = colorRampPalette(c("yellow", "blue"))(6))

@@ -90,6 +90,9 @@ s.class(xy, fac = posi, facets = posi, ppoints.cex = 1.5, ellipseSize = 0, starS
   chullSize = c(1, 0.5))
   
 \dontrun{ 
+s.class(xy, fac = posi, col = coul, psub.text = "example s.class", pellipses.col = coul, 
+  plabels.cex = 0, key = list(space = "left"))
+   
 data(banque, package = "ade4")
 dudi1 <- ade4::dudi.acm(banque, scannf = FALSE)
 col <- rainbow(length(levels(banque[, 20])))

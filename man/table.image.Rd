@@ -65,6 +65,10 @@ table.image(dftab, coordsx = 1:ncol(as.matrix(dftab)), coordsy =
 \examples{
 tab <- as.table(matrix(rnorm(900), ncol = 30))
 g1 <- table.image(tab)
+
+# add a continuous color bar as legend
+# update(g1, plegend.drawColorKey = TRUE)
+
 g2 <- table.image(tab, n = 100, coordsx = c(30, 1:29), plegend.drawKey = FALSE)
 
 data(rpjdl, package = "ade4")

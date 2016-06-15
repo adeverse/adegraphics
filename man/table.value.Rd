@@ -96,6 +96,11 @@ w <- data.frame(scale(w))
 wpca <- ade4::dudi.pca(w, scann = FALSE)
 g1 <- table.value(w, ppoints.cex = 0.5, axis.line = list(col = "darkblue"), 
   axis.text = list(col = "darkgrey"))
+  
+# update the legend position
+update(g1, key = list(space = "left"))
+update(g1, key = list(columns = 1))
+
 g2 <- table.value(w, coordsy = rank(wpca$li[, 1]), ppoints.cex = 0.5, 
   axis.line = list(col = "darkblue"), axis.text = list(col = "darkgrey"))
 g3 <- table.value(w, coordsy = wpca$li[, 1], coordsx = wpca$co[, 1], ppoints.cex = 0.5, 

@@ -81,6 +81,8 @@ fac <- sort(rep(1:3, nrow(euro123$in78)))
 df <- rbind.data.frame(euro123$in78, euro123$in86, euro123$in97)
 row.names(df) <- paste(row.names(euro123$in78), rep(c(1, 2, 3), rep(12, 3)), sep = "")
 triangle.class(df, fac = fac, label = row.names(df), showposition = TRUE, col = c(1, 2, 3))
+triangle.class(df, fac = fac, label = row.names(df), showposition = FALSE, plabels.cex = 0, 
+  col = c(1, 2, 3), key = list(space = "left"))
 }
 
 \keyword{hplot}
