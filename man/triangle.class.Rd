@@ -77,12 +77,11 @@ triangle.class(dfxyz, fac, wt = rep(1, NROW(fac)), labels = levels(fac),
 
 \examples{
 data(euro123, package = "ade4")
-fac <- sort(rep(1:3, nrow(euro123$in78)))
-df <- rbind.data.frame(euro123$in78, euro123$in86, euro123$in97)
-row.names(df) <- paste(row.names(euro123$in78), rep(c(1, 2, 3), rep(12, 3)), sep = "")
-triangle.class(df, fac = fac, label = row.names(df), showposition = TRUE, col = c(1, 2, 3))
-triangle.class(df, fac = fac, label = row.names(df), showposition = FALSE, plabels.cex = 0, 
-  col = c(1, 2, 3), key = list(space = "left"))
+fac1 <- euro123$plan$an
+df1 <- rbind.data.frame(euro123$in78, euro123$in86, euro123$in97)
+triangle.class(df1, fac = fac1, showposition = TRUE, col = c(1, 2, 3))
+triangle.class(df1, fac = fac1, showposition = FALSE, plabels.cex = 0, col = c(1, 2, 3), 
+  key = list(space = "left"))
 }
 
 \keyword{hplot}
