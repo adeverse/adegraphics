@@ -122,6 +122,9 @@ setMethod(
         if(object@adeg.par$paxes$aspectratio != "iso")
             object@adeg.par$pgrid$text$cex <- 0 ## grid cell size has no meaning
         
+        if(!is.null(object@g.args$Sp))
+          object@adeg.par$paxes$aspectratio <- ifelse(is.na(proj4string(object@g.args$Sp)) || is.projected(object@g.args$Sp), 1, 1/cos((mean(object@g.args$ylim) * pi)/180))
+        
         ## if grid and axes are drawn, no text indication
         if(object@adeg.par$pgrid$draw && object@adeg.par$paxes$draw)
             object@adeg.par$pgrid$text$cex <- 0
