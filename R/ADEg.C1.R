@@ -111,13 +111,6 @@ setMethod(
             if(is.null(object@g.args$xlim))
                 object@g.args$xlim <- lim
             
-            if(inherits(object, "C1.curve") | inherits(object, "C1.dotplot") | inherits(object, "C1.interval"))
-                if(is.null(scalesandlab$y$at))
-                    scalesandlab$y$at <- at
-            
-            if(is.null(scalesandlab$y$at))
-                scalesandlab$y$at <- 1:NROW(score)
-            
         } else {
             ## draw axes for vertical plot
             if(is.null(scalesandlab$y$at))
@@ -126,12 +119,6 @@ setMethod(
             if(is.null(object@g.args$ylim))
                 object@g.args$ylim <- lim
             
-            if(inherits(object, "C1.curve") | inherits(object, "C1.dotplot") | inherits(object, "C1.interval"))
-                if(is.null(scalesandlab$x$at))
-                    scalesandlab$x$at <- at
-            
-            if(is.null(scalesandlab$x$at))
-                scalesandlab$x$at <- 1:NROW(score)
         }
         
         object@g.args$scales <- scalesandlab
