@@ -80,6 +80,5 @@ xyplot(0:5 ~ 0:3, panel = function(...) adeg.panel.Spatial(nc, col = 1:2))
 
 ## ex6
 mysp <- SpatialPointsDataFrame(matrix(rnorm(20), 10), data.frame(matrix(rnorm(20), 10)))
-s.Spatial(mysp, pSp.cex = 2)
-s.Spatial(mysp, col = c("red", "blue"), pSp.cex = 2)
-s.Spatial(mysp, pSp.col = c("red", "blue"), pSp.cex = 2) ## must be the same as the previous plot
+s.Spatial(mysp)
+s.Spatial(mysp, col = c("red", "blue"))

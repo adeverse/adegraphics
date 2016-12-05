@@ -7,7 +7,7 @@
 }
 
 \usage{
-s.Spatial(spObj, col = TRUE, nclass = 5, plot = TRUE, 
+s.Spatial(spObj, col = TRUE, nclass = 5, scale = TRUE, plot = TRUE, 
   storeData = TRUE, pos = -1, ...)
 }
 
@@ -19,6 +19,9 @@ s.Spatial(spObj, col = TRUE, nclass = 5, plot = TRUE,
   \item{nclass}{if \code{spObj} contains data, the desired number
     of intervals splitting the data (using \code{pretty})}
   
+  \item{scale}{a \code{logical} indicating if numeric variables
+    should be scaled}
+    
   \item{plot}{a logical indicating if the graphics is displayed}
   
   \item{storeData}{a logical indicating if the data should be stored in
