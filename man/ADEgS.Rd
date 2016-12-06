@@ -19,8 +19,8 @@ ADEgS(adeglist, positions, layout, add = NULL, plot = TRUE)
       For each simple graphic, i.e. in each row, the coordinates of the top-right and the bottom-left hand corners are in \code{npc} unit (normalized parent coordinates).}
       
   \item{layout}{a layout indication in two possible forms: \itemize{
-    \item{a list}{arguments of the \code{layout} function}
-    \item{a two-length vector}{rows' and columns' number of layout}
+    \item{a list containing arguments of the \code{layout} function}
+    \item{a two-length vector containing rows' and columns' number of layout}
   }}
   
   \item{add}{a square matrix with as many rows and columns as the number of graphical objects in the \code{ADEglist} slot.
