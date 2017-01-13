@@ -1,8 +1,8 @@
 Package: adegraphics
 Type: Package
 Title: An S4 Lattice-Based Package for the Representation of Multivariate Data
-Version: 1.0-5
-Date: 2016-06-15
+Version: 1.0-6
+Date: 2016-12-13
 Author: Stéphane Dray <stephane.dray@univ-lyon1.fr> and Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>, with contributions from Jean Thioulouse. Based on earlier work by Alice Julien-Laferrière.
 Maintainer: Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
 Description: Graphical functionalities for the representation of multivariate data. It is a complete re-implementation of the functions available in the 'ade4' package.
