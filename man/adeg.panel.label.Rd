@@ -56,13 +56,13 @@ adeg.panel.label(x, y, labels, plabels, pos = NULL)
 }
 
 \examples{
-if(require(lattice, quiet = TRUE)) {
+if(require(lattice, quietly = TRUE)) {
 param <- adegpar("plabels")[[1]]
 xyplot(1:10 ~ 1:10, panel = function(x, y, ...){
   adeg.panel.label(x, y, LETTERS[1:10], plabels = param)})
 }
 
-if(require(lattice, quiet = TRUE)) {
+if(require(lattice, quietly = TRUE)) {
 param$boxes$draw <- FALSE
 param$col <- "blue"
 xyplot(1:10 ~ 1:10, panel = function(x, y, ...){

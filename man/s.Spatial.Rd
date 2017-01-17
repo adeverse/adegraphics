@@ -60,7 +60,7 @@ data(elec88, package = "ade4")
 g1 <- s.Spatial(elec88$Spatial)
 
 \dontrun{
-  if(require(sp, quiet = TRUE)) {
+  if(require(sp, quietly = TRUE)) {
     ## mapping whith data
     obj <- SpatialPolygonsDataFrame(Sr = elec88$Spatial, data = elec88$tab)
     g2 <- s.Spatial(obj)

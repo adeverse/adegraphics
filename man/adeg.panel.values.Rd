@@ -64,7 +64,7 @@ adeg.panel.values(x, y, z, method, symbol, ppoints, breaks, centerpar = NULL,
 }
 
 \examples{
-if(require(lattice, quiet = TRUE)) {
+if(require(lattice, quietly = TRUE)) {
 param <- adegpar("ppoints")[[1]]
 param$col <- adegpar("ppalette")[[1L]]$quanti(2)
 z <- rnorm(10)
@@ -73,7 +73,7 @@ xyplot(1:10 ~ 1:10, panel = function(x, y, ...){
   param, breaks = pretty(z, 4))})
 }
 
-if(require(lattice, quiet = TRUE)) {
+if(require(lattice, quietly = TRUE)) {
 param$col <- adegpar()$ppalette$quali((length(pretty(z, 2)) - 1))
 xyplot(1:10 ~ 1:10, panel = function(x, y, ...){
   adeg.panel.values(x, y, z, method = "color", symbol = "circle", 

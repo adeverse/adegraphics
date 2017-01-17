@@ -39,7 +39,7 @@ adeg.panel.hist(histValues, horizontal = TRUE, densi, drawLines, params = list()
 }
 
 \examples{
-if(require(KernSmooth, quiet = TRUE) & require(lattice, quiet = TRUE)) {
+if(require(KernSmooth, quietly = TRUE) & require(lattice, quietly = TRUE)) {
 
   z <- round(rnorm(100, 30, 5))
   h <- hist(z, plot = FALSE)

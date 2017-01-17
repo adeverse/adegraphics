@@ -1487,7 +1487,7 @@
                               origin = adegtot$porigin$origin, aspect.ratio = adegtot$paxes$aspectratio, includeOr = adegtot$porigin$include)
     
     if(type != "label") {
-      # if ellipses or crosses are drawn, the limits are re-calculated and the elipse size are normalized
+      # if ellipses or crosses are drawn, the limits are re-calculated and the ellipse size are normalized
       heavy_inertcolmax <- apply(heavy_inertcol, 2, max)
       heavy_inertcolnorm <- matrix(NA, NROW(heavy_inertcol), 2)
       for (i in 1:2) {heavy_inertcolnorm[, i] <- (heavy_inertcol[, i] / heavy_inertcolmax[i]) * (diff(lim.global[[i]]) / 10)}
