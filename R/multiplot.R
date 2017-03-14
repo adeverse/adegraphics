@@ -305,6 +305,25 @@ multi.facets.C1 <- function(thecall, adepar, samelimits = TRUE) {
   names(listGraph) <- levels(facets)
   posmatrix <- layout2position(.n2mfrow(nlevels(facets)), ng = nlevels(facets))
   object <- new(Class = "ADEgS", ADEglist = listGraph, positions = posmatrix, add = matrix(0, ncol = nlevels(facets), nrow = nlevels(facets)), Call = as.call(thecall))
+  
+  ## same limits for all graphics when the second axis is done by intern calculations
+  if(inherits(object[[1]], "C1.density") | inherits(object[[1]], "C1.gauss") | inherits(object[[1]], "C1.hist")) {
+    if(isTRUE(samelimits) | is.null(samelimits)) {
+      cc <- object@Call
+      if(adegtot$p1d$horizontal & is.null(thecall$ylim)) {
+        Ylim <- range(sapply(object@ADEglist, function(x) x@g.args$ylim))
+        update(object, ylim = Ylim)
+        object@Call <- cc # this call does not include the ylim update
+      }
+      if(!adegtot$p1d$horizontal & is.null(thecall$xlim)) {
+        Xlim <- range(sapply(listGraph, function(x) x@g.args$xlim))
+        update(object, xlim = Xlim)
+        object@Call <- paste(substr(cc, 1, nchar(cc) - 1), ", xlim = c(", Xlim[1], ",", Xlim[2], ")", sep = "")
+        object@Call <- cc  # this call does not include the xlim update
+      }
+    }
+  }
+
   ## change pos et frame a posteriori ??
   return(object)
 }
