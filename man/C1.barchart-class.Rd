@@ -23,6 +23,7 @@
     \item{\code{data}}{a list containing data or data's name. \itemize{
       \item{\code{score}: the displayed values in the form of a vector, a factor, a name or a matching call.}
       \item{\code{labels}: the labels' names drawn on the top of bars.}
+      \item{\code{at}: the index value.}
       \item{\code{frame}: a positive or null integer. It is the number of the frame containing the data (used 
         with \code{sys.frame(..., env = data$frame)}). Only if the data are not stored (i.e. \code{data$storeData = FALSE}).}
       \item{\code{storeData}: a logical indicating if the data should be stored in the returned object. 

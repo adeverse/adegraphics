@@ -31,7 +31,7 @@ setMethod(
         else
             score <- eval(object@data$score, envir = sys.frame(object@data$frame))
         
-        if(inherits(object, "C1.curve") | inherits(object, "C1.dotplot") | inherits(object, "C1.interval"))
+        if(inherits(object, "C1.barchart") | inherits(object, "C1.curve") | inherits(object, "C1.dotplot") | inherits(object, "C1.interval"))
             if(object@data$storeData)
                 at <- object@data$at
             else
@@ -282,7 +282,7 @@ setMethod(
         xdata <- rep(1, length(score))
         if(inherits(object, "C1.barchart")) {
             xdata <- 1:length(score)
-        } else if(inherits(object, "C1.dotplot") | inherits(object, "C1.curve") | inherits(object, "C1.interval")) {
+        } else if(inherits(object, "C1.barchart") | inherits(object, "C1.curve") | inherits(object, "C1.dotplot") | inherits(object, "C1.interval")) {
             if(object@data$storeData)
                 xdata <- object@data$at
             else
