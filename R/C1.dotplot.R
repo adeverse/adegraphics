@@ -89,6 +89,8 @@ s1d.dotplot <- function(score, at = 1:NROW(score), facets = NULL, plot = TRUE, s
   
   ## evaluation of some parameters
   thecall <- .expand.call(match.call())
+  score <- eval(thecall$score, envir = sys.frame(sys.nframe() + pos))
+  
   ## parameters sorted
   sortparameters <- sortparamADEg(...)
   

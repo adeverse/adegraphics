@@ -280,13 +280,11 @@ setMethod(
             score <- as.matrix(score)[, 1]  ## to manage 'score' when it is a data.frame with only one column
 
         xdata <- rep(1, length(score))
-        if(inherits(object, "C1.barchart")) {
-            xdata <- 1:length(score)
-        } else if(inherits(object, "C1.barchart") | inherits(object, "C1.curve") | inherits(object, "C1.dotplot") | inherits(object, "C1.interval")) {
-            if(object@data$storeData)
-                xdata <- object@data$at
-            else
-                xdata <- eval(object@data$at, envir = sys.frame(object@data$frame))
+        if(inherits(object, "C1.barchart") | inherits(object, "C1.curve") | inherits(object, "C1.dotplot") | inherits(object, "C1.interval")) {
+          if(object@data$storeData)
+            xdata <- object@data$at
+          else
+            xdata <- eval(object@data$at, envir = sys.frame(object@data$frame))
         }
         
         fml <- as.formula(score ~ xdata)

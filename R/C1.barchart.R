@@ -89,18 +89,22 @@ setMethod(
      
   	## lims <- current.panel.limits(unit = "native")
     
+    ## reorder the values
+    y <- y[order(x)]
+    x <- sort(x)
+    
     ## Starts the display
     ## depends on the parametres horizontal
     ## reverse and rug.draw are always considered as FALSE
     if(pscore$horizontal) {
       x.tmp <- y
-      y.tmp <- 1:length(x)
+      y.tmp <- x
     } else {
-      x.tmp <- 1:length(x)
+      x.tmp <- x
       y.tmp <- y
     }
     
-    panel.barchart(x.tmp, y.tmp, horizontal = pscore$horizontal, box.width = 0.9, origin = 0, reference = FALSE,
+    panel.barchart(x = x.tmp, y = y.tmp, horizontal = pscore$horizontal, box.width = 0.9, origin = 0, reference = FALSE,
                    border = ppoly$border, col = ppoly$col, lty = ppoly$lty, lwd = ppoly$lwd, alpha = ppoly$alpha)
     ## panel.text(x.tmp, y.tmp, labels)
     if(!is.null(labels)) {
