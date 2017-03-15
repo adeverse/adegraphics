@@ -275,28 +275,25 @@ multi.facets.C1 <- function(thecall, adepar, samelimits = TRUE) {
   ## creation of the plots (ADEg objects)
   for(i in 1:nlevels(facets)) {
     thenewcall$psub.text <- levels(facets)[i]
+    
     if(thecall[[1]] == "s1d.interval") {
       thenewcall$score1 <- call("[[", call("split", thecall$score1, thecall$facets), i)
       thenewcall$score2 <- call("[[", call("split", thecall$score2, thecall$facets), i)
-      thenewcall$at <- call("[[", call("split", thecall$at, thecall$facets), i)
-      } else {
+    } else {
       thenewcall$score <- call("[[", call("split", thecall$score, thecall$facets), i)
     }
-    
     
     if(thecall[[1]] == "s1d.barchart" & !is.null(thecall$labels))
       thenewcall$labels <- call("[[", call("split", thecall$labels, thecall$facets), i)
 
-     if(thecall[[1]] == "s1d.dotplot" | thecall[[1]] == "s1d.curve")
+     if(thecall[[1]] == "s1d.barchart" | thecall[[1]] == "s1d.dotplot" | thecall[[1]] == "s1d.curve" | thecall[[1]] == "s1d.interval")
       thenewcall$at <- call("[[", call("split", thecall$at, thecall$facets), i)
      
-    if(thecall[[1]] == "s1d.density")
+    if(thecall[[1]] == "s1d.density" | thecall[[1]] == "s1d.gauss")
       thenewcall$fac <- call("[[", call("split", thecall$fac, thecall$facets), i)
     
-    if(thecall[[1]] == "s1d.gauss") {
-      thenewcall$fac <- call("[[", call("split", thecall$fac, thecall$facets), i)
+    if(thecall[[1]] == "s1d.gauss")
       thenewcall$wt <- call("[[", call("split", thecall$wt, thecall$facets), i)
-    }
     
     listGraph <- c(listGraph, do.call(as.character(thenewcall[[1]]), thenewcall[-1]))
   }
