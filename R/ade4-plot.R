@@ -257,6 +257,7 @@
   
   appel <- as.list(x$call)
   fac <- eval.parent(appel$fac)
+  dudi <- eval.parent(appel$x)
   
   ## sort parameters for each graph
   graphsnames <- c("loadings", "col", "eig", "row", "Xax", "class")
@@ -277,7 +278,7 @@
   g1 <- do.call("s.arrow", c(list(dfxy = substitute(x$c1), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
   g2 <- do.call("s.arrow", c(list(dfxy = substitute(x$co), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
   g3 <- do.call("plotEig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]])) 
-  g4 <- do.call("s.class", c(list(dfxy = substitute(x$ls), wt = substitute(x$lw), fac = appel$fac, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
+  g4 <- do.call("s.class", c(list(dfxy = substitute(x$ls), wt = substitute(dudi$lw), fac = appel$fac, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
   g5 <- do.call("s.corcircle", c(list(dfxy = substitute(x$as), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[5]]))
   g6 <- do.call("s.label", c(list(dfxy = substitute(x$li), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[6]]))
   
