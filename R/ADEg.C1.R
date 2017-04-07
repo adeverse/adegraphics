@@ -31,7 +31,7 @@ setMethod(
         else
             score <- eval(object@data$score, envir = sys.frame(object@data$frame))
         
-        if(inherits(object, "C1.curve") | inherits(object, "C1.dotplot") | inherits(object, "C1.interval"))
+        if(inherits(object, "C1.barchart") | inherits(object, "C1.curve") | inherits(object, "C1.dotplot") | inherits(object, "C1.interval"))
             if(object@data$storeData)
                 at <- object@data$at
             else
@@ -233,7 +233,9 @@ setMethod(
         ## grid background and box
         object@trellis.par$panel.background$col <- object@adeg.par$pbackground$col
         if(!object@adeg.par$pbackground$box)
-            object@trellis.par$axis.line$col <- "transparent"
+          object@trellis.par$axis.line$col <- "transparent"
+        else
+          object@trellis.par$axis.line$col <- "black"
         
         arguments <- list(
             par.settings = object@trellis.par,
@@ -278,13 +280,11 @@ setMethod(
             score <- as.matrix(score)[, 1]  ## to manage 'score' when it is a data.frame with only one column
 
         xdata <- rep(1, length(score))
-        if(inherits(object, "C1.barchart")) {
-            xdata <- 1:length(score)
-        } else if(inherits(object, "C1.dotplot") | inherits(object, "C1.curve") | inherits(object, "C1.interval")) {
-            if(object@data$storeData)
-                xdata <- object@data$at
-            else
-                xdata <- eval(object@data$at, envir = sys.frame(object@data$frame))
+        if(inherits(object, "C1.barchart") | inherits(object, "C1.curve") | inherits(object, "C1.dotplot") | inherits(object, "C1.interval")) {
+          if(object@data$storeData)
+            xdata <- object@data$at
+          else
+            xdata <- eval(object@data$at, envir = sys.frame(object@data$frame))
         }
         
         fml <- as.formula(score ~ xdata)

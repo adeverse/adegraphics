@@ -144,8 +144,10 @@ setMethod(
         ## background and box
         ## object@trellis.par$panel.background$col <- object@adeg.par$pbackground$col
         if(!object@adeg.par$pbackground$box)
-            object@trellis.par$axis.line$col <- "transparent"
-
+          object@trellis.par$axis.line$col <- "transparent"
+        else
+          object@trellis.par$axis.line$col <- "black"
+        
         arguments = list(
             par.settings = object@trellis.par,
             scales = if(!is.null(object@g.args$scales)) object@g.args$scales else list(draw = FALSE),

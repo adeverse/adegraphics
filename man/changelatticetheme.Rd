@@ -35,11 +35,11 @@ changelatticetheme(...)
 }
 
 \examples{
-if(require(lattice, quiet = TRUE)) {
-show.settings()
-changelatticetheme(list(superpose.symbol = list(pch = c(21, 22, 35), cex = 1)))
-show.settings()
-show.settings()[1]
+if(require(lattice, quietly = TRUE)) {
+  show.settings()
+  changelatticetheme(list(superpose.symbol = list(pch = c(21, 22, 35), cex = 1)))
+  show.settings()
+  show.settings()[1]
 }
 }
 \keyword{iplot}

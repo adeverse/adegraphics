@@ -275,28 +275,25 @@ multi.facets.C1 <- function(thecall, adepar, samelimits = TRUE) {
   ## creation of the plots (ADEg objects)
   for(i in 1:nlevels(facets)) {
     thenewcall$psub.text <- levels(facets)[i]
+    
     if(thecall[[1]] == "s1d.interval") {
       thenewcall$score1 <- call("[[", call("split", thecall$score1, thecall$facets), i)
       thenewcall$score2 <- call("[[", call("split", thecall$score2, thecall$facets), i)
-      thenewcall$at <- call("[[", call("split", thecall$at, thecall$facets), i)
-      } else {
+    } else {
       thenewcall$score <- call("[[", call("split", thecall$score, thecall$facets), i)
     }
-    
     
     if(thecall[[1]] == "s1d.barchart" & !is.null(thecall$labels))
       thenewcall$labels <- call("[[", call("split", thecall$labels, thecall$facets), i)
 
-     if(thecall[[1]] == "s1d.dotplot" | thecall[[1]] == "s1d.curve")
+     if(thecall[[1]] == "s1d.barchart" | thecall[[1]] == "s1d.dotplot" | thecall[[1]] == "s1d.curve" | thecall[[1]] == "s1d.interval")
       thenewcall$at <- call("[[", call("split", thecall$at, thecall$facets), i)
      
-    if(thecall[[1]] == "s1d.density")
+    if(thecall[[1]] == "s1d.density" | thecall[[1]] == "s1d.gauss")
       thenewcall$fac <- call("[[", call("split", thecall$fac, thecall$facets), i)
     
-    if(thecall[[1]] == "s1d.gauss") {
-      thenewcall$fac <- call("[[", call("split", thecall$fac, thecall$facets), i)
+    if(thecall[[1]] == "s1d.gauss")
       thenewcall$wt <- call("[[", call("split", thecall$wt, thecall$facets), i)
-    }
     
     listGraph <- c(listGraph, do.call(as.character(thenewcall[[1]]), thenewcall[-1]))
   }
@@ -305,6 +302,25 @@ multi.facets.C1 <- function(thecall, adepar, samelimits = TRUE) {
   names(listGraph) <- levels(facets)
   posmatrix <- layout2position(.n2mfrow(nlevels(facets)), ng = nlevels(facets))
   object <- new(Class = "ADEgS", ADEglist = listGraph, positions = posmatrix, add = matrix(0, ncol = nlevels(facets), nrow = nlevels(facets)), Call = as.call(thecall))
+  
+  ## same limits for all graphics when the second axis is done by intern calculations
+  if(inherits(object[[1]], "C1.density") | inherits(object[[1]], "C1.gauss") | inherits(object[[1]], "C1.hist")) {
+    if(isTRUE(samelimits) | is.null(samelimits)) {
+      cc <- object@Call
+      if(adegtot$p1d$horizontal & is.null(thecall$ylim)) {
+        Ylim <- range(sapply(object@ADEglist, function(x) x@g.args$ylim))
+        update(object, ylim = Ylim)
+        object@Call <- cc # this call does not include the ylim update
+      }
+      if(!adegtot$p1d$horizontal & is.null(thecall$xlim)) {
+        Xlim <- range(sapply(listGraph, function(x) x@g.args$xlim))
+        update(object, xlim = Xlim)
+        object@Call <- paste(substr(cc, 1, nchar(cc) - 1), ", xlim = c(", Xlim[1], ",", Xlim[2], ")", sep = "")
+        object@Call <- cc  # this call does not include the xlim update
+      }
+    }
+  }
+
   ## change pos et frame a posteriori ??
   return(object)
 }

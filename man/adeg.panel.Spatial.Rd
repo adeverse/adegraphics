@@ -67,7 +67,7 @@ adeg.panel.Spatial(SpObject, sp.layout = NULL, col = 1, border = 1, lwd = 1,
 
 \examples{
 
-if(require(maptools, quiet = TRUE) & require(lattice, quiet = TRUE)) {
+if(require(maptools, quietly = TRUE) & require(lattice, quietly = TRUE)) {
 
 nc <- readShapePoly(system.file("shapes/sids.shp", package = "maptools")[1], 
   proj4string = CRS("+proj=longlat +datum=NAD27"))

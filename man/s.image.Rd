@@ -91,7 +91,7 @@ g3 <- s.image(df1, z1, gridsize = 100)
 ## g4 <- s.image(df1, z1, gridsize = 1000, plot = FALSE)
 
 \dontrun{
-  if(require(splancs, quiet = TRUE) & require(sp, quiet = TRUE)) {
+  if(require(splancs, quietly = TRUE) & require(sp, quietly = TRUE)) {
     Sr1 <- Polygon(cbind(c(0, 1, 2, 1, 2, 0, -2, -1, -2, -1, 0), 
       c(2.5, 1.5, 2, 0, -2, -1, -2, 0, 2, 1.5, 2.5)))
     Sr2 <- Polygon(cbind(c(-0.5, 0.5, 0.5, -0.5, -0.5), c(0, 0, 1 ,1, 0)), hole = TRUE)

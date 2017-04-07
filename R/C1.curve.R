@@ -26,10 +26,14 @@ setMethod(
     on.exit(adegpar(oldparamadeg))
     adegtot <- adegpar(object@adeg.par)
     
-    if(object@data$storeData)
+    if(object@data$storeData) {
+      score <- object@data$score
       at <- object@data$at
-    else
+    } else {
+      score <- eval(object@data$score, envir = sys.frame(object@data$frame))
       at <- eval(object@data$at, envir = sys.frame(object@data$frame))
+    }
+    score <- as.matrix(score)[, 1]  ## to manage 'score' when it is a data.frame with only one column
     
     ## change some defaults
     adegtot$p1d$rug$draw <- FALSE

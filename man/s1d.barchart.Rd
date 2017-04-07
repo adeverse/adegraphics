@@ -8,14 +8,16 @@
 }
 
 \usage{
-s1d.barchart(score, labels = NULL, facets = NULL, plot = TRUE, 
-  storeData = TRUE, add = FALSE, pos = -1, ...)
+s1d.barchart(score, labels = NULL, at = 1:NROW(score), facets = NULL, 
+  plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...)
 }
 
 \arguments{
   \item{score}{a numeric vector (or a data frame) used to produce the plot}
   
   \item{labels}{the labels' names drawn on the top of bars}
+  
+  \item{at}{a numeric vector used as an index}
   
   \item{facets}{a factor splitting \code{score} so that subsets
     of the data are represented on different sub-graphics}
