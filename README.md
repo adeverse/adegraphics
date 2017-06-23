@@ -52,19 +52,8 @@ Once installed, the package can be loaded using:
 library("adegraphics")
 ```
 
-If you do not wish to install the development environments Rtools (Windows) / XCode (Mac), you can install the binary packages from this repository:
+If you do not wish to install the development environments Rtools (Windows) / XCode (Mac), you can get the binary packages here:
 
-* **Windows**:
-```r
-install.packages("http://pbil.univ-lyon1.fr/members/thioulouse/bin/windows/adegraphics_1.0-8.zip")
-```
+* [**Windows**](http://pbil.univ-lyon1.fr/members/thioulouse/bin/windows/)
 
-* **Mac**:
-```r
-install.packages("http://pbil.univ-lyon1.fr/members/thioulouse/bin/macosx/adegraphics_1.0-8.tgz")
-```
-
-
-
-
-
+* [**macOS**](http://pbil.univ-lyon1.fr/members/thioulouse/bin/macosx/)
