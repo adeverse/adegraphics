@@ -43,6 +43,9 @@ setMethod(
     object@stats$coords2d1 <- .coordtotriangleM(df1, mini3 = object@g.args$min3d, maxi3 = object@g.args$max3d)[, 2:3]
     object@stats$coords2d2 <- .coordtotriangleM(df2, mini3 = object@g.args$min3d, maxi3 = object@g.args$max3d)[, 2:3]
     
+    ## never optimized labels for triangle.match
+    object@adeg.par$plabels$optim <- FALSE
+    
     assign(name_obj, object, envir = parent.frame())
   })
 
@@ -75,7 +78,7 @@ setMethod(
     if(any(object@adeg.par$plabels$cex > 0)) {
       xlab <- (object@stats$coords2d1[, 1] + object@stats$coords2d2[, 1]) / 2
       ylab <- (object@stats$coords2d1[, 2] + object@stats$coords2d2[, 2]) / 2
-      object@adeg.par$plabels$optim <- FALSE
+      
       adeg.panel.label(xlab, ylab, labels = labels, object@adeg.par$plabels)
     }
   })

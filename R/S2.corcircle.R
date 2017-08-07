@@ -4,7 +4,7 @@
 
 setClass(
   Class = "S2.corcircle",
-  contains = "ADEg.S2",
+  contains = "ADEg.S2"
 )
 
 
@@ -39,6 +39,8 @@ setMethod(
         coord[i] <- sqrt(1 - h0[i] * h0[i])
       return(list(x0 = c(h0, -coord), x1 = c(h0, coord), y0 = c(-coord, h0), y1 = c(coord, h0), d = cgrid))
     }
+    
+    ## change default for some parameters
     if(adegtot$pgrid$draw || adegtot$paxes$draw)
       object@s.misc$backgrid <- getgrid(adegtot$pgrid$nint)      
     if(is.null(object@adeg.par$ppoints$cex))
@@ -47,6 +49,10 @@ setMethod(
     ## object modification before calling inherited method
     object@adeg.par <- adegtot
     callNextMethod() ## prepare graph
+    
+    ## never optimized labels for s.corcircle
+    object@adeg.par$plabels$optim <- FALSE
+    
     assign(name_obj, object, envir = parent.frame())
   })
 
@@ -71,7 +77,7 @@ setMethod(
     test <- .textsize(labels, plabels)
     w <- test$w
     h <- test$h
-    plabels$optim <- FALSE ## no optimisation
+    
     adeg.panel.label(x = x + pos[1, ] * w / 2, y = y + pos[2, ] * h / 2, labels = labels, plabels = plabels)
   })
 

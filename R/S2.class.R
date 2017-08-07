@@ -4,7 +4,7 @@
 
 setClass(
   Class = "S2.class",
-  contains = "ADEg.S2",
+  contains = "ADEg.S2"
 )
 
   
@@ -107,6 +107,7 @@ setMethod(
     
     ## never optimized labels for s.class
     object@adeg.par$plabels$optim <- FALSE
+    
     assign(name_obj, object, envir = parent.frame())
   })
 

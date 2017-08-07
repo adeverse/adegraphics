@@ -4,7 +4,7 @@
 
 setClass(
   Class= "S2.traject",
-  contains = "ADEg.S2",
+  contains = "ADEg.S2"
 )
 
 
@@ -49,6 +49,10 @@ setMethod(
     ## object modification before calling inherited method
     object@adeg.par <- adegtot
     callNextMethod() ## prepare graph
+    
+    ## never optimized labels for s.traject
+    object@adeg.par$plabels$optim <- FALSE
+    
     assign(name_obj, object, envir = parent.frame())
   })
 
@@ -115,8 +119,6 @@ setMethod(
         }
       }
       
-      ## always false here no optimization for straject object
-      object@adeg.par$plabels$optim <- FALSE
       adeg.panel.label(x, y, labels = labels, plabels = object@adeg.par$plabels)
     }
   })

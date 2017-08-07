@@ -26,7 +26,7 @@ adeg.panel.label <- function(x, y, labels, plabels, pos = NULL) {
     optim <- plabels$optim[1] ## only one possibility
     newpos <- list(x = x[ldraw], y = y[ldraw])
     
-    if(optim) {                
+    if(optim) {
       ## calcul des nouvelles positions uniquement pour les labels qui seront dessines
       ## informations sur panel
       nativelim <- current.panel.limits(unit = "native")
@@ -34,7 +34,13 @@ adeg.panel.label <- function(x, y, labels, plabels, pos = NULL) {
       ## calcul des nouvelles positions.
       if(any(is.na(width)) | any(is.na(height)) | any(is.na(newpos$y)) | any(is.na(newpos$x))) 
         stop("NA restants revoir adeg.panel.label")
-      newpos <- .pointLabel(x = newpos$x, y = newpos$y, labels = lab, width = width / diff(nativelim$xlim), height = height / diff(nativelim$ylim), limits = nativelim, xyAspect = diff(incheslim$xlim) / diff(incheslim$ylim), trace = FALSE)
+      newpos <- .pointLabel(x = newpos$x, y = newpos$y, labels = lab, 
+                            width = width / diff(nativelim$xlim), 
+                            height = height / diff(nativelim$ylim), 
+                            limits = nativelim, 
+                            xyAspect = diff(incheslim$xlim) / diff(incheslim$ylim), 
+                            trace = FALSE)
+      pos <- NULL
     }
     
     if(any(bdraw)) {

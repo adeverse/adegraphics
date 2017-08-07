@@ -4,7 +4,7 @@
 
 setClass(
   Class = "S2.distri",
-  contains = "ADEg.S2",
+  contains = "ADEg.S2"
 )
 
 
@@ -69,8 +69,10 @@ setMethod(
                       cxy = object@stats$covvar[[i]][1, 2], coeff = object@g.args$ellipseSize)
       })                                                    
     }
+    
     ## never optimized labels for s.distri
     object@adeg.par$plabels$optim <- FALSE
+
     assign(name_obj, object, envir = parent.frame())
   })
 

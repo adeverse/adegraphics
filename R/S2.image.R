@@ -5,7 +5,7 @@
 ## TODO: prendre en comptre les differents z
 setClass(
   Class = "S2.image",
-  contains = "ADEg.S2",
+  contains = "ADEg.S2"
 )
 
 

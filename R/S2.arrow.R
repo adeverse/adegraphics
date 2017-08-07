@@ -4,7 +4,7 @@
 
 setClass(
   Class = "S2.arrow",
-  contains = "ADEg.S2",
+  contains = "ADEg.S2"
 )
 
 
@@ -48,6 +48,10 @@ setMethod(
       }
       object@s.misc$lim.update <- TRUE
     }
+    
+    ## never optimized labels for s.arrow
+    object@adeg.par$plabels$optim <- FALSE
+    
     assign(name_obj, object, envir = parent.frame())
   })
 
@@ -73,8 +77,7 @@ setMethod(
       test <- .textsize(arrownames, plabels)
       w <- test$w
       h <- test$h
-      ## optim always false for s.arrow
-      plabels$optim <- FALSE
+
       if(any(object@adeg.par$plabels$cex > 0))
         adeg.panel.label(x + pos[1, ] * w / 2, y + pos[2, ] * h / 2 , arrownames, plabels)
     }

@@ -6,8 +6,8 @@
 ## Remarque ==> pour size, si couleur selon <0 ou >0 il faut s'assurer que 0 ne sera donc pas dans un intervalle? (inclus ex [-1, 1])
 setClass(
     Class = "S2.value",
-    contains = "ADEg.S2",
-    )
+    contains = "ADEg.S2"
+)
 
 
 setMethod(
@@ -85,6 +85,9 @@ setMethod(
         ## object modification before calling inherited method
         object@adeg.par <- adegtot
         callNextMethod() ## prepare graph
+        
+        ## never optimized labels for s.value
+        object@adeg.par$plabels$optim <- FALSE
          
         assign(name_obj, object, envir = parent.frame())
     })

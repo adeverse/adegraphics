@@ -113,7 +113,9 @@ setMethod(
       if(any(object@g.args$chullSize > 0))
         object@s.misc$chullcoord  <- .util.chull(object@stats$coords2d[, 1], object@stats$coords2d[, 2], mean.x, mean.y, fac = fac, chullSize =  object@g.args$chullSize)
     
+    ## never optimized labels for triangle.class
     object@adeg.par$plabels$optim <- FALSE
+    
     assign(name_obj, object, envir = parent.frame())
   })
 

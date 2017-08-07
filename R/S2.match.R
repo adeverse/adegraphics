@@ -6,7 +6,7 @@
 ## We know that the two data sets have the same row number, so we can easily retrieve and distinguish the two set (the first (nrow/2) rows are from dfxy1 the rest from dfxy2
 setClass(
   Class = "S2.match",
-  contains = "ADEg.S2",
+  contains = "ADEg.S2"
 )
 
 
@@ -44,6 +44,10 @@ setMethod(
     ## object modification before calling inherited method
     object@adeg.par <- adegtot
     callNextMethod() ## prepare graph
+    
+    ## never optimized labels for s.match
+    object@adeg.par$plabels$optim <- FALSE
+    
     assign(name_obj, object, envir = parent.frame())
   })
 
@@ -69,7 +73,7 @@ setMethod(
         labels <- object@data$labels
       else
         labels <- eval(object@data$labels, envir = sys.frame(object@data$frame))
-      object@adeg.par$plabels$optim <- FALSE
+      
       adeg.panel.label(xlab, ylab ,labels, object@adeg.par$plabels)
     }
   })

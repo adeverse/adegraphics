@@ -55,7 +55,9 @@ setMethod(
     df <- sweep(df, 1, rowSums(df), "/")
     object@stats$coords2d <- .coordtotriangleM(df, mini3 = object@g.args$min3d, maxi3 = object@g.args$max3d)[, 2:3]
 
+    ## never optimized labels for triangle.traject
     object@adeg.par$plabels$optim <- FALSE
+    
     assign(name_obj, object, envir = parent.frame())
   })
 
@@ -122,9 +124,7 @@ setMethod(
           y[i] <- (todrawY[[i]][suborder[middl[i]]] + todrawY[[i]][suborder[middl[i]+1]]) / 2
         }
       }
-      
-      ## always false here no optimization for straject object
-      object@adeg.par$plabels$optim <- FALSE
+
       adeg.panel.label(x, y, labels = labels, plabels = object@adeg.par$plabels)
     }
   })

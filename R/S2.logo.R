@@ -5,7 +5,7 @@
 
 setClass(
   Class = "S2.logo",
-  contains = "ADEg.S2",
+  contains = "ADEg.S2"
 )
 
 setMethod(

@@ -36,7 +36,7 @@ setMethod(
     adegtot <- adegpar(object@adeg.par)
     
     ## change default for some parameters
-    if((is.null(object@adeg.par$plabels$boxes$draw) & adegtot$plabels$optim) || (is.null(object@adeg.par$plabels$boxes$draw) & length(labels) > 1000)) ## dessin des boxes labels non renseigne par l'utilisateur lors de lappel a factorise
+    if((is.null(object@adeg.par$plabels$boxes$draw) & adegtot$plabels$optim) || (is.null(object@adeg.par$plabels$boxes$draw) & length(labels) > 1000))
       adegtot$plabels$boxes$draw <- FALSE
     if(is.null(object@adeg.par$porigin$include) & (any(names(object@g.args) %in% c("Sp", "nbobject"))))
       adegtot$porigin$include <- FALSE

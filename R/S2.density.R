@@ -44,7 +44,11 @@ setMethod(
     
     object@stats$densit <- bkde2D(dfxy[, c(object@data$xax[1], object@data$yax[1])], bandwidth = object@g.args$bandwidth, gridsize = rep(object@g.args$gridsize, length.out = 2))
     ## TODO: as in s.image, remove points (only) where density is null
-    ## use expand.grid....           
+    ## use expand.grid...
+    
+    ## never optimized labels for s.density
+    object@adeg.par$plabels$optim <- FALSE
+    
     assign(name_obj, object, envir = parent.frame())
   })
 

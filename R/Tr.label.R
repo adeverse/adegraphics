@@ -37,9 +37,9 @@ setMethod(
     on.exit(adegpar(oldparamadeg))
     adegtot <- adegpar(object@adeg.par)
     
-    ## change some parameter values
-    if((is.null(object@adeg.par$plabels$boxes$draw) & adegtot$plabels$optim) | (is.null(object@adeg.par$plabels$boxes$draw) & length(labels) > 1000))  
-      adegtot$plboxes$draw <- FALSE
+    ## change default for some parameters
+    if((is.null(object@adeg.par$plabels$boxes$draw) & adegtot$plabels$optim) || (is.null(object@adeg.par$plabels$boxes$draw) & length(labels) > 1000))
+      adegtot$plabels$boxes$draw <- FALSE
     
     if(object@g.args$addmean) {
       default <- list(pch = 20, col = "black", cex = 2)
