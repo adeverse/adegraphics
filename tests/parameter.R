@@ -79,7 +79,7 @@ update(g3, plines = list(col = "blue", lwd = 2, lty = 3), parr.end = "both", par
 
 ## with spatial object
 library(maptools)
-nc <- readShapePoly(system.file("etc/shapes/sids.shp", package = "spdep")[1], proj4string = CRS("+proj=longlat +datum=NAD27"))
+nc <- readShapePoly(system.file("shapes/sids.shp", package = "spData")[1], proj4string = CRS("+proj=longlat +datum=NAD27"))
 xy <- coordinates(nc)
 g4 <- s.label(xy, label = as.character(1:nrow(xy)), porigin.include = FALSE, Sp = nc, pSp.col = colorRampPalette(c("yellow", "blue"))(52), pgrid.draw = TRUE)
 update(g4, pSp = list(col = "yellow", border = "blue", lwd = 2, lty = 5, alpha = 0.01)) ## don't match : to solve

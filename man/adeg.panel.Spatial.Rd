@@ -67,9 +67,10 @@ adeg.panel.Spatial(SpObject, sp.layout = NULL, col = 1, border = 1, lwd = 1,
 
 \examples{
 
-if(require(maptools, quietly = TRUE) & require(lattice, quietly = TRUE)) {
+if(require(maptools, quietly = TRUE) & require(lattice, quietly = TRUE) & 
+  require(spData, quietly = TRUE)) {
 
-nc <- readShapePoly(system.file("etc/shapes/sids.shp", package = "spdep")[1],
+nc <- readShapePoly(system.file("shapes/sids.shp", package = "spData")[1],
   proj4string = CRS("+proj=longlat +datum=NAD27"))
 xy <- coordinates(nc)
 arrow <- list("SpatialPolygonsRescale", layout.north.arrow(), 
