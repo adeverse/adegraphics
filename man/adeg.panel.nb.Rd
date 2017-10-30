@@ -57,12 +57,12 @@ adeg.panel.edges(edges, coords, col.edge = "black", lwd = 1, lty = 1, pch = 20,
 }
 
 \examples{
-if(require(maptools, quietly = TRUE) & require(lattice, quietly = TRUE) 
-  & require(spdep, quietly = TRUE)) {
+if(require(maptools, quietly = TRUE) & require(lattice, quietly = TRUE) &
+  require(spdep, quietly = TRUE) & require(spData, quietly = TRUE)) {
 
-  columbus <- readShapePoly(system.file("etc/shapes/columbus.shp", package = "spdep")[1])
+  columbus <- readShapePoly(system.file("shapes/columbus.shp", package = "spData")[1])
   coords <- coordinates(columbus)
-  col.gal.nb <- read.gal(system.file("etc/weights/columbus.gal", package = "spdep")[1])
+  col.gal.nb <- read.gal(system.file("weights/columbus.gal", package = "spData")[1])
   nbobject <- col.gal.nb
   xyplot(coords[, 2] ~ coords[, 1],
     panel = function(...){adeg.panel.nb(col.gal.nb, coords, col.edge = c("blue", "red"))})
