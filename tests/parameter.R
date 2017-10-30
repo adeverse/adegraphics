@@ -78,8 +78,8 @@ g3 <- s.arrow(coin1$l1, plabels.cex = .87)
 update(g3, plines = list(col = "blue", lwd = 2, lty = 3), parr.end = "both", parr = list(angle = 25, length = 0.5))
 
 ## with spatial object
-library(maptools)
-nc <- readShapePoly(system.file("shapes/sids.shp", package = "spData")[1], proj4string = CRS("+proj=longlat +datum=NAD27"))
+library(rgdal)
+nc <- readOGR(system.file("shapes/sids.shp", package = "spData")[1])
 xy <- coordinates(nc)
 g4 <- s.label(xy, label = as.character(1:nrow(xy)), porigin.include = FALSE, Sp = nc, pSp.col = colorRampPalette(c("yellow", "blue"))(52), pgrid.draw = TRUE)
 update(g4, pSp = list(col = "yellow", border = "blue", lwd = 2, lty = 5, alpha = 0.01)) ## don't match : to solve

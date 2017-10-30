@@ -1,11 +1,11 @@
 library(adegraphics)
 library(spdep)
 library(spData)
-library(maptools)
 library(lattice)
+library(rgdal)
 pdf("nbgraph.pdf")
 
-columbus <- readShapePoly(system.file("shapes/columbus.shp", package = "spData")[1])
+columbus <- readOGR(system.file("shapes/columbus.shp", package = "spData")[1])
 coords <- coordinates(columbus)
 col.gal.nb <- read.gal(system.file("weights/columbus.gal", package = "spData")[1])
 

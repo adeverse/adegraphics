@@ -1,10 +1,10 @@
 library(adegraphics)
-library(maptools)
 library(spData)
+library(rgdal)
 pdf("panelSpatial.pdf")
 
 ## ex1
-nc <- readShapePoly(system.file("shapes/sids.shp", package = "spData")[1], proj4string = CRS("+proj=longlat +datum=NAD27"))
+nc <- readOGR(system.file("shapes/sids.shp", package = "spData")[1])
 dfxy1 <- coordinates(nc)
 g1 <- s.label(dfxy1, Sp = nc, pSp.col = colorRampPalette(c("yellow", "blue"))(52), pgrid.draw = FALSE, plabels.cex = 0)
 
@@ -12,7 +12,7 @@ g1 <- s.label(dfxy1, Sp = nc, pSp.col = colorRampPalette(c("yellow", "blue"))(52
 ## ex2
 data(meuse, package = "sp")
 coordinates(meuse) <- ~ x + y
-data(meuse.grid)
+data(meuse.grid, package = "sp")
 m <- SpatialPixelsDataFrame(points = meuse.grid[c("x", "y")], data = meuse.grid)
 data(meuse.riv)
 meuse.sr <- SpatialPolygons(list(Polygons(list(Polygon(meuse.riv)), "meuse.riv")))
@@ -50,7 +50,8 @@ g4 <- s.class(dfxy4, region.names, ellip = 0, star = 0, col = col.region, Sp = g
 ## ex4
 library(sp)
 library(lattice)
-nc <- readShapePoly(system.file("shapes/sids.shp", package = "spData")[1], proj4string = CRS("+proj=longlat +datum=NAD27"))
+library(rgdal)
+nc <- readOGR(system.file("shapes/sids.shp", package = "spData")[1])
 
 sp <- SpatialPolygons(nc@polygons, nc@plotOrder)
 g5 <- xyplot(1 ~ 1, xlim = bbox(sp)[1, ], ylim = bbox(sp)[2, ], panel = function(...) {adeg.panel.Spatial(SpObject = sp, col = "black", border = "black")})
