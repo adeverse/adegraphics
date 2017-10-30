@@ -3,7 +3,7 @@ library(maptools)
 pdf("panelSpatial.pdf")
 
 ## ex1
-nc <- readShapePoly(system.file("shapes/sids.shp", package = "maptools")[1], proj4string = CRS("+proj=longlat +datum=NAD27"))
+nc <- readShapePoly(system.file("etc/shapes/sids.shp", package = "spdep")[1], proj4string = CRS("+proj=longlat +datum=NAD27"))
 dfxy1 <- coordinates(nc)
 g1 <- s.label(dfxy1, Sp = nc, pSp.col = colorRampPalette(c("yellow", "blue"))(52), pgrid.draw = FALSE, plabels.cex = 0)
 
@@ -49,7 +49,7 @@ g4 <- s.class(dfxy4, region.names, ellip = 0, star = 0, col = col.region, Sp = g
 ## ex4
 library(sp)
 library(lattice)
-nc <- readShapePoly(system.file("shapes/sids.shp", package = "maptools")[1], proj4string = CRS("+proj=longlat +datum=NAD27"))
+nc <- readShapePoly(system.file("etc/shapes/sids.shp", package = "spdep")[1], proj4string = CRS("+proj=longlat +datum=NAD27"))
 
 sp <- SpatialPolygons(nc@polygons, nc@plotOrder)
 g5 <- xyplot(1 ~ 1, xlim = bbox(sp)[1, ], ylim = bbox(sp)[2, ], panel = function(...) {adeg.panel.Spatial(SpObject = sp, col = "black", border = "black")})
