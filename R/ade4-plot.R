@@ -281,7 +281,6 @@
     stop("Non convenient yax")
   
   appel <- as.list(x$call)
-  fac <- eval.parent(appel$fac)
   
   ## sort parameters for each graph
   graphsnames <- c("Rrow", "Qrow", "Rax", "Rloadings", "Qloadings", "Qax", "eig")
@@ -380,7 +379,6 @@
     stop("Non convenient yax")
   
   appel <- as.list(x$call)
-  fac <- eval.parent(appel$fac)
   
   ## sort parameters for each graph  
   graphsnames <- c("loadings", "col", "eig", "row", "Xax", "class")
@@ -429,7 +427,6 @@
     stop("Non convenient yax")
   
   appel <- as.list(x$call)
-  fac <- eval.parent(appel$fac)
   
   ## sort parameters for each graph
   graphsnames <- c("loadings", "col", "eig", "row", "Xax", "ccrow")
@@ -542,7 +539,6 @@
     stop("Non convenient yax")
   
   appel <- as.list(x$call)
-  fac <- eval.parent(appel$fac)
   
   ## sort parameters for each graph
   graphsnames <- c("Rrow", "Qrow", "Rax", "Rloadings", "Qloadings", "Qax", "eig")
@@ -1083,7 +1079,6 @@
     stop("Non convenient yax")
   
   appel <- as.list(x$call)
-  fac <- eval.parent(appel$fac)
   
   ## sort parameters for each graph
   graphsnames <- c("Rrow", "Qrow", "Rax", "Rloadings","Qloadings", "Qax", "eig")
