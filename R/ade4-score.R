@@ -71,7 +71,7 @@
 }
 
 
-"score.mix" <- function (x, xax = 1, which.var = NULL, pos = -1, storeData = TRUE, plot = TRUE, ...) {
+"score.mix" <- function (x, xax = 1, which.var = NULL, type = c("points", "boxplot"), pos = -1, storeData = TRUE, plot = TRUE, ...) {
   if(!inherits(x, "mix")) 
     stop("Object of class 'mix' expected")
   if(x$nf == 1) 
@@ -140,25 +140,40 @@
     
     ## type of variable : factor
     else if(type.var == "f") {
-      ## parameters management
-      params$adepar <- list(ppoints = list(pch = "|"), paxes = list(aspectratio = "fill", draw = TRUE), porigin = list(draw = FALSE), pgrid = list(draw = FALSE), psub = list(text = colnames(evTab)[i], position = "topleft"))
-      sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
-      
       ## data management
       fac <- evTab[, i]
       faccall <- call("[", oritab, 1:NROW(evTab), i)
       meangroup <- call("as.numeric", call("tapply", scorecall, faccall, mean))
       dfxy <- call("cbind", scorecall, call("as.numeric", call("[", meangroup, faccall)))
       
-      ## ADEg creation
-      g1 <- do.call("s.class", c(list(dfxy = dfxy, fac = faccall, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args, sortparameters$rest))
-      xlimg1 <- g1@g.args$xlim
-      ylimg1 <- g1@g.args$ylim
-      g2 <- xyplot(score ~ fac, xlab = "", ylab = "", xlim = xlimg1, ylim = ylimg1, 
-                   aspect = g1@adeg.par$paxes$aspectratio, panel = function(x, y) {panel.abline(h = as.numeric(tapply(y, x, mean)), a = 0, b = 1, lty = 1)})
-      g2$call <- call("xyplot", substitute(scorecall ~ faccall), xlab = "", ylab = "", xlim = substitute(xlimg1), ylim = substitute(ylimg1), 
-                      aspect = g1@adeg.par$paxes$aspectratio, panel = function(x, y) {panel.abline(h = as.numeric(tapply(y, x, mean)), a = 0, b = 1, lty = 1)})
-      ADEglist[[i]] <- superpose(g2, g1, plot = FALSE)
+      type <- match.arg(type)
+      params <- list()
+      
+      if(type == "boxplot") {
+        ## parameter management
+        params$adepar <- list(plabels = list(boxes = list(draw = FALSE)), p1d = list(rug = list(draw = TRUE)), paxes = list(draw = TRUE, y = list(draw = FALSE)), 
+                              plegend = list(drawKey = FALSE), pgrid = list(text = list(cex = 0)), psub = list(position = "topleft"))
+        params$g.args <- list(samelimits = FALSE)
+        sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+        
+        ## ADEgS creation
+        ADEglist[[i]] <- do.call("s1d.boxplot", c(list(score = scorecall, fac = faccall, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args, sortparameters$rest))
+        
+      } else if(type == "points") {
+        ## parameter management
+        params$adepar <- list(ppoints = list(pch = "|"), porigin = list(draw = FALSE), paxes = list(aspectratio = "fill", draw = TRUE), pgrid = list(draw = FALSE), psub = list(text = colnames(evTab)[i], position = "topleft"))
+        sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+        
+        ## ADEg creation
+        g1 <- do.call("s.class", c(list(dfxy = dfxy, fac = faccall, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args, sortparameters$rest))
+        xlimg1 <- g1@g.args$xlim
+        ylimg1 <- g1@g.args$ylim
+        g2 <- xyplot(score ~ fac, xlab = "", ylab = "", xlim = xlimg1, ylim = ylimg1, 
+                     aspect = g1@adeg.par$paxes$aspectratio, panel = function(x, y) {panel.abline(h = as.numeric(tapply(y, x, mean)), a = 0, b = 1, lty = 1)})
+        g2$call <- call("xyplot", substitute(scorecall ~ faccall), xlab = "", ylab = "", xlim = substitute(xlimg1), ylim = substitute(ylimg1),
+                        aspect = g1@adeg.par$paxes$aspectratio, panel = function(x, y) {panel.abline(h = as.numeric(tapply(y, x, mean)), a = 0, b = 1, lty = 1)})
+        ADEglist[[i]] <- superpose(g2, g1, plot = FALSE)
+      }
     }
     
     ## type of variable : ordered
