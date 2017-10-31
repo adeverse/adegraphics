@@ -154,11 +154,11 @@
       g1 <- do.call("s.class", c(list(dfxy = dfxy, fac = faccall, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args, sortparameters$rest))
       xlimg1 <- g1@g.args$xlim
       ylimg1 <- g1@g.args$ylim
-      g2 <- xyplot(score ~ fac, xlab = "", ylab = "", scales = list(x = list(tck = c(1, 0)), y = list(tck = c(1, 0))), xlim = xlimg1, ylim = ylimg1, 
+      g2 <- xyplot(score ~ fac, xlab = "", ylab = "", xlim = xlimg1, ylim = ylimg1, 
                    aspect = g1@adeg.par$paxes$aspectratio, panel = function(x, y) {panel.abline(h = as.numeric(tapply(y, x, mean)), a = 0, b = 1, lty = 1)})
-      g2$call <- call("xyplot", substitute(scorecall ~ faccall), xlab = "", ylab = "", scales = list(x = list(tck = c(1, 0)), y = list(tck = c(1, 0))), xlim = substitute(xlimg1), 
-                      ylim = substitute(ylimg1), aspect = g1@adeg.par$paxes$aspectratio, panel = function(x, y) {panel.abline(h = as.numeric(tapply(y, x, mean)), a = 0, b = 1, lty = 1)})
-      ADEglist[[i]] <- superpose(g1, g2)
+      g2$call <- call("xyplot", substitute(scorecall ~ faccall), xlab = "", ylab = "", xlim = substitute(xlimg1), ylim = substitute(ylimg1), 
+                      aspect = g1@adeg.par$paxes$aspectratio, panel = function(x, y) {panel.abline(h = as.numeric(tapply(y, x, mean)), a = 0, b = 1, lty = 1)})
+      ADEglist[[i]] <- superpose(g2, g1, plot = FALSE)
     }
     
     ## type of variable : ordered
