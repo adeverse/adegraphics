@@ -1367,7 +1367,7 @@
 
 
 "plot.inertia" <- function(x, xax = 1, yax = 2, cont = 0.1, type = c("label", "cross", "ellipse", "both"), ellipseSize = 1.5, 
-                           posieig = "none", plot = TRUE, storeData = TRUE, pos = -1, ...) { 
+                           posieig = "none", plot = TRUE, storeData = TRUE, pos = -1, ...) {
   
   if(!inherits(x, "inertia")) 
     stop("Object of class 'inertia' expected")
@@ -1386,21 +1386,10 @@
   if(yax > evTab$nf)
     stop("Non convenient yax")
   
-  contrib1D <- FALSE
-  if(xax == yax) {
-    contrib1D <- TRUE
-    ## Transformation to square root for better visual representation
-    # cont <- sqrt(cont)
-  }
-  
   adegtot <- adegpar()
   position <- match.arg(posieig[1], choices = c("bottomleft", "bottomright", "topleft", "topright", "none"), several.ok = FALSE)
   type <- match.arg(type)
   type <- type[1]
-  if(type != "label" & isTRUE(contrib1D)) {
-    warning("Only 'label' type is used when only one axis is displayed ('xax' and 'yax' are the same)", call. = FALSE)
-    type <- "label"
-  }
   
   ## sort parameters for each graph
   graphsnames <- c("light_row", "heavy_row", "light_col", "heavy_col", "eig")
@@ -1413,13 +1402,8 @@
   params$light_col <- list(plabels = list(cex = 0), ppoints = list(col = "grey20", alpha = 0.45, cex = 1.2, pch = 19))
   
   if(type == "label") {
-    if(contrib1D){
-      params$heavy_row <- list(plabels = list(boxes = list(draw = TRUE), col = "red", srt = "horizontal"), ppoints = list(col = "red", cex = 1.2, pch = 19))
-      params$heavy_col <- list(plabels = list(boxes = list(draw = TRUE), col = "blue", srt = "horizontal"), ppoints = list(col = "blue", cex = 1.2, pch = 19))
-    } else {
-      params$heavy_row <- list(plabels = list(boxes = list(draw = FALSE), col = "red"), ppoints = list(cex = 0))
-      params$heavy_col <- list(plabels = list(boxes = list(draw = FALSE), col = "blue"), ppoints = list(cex = 0))
-    }
+    params$heavy_row <- list(plabels = list(boxes = list(draw = FALSE), col = "red"), ppoints = list(cex = 0))
+    params$heavy_col <- list(plabels = list(boxes = list(draw = FALSE), col = "blue"), ppoints = list(cex = 0))
   } else if(type == "cross") {
     params$heavy_row <- list(ellipseSize = ellipseSize, plabels = list(boxes = list(draw = FALSE), col = "red"), ppoints = list(cex = 0), pellipses = list(lwd = 0, axes = list(col = "red", lty = 1)), plines = list(lwd = 0), plegend = list(drawKey = FALSE))
     params$heavy_col <- list(ellipseSize = ellipseSize, plabels = list(boxes = list(draw = FALSE), col = "blue"), ppoints = list(cex = 0), pellipses = list(lwd = 0, axes = list(col = "blue", lty = 1)), plines = list(lwd = 0), plegend = list(drawKey = FALSE))
@@ -1435,142 +1419,96 @@
   
   ## management of the data and the parameters about the rows' contribution (individuals) on axes
   if(!is.null(x$row.abs)) {
-    if(contrib1D){
-      inertrow <- x$row.abs[, xax] / 100
-      # inertrow <- sqrt(x$row.abs[, xax]) / 100
-      inertrowcall <- call("/", call("[", call("$", substitute(x), "row.abs"), call(":", 1, call("NROW", call("$", substitute(x), "row.abs"))), xax), 100)
-      # inertrowcall <- call("/", call("sqrt", call("[", call("$", substitute(x), "row.abs"), call(":", 1, call("NROW", call("$", substitute(x), "row.abs"))), xax)), 100)
-      lightrow <- subset(evTab$li[, xax], inertrow < cont)
-      lightrowcall <- call("subset", call("[", call("$", ori[[2]], "li"), call(":", 1, call("NROW", call("$", ori[[2]], "li"))), xax), call("<", inertrowcall, cont))
-     
-      heavyrow <- subset(evTab$li[, xax], inertrow >= cont)
-      heavyrowcall <- call("c", call("subset", call("[", call("$", ori[[2]], "li"), call(":", 1, call("NROW", call("$", ori[[2]], "li"))), xax), call(">=", inertrowcall, cont)), 0)
-      if(length(heavyrow) == 0)
-        stop("No points to draw, try lowering 'cont' (see 'x$row.abs')")
-      heavy_inertrow <- subset(inertrow, inertrow >= cont)
-      names_heavyrow <- subset(rownames(x$row.abs), inertrow >= cont)
-      
-      limglobal <- setlimits1D(mini = min(c(heavyrow, lightrow)), maxi = max(c(heavyrow, lightrow)), 
-                               origin = adegtot$porigin$origin, includeOr = adegtot$porigin$include)
-      params <- list()
-      params$light_row <- list(xlim = limglobal)
-      sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
-      
-    } else {
-      inertrow <- x$row.abs[, c(xax, yax)] / 100
-      inertrowcall <- call("/", call("[", call("$", substitute(x), "row.abs"), call(":", 1, call("NROW", call("$", substitute(x), "row.abs"))), c(xax, yax)), 100)
-      lightrow <- subset(evTab$li[, c(xax, yax)], inertrow[, 1] < cont & inertrow[, 2] < cont)
-      lightrowcall <- call("subset", call("[", call("$", ori[[2]], "li"), call(":", 1, call("NROW", call("$", ori[[2]], "li"))), c(xax, yax)), call("&", call("<", call("[", inertrowcall, 1), cont), call("<", call("[", inertrowcall, 2), cont)))
-      
-      heavyrow <- subset(evTab$li[, c(xax, yax)], inertrow[, 1] >= cont | inertrow[, 2] >= cont)
-      heavyrowcall <- call("subset", call("[", call("$", ori[[2]], "li"), call(":", 1, call("NROW", call("$", ori[[2]], "li"))), c(xax, yax)), call("&", call(">=", call("[", inertrowcall, 1), cont), call(">=", call("[", inertrowcall, 2), cont)))
-      if(nrow(heavyrow) == 0)
-        stop("No points to draw, try lowering 'cont'")
-      heavy_inertrow <- subset(inertrow, inertrow[, 1] >= cont | inertrow[, 2] >= cont)
-      heavy_inertrowcum <- apply(heavy_inertrow, 1, sum)
-      
-      if(type == "label"){
-        if(is.null(sortparameters$heavy_row$plabels$cex)) {
-          sortparameters$heavy_row$plabels$cex <- heavy_inertrowcum / (max(heavy_inertrowcum) / 1.5)
-        } else {
-          sortparameters$heavy_row$plabels$cex <- sortparameters$heavy_row$plabels$cex * heavy_inertrowcum / (max(heavy_inertrowcum) / 1.5)
-        }
+    inertrow <- x$row.abs[, c(xax, yax)] / 100
+    inertrowcall <- call("/", call("[", call("$", substitute(x), "row.abs"), call(":", 1, call("NROW", call("$", substitute(x), "row.abs"))), c(xax, yax)), 100)
+    lightrow <- subset(evTab$li[, c(xax, yax)], inertrow[, 1] < cont & inertrow[, 2] < cont)
+    lightrowcall <- call("subset", call("[", call("$", ori[[2]], "li"), call(":", 1, call("NROW", call("$", ori[[2]], "li"))), c(xax, yax)), call("&", call("<", call("[", inertrowcall, 1), cont), call("<", call("[", inertrowcall, 2), cont)))
+    
+    heavyrow <- subset(evTab$li[, c(xax, yax)], inertrow[, 1] >= cont | inertrow[, 2] >= cont)
+    heavyrowcall <- call("subset", call("[", call("$", ori[[2]], "li"), call(":", 1, call("NROW", call("$", ori[[2]], "li"))), c(xax, yax)), call("&", call(">=", call("[", inertrowcall, 1), cont), call(">=", call("[", inertrowcall, 2), cont)))
+    if(nrow(heavyrow) == 0)
+      stop("No points to draw, try lowering 'cont'")
+    heavy_inertrow <- subset(inertrow, inertrow[, 1] >= cont | inertrow[, 2] >= cont)
+    heavy_inertrowcum <- apply(heavy_inertrow, 1, sum)
+    
+    if(type == "label"){
+      if(is.null(sortparameters$heavy_row$plabels$cex)) {
+        sortparameters$heavy_row$plabels$cex <- heavy_inertrowcum / (max(heavy_inertrowcum) / 1.5)
+      } else {
+        sortparameters$heavy_row$plabels$cex <- sortparameters$heavy_row$plabels$cex * heavy_inertrowcum / (max(heavy_inertrowcum) / 1.5)
       }
-      
-      limglobal <- setlimits2D(minX = min(c(heavyrow[, 1], lightrow[, 1])), maxX = max(c(heavyrow[, 1], lightrow[, 1])), 
-                               minY = min(c(heavyrow[, 2], lightrow[, 2])), maxY = max(c(heavyrow[, 2], lightrow[, 2])),
-                               origin = adegtot$porigin$origin, aspect.ratio = adegtot$paxes$aspectratio, includeOr = adegtot$porigin$include)
-      
-      if(type != "label") {
-        # if ellipses or crosses are drawn, the limits are re-calculated and the elipses size are normalized
-        heavy_inertrowmax <- apply(heavy_inertrow, 2, max)
-        heavy_inertrownorm <- matrix(NA, NROW(heavy_inertrow), 2)
-        for (i in 1:2) {heavy_inertrownorm[, i] <- (heavy_inertrow[, i] / heavy_inertrowmax[i]) * (diff(limglobal[[i]]) / 10)}
-        
-        # TODO
-        # add 0.00001 to the coordinates to avoid the bug in the '.util.ellipse' function (waiting to correct it)
-        cont_row <- cbind(c(heavyrow[, 1] - heavy_inertrownorm[, 1]/2, heavyrow[, 1] + heavy_inertrownorm[, 1]/2, heavyrow[, 1], heavyrow[, 1] + 0.00001), 
-                          c(heavyrow[, 2] + 0.00001, heavyrow[, 2], heavyrow[, 2] - heavy_inertrownorm[, 2]/2, heavyrow[, 2] + heavy_inertrownorm[, 2]/2)) 
-        fac_row <- as.factor(rep(rownames(heavyrow), 4))
-        limglobal <- setlimits2D(minX = min(c(cont_row[, 1], lightrow[, 1])), maxX = max(c(cont_row[, 1], lightrow[, 1])), 
-                                 minY = min(c(cont_row[, 2], lightrow[, 2])), maxY = max(c(cont_row[, 2], lightrow[, 2])),
-                                 origin = adegtot$porigin$origin, aspect.ratio = adegtot$paxes$aspectratio, includeOr = adegtot$porigin$include)
-      }
-      
-      params <- list()
-      params$light_row <- list(xlim = limglobal$xlim, ylim = limglobal$ylim)
-      sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
     }
+    
+    limglobal <- setlimits2D(minX = min(c(heavyrow[, 1], lightrow[, 1])), maxX = max(c(heavyrow[, 1], lightrow[, 1])), 
+                             minY = min(c(heavyrow[, 2], lightrow[, 2])), maxY = max(c(heavyrow[, 2], lightrow[, 2])),
+                             origin = adegtot$porigin$origin, aspect.ratio = adegtot$paxes$aspectratio, includeOr = adegtot$porigin$include)
+    
+    if(type != "label") {
+      # if ellipses or crosses are drawn, the limits are re-calculated and the elipses size are normalized
+      heavy_inertrowmax <- apply(heavy_inertrow, 2, max)
+      heavy_inertrownorm <- matrix(NA, NROW(heavy_inertrow), 2)
+      for (i in 1:2) {heavy_inertrownorm[, i] <- (heavy_inertrow[, i] / heavy_inertrowmax[i]) * (diff(limglobal[[i]]) / 10)}
+      
+      # TODO
+      # add 0.00001 to the coordinates to avoid the bug in the '.util.ellipse' function (waiting to correct it)
+      cont_row <- cbind(c(heavyrow[, 1] - heavy_inertrownorm[, 1]/2, heavyrow[, 1] + heavy_inertrownorm[, 1]/2, heavyrow[, 1], heavyrow[, 1] + 0.00001), 
+                        c(heavyrow[, 2] + 0.00001, heavyrow[, 2], heavyrow[, 2] - heavy_inertrownorm[, 2]/2, heavyrow[, 2] + heavy_inertrownorm[, 2]/2)) 
+      fac_row <- as.factor(rep(rownames(heavyrow), 4))
+      limglobal <- setlimits2D(minX = min(c(cont_row[, 1], lightrow[, 1])), maxX = max(c(cont_row[, 1], lightrow[, 1])), 
+                               minY = min(c(cont_row[, 2], lightrow[, 2])), maxY = max(c(cont_row[, 2], lightrow[, 2])),
+                               origin = adegtot$porigin$origin, aspect.ratio = adegtot$paxes$aspectratio, includeOr = adegtot$porigin$include)
+    }
+    
+    params <- list()
+    params$light_row <- list(xlim = limglobal$xlim, ylim = limglobal$ylim)
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   }
   
   ## management of the data and the parameters about the columns' contribution (variables) on axes
   if(!is.null(x$col.abs)) {
-    if(contrib1D){
-      inertcol <- x$col.abs[, xax] / 100
-      # inertcol <- sqrt(x$col.abs[, xax]) / 100
-      inertcolcall <- call("/", call("[", call("$", substitute(x), "col.abs"), call(":", 1, call("NROW", call("$", substitute(x), "col.abs"))), xax), 100)
-      # inertcolcall <- call("/", call("sqrt", call("[", call("$", substitute(x), "col.abs"), call(":", 1, call("NROW", call("$", substitute(x), "col.abs"))), xax)), 100)
-      lightcol <- subset(evTab$co[, xax], inertcol < cont)
-      lightcolcall <- call("subset", call("[", call("$", ori[[2]], "co"), call(":", 1, call("NROW", call("$", ori[[2]], "co"))), xax), call("<", inertcolcall, cont))
-      
-      heavycol <- subset(evTab$co[, xax], inertcol >= cont)
-      heavycolcall <- call("c", call("subset", call("[", call("$", ori[[2]], "co"), call(":", 1, call("NROW", call("$", ori[[2]], "co"))), xax), call(">=", inertcolcall, cont)), 0)
-      if(length(heavycol) == 0)
-        stop("No points to draw, try lowering 'cont' (see 'x$col.abs')")
-      heavy_inertcol <- subset(inertcol, inertcol >= cont)
-      names_heavycol <- subset(rownames(x$col.abs), inertcol >= cont)
-      
-      limglobal <- setlimits1D(mini = min(c(heavycol, lightcol)), maxi = max(c(heavycol, lightcol)), 
-                               origin = adegtot$porigin$origin, includeOr = adegtot$porigin$include)
-      params <- list()
-      params$light_col <- list(xlim = limglobal)
-      sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
-      
-    } else {
-      inertcol <- x$col.abs[, c(xax, yax)] / 100
-      inertcolcall <- call("/", call("[", call("$", substitute(x), "col.abs"), call(":", 1, call("NROW", call("$", substitute(x), "col.abs"))), c(xax, yax)), 100)
-      lightcol <- subset(evTab$co[, c(xax, yax)], inertcol[, 1] < cont & inertcol[, 2] < cont)
-      lightcolcall <- call("subset", call("[", call("$", ori[[2]], "co"), call(":", 1, call("NROW", call("$", ori[[2]], "co"))), c(xax, yax)), call("&", call("<", call("[", inertcolcall, 1), cont), call("<", call("[", inertcolcall, 2), cont)))
-      
-      heavycol <- subset(evTab$co[, c(xax, yax)], inertcol[, 1] >= cont | inertcol[, 2] >= cont)
-      heavycolcall <- call("subset", call("[", call("$", ori[[2]], "co"), call(":", 1, call("NROW", call("$", ori[[2]], "co"))), c(xax, yax)), call("&", call(">=", call("[", inertcolcall, 1), cont), call(">=", call("[", inertcolcall, 2), cont)))
-      if(nrow(heavycol) == 0)
-        stop("No points to draw, try lowering 'cont'")
-      heavy_inertcol <- subset(inertcol, inertcol[, 1] >= cont | inertcol[, 2] >= cont)
-      heavy_inertcolcum <- apply(heavy_inertcol, 1, sum)
-      
-      if(type == "label") {
-        if(is.null(sortparameters$heavy_col$plabels$cex)) {
-          sortparameters$heavy_col$plabels$cex <- heavy_inertcolcum / (max(heavy_inertcolcum) / 1.5)
-        } else {
-          sortparameters$heavy_col$plabels$cex <- sortparameters$heavy_col$plabels$cex * heavy_inertcolcum / (max(heavy_inertcolcum) / 1.5)
-        }
+    inertcol <- x$col.abs[, c(xax, yax)] / 100
+    inertcolcall <- call("/", call("[", call("$", substitute(x), "col.abs"), call(":", 1, call("NROW", call("$", substitute(x), "col.abs"))), c(xax, yax)), 100)
+    lightcol <- subset(evTab$co[, c(xax, yax)], inertcol[, 1] < cont & inertcol[, 2] < cont)
+    lightcolcall <- call("subset", call("[", call("$", ori[[2]], "co"), call(":", 1, call("NROW", call("$", ori[[2]], "co"))), c(xax, yax)), call("&", call("<", call("[", inertcolcall, 1), cont), call("<", call("[", inertcolcall, 2), cont)))
+    
+    heavycol <- subset(evTab$co[, c(xax, yax)], inertcol[, 1] >= cont | inertcol[, 2] >= cont)
+    heavycolcall <- call("subset", call("[", call("$", ori[[2]], "co"), call(":", 1, call("NROW", call("$", ori[[2]], "co"))), c(xax, yax)), call("&", call(">=", call("[", inertcolcall, 1), cont), call(">=", call("[", inertcolcall, 2), cont)))
+    if(nrow(heavycol) == 0)
+      stop("No points to draw, try lowering 'cont'")
+    heavy_inertcol <- subset(inertcol, inertcol[, 1] >= cont | inertcol[, 2] >= cont)
+    heavy_inertcolcum <- apply(heavy_inertcol, 1, sum)
+    
+    if(type == "label") {
+      if(is.null(sortparameters$heavy_col$plabels$cex)) {
+        sortparameters$heavy_col$plabels$cex <- heavy_inertcolcum / (max(heavy_inertcolcum) / 1.5)
+      } else {
+        sortparameters$heavy_col$plabels$cex <- sortparameters$heavy_col$plabels$cex * heavy_inertcolcum / (max(heavy_inertcolcum) / 1.5)
       }
-      
-      limglobal <- setlimits2D(minX = min(c(heavycol[, 1], lightcol[, 1])), maxX = max(c(heavycol[, 1], lightcol[, 1])), 
-                               minY = min(c(heavycol[, 2], lightcol[, 2])), maxY = max(c(heavycol[, 2], lightcol[, 2])),
-                               origin = adegtot$porigin$origin, aspect.ratio = adegtot$paxes$aspectratio, includeOr = adegtot$porigin$include)
-      
-      if(type != "label") {
-        # if ellipses or crosses are drawn, the limits are re-calculated and the ellipse size are normalized
-        heavy_inertcolmax <- apply(heavy_inertcol, 2, max)
-        heavy_inertcolnorm <- matrix(NA, NROW(heavy_inertcol), 2)
-        for (i in 1:2) {heavy_inertcolnorm[, i] <- (heavy_inertcol[, i] / heavy_inertcolmax[i]) * (diff(limglobal[[i]]) / 10)}
-        
-        # TODO
-        # add 0.00001 to the coordinates to avoid the bug in the '.util.ellipse' function (waiting to correct it)
-        cont_col <- cbind(c(heavycol[, 1] - heavy_inertcolnorm[, 1]/2, heavycol[, 1] + heavy_inertcolnorm[, 1]/2, heavycol[, 1], heavycol[, 1] + 0.00001), 
-                          c(heavycol[, 2] + 0.00001, heavycol[, 2], heavycol[, 2] - heavy_inertcolnorm[, 2]/2, heavycol[, 2] + heavy_inertcolnorm[, 2]/2))  
-        fac_col <- as.factor(rep(rownames(heavycol), 4))
-        limglobal <- setlimits2D(minX = min(c(cont_col[, 1], lightcol[, 1])), maxX = max(c(cont_col[, 1], lightcol[, 1])), 
-                                 minY = min(c(cont_col[, 2], lightcol[, 2])), maxY = max(c(cont_col[, 2], lightcol[, 2])),
-                                 origin = adegtot$porigin$origin, aspect.ratio = adegtot$paxes$aspectratio, includeOr = adegtot$porigin$include)
-      }
-      
-      params <- list()
-      params$light_col <- list(xlim = limglobal$xlim, ylim = limglobal$ylim)
-      sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
     }
+    
+    limglobal <- setlimits2D(minX = min(c(heavycol[, 1], lightcol[, 1])), maxX = max(c(heavycol[, 1], lightcol[, 1])), 
+                             minY = min(c(heavycol[, 2], lightcol[, 2])), maxY = max(c(heavycol[, 2], lightcol[, 2])),
+                             origin = adegtot$porigin$origin, aspect.ratio = adegtot$paxes$aspectratio, includeOr = adegtot$porigin$include)
+    
+    if(type != "label") {
+      # if ellipses or crosses are drawn, the limits are re-calculated and the ellipse size are normalized
+      heavy_inertcolmax <- apply(heavy_inertcol, 2, max)
+      heavy_inertcolnorm <- matrix(NA, NROW(heavy_inertcol), 2)
+      for (i in 1:2) {heavy_inertcolnorm[, i] <- (heavy_inertcol[, i] / heavy_inertcolmax[i]) * (diff(limglobal[[i]]) / 10)}
+      
+      # TODO
+      # add 0.00001 to the coordinates to avoid the bug in the '.util.ellipse' function (waiting to correct it)
+      cont_col <- cbind(c(heavycol[, 1] - heavy_inertcolnorm[, 1]/2, heavycol[, 1] + heavy_inertcolnorm[, 1]/2, heavycol[, 1], heavycol[, 1] + 0.00001), 
+                        c(heavycol[, 2] + 0.00001, heavycol[, 2], heavycol[, 2] - heavy_inertcolnorm[, 2]/2, heavycol[, 2] + heavy_inertcolnorm[, 2]/2))  
+      fac_col <- as.factor(rep(rownames(heavycol), 4))
+      limglobal <- setlimits2D(minX = min(c(cont_col[, 1], lightcol[, 1])), maxX = max(c(cont_col[, 1], lightcol[, 1])), 
+                               minY = min(c(cont_col[, 2], lightcol[, 2])), maxY = max(c(cont_col[, 2], lightcol[, 2])),
+                               origin = adegtot$porigin$origin, aspect.ratio = adegtot$paxes$aspectratio, includeOr = adegtot$porigin$include)
+    }
+    
+    params <- list()
+    params$light_col <- list(xlim = limglobal$xlim, ylim = limglobal$ylim)
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   }
   
   
@@ -1580,31 +1518,15 @@
   
   ## function to create the graphics about the row' contribution (individuals) on axes
   f_row <- function(posi = "none", pos){
-    graphnames <- c(if(length(lightrow) > 0) {"light_row"}, "heavy_row", if(contrib1D) {"contribution"}, if(posi != "none") {"eig"})
+    graphnames <- c(if(length(lightrow) > 0) {"light_row"}, "heavy_row", if(posi != "none") {"eig"})
     
-    if(contrib1D) {
-      if(length(lightrow) > 0) {
-        g1 <- do.call("s1d.label", c(list(score = lightrow, at = 0, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$light_row))
-        g2 <- do.call("s1d.label", c(list(score = heavyrow, at = heavy_inertrow, labels = names_heavyrow, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$heavy_row))
-        grow <- do.call("superpose", list(g1, g2))
-        grow@Call <- call("superpose", list(g1@Call, g2@Call))
-      } else {
-        grow <- do.call("s1d.label", c(list(score = heavyrow, at = heavy_inertrow, labels = names_heavyrow, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$heavy_col))
-      }
-      # add an horizontal line drawinf the contribution threshold
-      gcont <- xyplot(0 ~ 0, panel = function(x, y) {panel.abline(h = cont, lty = "dotted", col = "grey")})
-      grow <- do.call("superpose", list(grow, gcont))
-      grow@Call <- call("superpose", list(grow@Call, gcont$call))
-      
-    } else {
-      g1 <- do.call("s.label", c(list(dfxy = lightrow, xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$light_row))
-      if(type == "label")
-        g2 <- do.call("s.label", c(list(dfxy = heavyrow, xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$heavy_row))
-      else
-        g2 <- do.call("s.class", c(list(dfxy = cont_row, fac = fac_row, xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$heavy_row))
-      grow <- do.call("superpose", list(g1, g2))
-      grow@Call <- call("superpose", list(g1@Call, g2@Call))
-    }
+    g1 <- do.call("s.label", c(list(dfxy = lightrow, xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$light_row))
+    if(type == "label")
+      g2 <- do.call("s.label", c(list(dfxy = heavyrow, xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$heavy_row))
+    else
+      g2 <- do.call("s.class", c(list(dfxy = cont_row, fac = fac_row, xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$heavy_row))
+    grow <- do.call("superpose", list(g1, g2))
+    grow@Call <- call("superpose", list(g1@Call, g2@Call))
     
     if(posi != "none")
       grow <- do.call("insert", list(geig, grow, posi = posi, plot = FALSE, ratio = 0.25))
@@ -1614,31 +1536,15 @@
   
   # function to create the graphics about the columns' contribution (variables) on axes
   f_col <- function(posi = "none", pos) {
-    graphnames <- c(if(length(lightcol) > 0) {"light_col"}, "heavy_col", if(contrib1D) {"contribution"}, if(posi != "none") {"eig"})
+    graphnames <- c(if(length(lightcol) > 0) {"light_col"}, "heavy_col", if(posi != "none") {"eig"})
     
-    if(contrib1D) {
-      if(length(lightcol) > 0) {
-        g3 <- do.call("s1d.label", c(list(score = lightcol, at = 0, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$light_col))
-        g4 <- do.call("s1d.label", c(list(score = heavycol, at = heavy_inertcol, labels = names_heavycol, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$heavy_col))
-        gcol <- do.call("superpose", list(g3, g4))
-        gcol@Call <- call("superpose", list(g3@Call, g4@Call))
-      } else {
-        gcol <- do.call("s1d.label", c(list(score = heavycol, at = heavy_inertcol, labels = names_heavycol, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$heavy_col))
-      }
-      # add an horizontal line drawinf the contribution threshold
-      gcont <- xyplot(0 ~ 0, panel = function(x, y) {panel.abline(h = cont, lty = "dotted", col = "grey")})
-      gcol <- do.call("superpose", list(gcol, gcont))
-      gcol@Call <- call("superpose", list(gcol@Call, gcont$call))
-      
-    } else {
-      g3 <- do.call("s.label", c(list(dfxy = lightcol, xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$light_col))
-      if(type == "label")
-        g4 <- do.call("s.label", c(list(dfxy = heavycol, xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$heavy_col))
-      else
-        g4 <- do.call("s.class", c(list(dfxy = cont_col, fac = fac_col, xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$heavy_col))
-      gcol <- do.call("superpose", list(g3, g4))
-      gcol@Call <- call("superpose", list(g3@Call, g4@Call))
-    }
+    g3 <- do.call("s.label", c(list(dfxy = lightcol, xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$light_col))
+    if(type == "label")
+      g4 <- do.call("s.label", c(list(dfxy = heavycol, xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$heavy_col))
+    else
+      g4 <- do.call("s.class", c(list(dfxy = cont_col, fac = fac_col, xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$heavy_col))
+    gcol <- do.call("superpose", list(g3, g4))
+    gcol@Call <- call("superpose", list(g3@Call, g4@Call))
     
     if(posi != "none")
       gcol <- do.call("insert", list(geig, gcol, posi = posi, plot = FALSE, ratio = 0.25))

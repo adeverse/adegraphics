@@ -692,3 +692,157 @@
     print(object)
   invisible(object)
 }
+
+
+"score.inertia" <- function(x, xax = 1, cont = 0.1, posieig = "none", pos = -1, storeData = TRUE, plot = TRUE, ...) { 
+  
+  if(!inherits(x, "inertia")) 
+    stop("Object of class 'inertia' expected")
+  
+  ## data management
+  ori <- as.list(x$call)
+  evTab <- eval.parent(ori[[2]])
+  
+  if(length(xax) > 1)
+    stop("Not implemented for multiple xax")
+  if(xax > evTab$nf)
+    stop("Non convenient xax")
+  
+  adegtot <- adegpar()
+  position <- match.arg(posieig[1], choices = c("bottomleft", "bottomright", "topleft", "topright", "none"), several.ok = FALSE)
+
+  ## sort parameters for each graph
+  graphsnames <- c("light_row", "heavy_row", "light_col", "heavy_col", "eig")
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
+  
+  ## parameters management
+  adegtot <- adegpar()
+  params <- list()
+  params$light_row <- list(plabels = list(cex = 0), ppoints = list(col = "grey20", alpha = 0.45, cex = 1.2, pch = 19))
+  params$light_col <- list(plabels = list(cex = 0), ppoints = list(col = "grey20", alpha = 0.45, cex = 1.2, pch = 19))
+  
+  params$heavy_row <- list(plabels = list(boxes = list(draw = TRUE), col = "red", srt = "horizontal"), ppoints = list(col = "red", cex = 1.2, pch = 19))
+  params$heavy_col <- list(plabels = list(boxes = list(draw = TRUE), col = "blue", srt = "horizontal"), ppoints = list(col = "blue", cex = 1.2, pch = 19))
+  params$eig <- list(pbackground = list(box = TRUE), psub = list(text = "Eigenvalues"))
+  sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+  
+  ## management of the data and the parameters about the rows' contribution (individuals) on axes
+  if(!is.null(x$row.abs)) {
+    inertrow <- x$row.abs[, xax] / 100
+    # inertrow <- sqrt(x$row.abs[, xax]) / 100
+    inertrowcall <- call("/", call("[", call("$", substitute(x), "row.abs"), call(":", 1, call("NROW", call("$", substitute(x), "row.abs"))), xax), 100)
+    # inertrowcall <- call("/", call("sqrt", call("[", call("$", substitute(x), "row.abs"), call(":", 1, call("NROW", call("$", substitute(x), "row.abs"))), xax)), 100)
+    lightrow <- subset(evTab$li[, xax], inertrow < cont)
+    lightrowcall <- call("subset", call("[", call("$", ori[[2]], "li"), call(":", 1, call("NROW", call("$", ori[[2]], "li"))), xax), call("<", inertrowcall, cont))
+    
+    heavyrow <- subset(evTab$li[, xax], inertrow >= cont)
+    heavyrowcall <- call("c", call("subset", call("[", call("$", ori[[2]], "li"), call(":", 1, call("NROW", call("$", ori[[2]], "li"))), xax), call(">=", inertrowcall, cont)), 0)
+    if(length(heavyrow) == 0)
+      stop("No points to draw, try lowering 'cont' (see 'x$row.abs')")
+    heavy_inertrow <- subset(inertrow, inertrow >= cont)
+    names_heavyrow <- subset(rownames(x$row.abs), inertrow >= cont)
+    
+    limglobal <- setlimits1D(mini = min(c(heavyrow, lightrow)), maxi = max(c(heavyrow, lightrow)), 
+                             origin = adegtot$porigin$origin, includeOr = adegtot$porigin$include)
+    params <- list()
+    params$light_row <- list(xlim = limglobal)
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+  }
+  
+  ## management of the data and the parameters about the columns' contribution (variables) on axes
+  if(!is.null(x$col.abs)) {
+    inertcol <- x$col.abs[, xax] / 100
+    # inertcol <- sqrt(x$col.abs[, xax]) / 100
+    inertcolcall <- call("/", call("[", call("$", substitute(x), "col.abs"), call(":", 1, call("NROW", call("$", substitute(x), "col.abs"))), xax), 100)
+    # inertcolcall <- call("/", call("sqrt", call("[", call("$", substitute(x), "col.abs"), call(":", 1, call("NROW", call("$", substitute(x), "col.abs"))), xax)), 100)
+    lightcol <- subset(evTab$co[, xax], inertcol < cont)
+    lightcolcall <- call("subset", call("[", call("$", ori[[2]], "co"), call(":", 1, call("NROW", call("$", ori[[2]], "co"))), xax), call("<", inertcolcall, cont))
+    
+    heavycol <- subset(evTab$co[, xax], inertcol >= cont)
+    heavycolcall <- call("c", call("subset", call("[", call("$", ori[[2]], "co"), call(":", 1, call("NROW", call("$", ori[[2]], "co"))), xax), call(">=", inertcolcall, cont)), 0)
+    if(length(heavycol) == 0)
+      stop("No points to draw, try lowering 'cont' (see 'x$col.abs')")
+    heavy_inertcol <- subset(inertcol, inertcol >= cont)
+    names_heavycol <- subset(rownames(x$col.abs), inertcol >= cont)
+    
+    limglobal <- setlimits1D(mini = min(c(heavycol, lightcol)), maxi = max(c(heavycol, lightcol)), 
+                             origin = adegtot$porigin$origin, includeOr = adegtot$porigin$include)
+    params <- list()
+    params$light_col <- list(xlim = limglobal)
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+  }
+  
+  
+  ## displaying of the eigen values
+  if(position != "none")
+    geig <- do.call("plotEig", c(list(eigvalue = call("$", ori[[2]], "eig"), nf = 1:evTab$nf, xax = xax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$eig))
+  
+  ## function to create the graphics about the row' contribution (individuals) on axes
+  f_row <- function(posi = "none", pos){
+    graphnames <- c(if(length(lightrow) > 0) {"light_row"}, "heavy_row", "contribution", if(posi != "none") {"eig"})
+    
+    if(length(lightrow) > 0) {
+      g1 <- do.call("s1d.label", c(list(score = lightrow, at = 0, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$light_row))
+      g2 <- do.call("s1d.label", c(list(score = heavyrow, at = heavy_inertrow, labels = names_heavyrow, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$heavy_row))
+      grow <- do.call("superpose", list(g1, g2))
+      grow@Call <- call("superpose", list(g1@Call, g2@Call))
+    } else {
+      grow <- do.call("s1d.label", c(list(score = heavyrow, at = heavy_inertrow, labels = names_heavyrow, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$heavy_col))
+    }
+    # add an horizontal line drawinf the contribution threshold
+    gcont <- xyplot(0 ~ 0, panel = function(x, y) {panel.abline(h = cont, lty = "dotted", col = "grey")})
+    grow <- do.call("superpose", list(grow, gcont))
+    grow@Call <- call("superpose", list(grow@Call, gcont$call))
+    
+    if(posi != "none")
+      grow <- do.call("insert", list(geig, grow, posi = posi, plot = FALSE, ratio = 0.25))
+    names(grow) <- graphnames
+    return(grow)
+  }
+  
+  # function to create the graphics about the columns' contribution (variables) on axes
+  f_col <- function(posi = "none", pos) {
+    graphnames <- c(if(length(lightcol) > 0) {"light_col"}, "heavy_col", "contribution", if(posi != "none") {"eig"})
+    
+    if(length(lightcol) > 0) {
+      g3 <- do.call("s1d.label", c(list(score = lightcol, at = 0, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$light_col))
+      g4 <- do.call("s1d.label", c(list(score = heavycol, at = heavy_inertcol, labels = names_heavycol, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$heavy_col))
+      gcol <- do.call("superpose", list(g3, g4))
+      gcol@Call <- call("superpose", list(g3@Call, g4@Call))
+    } else {
+      gcol <- do.call("s1d.label", c(list(score = heavycol, at = heavy_inertcol, labels = names_heavycol, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$heavy_col))
+    }
+    # add an horizontal line drawinf the contribution threshold
+    gcont <- xyplot(0 ~ 0, panel = function(x, y) {panel.abline(h = cont, lty = "dotted", col = "grey")})
+    gcol <- do.call("superpose", list(gcol, gcont))
+    gcol@Call <- call("superpose", list(gcol@Call, gcont$call))
+    
+    if(posi != "none")
+      gcol <- do.call("insert", list(geig, gcol, posi = posi, plot = FALSE, ratio = 0.25))
+    names(gcol) <- graphnames
+    return(gcol)
+  }
+  
+  ## function to create a layout of the graphics about the contribution of rows (individuals) and columns (variables) on axes
+  f_both <- function(posi = "none", pos) {
+    object <- do.call("cbindADEg", c(list(f_row(posi = "none", pos = pos - 1), f_col(posi = posi, pos = pos - 1))))
+    names(object) <- c("row", "col")
+    return(object)
+  }
+  
+  ## creation of the appropriate plot according to the input data
+  if(!is.null(x$row.abs) & is.null(x$col.abs))
+    object <- f_row(posi = position, pos = pos)
+  if(!is.null(x$col.abs) & is.null(x$row.abs))
+    object <- f_col(posi = position, pos = pos)
+  if(!is.null(x$row.abs) & !is.null(x$col.abs))
+    object <- f_both(posi = position, pos = pos)
+  if(is.null(x$row.abs) & is.null(x$col.abs))
+    stop(paste("No inertia was calculated in the ", substitute(x), " object", sep = ""))
+  
+  object@Call <- match.call()
+  
+  if(plot)
+    print(object)
+  invisible(object)
+}
