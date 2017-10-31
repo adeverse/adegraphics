@@ -35,6 +35,82 @@
 }
 
 
+"plot.acm"  <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, ...) {
+  if(!inherits(x, "dudi"))
+    stop("Object of class 'dudi' expected")
+  if(!inherits(x, "acm"))
+    stop("Object of class 'acm' expected")
+  
+  if((xax == yax) || (x$nf == 1))
+    stop("One axis only : not yet implemented")
+  if(length(xax) > 1 | length(yax) > 1)
+    stop("Not implemented for multiple xax/yax")
+  
+  if(xax > x$nf)
+    stop("Non convenient xax")
+  if(yax > x$nf)
+    stop("Non convenient yax")
+  
+  ## prepare
+  oritab <- as.list(x$call)[[2]]
+  
+  ## parameter management
+  sortparameters <- sortparamADEg(...)
+  params <- list()
+  params$g.args <- list(starSize = 0)
+  sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+  
+  object <- do.call("s.class", c(list(dfxy = substitute(x$li), fac = oritab, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args, sortparameters$rest))
+  object@Call <- match.call()
+  if(plot)
+    print(object)
+  invisible(object)
+}
+
+
+"plot.fca" <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, ...) {
+  if(!inherits(x, "dudi"))
+    stop("Object of class 'dudi' expected")
+  if(!inherits(x, "fca"))
+    stop("Object of class 'fca' expected")
+  
+  if((xax == yax) || (x$nf == 1))
+    stop("One axis only : not yet implemented")
+  if(length(xax) > 1 | length(yax) > 1)
+    stop("Not implemented for multiple xax/yax")
+  
+  if(xax > x$nf)
+    stop("Non convenient xax")
+  if(yax > x$nf)
+    stop("Non convenient yax")
+  
+  ## prepare
+  oritab <- as.list(x$call)[[2]]
+  evTab <- eval.parent(oritab)
+  indica <- factor(rep(names(x$blo), x$blo))
+  ng <- length(levels(indica))   
+  
+  ## parameter management
+  graphsnames <- as.character(levels(indica))
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
+  params <- list()
+  params <- lapply(1:length(graphsnames), function(i) {params[[i]] <- list(starSize = 0.5, ellipseSize = 0, plabels = list(cex = 1.25), psub = list(text = graphsnames[i]))})
+  names(params) <- graphsnames
+  sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+  
+  ## creation of each individual ADEg
+  l <- list()
+  l <- sapply(1:length(levels(indica)), function(i) {do.call("s.distri", c(list(dfxy = substitute(x$l1, env = sys.frame(-3)), dfdistri = call("[", oritab, call(":", 1, nrow(evTab)), which(indica == levels(indica)[i])), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[i]]))})
+  
+  ## ADEgS creation
+  object <- new(Class = "ADEgS", ADEglist = l, positions = layout2position(.n2mfrow(ng), ng  = ng), add = matrix(0, ncol = ng, nrow = ng), Call = match.call())
+  names(object) <- graphsnames
+  if(plot)
+    print(object)
+  invisible(object)
+}
+
+
 "plot.coinertia" <- function(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, ...) {
   if(!inherits(x, "coinertia")) 
     stop("Object of class 'coinertia' expected")
