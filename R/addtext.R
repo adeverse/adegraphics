@@ -26,7 +26,6 @@ setMethod(
         adeg.panel.label(x, y, labels, plabels = params), plot = FALSE)
 
     textadded$call <- call("xyplot", ycoord ~ xcoord, xlim = substitute(xlim), ylim = substitute(ylim), labels = substitute(labels), 
-                
                            panel = function(x, y, labels, ...) adeg.panel.label(x, y, labels = labels, plabels = params))
     
     obj <- superpose(object, textadded, plot = FALSE)

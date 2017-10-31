@@ -17,7 +17,7 @@ Collate: adeGsenv.R parameter.R utils.R
   ADEg.S2.R S2.arrow.R S2.class.R S2.corcircle.R S2.density.R S2.distri.R S2.image.R S2.label.R S2.logo.R S2.match.R S2.traject.R S2.value.R 
   ADEg.T.R T.image.R T.value.R T.cont.R 
   ADEg.Tr.R Tr.class.R Tr.label.R Tr.match.R Tr.traject.R
-  addtext.R ade4-kplot.R ade4-scatter.R ade4-plot.R multiplot.R s.Spatial.R utilskey.R
+  addtext.R ade4-kplot.R ade4-scatter.R ade4-score.R ade4-plot.R multiplot.R s.Spatial.R utilskey.R
 URL: http://pbil.univ-lyon1.fr/ADE-4, Mailing list: http://listes.univ-lyon1.fr/wws/info/adelist
 BugReports: https://github.com/sdray/adegraphics/issues
 Encoding: UTF-8
