@@ -124,7 +124,9 @@ TRUE, plot = TRUE, \dots)
 
 \method{score}{acm}(x, xax = 1, which.var = NULL, type = c("points", "boxplot"), pos = -1, 
   storeData = TRUE, plot = TRUE, \dots)
-\method{score}{mix}(x, xax = 1, which.var = NULL, pos = -1, storeData = TRUE, plot = TRUE, \dots)
+\method{score}{mix}(x, xax = 1, which.var = NULL, type = c("points", "boxplot"), pos = -1, 
+  storeData = TRUE, plot = TRUE, \dots)
+
 \method{score}{pca}(x, xax = 1, which.var = NULL, pos = -1, storeData = TRUE, plot = TRUE, \dots)
 
 \method{screeplot}{dudi}(x, col.kept = "grey", col = "white", pos = -1, plot = TRUE, \dots)
@@ -177,7 +179,7 @@ TRUE, plot = TRUE, \dots)
   
   \item{which.var}{the numbers of the kept columns for the analysis, otherwise all columns (used in \code{score.*})}
   
-  \item{type}{a string of characters (only used in \code{score.acm}) indicating if points (\code{points}) or boxplot (\code{boxplot}) are used to represent levels of factors} 
+  \item{type}{a string of characters (only used in \code{score.acm} and \code{score.mix}) indicating if points (\code{points}) or boxplot (\code{boxplot}) are used to represent levels of factors} 
     
   \item{col.kept}{one color value to color the kept axes in the barchart (used in \code{screeplot.dudi})}
 
