@@ -57,15 +57,13 @@ adeg.panel.edges(edges, coords, col.edge = "black", lwd = 1, lty = 1, pch = 20,
 }
 
 \examples{
-if(require(rgdal, quietly = TRUE) & require(lattice, quietly = TRUE) &
-  require(spdep, quietly = TRUE) & require(spData, quietly = TRUE)) {
+if(require(lattice, quietly = TRUE) &
+  require(spdep, quietly = TRUE)) {
 
-  columbus <- readOGR(system.file("shapes/columbus.shp", package = "spData")[1])
-  coords <- coordinates(columbus)
-  col.gal.nb <- read.gal(system.file("weights/columbus.gal", package = "spData")[1])
-  nbobject <- col.gal.nb
+  data(elec88, package = "ade4")
+  coords <- elec88$xy
   xyplot(coords[, 2] ~ coords[, 1],
-    panel = function(...){adeg.panel.nb(col.gal.nb, coords, col.edge = c("blue", "red"))})
+    panel = function(...){adeg.panel.nb(elec88$nb, coords, col.edge = c("blue", "red"))})
 }
 
 if(require(lattice, quietly = TRUE)) {
