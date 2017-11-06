@@ -94,6 +94,7 @@ setMethod(
       margin <- object@g.args$ylim[ref]
       if(object@adeg.par$p1d$rug$draw)
         margin <- object@adeg.par$p1d$rug$margin * abs(diff(object@g.args$ylim))
+      object@adeg.par$p1d$rug$margin <- margin
       object@s.misc$rug <- object@g.args$ylim[ref]
       object@g.args$ylim[ref] <- object@g.args$ylim[ref] + lead * margin
     }
@@ -105,6 +106,7 @@ setMethod(
       margin <- object@g.args$xlim[ref]
       if(object@adeg.par$p1d$rug$draw)
         margin <- object@adeg.par$p1d$rug$margin * abs(diff(object@g.args$xlim))
+      object@adeg.par$p1d$rug$margin <- margin
       object@s.misc$rug <- object@g.args$xlim[ref]
       object@g.args$xlim[ref] <- object@g.args$xlim[ref] + lead * margin
     }
