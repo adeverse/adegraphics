@@ -1,3 +1,4 @@
+library(ade4)
 library(adegraphics)
 pdf("parameter.pdf")
 
@@ -78,10 +79,8 @@ g3 <- s.arrow(coin1$l1, plabels.cex = .87)
 update(g3, plines = list(col = "blue", lwd = 2, lty = 3), parr.end = "both", parr = list(angle = 25, length = 0.5))
 
 ## with spatial object
-library(rgdal)
-nc <- readOGR(system.file("shapes/sids.shp", package = "spData")[1])
-xy <- coordinates(nc)
-g4 <- s.label(xy, label = as.character(1:nrow(xy)), porigin.include = FALSE, Sp = nc, pSp.col = colorRampPalette(c("yellow", "blue"))(52), pgrid.draw = TRUE)
+data(elec88, package = "ade4")
+g4 <- s.label(elec88$xy, label = as.character(1:nrow(elec88$xy)), porigin.include = FALSE, Sp = elec88$Spatial, pSp.col = colorRampPalette(c("yellow", "blue"))(5), pgrid.draw = TRUE)
 update(g4, pSp = list(col = "yellow", border = "blue", lwd = 2, lty = 5, alpha = 0.01)) ## don't match : to solve
 
 ## plabels parameter
