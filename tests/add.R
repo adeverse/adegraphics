@@ -1,6 +1,8 @@
 library(adegraphics)
 pdf("add.pdf")
 
+########################### add.ADEg ##############################
+
 data(granulo, package = "ade4")
 df <- data.frame(t(apply(granulo$tab, 1, function(x) x / sum(x))))
 pca <- ade4::dudi.pca(df, scal = FALSE, scan = FALSE)
@@ -14,7 +16,7 @@ g6 <- ADEgS(list(g1 = g1, g5 = g5), layout = c(1, 2))
 update(g6, pback.col = "lightblue", g1.plabels.cex = 2, g5.plabels.col = "red")
 
 
-## addtext
+############################## addtext ##############################
 # on a ADEg
 addtext(g1, -1, 1, "Data Granulo", plabels.cex = 1.5, plabels.col = "red")
 addtext(g1, -1, 1, c("Data", "Granulo"), plabels.cex = 1.5, plabels.col = c("red", "blue"))
@@ -30,6 +32,7 @@ data(dunedata, package = "ade4")
 afc1 <- ade4::dudi.coa(dunedata$veg, scannf = FALSE)
 g7 <- table.value(dunedata$veg, symbol = "circle", ppoints.cex = 0.5, plot = FALSE)
 addtext(g7, 1, 20, "A", plabels.srt = 45, plabels.boxes.draw = FALSE)
+# TODO : srt create a warning but works
 
 # on a trellis
 library(lattice)
@@ -59,3 +62,33 @@ addtext(g10, c(0.5, 0.5, -0.5, -0.5), c(0.5, -0.5), levels(posi), plabels.cex = 
 # addtext(g3, -0.9, -0.2, "Data Granulo", plabels.cex = 1.2, which = 1) # message d'erreur : unable to find an inherited method for function ‘printSuperpose’ for signature ‘"S2.label", "ADEgS"’
 # addtext(g3, -0.5, -0.1, "Data Granulo", plabels.cex = 1.2, which = 2)
 # addtext(g3, -0.9, -0.2, "Data Granulo", plabels.cex = 1.2, which = 1:2)
+
+
+############################## addline ##############################
+# on a ADEg
+g11 <- s.label(cbind(rnorm(100), rnorm(100)))
+addline(g11, 0, 1, plines = list(col = "red", lwd = 2, lty = 2))
+addline(g11, h = 0.2, plines.col = "green")
+addline(g11, v = c(-0.7, 0.7), plines.col = "blue")
+
+# on a trellis
+library(lattice)
+g8 <- xyplot(1 ~ 1)
+addline(g8, 0, 0.9, plines.col = "orange")
+addline(g8, h = 1.1, v = 0.9, plines.col = "grey")
+
+
+############################## addpoint ##############################
+# on a ADEg
+g11 <- s.label(cbind(rnorm(100), rnorm(100)))
+addpoint(g11, 2, 2, ppoints.col = "red", ppoints.pch = "*", ppoints.cex = 3)
+addpoint(g11, c(1,2), c(0.2, 0.4), ppoints.col = "orange")
+addpoint(g11, 1, c(0.2, 0.4), ppoints.col = "lightblue")
+
+# on a trellis
+library(lattice)
+g8 <- xyplot(1 ~ 1)
+addpoint(g8, 0, 0.5, ppoints.col = "red")
+addline(g8, h = 1.1, v = 0.9, plines.col = "grey")
+
+

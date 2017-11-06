@@ -20,7 +20,7 @@ setMethod(
     }
     
     ## sorting parameters
-    graphsnames <- c("object", "densX", "densY", "link") 
+    graphsnames <- c(all.names(substitute(object)), "densX", "densY", "link") 
     sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
     params <- vector("list", 4)
     names(params) <- graphsnames
