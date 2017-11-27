@@ -11,7 +11,8 @@ g1 <- s.arrow(ade4::dudi.pca(data.frame(df), scan = F, nf = 2)$co)
 g2 <- s.label(pca$li, plabels.cex = 0.5, plabels.col = "blue", plot = F)
 g3 <- add.ADEg(g2)
 g4 <- s.label(pca$c1, plabels.col = "red", add = T)
-g5 <- s.arrow(pca$c1, plabels.cex = 1.5)
+
+g5 <- s.arrow(pca$c1, plabels.cex = 1.5, plot = FALSE)
 g6 <- ADEgS(list(g1 = g1, g5 = g5), layout = c(1, 2))
 update(g6, pback.col = "lightblue", g1.plabels.cex = 2, g5.plabels.col = "red")
 
@@ -19,8 +20,8 @@ update(g6, pback.col = "lightblue", g1.plabels.cex = 2, g5.plabels.col = "red")
 ############################## addtext ##############################
 # on a ADEg
 addtext(g1, -1, 1, "Data Granulo", plabels.cex = 1.5, plabels.col = "red")
-addtext(g1, -1, 1, c("Data", "Granulo"), plabels.cex = 1.5, plabels.col = c("red", "blue"))
-addtext(g1, -1, 1, c("Data", "Granulo"), plabels.cex = 1.5, plabels.col = "red")
+addtext(g1, -1, 1, c("Data", "Granulo"), plabels.cex = 1.5, plabels.col = c("red", "blue")) # the two labels are superposed
+addtext(g1, -1, 1, c("Data", "Granulo"), plabels.cex = 1.5, plabels.col = "red") # the two labels are superposed
 
 addtext(g1, c(-1, -0.5), 1, "Data Granulo", plabels.cex = 1.5, plabels.col = c("red", "blue"))
 addtext(g1, c(-1, -0.5), 1, c("Data", "Granulo"), plabels.cex = 1.5, plabels.col = c("red", "blue"))
@@ -32,19 +33,18 @@ data(dunedata, package = "ade4")
 afc1 <- ade4::dudi.coa(dunedata$veg, scannf = FALSE)
 g7 <- table.value(dunedata$veg, symbol = "circle", ppoints.cex = 0.5, plot = FALSE)
 addtext(g7, 1, 20, "A", plabels.srt = 45, plabels.boxes.draw = FALSE)
-# TODO : srt create a warning but works
 
 # on a trellis
-library(lattice)
-g8 <- xyplot(1 ~ 1)
-addtext(g8, c(1.1, 0.9), 1.1, "trellis test", plabels.col = c("orange", "grey"))
+# library(lattice)
+# g8 <- xyplot(1 ~ 1)
+# addtext(g8, c(1.1, 0.9), 1, "trellis test", plabels.col = c("orange", "grey"))
 
 # on a ADEgS
-addtext(g6, -0.9, -0.1, "Data Granulo", plabels.cex = 1.2, which = 1)
-addtext(g6, -0.5, -0.1, "Data Granulo", plabels.cex = 1.2, which = 2)
-addtext(g6, -0.9, -0.1, "Data Granulo", plabels.cex = 1.2, which = 1:2)
-addtext(g6, c(-0.9, -0.5), c(-0.2, -0.1), "Data Granulo", plabels.cex = 1.2, which = 1:2)
-addtext(g6, c(-0.9, -0.5), c(-0.2, -0.1), "Data Granulo", plabels.cex = 1.2, which = 1:2, plabels.col = c("red", "blue"))
+addtext(g6, -0.5, -0.1, "Data Granulo", plabels.col = "blue", which = 1)
+addtext(g6, -0.5, -0.1, "Data Granulo", plabels.col = "blue", which = 2)
+addtext(g6, -0.5, -0.1, "Data Granulo", plabels.col = "blue", which = 1:2)
+addtext(g6, c(0.9, -0.5), c(0.2, -0.1), "Data Granulo", plabels.col = "blue", plabels.cex = 1.2, which = 1:2)
+addtext(g6, c(0.9, -0.5), c(0.2, -0.1), "Data Granulo", plabels.cex = 1.2, which = 1:2, plabels.col = c("blue", "orange"))
 
 xy2 <- cbind.data.frame(x = runif(200, -1, 1), y = runif(200, -2, 2), y2 = runif(200, -0.5, 0.5))
 fac2 <- factor(xy2$x > 0) 
@@ -66,29 +66,45 @@ addtext(g10, c(0.5, 0.5, -0.5, -0.5), c(0.5, -0.5), levels(posi), plabels.cex = 
 
 ############################## addline ##############################
 # on a ADEg
-g11 <- s.label(cbind(rnorm(100), rnorm(100)))
+g11 <- s.label(cbind(rnorm(100), rnorm(100)), plot = FALSE)
 addline(g11, 0, 1, plines = list(col = "red", lwd = 2, lty = 2))
-addline(g11, h = 0.2, plines.col = "green")
-addline(g11, v = c(-0.7, 0.7), plines.col = "blue")
+addline(g11, h = 1, plines.col = "chartreuse4", plines.lwd = 3)
+addline(g11, v = c(-1, 1), plines.col = "cadetblue", plines.lwd = 3)
 
 # on a trellis
-library(lattice)
-g8 <- xyplot(1 ~ 1)
-addline(g8, 0, 0.9, plines.col = "orange")
-addline(g8, h = 1.1, v = 0.9, plines.col = "grey")
+# g8 <- xyplot(1 ~ 1, plot = TRUE)
+# addline(g8, 0, 1, plines.col = "orange")
+# addline(g8, h = 1.2, v = 0.8, plines.col = "grey30")
 
 
 ############################## addpoint ##############################
 # on a ADEg
-g11 <- s.label(cbind(rnorm(100), rnorm(100)))
-addpoint(g11, 2, 2, ppoints.col = "red", ppoints.pch = "*", ppoints.cex = 3)
-addpoint(g11, c(1,2), c(0.2, 0.4), ppoints.col = "orange")
-addpoint(g11, 1, c(0.2, 0.4), ppoints.col = "lightblue")
+g11 <- s.label(cbind(rnorm(100), rnorm(100)), ylab = "y axis label", plot = FALSE)
+addpoint(g11, 2, 2, ppoints.col = "coral", ppoints.pch = "*", ppoints.cex = 4)
+addpoint(g11, c(1, 2), c(1, 2), ppoints.col = "brown2")
+addpoint(g11, 1, c(1, 2), ppoints.col = "cyan2")
+
+g12 <- s1d.density(rnorm(1000), plot = FALSE)
+addpoint(g12, 2, 0, ppoints.col = "brown4", ppoints.cex = 3)
+
+g13 <- s1d.density(rnorm(1000), plot = FALSE, ylab = "y axis label")
+addpoint(g13, 2, 0, ppoints.col = "brown4", ppoints.cex = 3) # ERROR: the point is not drawn to the true coordinate y
 
 # on a trellis
-library(lattice)
-g8 <- xyplot(1 ~ 1)
-addpoint(g8, 0, 0.5, ppoints.col = "red")
-addline(g8, h = 1.1, v = 0.9, plines.col = "grey")
+# g8 <- xyplot(0 ~ 0, plot=FALSE)
+# addpoint(g8, 0, 0, ppoints.col = "red")
+# addpoint(g8, 0, 0.2, ppoints.col = "red")
 
+
+############################## addsegment ##############################
+# on a ADEg
+g11 <- s.label(cbind(rnorm(100), rnorm(100)), plot = FALSE)
+addsegment(g11, 0, 2, 0, -2, plines = list(col = "brown2", lwd = 3, lty = 2))
+addsegment(g11, -2, -2, 2, 2, plines = list(col = "brown2", lwd = 3, lty = 2))
+addsegment(g11, -2, 2, 2, -2, plines = list(col = "cyan2", lwd = 3, lty = 2))
+
+g12 <- s.label(cbind(rnorm(100), rnorm(100)), ylab = "y axis label", plot = FALSE)
+addsegment(g12, 0, 2, 0, -2, plines = list(col = "brown2", lwd = 3, lty = 2))
+addsegment(g12, -2, -2, 2, 2, plines = list(col = "brown2", lwd = 3, lty = 2))
+addsegment(g12, -2, 2, 2, -2, plines = list(col = "cyan2", lwd = 3, lty = 2))
 
