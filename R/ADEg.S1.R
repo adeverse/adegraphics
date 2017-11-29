@@ -148,7 +148,7 @@ setMethod(
         
         object@s.misc$rug <- Xlim[ref]
         Xlim[ref] <- Xlim[ref] + lead * margin
-        object@s.misc$Xlim.update <- Xlim  
+        object@s.misc$Xlim.update <- Xlim
       }
       
       object@g.args$xlim <- Xlim
