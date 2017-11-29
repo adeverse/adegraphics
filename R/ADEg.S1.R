@@ -103,18 +103,27 @@ setMethod(
       if(is.null(object@g.args$xlim) || !identical(object@s.misc$hori.update, object@adeg.par$p1d$horizontal))
         object@g.args$xlim <- lim
       
-      if(is.null(object@g.args$ylim))
-        object@g.args$ylim <- setlimits1D(min(at), max(at), 0, FALSE)
-      if(inherits(object, "S1.boxplot")) ## extend ylim for boxes
-        object@g.args$ylim <- object@g.args$ylim + c(-1, 1) * abs(diff(range(at))) / (nlevels(fac) + 1)
+      Ylim <- object@g.args$ylim
       
-      ref <- ifelse(object@adeg.par$p1d$reverse, 2, 1)
-      margin <- object@g.args$ylim[ref]
-      if(object@adeg.par$p1d$rug$draw)
-        margin <- object@adeg.par$p1d$rug$margin * abs(diff(object@g.args$ylim))
-      object@s.misc$rug <- object@g.args$ylim[ref]
-      object@g.args$ylim[ref] <- object@g.args$ylim[ref] + lead * margin
+      if(is.null(object@s.misc$Ylim.update) || Ylim != object@s.misc$Ylim.update) {
+        if(is.null(object@g.args$ylim))
+          Ylim <- setlimits1D(min(at), max(at), 0, FALSE)
+        if(inherits(object, "S1.boxplot")) ## extend ylim for boxes
+          Ylim <- Ylim + c(-1, 1) * abs(diff(range(at))) / (nlevels(fac) + 1)
         
+        ref <- ifelse(object@adeg.par$p1d$reverse, 2, 1)
+        if(object@adeg.par$p1d$rug$draw)
+          margin <- object@adeg.par$p1d$rug$margin * abs(diff(Ylim))
+        else
+          margin <- Ylim[ref]
+        
+        object@s.misc$rug <- Ylim[ref]
+        Ylim[ref] <- Ylim[ref] + lead * margin
+        object@s.misc$Ylim.update <- Ylim
+      }
+      
+      object@g.args$ylim <- Ylim
+      
     } else {
       ## draw axes for vertical plot
       if(is.null(scalesandlab$y$at))
@@ -123,17 +132,26 @@ setMethod(
       if(is.null(object@g.args$ylim) || !identical(object@s.misc$hori.update, object@adeg.par$p1d$horizontal))
         object@g.args$ylim <- lim
       
-      if(is.null(object@g.args$xlim))
-        object@g.args$xlim <- setlimits1D(min(at), max(at), 0, FALSE)
-      if(inherits(object, "S1.boxplot")) ## extend xlim for boxes
-        object@g.args$xlim <- object@g.args$xlim + c(-1, 1) * abs(diff(range(at))) / (nlevels(fac) + 1)
+      Xlim <- object@g.args$xlim
       
-      ref <- ifelse(object@adeg.par$p1d$reverse, 2, 1)
-      margin <- object@g.args$xlim[ref]
-      if(object@adeg.par$p1d$rug$draw)
-        margin <- object@adeg.par$p1d$rug$margin * abs(diff(object@g.args$xlim))
-      object@s.misc$rug <- object@g.args$xlim[ref]
-      object@g.args$xlim[ref] <-  object@g.args$xlim[ref] + lead * margin
+      if(is.null(object@s.misc$Xlim.update) || Xlim != object@s.misc$Xlim.update) {
+        if(is.null(object@g.args$xlim))
+          Xlim <- setlimits1D(min(at), max(at), 0, FALSE)
+        if(inherits(object, "S1.boxplot")) ## extend xlim for boxes
+          Xlim <- Xlim + c(-1, 1) * abs(diff(range(at))) / (nlevels(fac) + 1)
+        
+        ref <- ifelse(object@adeg.par$p1d$reverse, 2, 1)
+        if(object@adeg.par$p1d$rug$draw)
+          margin <- object@adeg.par$p1d$rug$margin * abs(diff(Xlim))
+        else
+          margin <- Xlim[ref]
+        
+        object@s.misc$rug <- Xlim[ref]
+        Xlim[ref] <- Xlim[ref] + lead * margin
+        object@s.misc$Xlim.update <- Xlim  
+      }
+      
+      object@g.args$xlim <- Xlim
     }
     
     object@g.args$scales <- scalesandlab
