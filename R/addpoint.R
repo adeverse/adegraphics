@@ -1,6 +1,6 @@
 setMethod(
   f = "addpoint",
-  signature = "ADEgORtrellis",
+  signature = "ADEg",
   definition = function(object, xcoord, ycoord, plot = TRUE, ...) {
     
     # iterate coordinates and/or labels if necessary
@@ -9,15 +9,9 @@ setMethod(
     ycoord <- rep_len(ycoord, length.out = size)
     
     # collect limits
-    if(inherits(object, "ADEg")) {
-      xlim <- object@g.args$xlim
-      ylim <- object@g.args$ylim
-      aspect <- object@adeg.par$paxes$aspectratio
-    } else {
-      xlim <- object$x.limits
-      ylim <- object$y.limits
-      aspect <- object$aspect.ratio
-    }
+    xlim <- object@g.args$xlim
+    ylim <- object@g.args$ylim
+    aspect <- object@adeg.par$paxes$aspectratio
     
     ## sorting parameters
     sortparameters <- sortparamADEg(...)$adepar
@@ -27,7 +21,7 @@ setMethod(
     
     # create the lattice object
     pointadded <- xyplot(ycoord ~ xcoord, xlim = xlim, ylim = ylim, xlab = NULL, ylab = NULL, aspect = aspect, 
-      panel = function(x, y, ...) panel.points(xcoord, ycoord, alpha = params$alpha, cex = params$cex, col = params$col, pch = params$pch, fill = params$fill), plot = FALSE)
+                         panel = function(x, y, ...) panel.points(xcoord, ycoord, alpha = params$alpha, cex = params$cex, col = params$col, pch = params$pch, fill = params$fill), plot = FALSE)
     
     pointadded$call <- call("xyplot", ycoord ~ xcoord, xlim = substitute(xlim), ylim = substitute(ylim), xlab = NULL, ylab = NULL,
                             aspect = substitute(aspect), alpha = params$alpha, cex = params$cex, col = params$col, pch = params$pch, fill = params$fill,

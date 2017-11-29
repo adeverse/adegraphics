@@ -2,7 +2,7 @@
 
 \alias{addline}
 \alias{addline-methods}
-\alias{addline,ADEgORtrellis-method}
+\alias{addline,ADEg-method}
 \alias{addline,ADEgS-method}
 
 \title{
@@ -18,7 +18,7 @@ addline(object, a = NULL, b = 0, h = NULL, v = NULL, plot = TRUE, ...)
 }
 
 \arguments{
-  \item{object}{an object of class \code{ADEg}, \code{ADEgS} or \code{trellis}
+  \item{object}{an object of class \code{ADEg} or \code{ADEgS}
   }
   \item{a, b}{coefficients of the line to be added, passed to the \code{panel.abline} 
     function of the \code{lattice} package
@@ -60,7 +60,7 @@ dfY0 <- ade4::scalewt(dfY)
 can1 <- cancor(dfX0, dfY0)
 varcanoX <- dfX0%*%can1$xcoef[,1]
 varcanoY <- dfY0%*%can1$ycoef[,1]
-g1 <- s.label(cbind(varcanoY,varcanoX), labels = row.names(monde84), plabel.cex = 0.8)
+g1 <- s.label(cbind(varcanoY,varcanoX), labels = row.names(monde84), plabel.cex = 0.8, plot = FALSE)
 addline(g1, 0, 1, plines.col = "red", plines.lwd = 0.5, plines.lty = 2)
 }
 

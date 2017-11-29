@@ -1,6 +1,6 @@
 setMethod(
   f = "addtext",
-  signature = "ADEgORtrellis",
+  signature = "ADEg",
   definition = function(object, xcoord, ycoord, label, plot = TRUE, ...) {
     
     # iterate coordinates and/or labels if necessary
@@ -10,15 +10,9 @@ setMethod(
     labels <- rep_len(label, length.out = size)
     
     # collect limits
-    if(inherits(object, "ADEg")) {
-      xlim <- object@g.args$xlim
-      ylim <- object@g.args$ylim
-      aspect <- object@adeg.par$paxes$aspectratio
-    } else {
-      xlim <- object$x.limits
-      ylim <- object$y.limits
-      aspect <- object$aspect.ratio
-    }
+    xlim <- object@g.args$xlim
+    ylim <- object@g.args$ylim
+    aspect <- object@adeg.par$paxes$aspectratio
     
     ## sorting parameters
     sortparameters <- sortparamADEg(...)$adepar
@@ -29,7 +23,7 @@ setMethod(
     # create the lattice object
     textadded <- xyplot(ycoord ~ xcoord, xlim = xlim, ylim = ylim, xlab = NULL, ylab = NULL, aspect = aspect,
                         panel = function(x, y, ...) adeg.panel.label(x, y, labels, plabels = params), plot = FALSE)
-
+    
     textadded$call <- call("xyplot", ycoord ~ xcoord, xlim = substitute(xlim), ylim = substitute(ylim), xlab = NULL, ylab = NULL,
                            aspect = substitute(aspect), labels = substitute(labels), 
                            panel = function(x, y, labels, ...) adeg.panel.label(x, y, labels = labels, plabels = params))
@@ -68,7 +62,7 @@ setMethod(
       sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
       params <- sortparameters$plabels
       params <- rapply(params, function(X) rep(X, length.out = length(which)), how = "list")
-        
+      
       xcoord <- rep_len(xcoord, length.out = length(which))
       ycoord <- rep_len(ycoord, length.out = length(which))
       labels <- rep_len(label, length.out = length(which))

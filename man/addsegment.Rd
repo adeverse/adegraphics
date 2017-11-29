@@ -2,7 +2,7 @@
 
 \alias{addsegment}
 \alias{addsegment-methods}
-\alias{addsegment,ADEgORtrellis-method}
+\alias{addsegment,ADEg-method}
 \alias{addsegment,ADEgS-method}
 
 \title{
@@ -18,7 +18,7 @@ addsegment(object, x0 = NULL, y0 = NULL, x1, y1, plot = TRUE, ...)
 }
 
 \arguments{
-  \item{object}{an object of class \code{ADEg}, \code{ADEgS} or \code{trellis}
+  \item{object}{an object of class \code{ADEg} or \code{ADEgS}
   }
   \item{x0, y0}{coordinates of points FROM which to draw, passed to 
     the \code{panel.segments} function of the \code{lattice} package

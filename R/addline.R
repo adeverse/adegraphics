@@ -1,18 +1,12 @@
 setMethod(
   f = "addline",
-  signature = "ADEgORtrellis",
+  signature = "ADEg",
   definition = function(object, a = NULL, b = 0, h = NULL, v = NULL, plot = TRUE, ...) {
     
     # collect limits
-    if(inherits(object, "ADEg")) {
-      xlim <- object@g.args$xlim
-      ylim <- object@g.args$ylim
-      aspect <- object@adeg.par$paxes$aspectratio
-    } else {
-      xlim <- object$x.limits
-      ylim <- object$y.limits
-      aspect <- object$aspect.ratio
-    }
+    xlim <- object@g.args$xlim
+    ylim <- object@g.args$ylim
+    aspect <- object@adeg.par$paxes$aspectratio
     
     ## sorting parameters
     sortparameters <- sortparamADEg(...)$adepar
@@ -21,7 +15,7 @@ setMethod(
     params <- sortparameters$plines
     
     lineadded <- xyplot(0 ~ 0, xlim = xlim, ylim = ylim, xlab = NULL, ylab = NULL, aspect = aspect, 
-      panel = function(x, y, ...) panel.abline(a = a, b = b, h = h, v = v, lwd = params$lwd, lty = params$lty, col = params$col), plot = FALSE)
+                        panel = function(x, y, ...) panel.abline(a = a, b = b, h = h, v = v, lwd = params$lwd, lty = params$lty, col = params$col), plot = FALSE)
     
     lineadded$call <- call("xyplot", 0 ~ 0, xlim = substitute(xlim), ylim = substitute(ylim), xlab = NULL, ylab = NULL,
                            aspect = substitute(aspect), lwd = params$lwd, lty = params$lty, col = params$col,

@@ -2,7 +2,7 @@
 
 \alias{addtext}
 \alias{addtext-methods}
-\alias{addtext,ADEgORtrellis-method}
+\alias{addtext,ADEg-method}
 \alias{addtext,ADEgS-method}
 
 \title{
@@ -18,7 +18,7 @@ addtext(object, xcoord, ycoord, label, plot = TRUE, ...)
 }
 
 \arguments{
-  \item{object}{an object of class \code{ADEg}, \code{ADEgS} or \code{trellis}
+  \item{object}{an object of class \code{ADEg} or \code{ADEgS}
   }
   \item{xcoord}{an integer (or a vector) indicating where \code{label} is(are) plotted on the x-axis, 
     passed to the \code{adeg.panel.label}
@@ -54,7 +54,7 @@ addtext(object, xcoord, ycoord, label, plot = TRUE, ...)
 data(dunedata, package = "ade4")
 afc1 <- ade4::dudi.coa(dunedata$veg, scannf = FALSE)
 g1 <- table.value(dunedata$veg, symbol = "circle", ppoints.cex = 0.5, plot = FALSE)
-addtext(g1, 1, 20, "A", plabels.srt = 45, plabels.box.draw = FALSE)
+addtext(g1, 1, 20, "A", plabels.srt = 45, plabels.box.draw = FALSE, plabels.col = "red")
 
 xy <- cbind.data.frame(x = runif(200, -1, 1), y = runif(200, -1, 1))
 posi <- factor(xy$x > 0) : factor(xy$y > 0)

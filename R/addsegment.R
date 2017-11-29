@@ -1,18 +1,12 @@
 setMethod(
   f = "addsegment",
-  signature = "ADEgORtrellis",
+  signature = "ADEg",
   definition = function(object, x0 = NULL, y0 = NULL, x1, y1, plot = TRUE, ...) {
     
     # collect limits
-    if(inherits(object, "ADEg")) {
-      xlim <- object@g.args$xlim
-      ylim <- object@g.args$ylim
-      aspect <- object@adeg.par$paxes$aspectratio
-    } else {
-      xlim <- object$x.limits
-      ylim <- object$y.limits
-      aspect <- object$aspect.ratio
-    }
+    xlim <- object@g.args$xlim
+    ylim <- object@g.args$ylim
+    aspect <- object@adeg.par$paxes$aspectratio
     
     ## sorting parameters
     sortparameters <- sortparamADEg(...)$adepar
@@ -21,7 +15,7 @@ setMethod(
     params <- sortparameters$plines
     
     segmentadded <- xyplot(0 ~ 0, xlim = xlim, ylim = ylim, main = NULL, xlab = NULL, ylab = NULL, aspect = aspect,
-      panel = function(x, y, ...) panel.segments(x0 = x0, y0 = y0, x1 = x1, y1 = y1, lwd = params$lwd, lty = params$lty, col = params$col), plot = FALSE)
+                           panel = function(x, y, ...) panel.segments(x0 = x0, y0 = y0, x1 = x1, y1 = y1, lwd = params$lwd, lty = params$lty, col = params$col), plot = FALSE)
     
     segmentadded$call <- call("xyplot", 0 ~ 0, xlim = substitute(xlim), ylim = substitute(ylim), xlab = NULL, ylab = NULL,
                               aspect = substitute(aspect), lwd = params$lwd, lty = params$lty, col = params$col,

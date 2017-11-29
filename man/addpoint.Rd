@@ -2,7 +2,7 @@
 
 \alias{addpoint}
 \alias{addpoint-methods}
-\alias{addpoint,ADEgORtrellis-method}
+\alias{addpoint,ADEg-method}
 \alias{addpoint,ADEgS-method}
 
 \title{
@@ -18,7 +18,7 @@ addpoint(object, xcoord, ycoord, plot = TRUE, ...)
 }
 
 \arguments{
-  \item{object}{an object of class \code{ADEg}, \code{ADEgS} or \code{trellis}
+  \item{object}{an object of class \code{ADEg} or \code{ADEgS}
   }
   \item{xcoord}{an integer (or a vector) indicating where \code{label} is(are) plotted 
     on the x-axis, passed to the \code{panel.points} function of the \code{lattice} package
@@ -50,8 +50,8 @@ addpoint(object, xcoord, ycoord, plot = TRUE, ...)
 
 \examples{
 data(deug, package = "ade4")
-g1 <- s1d.density(deug$tab[, 1])
 deug$cent[1]
+g1 <- s1d.density(deug$tab[, 1], plot = FALSE)
 addpoint(g1, xcoord = deug$cent[1], ycoord = 0, ppoints = list(col = "black",
   pch = "*", cex = 3))
 }
