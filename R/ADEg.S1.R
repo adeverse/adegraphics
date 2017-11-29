@@ -85,6 +85,7 @@ setMethod(
     object@s.misc$backgrid <- list(x = v0, d = cgrid)
     
     ## object@adeg.par$paxes has priority over object@g.args$scales
+    object@adeg.par$paxes$aspectratio <- "fill"
     scalesandlab <- modifyList(as.list(object@g.args$scales), object@adeg.par$paxes, keep.null = TRUE)
     
     if(!scalesandlab$draw) {
@@ -253,6 +254,7 @@ setMethod(
     arguments <- list(
                    par.settings = object@trellis.par,
                    scales = object@g.args$scales,
+                   aspect = object@adeg.par$paxes$aspectratio,
                    key = createkey(object),                   
                    axis = axis.L, ## see utils.R
                    panel = function(...) {
