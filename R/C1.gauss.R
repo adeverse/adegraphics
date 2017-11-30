@@ -91,7 +91,9 @@ setMethod(
       
       Ylim <- object@g.args$ylim
       
-      if(is.null(object@s.misc$Ylim.update) || Ylim != object@s.misc$Ylim.update) {
+      if(is.null(object@s.misc$p1dReverse.update) || object@adeg.par$p1d$reverse != object@s.misc$p1dReverse.update ||
+         is.null(object@s.misc$Ylim.update) || Ylim != object@s.misc$Ylim.update) {
+        
         if(is.null(object@g.args$ylim))
           Ylim <- c(0, max(sapply(gausscurv, FUN = function(x) {ifelse(is.na(x[1]), 0, max(x)) / 0.85})))
         
@@ -109,12 +111,15 @@ setMethod(
       }
       
       object@g.args$ylim <- Ylim
+      object@s.misc$p1dReverse.update <- object@adeg.par$p1d$reverse
       
     } else {
       
       Xlim <- object@g.args$xlim
       
-      if(is.null(object@s.misc$Xlim.update) || Xlim != object@s.misc$Xlim.update) {
+      if(is.null(object@s.misc$p1dReverse.update) || object@adeg.par$p1d$reverse != object@s.misc$p1dReverse.update ||
+         is.null(object@s.misc$Xlim.update) || Xlim != object@s.misc$Xlim.update) {
+        
         if(is.null(object@g.args$xlim))
           Xlim <- c(0, max(sapply(gausscurv, FUN = function(x) {ifelse(is.na(x[1]), 0, max(x)) / 0.85})))
         
@@ -129,6 +134,7 @@ setMethod(
         }
         
         object@s.misc$Xlim.update <- Xlim
+        object@s.misc$p1dReverse.update <- object@adeg.par$p1d$reverse
       }
       
       object@g.args$xlim <- Xlim

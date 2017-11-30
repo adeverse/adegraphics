@@ -105,7 +105,9 @@ setMethod(
       
       Ylim <- object@g.args$ylim
       
-      if(is.null(object@s.misc$Ylim.update) || Ylim != object@s.misc$Ylim.update) {
+      if(is.null(object@s.misc$p1dReverse.update) || object@adeg.par$p1d$reverse != object@s.misc$p1dReverse.update ||
+         is.null(object@s.misc$Ylim.update) || Ylim != object@s.misc$Ylim.update) {
+        
         if(is.null(object@g.args$ylim))
           Ylim <- setlimits1D(min(at), max(at), 0, FALSE)
         if(inherits(object, "S1.boxplot")) ## extend ylim for boxes
@@ -119,6 +121,7 @@ setMethod(
         object@s.misc$rug <- Ylim[ref]
         Ylim[ref] <- Ylim[ref] + lead * margin
         object@s.misc$Ylim.update <- Ylim
+        object@s.misc$p1dReverse.update <- object@adeg.par$p1d$reverse
       }
       
       object@g.args$ylim <- Ylim
@@ -133,7 +136,9 @@ setMethod(
       
       Xlim <- object@g.args$xlim
       
-      if(is.null(object@s.misc$Xlim.update) || Xlim != object@s.misc$Xlim.update) {
+      if(is.null(object@s.misc$p1dReverse.update) || object@adeg.par$p1d$reverse != object@s.misc$p1dReverse.update ||
+         is.null(object@s.misc$Xlim.update) || Xlim != object@s.misc$Xlim.update) {
+        
         if(is.null(object@g.args$xlim))
           Xlim <- setlimits1D(min(at), max(at), 0, FALSE)
         if(inherits(object, "S1.boxplot")) ## extend xlim for boxes
@@ -147,6 +152,7 @@ setMethod(
         object@s.misc$rug <- Xlim[ref]
         Xlim[ref] <- Xlim[ref] + lead * margin
         object@s.misc$Xlim.update <- Xlim
+        object@s.misc$p1dReverse.update <- object@adeg.par$p1d$reverse
       }
       
       object@g.args$xlim <- Xlim
