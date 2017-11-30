@@ -113,13 +113,16 @@ setMethod(
         if(inherits(object, "S1.boxplot")) ## extend ylim for boxes
           Ylim <- Ylim + c(-1, 1) * abs(diff(range(at))) / (nlevels(fac) + 1)
         
-        ref <- ifelse(object@adeg.par$p1d$reverse, 2, 1)
-        margin <- Ylim[ref]
-        if(object@adeg.par$p1d$rug$draw)
-          margin <- object@adeg.par$p1d$rug$margin * abs(diff(Ylim))
+        if(object@adeg.par$p1d$rug$draw) {
+          ref <- ifelse(object@adeg.par$p1d$reverse, 2, 1)
+          margin <- Ylim[ref]
+          if(object@adeg.par$p1d$rug$draw)
+            margin <- object@adeg.par$p1d$rug$margin * abs(diff(Ylim))
+          
+          object@s.misc$rug <- Ylim[ref]
+          Ylim[ref] <- Ylim[ref] + lead * margin
+        }
         
-        object@s.misc$rug <- Ylim[ref]
-        Ylim[ref] <- Ylim[ref] + lead * margin
         object@s.misc$Ylim.update <- Ylim
         object@s.misc$p1dReverse.update <- object@adeg.par$p1d$reverse
       }
@@ -144,13 +147,16 @@ setMethod(
         if(inherits(object, "S1.boxplot")) ## extend xlim for boxes
           Xlim <- Xlim + c(-1, 1) * abs(diff(range(at))) / (nlevels(fac) + 1)
         
-        ref <- ifelse(object@adeg.par$p1d$reverse, 2, 1)
-        margin <- Xlim[ref]
-        if(object@adeg.par$p1d$rug$draw)
-          margin <- object@adeg.par$p1d$rug$margin * abs(diff(Xlim))
+        if(object@adeg.par$p1d$rug$draw) {
+          ref <- ifelse(object@adeg.par$p1d$reverse, 2, 1)
+          margin <- Xlim[ref]
+          if(object@adeg.par$p1d$rug$draw)
+            margin <- object@adeg.par$p1d$rug$margin * abs(diff(Xlim))
+          
+          object@s.misc$rug <- Xlim[ref]
+          Xlim[ref] <- Xlim[ref] + lead * margin
+        }
         
-        object@s.misc$rug <- Xlim[ref]
-        Xlim[ref] <- Xlim[ref] + lead * margin
         object@s.misc$Xlim.update <- Xlim
         object@s.misc$p1dReverse.update <- object@adeg.par$p1d$reverse
       }
