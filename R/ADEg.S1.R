@@ -6,9 +6,9 @@ setClass(
   Class = "ADEg.S1",
   contains = c("ADEg", "VIRTUAL"),
   slots = c(data = "list")
-  )
+)
 
-  
+
 setMethod(
   f = "initialize",
   signature = "ADEg.S1",
@@ -51,15 +51,15 @@ setMethod(
       minX <- object@g.args$xlim[1]
       maxX <- object@g.args$xlim[2]
     }
-
+    
     if(!object@adeg.par$p1d$horizontal & !is.null(object@g.args$ylim) & is.null(object@s.misc$hori.update)) {
       minX <- object@g.args$ylim[1]
       maxX <- object@g.args$ylim[2]
     }
-
+    
     origin <- object@adeg.par$porigin
     lim <- setlimits1D(minX, maxX, origin = origin$origin[1], includeOr = origin$include)
-
+    
     ## compute grid size
     tmp <- pretty(lim, n = object@adeg.par$pgrid$nint)
     if(!origin$include)
@@ -68,7 +68,7 @@ setMethod(
     cgrid <- diff(tmp)[1]
     if(is.na(cgrid))
       stop("error while calculating grid")
-
+    
     ## compute grid location
     v0 <- origin$origin[1]
     if((origin$origin[1] + cgrid) <= lim[2])
@@ -76,11 +76,11 @@ setMethod(
     if((origin$origin[1] - cgrid >= lim[1]))
       v0 <- c(v0, seq(origin$origin[1] - cgrid, lim[1], by = -cgrid))
     v0 <- sort(v0[v0 >= lim[1] & v0 <= lim[2]])
-
+    
     ## clean near-zero values
     delta <- diff(range(v0))/object@adeg.par$pgrid$nint
     if (any(small <- abs(v0) < 1e-14 * delta)) 
-        v0[small] <- 0
+      v0[small] <- 0
     
     object@s.misc$backgrid <- list(x = v0, d = cgrid)
     
@@ -172,7 +172,7 @@ setMethod(
     porigin <- object@adeg.par$porigin 
     pscore <- object@adeg.par$p1d
     lims <- current.panel.limits(unit = "native")
-
+    
     plines <- object@adeg.par$plines
     if(!is.null(object@data$fac)) {
       ## there is a factor in the data (e.g., S1.class)
@@ -214,13 +214,13 @@ setMethod(
       ## draw grid
       if(grid$draw)
         panel.segments(y0 = object@s.misc$backgrid$x , y1 = object@s.misc$backgrid$x, x0 = lims$xlim[1], x1 = lims$xlim[2], col = grid$col, lty = grid$lty, lwd = grid$lwd)
-
+      
       ## draw origin
       panel.abline(
         h = if(porigin$draw) porigin$origin else NULL,
         v = if(pscore$rug$draw & pscore$rug$line) object@s.misc$rug else NULL,
         col = porigin$col, lwd = porigin$lwd, lty = porigin$lty, alpha = porigin$alpha)
-
+      
       ## draw rug
       if(pscore$rug$draw && (pscore$rug$tck != 0)) {
         ref <- ifelse(pscore$reverse, object@g.args$xlim[2], object@g.args$xlim[1])
@@ -232,7 +232,7 @@ setMethod(
         do.call("panel.rug", c(list(y = y, start = start, end = end), plines))
       }
     }
-
+    
     ## indicate grid size (d = **)
     if(grid$draw & (grid$text$cex > 0)) { 
       text.pos <- .setposition(grid$text$pos)
@@ -259,19 +259,19 @@ setMethod(
       object@trellis.par$axis.line$col <- "black"
     
     arguments <- list(
-                   par.settings = object@trellis.par,
-                   scales = object@g.args$scales,
-                   aspect = object@adeg.par$paxes$aspectratio,
-                   key = createkey(object),                   
-                   axis = axis.L, ## see utils.R
-                   panel = function(...) {
-                     panelbase(object,...) ## grid,
-                     panel(object,...) ## call to S1.panel function, for slabel and ADEg.S1 class of graphs
-                   })
+      par.settings = object@trellis.par,
+      scales = object@g.args$scales,
+      aspect = object@adeg.par$paxes$aspectratio,
+      key = createkey(object),                   
+      axis = axis.L, ## see utils.R
+      panel = function(...) {
+        panelbase(object,...) ## grid,
+        panel(object,...) ## call to S1.panel function, for slabel and ADEg.S1 class of graphs
+      })
     
     object@lattice.call$arguments <- arguments
     object@lattice.call$graphictype <- "xyplot" 
-
+    
     ## get lattice arguments (set unspecified to NULL)
     argnames <- c("main", "sub", "xlab", "ylab")
     largs <- object@g.args[argnames]
@@ -284,7 +284,7 @@ setMethod(
     
     object@lattice.call$arguments <- c(object@lattice.call$arguments, largs, list(strip = FALSE))
     assign(name_obj, object, envir = parent.frame())
-})
+  })
 
 
 setMethod(
@@ -364,7 +364,7 @@ setMethod(
       v0 <- c(v0, seq(origin$origin[1] - cgrid, lim[1], by = -cgrid))
     v0 <- sort(v0[v0 >= lim[1] & v0 <= lim[2]])
     object@s.misc$backgrid <- list(x = v0, d = cgrid)
-
+    
     setlatticecall(object)
     print(object)
     invisible()   
