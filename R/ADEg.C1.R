@@ -169,14 +169,14 @@ setMethod(
             ## draw origin
             panel.abline(
                 v = if(porigin$draw) porigin$origin else NULL,
-                h = if(pscore$rug$draw & pscore$rug$line) ref + lead * margin else NULL,
+                h = if(pscore$rug$draw & pscore$rug$line) object@s.misc$rug else NULL,
                 col = porigin$col, lwd = porigin$lwd, lty = porigin$lty, alpha = porigin$alpha)
             
             ## draw rug
             if(pscore$rug$draw & (pscore$rug$tck != 0)) {
                 ## tick end and starting points
-                start <- ref + lead * margin
-                end <- (start - pscore$rug$tck * lead * abs(start - ref))
+                start <- object@s.misc$rug
+                end <- start - pscore$rug$tck * lead * abs(start - ref)
                 start <- convertUnit(unit(start, "native"), unitTo = "npc", axisFrom = "y", valueOnly = TRUE)
                 end <- convertUnit(unit(end, "native"), unitTo = "npc", axisFrom = "y", valueOnly = TRUE)
                 do.call("panel.rug", c(list(x = y, start = start, end = end), plines))
@@ -198,14 +198,14 @@ setMethod(
             ## draw origin
             panel.abline(
                 h = if(porigin$draw) porigin$origin else NULL,
-                v = if(pscore$rug$draw & pscore$rug$line) ref + lead * margin else NULL,
+                v = if(pscore$rug$draw & pscore$rug$line) object@s.misc$rug else NULL,
                 col = porigin$col, lwd = porigin$lwd, lty = porigin$lty, alpha = porigin$alpha)
 
             ## draw rug
             if(pscore$rug$draw && pscore$rug$tck != 0) {
                 ## tick end and starting points
-                start <- ref + lead * margin
-                end <- (start - pscore$rug$tck * lead * abs(start - ref))
+                start <- object@s.misc$rug
+                end <- start - pscore$rug$tck * lead * abs(start - ref)
                 start <- convertUnit(unit(start, "native"), unitTo = "npc", axisFrom = "x", valueOnly = TRUE)
                 end <- convertUnit(unit(end, "native"), unitTo = "npc", axisFrom = "x", valueOnly = TRUE)
                 do.call("panel.rug", c(list(y = y, start = start, end = end), plines))

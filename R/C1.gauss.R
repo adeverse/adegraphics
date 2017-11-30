@@ -100,7 +100,6 @@ setMethod(
           margin <- object@adeg.par$p1d$rug$margin * abs(diff(Ylim))
         else
           margin <- Ylim[ref]
-        # object@adeg.par$p1d$rug$margin <- margin
         object@s.misc$rug <- Ylim[ref]
         Ylim[ref] <- Ylim[ref] + lead * margin
         object@s.misc$Ylim.update <- Ylim
@@ -121,7 +120,6 @@ setMethod(
           margin <- object@adeg.par$p1d$rug$margin * abs(diff(Xlim))
         else
           margin <- Xlim[ref]
-        # object@adeg.par$p1d$rug$margin <- margin
         object@s.misc$rug <- Xlim[ref]
         Xlim[ref] <- Xlim[ref] + lead * margin
         object@s.misc$Xlim.update <- Xlim
@@ -178,8 +176,8 @@ setMethod(
       margin <- 0
       xx <- seq(from = lims$xlim[1], to = lims$xlim[2], length.out = object@g.args$steps)
       if(pscore$rug$draw)
-        margin <- if(is.unit(pscore$rug$margin)) convertUnit(pscore$rug$margin, typeFrom = "dimension", unitTo = "native", axisFrom = "y", valueOnly = TRUE) else pscore$rug$margin
-      margin <- ifelse(pscore$reverse, lims$ylim[2], lims$ylim[1]) + lead * margin
+        margin <- if(is.unit(object@s.misc$rug)) convertUnit(object@s.misc$rug, typeFrom = "dimension", unitTo = "native", axisFrom = "y", valueOnly = TRUE) else object@s.misc$rug
+      # margin <- ifelse(pscore$reverse, lims$ylim[2], lims$ylim[1]) + lead * margin
        
       for(i in 1:nlev) {
         if(!is.na(curvess[[i]][1])) {
@@ -199,8 +197,9 @@ setMethod(
       margin <- 0
       yy <- seq(from = lims$ylim[1], to = lims$ylim[2], length.out = object@g.args$steps)
       if(pscore$rug$draw)
-        margin <- if(is.unit(pscore$rug$margin)) convertUnit(pscore$rug$margin, typeFrom = "dimension", unitTo = "native", axisFrom = "x", valueOnly = TRUE) else pscore$rug$margin
-      margin <- ifelse(pscore$reverse, lims$xlim[2], lims$xlim[1]) + lead * margin
+        margin <- if(is.unit(object@s.misc$rug)) convertUnit(object@s.misc$rug, typeFrom = "dimension", unitTo = "native", axisFrom = "x", valueOnly = TRUE) else object@s.misc$rug
+      # margin <- ifelse(pscore$reverse, lims$xlim[2], lims$xlim[1]) + lead * margin
+      
       for(i in 1:nlev) {
         if(!is.na(curvess[[i]][1])) {
           x <- margin + lead * curvess[[i]]
