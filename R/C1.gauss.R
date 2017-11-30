@@ -96,10 +96,10 @@ setMethod(
           Ylim <- c(0, max(sapply(gausscurv, FUN = function(x) {ifelse(is.na(x[1]), 0, max(x)) / 0.85})))
         
         ref <- ifelse(object@adeg.par$p1d$reverse, 2, 1)
+        margin <- Ylim[ref]
         if(object@adeg.par$p1d$rug$draw)
           margin <- object@adeg.par$p1d$rug$margin * abs(diff(Ylim))
-        else
-          margin <- Ylim[ref]
+          
         object@s.misc$rug <- Ylim[ref]
         Ylim[ref] <- Ylim[ref] + lead * margin
         object@s.misc$Ylim.update <- Ylim
@@ -116,10 +116,10 @@ setMethod(
           Xlim <- c(0, max(sapply(gausscurv, FUN = function(x) {ifelse(is.na(x[1]), 0, max(x)) / 0.85})))
         
         ref <- ifelse(object@adeg.par$p1d$reverse, 2, 1)
+        margin <- Xlim[ref]
         if(object@adeg.par$p1d$rug$draw)
           margin <- object@adeg.par$p1d$rug$margin * abs(diff(Xlim))
-        else
-          margin <- Xlim[ref]
+          
         object@s.misc$rug <- Xlim[ref]
         Xlim[ref] <- Xlim[ref] + lead * margin
         object@s.misc$Xlim.update <- Xlim
@@ -173,7 +173,7 @@ setMethod(
     lead <- ifelse(pscore$reverse, -1, 1)   
     if(pscore$horizontal) {
       ## horizontal drawing
-      margin <- 0
+      margin <- ifelse(pscore$reverse, lims$ylim[2], lims$ylim[1])
       xx <- seq(from = lims$xlim[1], to = lims$xlim[2], length.out = object@g.args$steps)
       if(pscore$rug$draw)
         margin <- if(is.unit(object@s.misc$rug)) convertUnit(object@s.misc$rug, typeFrom = "dimension", unitTo = "native", axisFrom = "y", valueOnly = TRUE) else object@s.misc$rug
@@ -194,7 +194,7 @@ setMethod(
       }
     } else {
       ## vertical drawing
-      margin <- 0
+      margin <- ifelse(pscore$reverse, lims$xlim[2], lims$xlim[1])
       yy <- seq(from = lims$ylim[1], to = lims$ylim[2], length.out = object@g.args$steps)
       if(pscore$rug$draw)
         margin <- if(is.unit(object@s.misc$rug)) convertUnit(object@s.misc$rug, typeFrom = "dimension", unitTo = "native", axisFrom = "x", valueOnly = TRUE) else object@s.misc$rug

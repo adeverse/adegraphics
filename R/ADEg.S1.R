@@ -112,10 +112,9 @@ setMethod(
           Ylim <- Ylim + c(-1, 1) * abs(diff(range(at))) / (nlevels(fac) + 1)
         
         ref <- ifelse(object@adeg.par$p1d$reverse, 2, 1)
+        margin <- Ylim[ref]
         if(object@adeg.par$p1d$rug$draw)
           margin <- object@adeg.par$p1d$rug$margin * abs(diff(Ylim))
-        else
-          margin <- Ylim[ref]
         
         object@s.misc$rug <- Ylim[ref]
         Ylim[ref] <- Ylim[ref] + lead * margin
@@ -141,10 +140,9 @@ setMethod(
           Xlim <- Xlim + c(-1, 1) * abs(diff(range(at))) / (nlevels(fac) + 1)
         
         ref <- ifelse(object@adeg.par$p1d$reverse, 2, 1)
+        margin <- Xlim[ref]
         if(object@adeg.par$p1d$rug$draw)
           margin <- object@adeg.par$p1d$rug$margin * abs(diff(Xlim))
-        else
-          margin <- Xlim[ref]
         
         object@s.misc$rug <- Xlim[ref]
         Xlim[ref] <- Xlim[ref] + lead * margin
