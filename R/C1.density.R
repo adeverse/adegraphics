@@ -177,7 +177,7 @@ setMethod(
       for(i in 1:nlev) {
         if(!is.na(curvess[[i]]$y[1])) {
           y <- margin + lead * curvess[[i]]$y
-          panel.polygon(x = c(min(curvess[[i]]$x), curvess[[i]]$x, max(curvess[[i]]$y)), y = c(margin, y, margin), border = ppoly$border[i],
+          panel.polygon(x = c(min(curvess[[i]]$x), curvess[[i]]$x, max(curvess[[i]]$x)), y = c(margin, y, margin), border = ppoly$border[i],
                         col = ppoly$col[i], lty = ppoly$lty[i], lwd = ppoly$lwd[i], alpha = ppoly$alpha[i])
           if(nlev > 1) {
             ## indicate levels names for each curve
