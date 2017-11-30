@@ -200,7 +200,7 @@ setMethod(
       
       ## draw rug
       if(pscore$rug$draw & (pscore$rug$tck != 0)) {
-        ref <- ifelse(pscore$reverse, object@g.args$ylim[2], object@g.args$ylim[1])
+        ref <- ifelse(pscore$reverse, lims$ylim[2], lims$ylim[1])
         ## tick end and starting points
         start <- object@s.misc$rug
         end <- start - pscore$rug$tck * lead * abs(start - ref)
@@ -223,7 +223,7 @@ setMethod(
       
       ## draw rug
       if(pscore$rug$draw && (pscore$rug$tck != 0)) {
-        ref <- ifelse(pscore$reverse, object@g.args$xlim[2], object@g.args$xlim[1])
+        ref <- ifelse(pscore$reverse, lims$xlim[2], lims$xlim[1])
         ## tick end and starting points
         start <- object@s.misc$rug
         end <- start - pscore$rug$tck * lead * abs(start - ref)
