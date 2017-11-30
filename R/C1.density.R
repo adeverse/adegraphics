@@ -90,13 +90,16 @@ setMethod(
         if(is.null(object@g.args$ylim))
           Ylim <- c(0, max(sapply(densit, FUN = function(x) {ifelse(is.na(x$y[1]), 0, max(x$y))}) / 0.85))
         
-        ref <- ifelse(object@adeg.par$p1d$reverse, 2, 1)
-        margin <- Ylim[ref]
-        if(object@adeg.par$p1d$rug$draw)
-          margin <- object@adeg.par$p1d$rug$margin * abs(diff(Ylim))
+        if(object@adeg.par$p1d$rug$draw) {
+          ref <- ifelse(object@adeg.par$p1d$reverse, 2, 1)
+          margin <- Ylim[ref]
+          if(object@adeg.par$p1d$rug$draw)
+            margin <- object@adeg.par$p1d$rug$margin * abs(diff(Ylim))
           
-        object@s.misc$rug <- Ylim[ref]
-        Ylim[ref] <- Ylim[ref] + lead * margin
+          object@s.misc$rug <- Ylim[ref]
+          Ylim[ref] <- Ylim[ref] + lead * margin
+        }
+        
         object@s.misc$Ylim.update <- Ylim
       }
       
@@ -110,13 +113,16 @@ setMethod(
         if(is.null(object@g.args$xlim))
           Xlim <- c(0, max(sapply(densit, FUN = function(x) {ifelse(is.na(x$y[1]), 0, max(x$y))}) / 0.85))
         
-        ref <- ifelse(object@adeg.par$p1d$reverse, 2, 1)
-        margin <- Xlim[ref]
-        if(object@adeg.par$p1d$rug$draw)
-          margin <- object@adeg.par$p1d$rug$margin * abs(diff(Xlim))
+        if(object@adeg.par$p1d$rug$draw) {
+          ref <- ifelse(object@adeg.par$p1d$reverse, 2, 1)
+          margin <- Xlim[ref]
+          if(object@adeg.par$p1d$rug$draw)
+            margin <- object@adeg.par$p1d$rug$margin * abs(diff(Xlim))
           
-        object@s.misc$rug <- Xlim[ref]
-        Xlim[ref] <- Xlim[ref] + lead * margin
+          object@s.misc$rug <- Xlim[ref]
+          Xlim[ref] <- Xlim[ref] + lead * margin
+        }
+        
         object@s.misc$Xlim.update <- Xlim
       }
       
