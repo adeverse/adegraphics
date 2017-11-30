@@ -188,12 +188,6 @@ setMethod(
     if(pscore$horizontal) {
       ## horizontal plot
       
-      ## set margins to get some place for rug
-      ref <- ifelse(pscore$reverse, object@g.args$ylim[2], object@g.args$ylim[1])
-      margin <- ref
-      if(pscore$rug$draw)
-        margin <- ifelse(is.unit(pscore$rug$margin), convertUnit(pscore$rug$margin, typeFrom = "dimension", unitTo = "native", axisFrom = "y", valueOnly = TRUE), pscore$rug$margin)
-            
       ## draw grid
       if(grid$draw)
         panel.segments(x0 = object@s.misc$backgrid$x , x1 = object@s.misc$backgrid$x, y0 = lims$ylim[1], y1 = lims$ylim[2], col = grid$col, lty = grid$lty, lwd = grid$lwd)
@@ -206,22 +200,16 @@ setMethod(
       
       ## draw rug
       if(pscore$rug$draw & (pscore$rug$tck != 0)) {
+        ref <- ifelse(pscore$reverse, object@g.args$ylim[2], object@g.args$ylim[1])
         ## tick end and starting points
         start <- object@s.misc$rug
         end <- start - pscore$rug$tck * lead * abs(start - ref)
-        ## 'panel.rug' needs 'npc' values 
         start <- convertUnit(unit(start, "native"), unitTo = "npc", axisFrom = "y", valueOnly = TRUE)
         end <- convertUnit(unit(end, "native"), unitTo = "npc", axisFrom = "y", valueOnly = TRUE)
         do.call("panel.rug", c(list(x = y, start = start, end = end), plines))
       }
     } else {
       ## vertical plot
-      
-      ## set margins to get some place for rug
-      ref <- ifelse(pscore$reverse, object@g.args$xlim[2], object@g.args$xlim[1])
-      margin <- ref
-      if(pscore$rug$draw)          
-        margin <- ifelse(is.unit(pscore$rug$margin), convertUnit(pscore$rug$margin, typeFrom = "dimension", unitTo = "native", axisFrom = "x", valueOnly = TRUE), pscore$rug$margin)
       
       ## draw grid
       if(grid$draw)
@@ -235,6 +223,7 @@ setMethod(
 
       ## draw rug
       if(pscore$rug$draw && (pscore$rug$tck != 0)) {
+        ref <- ifelse(pscore$reverse, object@g.args$xlim[2], object@g.args$xlim[1])
         ## tick end and starting points
         start <- object@s.misc$rug
         end <- start - pscore$rug$tck * lead * abs(start - ref)

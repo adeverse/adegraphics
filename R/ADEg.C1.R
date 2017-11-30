@@ -156,12 +156,6 @@ setMethod(
         if(pscore$horizontal) {
             ## horizontal plot
             
-            ## set margins to get some place for rug
-            ref <- ifelse(pscore$reverse, lims$ylim[2], lims$ylim[1])
-            margin <- ref
-            if(pscore$rug$draw)
-                margin <- ifelse(is.unit(pscore$rug$margin), convertUnit(pscore$rug$margin, typeFrom = "dimension", unitTo = "native", axisFrom = "y", valueOnly = TRUE), pscore$rug$margin)
-            
             ## draw grid
             if(grid$draw)
                 panel.segments(x0 = object@s.misc$backgrid$x , x1 = object@s.misc$backgrid$x, y0 = lims$ylim[1], y1 = lims$ylim[2], col = grid$col, lty = grid$lty, lwd = grid$lwd)
@@ -174,6 +168,7 @@ setMethod(
             
             ## draw rug
             if(pscore$rug$draw & (pscore$rug$tck != 0)) {
+                ref <- ifelse(pscore$reverse, lims$ylim[2], lims$ylim[1])
                 ## tick end and starting points
                 start <- object@s.misc$rug
                 end <- start - pscore$rug$tck * lead * abs(start - ref)
@@ -184,12 +179,6 @@ setMethod(
             
         } else {
             ## vertical plot
-            
-            ## set margins to get some place for rug
-            ref <- ifelse(pscore$reverse, lims$xlim[2], lims$xlim[1])
-            margin <- ref
-            if(pscore$rug$draw)          
-                margin <- ifelse(is.unit(pscore$rug$margin), convertUnit(pscore$rug$margin, typeFrom = "dimension", unitTo = "native", axisFrom = "x", valueOnly = TRUE), pscore$rug$margin)
             
             ## draw grid
             if(grid$draw)
@@ -203,6 +192,7 @@ setMethod(
 
             ## draw rug
             if(pscore$rug$draw && pscore$rug$tck != 0) {
+                ref <- ifelse(pscore$reverse, lims$xlim[2], lims$xlim[1])
                 ## tick end and starting points
                 start <- object@s.misc$rug
                 end <- start - pscore$rug$tck * lead * abs(start - ref)
