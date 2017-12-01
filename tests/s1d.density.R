@@ -5,11 +5,11 @@ set.seed(40)
 x1 <- rnorm(1000)
 g11 <- s1d.density(x1)
 g12 <- s1d.density(x1, col = FALSE, ppoly.col = "blue", p1d.rev = TRUE)
-g13 <- s1d.density(x1, col = FALSE, ppoly.col = "blue", p1d.hori = FALSE)
-g14 <- s1d.density(x1, col = FALSE, ppoly.col = "blue", p1d.hori = FALSE, p1d.rev = TRUE)
+g13 <- s1d.density(x1, col = TRUE, ppoly.col = "blue", p1d.hori = FALSE)
+g14 <- s1d.density(x1, col = TRUE, p1d.hori = FALSE, p1d.rev = TRUE)
 
-update(g11, ppolygons.border = "black") # doesn't work !!
-update(g11, col = FALSE, ppolygons.col = "black") # doesn't work !!
+update(g11, ppolygons.border = "red")
+update(g11, col = FALSE, ppolygons.col = "black")
 update(g11, ppolygons.lwd = 3)
 update(g11, ppolygons.lty = 3)
 update(g11, ppolygons.alpha = 1)
@@ -36,3 +36,4 @@ update(g32, p1d.rev = TRUE)
 update(g33, p1d.rev = FALSE)
 update(g34, p1d.rev = TRUE)
 update(g35, p1d.rev = FALSE)
+

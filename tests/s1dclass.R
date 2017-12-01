@@ -14,7 +14,12 @@ g3 <- s1d.class(envpca$li[, 1], meau$design$season, col = 1:6, p1d.hori = F)
 set.seed(0)
 score1 <- c(rnorm(3, mean = 0, sd = 0.5), rnorm(3, mean = 1, sd = 0.5), rnorm(5, mean = 2, sd = 0.5))
 factor1 <- factor(rep(LETTERS[1:3], times = c(3, 3, 5)))
-g4 <- s1d.class(score1, factor1, col = 1:3)
+g41 <- s1d.class(score1, factor1)
+g42 <- s1d.class(score1, factor1, col = 1:3)
+g43 <- s1d.class(score1, factor1, col = TRUE)
+g44 <- s1d.class(score1, factor1, col = FALSE)
+g45 <- s1d.class(score1, factor1, plines.col = "grey")
+g46 <- s1d.class(score1, factor1, plines.col = "grey", col = TRUE)
 
 ## ex3
 score2 <- c(rnorm(10, mean = 0, sd = 0.5), rnorm(15, mean = -1, sd = 0.2), rnorm(10, mean = 2, sd = 0.5))
@@ -26,3 +31,4 @@ update(g5, posla = "value")
 indx <- rank(rnorm(35))
 factor2 <- factor2[rank(indx)]
 s1d.class(score2[indx], factor2[indx], col = 1:3, posla = "regular")
+

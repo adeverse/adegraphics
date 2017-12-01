@@ -4,7 +4,11 @@ pdf("s1d.boxplot.pdf")
 ## ex1
 x <- c(rnorm(10), rnorm(10))
 fact <- factor(rep(c("A", "B"), 10))
-g1 <- s1d.boxplot(x, fact)
+g11 <- s1d.boxplot(x, fact)
+g12 <- s1d.boxplot(x, fact, col = TRUE)
+g12 <- s1d.boxplot(x, fact, col = 2:3)
+g12 <- s1d.boxplot(x, fact, col = TRUE, plines.col = "black")
+
 g2 <- s1d.boxplot(x, fact, ppolygon.border = c("red", "blue"), box.rectangle = list(alpha = 1, fill = "green"))
 
 ## ex2
@@ -29,3 +33,4 @@ g7 <- s1d.boxplot(c(w1, w2, w3), data.frame(f1, f2))
 data(banque, package = "ade4")
 banque.acm <- ade4::dudi.acm(banque, scan = FALSE, nf = 4)
 s1d.boxplot(banque.acm$l1[, 1], banque[, 1:7], plabels.cex = 1.8)
+
