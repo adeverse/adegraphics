@@ -50,13 +50,14 @@ setMethod(
         object@g.args$ylab <- "density"
     }
     
-    if(!is.null(object@g.args$col)) {
-      if(is.logical(object@g.args$col)) {
-        if(object@g.args$col)
-          adegtot$plabels$col <- adegtot$plabels$boxes$col <- adegtot$plines$col <- adegtot$ppolygons$col <- adegtot$ppolygons$border <- adegtot$ppalette$quali(nlev) 
-      } else
-        adegtot$plabels$col <- adegtot$plabels$boxes$col <- adegtot$plines$col <- adegtot$ppolygons$col <- adegtot$ppolygons$border <- rep(object@g.args$col, length.out = nlev)
-    }
+    ## setting colors
+    paramsToColor <- list(plabels = list(col = object@adeg.par$plabels$col, boxes = list(col = object@adeg.par$plabels$boxes$col)),
+                          plines = list(col = object@adeg.par$plines$col),
+                          ppolygons = list(border = object@adeg.par$ppolygons$border, col = object@adeg.par$ppolygons$col))
+    
+    if(!(is.null(object@g.args$col) || (is.logical(object@g.args$col) && !object@g.args$col)))
+      adegtot <- modifyList(adegtot, col2adepar(ccol = object@g.args$col, pparamsToColor = paramsToColor, nnlev = nlev))
+    
     
     ## if fill is FALSE, polygons density curves are transparent
     if(!object@g.args$fill)
