@@ -38,18 +38,19 @@ setMethod(
       dfdistri <- object@data$dfdistri
     }
     
+    ## change default for some parameters
     if(is.null(colnames(dfdistri))) 
       adegtot$plabels$cex <- 0 ## no labels if no colnames in original data
     if(is.null(object@adeg.par$porigin$include) & (any(names(object@g.args) %in% c("Sp", "nbobject"))))
       adegtot$porigin$include <- FALSE
     
     ## setting colors
-    if(!is.null(object@g.args$col))
-      if(is.logical(object@g.args$col)) {
-        if(object@g.args$col)
-          adegtot$pellipses$border <- adegtot$pellipses$col <- adegtot$plabels$col <- adegtot$plabels$boxes$border <- adegtot$plines$col <- adegtot$ppalette$quali(NCOL(dfdistri))
-      } else
-        adegtot$pellipses$border <- adegtot$pellipses$col <- adegtot$plabels$col <- adegtot$plabels$boxes$border <- adegtot$plines$col <- rep(object@g.args$col, length.out = NCOL(dfdistri))
+    paramsToColor <- list(plabels = list(col = object@adeg.par$plabels$col, boxes = list(border = object@adeg.par$plabels$boxes$border)),
+                          plines = list(col = object@adeg.par$plines$col),
+                          pellipses = list(border = object@adeg.par$pellipses$border, col = object@adeg.par$pellipses$col))
+    
+    if(!(is.null(object@g.args$col) || (is.logical(object@g.args$col) && !object@g.args$col)))
+      adegtot <- modifyList(adegtot, col2adepar(ccol = object@g.args$col, pparamsToColor = paramsToColor, nnlev = NCOL(dfdistri)))
     
     ## statistics calculus
     object@stats$means <- t(apply(as.data.frame(dfdistri), 2, FUN = function(x) {apply(dfxy[, c(object@data$xax, object@data$yax)], 2, weighted.mean , w = x)}))
