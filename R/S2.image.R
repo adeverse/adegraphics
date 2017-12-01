@@ -29,11 +29,7 @@ setMethod(
     oldparamadeg <- adegpar()
     on.exit(adegpar(oldparamadeg))
     adegtot <- adegpar(object@adeg.par)
-   
-    object@g.args$gridsize <- rep(object@g.args$gridsize, length.out = 2)
-    if(is.null(object@adeg.par$porigin$include) & (any(names(object@g.args) %in% c("Sp", "nbobject", "outsideLimits"))))
-      adegtot$porigin$include <- FALSE
-
+    
     if(object@data$storeData) {
       dfxy <- object@data$dfxy
       z <- object@data$z
@@ -42,14 +38,20 @@ setMethod(
       z <- eval(object@data$z, envir = sys.frame(object@data$frame))
     }
     
+    ## change default for some parameters
+    object@g.args$gridsize <- rep(object@g.args$gridsize, length.out = 2)
+    if(is.null(object@adeg.par$porigin$include) & (any(names(object@g.args) %in% c("Sp", "nbobject", "outsideLimits"))))
+      adegtot$porigin$include <- FALSE
+    
     if(is.null(object@g.args$breaks))
-        object@s.misc$breaks.update <- pretty(z, object@g.args$nclass)
+      object@s.misc$breaks.update <- pretty(z, object@g.args$nclass)
     else
-        object@s.misc$breaks.update <- object@g.args$breaks
+      object@s.misc$breaks.update <- object@g.args$breaks
     
     object@s.misc$breaks.update <- breakstest(object@s.misc$breaks.update, z, n = length(object@s.misc$breaks.update))
     n <- length(object@s.misc$breaks.update)
     
+    ## setting colors
     if(!is.null(object@g.args$col)) {
         if(length(object@g.args$col) < (n - 1))
             stop(paste("not enough colors defined, at least ", (n - 1), " colors expected", sep = ""), call. = FALSE)

@@ -7,7 +7,7 @@ setClass(
   contains = "ADEg.S2"
 )
 
-  
+
 setMethod(
   f = "initialize",
   signature = "S2.class",
@@ -45,9 +45,9 @@ setMethod(
     ## change default for some parameters
     if(is.null(object@adeg.par$porigin$include) & (any(names(object@g.args) %in% c("Sp", "nbobject"))))
       adegtot$porigin$include <- FALSE
-
+    
     if(any(adegtot$plabels$cex > 0) & is.null(object@adeg.par$plegend$drawKey)) ## if labels, no legend
-        adegtot$plegend$drawKey <- FALSE
+      adegtot$plegend$drawKey <- FALSE
     
     ## setting colors
     paramsToColor <- list(ppoints = list(col = object@adeg.par$ppoints$col, fill = object@adeg.par$ppoints$fill),
@@ -189,9 +189,9 @@ setMethod(
     }
   })
 
-  
+
 s.class <- function(dfxy, fac, xax = 1, yax = 2, wt = rep(1, NROW(fac)), labels = levels(fac), ellipseSize = 1.5, starSize = 1, 
-  									chullSize = NULL, col = NULL, facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
+                    chullSize = NULL, col = NULL, facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
   
   ## evaluation of some parameters (required for multiplot)
   thecall <- .expand.call(match.call())
@@ -236,16 +236,16 @@ s.class <- function(dfxy, fac, xax = 1, yax = 2, wt = rep(1, NROW(fac)), labels 
   ## simple ADEg graphic
   else {
     if(length(sortparameters$rest))
-  	  warning(c("Unused parameters: ", paste(unique(names(sortparameters$rest)), " ", sep = "")), call. = FALSE)
+      warning(c("Unused parameters: ", paste(unique(names(sortparameters$rest)), " ", sep = "")), call. = FALSE)
     
     ## creation of the ADEg object
     g.args <- c(sortparameters$g.args, list(ellipseSize = ellipseSize, starSize = starSize, chullSize = chullSize, col = col))
     if(storeData)
-    	tmp_data <- list(dfxy = dfxy, fac = fac, xax = xax, yax = yax, wt = wt, labels = labels, frame = sys.nframe() + pos, storeData = storeData)
+      tmp_data <- list(dfxy = dfxy, fac = fac, xax = xax, yax = yax, wt = wt, labels = labels, frame = sys.nframe() + pos, storeData = storeData)
     else
       tmp_data <- list(dfxy = thecall$dfxy, fac = thecall$fac, xax = xax, yax = yax, wt = thecall$wt, labels = thecall$labels, frame = sys.nframe() + pos, storeData = storeData)
     object <- new(Class = "S2.class", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = g.args, Call = as.call(thecall))
-
+    
     ## preparation of the graph
     prepare(object)
     setlatticecall(object)
