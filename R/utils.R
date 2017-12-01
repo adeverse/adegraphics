@@ -1,3 +1,26 @@
+replaceListNull <- function(x, val) {
+  lapply(x, function(x) {
+    if (is.list(x)){
+      replaceListNull(x, val)
+    } else{
+      if(is.null(x)) val else(x)
+    } 
+  })
+}
+
+col2adepar <- function(ccol, pparamsToColor, nnlev) {
+  myCol <- NULL
+  if(is.logical(ccol) && isTRUE(ccol))
+    myCol <- adegpar()$ppalette$quali(nnlev)
+  else
+    myCol <- rep(ccol, length.out = nnlev)
+  
+  if(!is.null(myCol))
+    return(replaceListNull(pparamsToColor, myCol))
+  else 
+    return()
+}
+
 repList <- function(x, times) {
   if(times == 1)
     l <- x
