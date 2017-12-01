@@ -42,37 +42,19 @@ setMethod(
       adegtot$plabels$srt <- 0
     
     if(any(adegtot$plabels$cex > 0) & is.null(object@adeg.par$plegend$drawKey)) ## if labels, no legend
-      adegtot$plegend$drawKey <- FALSE    
-    ## setting colors 
-    if(!is.null(object@g.args$col)) {
-      col.idx <- FALSE
-      if(is.logical(object@g.args$col)) {
-        if(object@g.args$col){
-          colT <- adegtot$ppalette$quali(nlevels(fac))
-          col.idx <- TRUE
-        }
-      } else {
-        colT <- rep(object@g.args$col, length.out = nlevels(fac))
-        col.idx <- TRUE
-      }
-      
-      if(col.idx) {
-        if(is.null(object@adeg.par$ppoints$col))
-          adegtot$ppoints$col <- colT
-        if(is.null(object@adeg.par$ppoints$fill))
-          adegtot$ppoints$fill <- colT
-        if(is.null(object@adeg.par$plabels$col))
-          adegtot$plabels$col <- colT
-        if(is.null(object@adeg.par$plabels$boxes$border))
-          adegtot$plabels$boxes$border <- colT
-        if(is.null(object@adeg.par$plines$col))
-          adegtot$plines$col <- colT
-      }
-    }
+      adegtot$plegend$drawKey <- FALSE
     
+    ## setting colors
+    paramsToColor <- list(ppoints = list(col = object@adeg.par$ppoints$col, fill = object@adeg.par$ppoints$fill),
+                          plabels = list(col = object@adeg.par$plabels$col, boxes = list(border = object@adeg.par$plabels$boxes$border)),
+                          plines = list(col = object@adeg.par$plines$col))
+    
+    if(!(is.null(object@g.args$col) || (is.logical(object@g.args$col) && !object@g.args$col)))
+      adegtot <- modifyList(adegtot, col2adepar(ccol = object@g.args$col, pparamsToColor = paramsToColor, nnlev = nlevels(fac)))
+    
+    ## manage limits 
     if(adegtot$p1d$horizontal & is.null(object@g.args$ylim))
       object@g.args$ylim <- c(0, 1)
-    
     if(!adegtot$p1d$horizontal & is.null(object@g.args$xlim))
       object@g.args$xlim <- c(0, 1)
     
