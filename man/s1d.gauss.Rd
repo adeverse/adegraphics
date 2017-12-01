@@ -9,7 +9,7 @@
 
 \usage{
 s1d.gauss(score, fac = gl(1, NROW(score)), wt = rep(1,
-  NROW(score)), steps = 200, col = TRUE, fill = TRUE,
+  NROW(score)), steps = 200, col = NULL, fill = TRUE,
   facets = NULL, plot = TRUE, storeData = TRUE, add =
   FALSE, pos = -1, ...)
 }

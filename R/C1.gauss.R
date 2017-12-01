@@ -50,11 +50,13 @@ setMethod(
         object@g.args$ylab <- "density"
     }
     
-    if(is.logical(object@g.args$col)) {
-      if(object@g.args$col)
-        adegtot$plabels$col <- adegtot$plabels$boxes$col <- adegtot$plines$col <- adegtot$ppolygons$col <- adegtot$ppolygons$border <- adegtot$ppalette$quali(nlev) 
-    } else
-      adegtot$plabels$col <- adegtot$plabels$boxes$col <- adegtot$plines$col <- adegtot$ppolygons$col <- adegtot$ppolygons$border <- rep(object@g.args$col, length.out = nlev)
+    if(!is.null(object@g.args$col)) {
+      if(is.logical(object@g.args$col)) {
+        if(object@g.args$col)
+          adegtot$plabels$col <- adegtot$plabels$boxes$col <- adegtot$plines$col <- adegtot$ppolygons$col <- adegtot$ppolygons$border <- adegtot$ppalette$quali(nlev) 
+      } else
+        adegtot$plabels$col <- adegtot$plabels$boxes$col <- adegtot$plines$col <- adegtot$ppolygons$col <- adegtot$ppolygons$border <- rep(object@g.args$col, length.out = nlev)
+    }
     
     ## if fill is FALSE, polygons density curves are transparent
     if(!object@g.args$fill)
@@ -228,7 +230,7 @@ setMethod(
   })
 
 
-s1d.gauss <- function(score, fac = gl(1, NROW(score)), wt = rep(1, NROW(score)), steps = 200, col = TRUE, fill = TRUE, facets = NULL,
+s1d.gauss <- function(score, fac = gl(1, NROW(score)), wt = rep(1, NROW(score)), steps = 200, col = NULL, fill = TRUE, facets = NULL,
                       plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
                       
   thecall <- .expand.call(match.call())

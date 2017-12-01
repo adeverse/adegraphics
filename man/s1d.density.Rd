@@ -10,7 +10,7 @@
 \usage{
 s1d.density(score, fac = gl(1, NROW(score)), kernel = c("normal", "box", 
   "epanech", "biweight", "triweight"), bandwidth = NULL, gridsize = 450, 
-  col = TRUE, fill = TRUE, facets = NULL, plot = TRUE, storeData = TRUE,
+  col = NULL, fill = TRUE, facets = NULL, plot = TRUE, storeData = TRUE,
   add = FALSE, pos = -1, ...)
 }
 
