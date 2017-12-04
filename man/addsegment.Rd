@@ -57,11 +57,11 @@ addsegment(object, x0 = NULL, y0 = NULL, x1, y1, plot = TRUE, ...)
 \examples{
 data(deug, package = "ade4")
 g11 <- s1d.density(deug$tab[, 1], plot = FALSE)
-g12 <- addsegment(g11, x0 = deug$cent[1], x1 = deug$cent[1], y0 = 0, y1 = 1, plines = list(col = "grey30",
-  lwd = 3))
+g12 <- addsegment(g11, x0 = deug$cent[1], x1 = deug$cent[1], y0 = 0, y1 = 1, 
+  plines = list(col = "grey30", lwd = 3))
 g13 <- addsegment(g11, 
   x0 = deug$cent + seq(0, 1, length.out = length(deug$cent)), 
-  x1 = deug$cent + seq(0, 1, length.out = length(deug$cent), 
+  x1 = deug$cent + seq(0, 1, length.out = length(deug$cent)), 
   y0 = 0, y1 = 1, 
   plines = list(col = 1:length(deug$cent), lty = 1:length(deug$cent)))
   
@@ -75,8 +75,10 @@ dfY0 <- ade4::scalewt(dfY)
 can1 <- cancor(dfX0, dfY0)
 varcanoX <- dfX0%*%can1$xcoef[,1]
 varcanoY <- dfY0%*%can1$ycoef[,1]
-g21 <- s.label(cbind(varcanoY,varcanoX), labels = row.names(monde84), plabel.cex = 0.8, plot = FALSE)
-g22 <- addsegment(g2, -1.25, -1.25, 1.25, 1.25, plines.col = "purple", plines.lwd = 1.5, plines.lty = 2)
+g21 <- s.label(cbind(varcanoY,varcanoX), labels = row.names(monde84), plabel.cex = 0.8, 
+  plot = FALSE)
+g22 <- addsegment(g21, -1.25, -1.25, 1.25, 1.25, plines.col = "purple", plines.lwd = 1.5, 
+  plines.lty = 2)
 }
 
 \keyword{aplot}
