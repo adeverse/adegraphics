@@ -41,8 +41,8 @@ adegpar(...)
         (for \code{horizontal} as \code{TRUE}) or at the right of the device (for \code{horizontal} as \code{FALSE}).}
       \item{\code{rug}: a list dedicated to tick marks \itemize{
         \item{\code{draw}: a logical indicating if the rugs are drawn}
-        \item{\code{tck}: size of the rug (ticks) in proportion from the reference line and the origin of the device}
-        \item{\code{margin}: where to draw the reference line}
+        \item{\code{tck}: size of the rug (ticks) in proportion from the reference line and the origin of the device (0.5 by default)}
+        \item{\code{margin}: where to draw the reference line (0.07 by default)}
         \item{\code{line}: a logical indicating if the reference line is drawn using \code{porigin} arguments}
       }}
     }}
