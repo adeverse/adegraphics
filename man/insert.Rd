@@ -75,13 +75,12 @@ print(g3) ## square == NULL
 print(g3, square = TRUE)
 print(g3, square = FALSE)
 
-
 g4 <- insert(g2, g1, posi = "topleft")
 
 data(jv73, package = "ade4")
 pca1 <- ade4::dudi.pca(jv73$morpho, scannf = FALSE)
-g5 <- s.value(jv73$xy, pca1$li[, 1:2], porigin.include = FALSE)
-g6 <- s.corcircle(pca1$co, pbackground.box = FALSE)
+g5 <- s.value(jv73$xy, pca1$li[, 1:2], porigin.include = FALSE, plot = FALSE)
+g6 <- s.corcircle(pca1$co, pbackground.box = FALSE, plot = FALSE)
 g7 <- insert(g6, g5, posi = c(0.3, 0.4, 0.5, 0.6))
 }
 
