@@ -1,5 +1,5 @@
 library(adegraphics)
-pdf("sdensity.pdf")
+pdf("s.density.pdf")
 
 xx1 <- rnorm(1000, 1, 2)
 yy1 <- rnorm(1000, 1, 2)

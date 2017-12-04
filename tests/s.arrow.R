@@ -1,5 +1,5 @@
 library(adegraphics)
-pdf("sarrow.pdf")
+pdf("s.arrow.pdf")
 
 ## ex1 : from tdr641
 data(doubs, package = "ade4") 

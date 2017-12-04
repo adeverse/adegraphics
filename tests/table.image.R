@@ -1,5 +1,5 @@
 library(adegraphics)
-pdf("timage.pdf")
+pdf("table.image.pdf")
 
 ## ex1
 x <- 1:4

@@ -1,5 +1,5 @@
 library(adegraphics)
-pdf("sdistri.pdf")
+pdf("s.distri.pdf")
 
 xy5 <- cbind.data.frame(x = runif(200, -1, 1), y = runif(200, -1, 1))
 w1 <- as.numeric((xy5$x > 0) & (xy5$y > 0))

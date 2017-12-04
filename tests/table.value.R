@@ -1,5 +1,6 @@
 library(adegraphics)
-pdf("tvalue.pdf")
+pdf("table.value.pdf")
+
 
 ## ex1
 data(olympic, package = "ade4")
@@ -13,8 +14,12 @@ g5 <- table.value(tab1, coordsy = pca$li[, 1], coordsx = pca$co[, 1], ptable = l
 
 ## ex2
 data(eurodist)
-g6 <- table.value(eurodist, store = TRUE, symbol = "circle")
-g7 <- table.value(eurodist, store = FALSE, psub.text = "eurodist", psub.position = c(0, -0.04))
+g61 <- table.value(eurodist)
+g62 <- table.value(eurodist, store = TRUE, symbol = "circle")
+g63 <- table.value(eurodist, store = FALSE, psub.text = "eurodist", psub.position = c(0, -0.04))
+g64 <- table.value(eurodist, ptable.margin = list(b = 17, t = 17, l = 17, r = 17))
+g65 <- table.value(eurodist, ptable.x = list(pos = "bottom"),
+                  ptable.margin = list(b = 17, t = 17, l = 17, r = 17))
 
 ## ex3
 data("doubs", package = "ade4")
@@ -56,3 +61,13 @@ ade4::table.value(tab6, x = 1:10, y = 10:1)
 g17 <- table.value(tab6, coordsx = 1:10, coordsy = 10:1)
 g18 <- table.value(tab6, coordsx = 1:10, coordsy = c(1, 2, 5, 6, 8, 9, 10, 3, 4, 7))
 
+
+## ex8
+d <- as.dist(matrix(rep(1:5, 5), 5), upper = TRUE)
+attr(d, "Labels") <- c ("A", "B", "C", "D", "E")
+g4 <- table.value(d)
+
+## ex9
+data(irishdata, package = "ade4")
+d.geo <- dist(irishdata$xy.utm)
+g5 <- table.value(d.geo)

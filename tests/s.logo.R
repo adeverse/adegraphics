@@ -1,5 +1,5 @@
 library(adegraphics)
-pdf("slogo.pdf")
+pdf("s.logo.pdf")
 
 ## ex1
 data(ggtortoises, package = "ade4")

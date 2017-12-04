@@ -1,5 +1,5 @@
 library(adegraphics)
-pdf("svalue.pdf")
+pdf("s.value.pdf")
 
 ## ex1
 xy <- cbind.data.frame(x = runif(50, -1, 1), y = runif(50, 0, 2))

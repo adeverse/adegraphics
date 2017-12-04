@@ -18,6 +18,22 @@ g6 <- ADEgS(list(g1 = g1, g5 = g5), layout = c(1, 2))
 update(g6, pback.col = "lightblue", g1.plabels.cex = 2, g5.plabels.col = "red")
 
 
+############################## addhist ##############################
+dfxy1 <- matrix(rnorm(200), ncol = 2)
+gh1 <- s.label(dfxy1)
+gh2 <- addhist(gh1)
+
+dfxy2 <- dfxy1
+dfxy2[, 2] <- dfxy2[, 2] + rnorm(100, 2)
+gh3 <- s.label(dfxy2)
+gh4 <- addhist(gh3, plot.polygon = list(col = "red"))
+
+data(rpjdl, package = "ade4")
+coa1 <- ade4::dudi.coa(rpjdl$fau, scannf = FALSE, nf = 4)
+gh5 <- s.label(coa1$li)
+gh6 <- addhist(gh5)
+
+
 ############################## addtext ##############################
 # on a ADEg
 addtext(g1, -1, 1, "Data Granulo", plabels.cex = 1.5, plabels.col = "red")

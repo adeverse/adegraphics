@@ -1,6 +1,6 @@
 library(adegraphics)
 library(grid)
-pdf("slabel.pdf")
+pdf("s.label.pdf")
 
 x0 <- runif(50, -2, 2)
 y0 <- runif(50, -2, 2)

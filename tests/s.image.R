@@ -1,6 +1,6 @@
 library(adegraphics)
 library(sp)
-pdf("simage.pdf")
+pdf("s.image.pdf")
 
 ## ex1
 xy <- data.frame(expand.grid(-3:3, -3:3))

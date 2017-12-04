@@ -1,5 +1,5 @@
 library(adegraphics)
-pdf("smatch.pdf")
+pdf("s.match.pdf")
 
 X <- data.frame(x = runif(50, -1, 2), y = runif(50, -1, 2))
 Y <- X + rnorm(100, sd = 0.3)

@@ -1,5 +1,5 @@
 library(adegraphics)
-pdf("sclass.pdf")
+pdf("s.class.pdf")
 
 xy0 <- cbind.data.frame(x = runif(20, -1, 1), y = runif(20, -1, 6))
 basic <- s.class(xy0, fac = factor(rep(c("A", "B"), le = 20)), chull = 0, star = 0)
