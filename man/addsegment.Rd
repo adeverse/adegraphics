@@ -21,10 +21,10 @@ addsegment(object, x0 = NULL, y0 = NULL, x1, y1, plot = TRUE, ...)
   \item{object}{an object of class \code{ADEg} or \code{ADEgS}
   }
   \item{x0, y0}{coordinates of points FROM which to draw, passed to 
-    the \code{panel.segments} function of the \code{lattice} package
+    the \code{panel.segments} function of the \code{lattice} package. See Details.
   }
   \item{x1, y1}{coordinates of points TO which to draw, passed to the 
-    \code{panel.segments} function of the \code{lattice} package
+    \code{panel.segments} function of the \code{lattice} package. See Details.
   }
   \item{plot}{a logical indicating if the graphics is displayed
   }
@@ -39,6 +39,12 @@ addsegment(object, x0 = NULL, y0 = NULL, x1, y1, plot = TRUE, ...)
    An object of class \code{ADEgS}.
 }
 
+\details{
+   \code{x0}, \code{y0}, \code{x1} and \code{y1} can be vectors. A line segment 
+   is drawn, for each i, between the point (x0[i], y0[i]) and the point
+   (x1[i], y1[i]). The coordinate vectors will be recycled to the length of the longest.
+}
+
 \author{Aurelie Siberchicot \email{aurelie.siberchicot@univ-lyon1.fr} and Stephane Dray
 }
 
@@ -50,9 +56,14 @@ addsegment(object, x0 = NULL, y0 = NULL, x1, y1, plot = TRUE, ...)
 
 \examples{
 data(deug, package = "ade4")
-g1 <- s1d.density(deug$tab[, 1], plot = FALSE)
-addsegment(g1, x0 = deug$cent[1], x1 = deug$cent[1], y0 = 0, y1 = 1, plines = list(col = "grey30",
+g11 <- s1d.density(deug$tab[, 1], plot = FALSE)
+g12 <- addsegment(g1, x0 = deug$cent[1], x1 = deug$cent[1], y0 = 0, y1 = 1, plines = list(col = "grey30",
   lwd = 3))
+g13 <- addsegment(g1, 
+  x0 = deug$cent + seq(0, 1, length.out = length(deug$cent)), 
+  x1 = deug$cent + seq(0, 1, length.out = length(deug$cent), 
+  y0 = 0, y1 = 1, 
+  plines = list(col = 1:length(deug$cent), lty = 1:length(deug$cent)))
   
 # example extracted from the pedagogic file, here: http://pbil.univ-lyon1.fr/R/pdf/tdr65.pdf
 data(monde84, package = "ade4")
@@ -64,8 +75,8 @@ dfY0 <- ade4::scalewt(dfY)
 can1 <- cancor(dfX0, dfY0)
 varcanoX <- dfX0%*%can1$xcoef[,1]
 varcanoY <- dfY0%*%can1$ycoef[,1]
-g2 <- s.label(cbind(varcanoY,varcanoX), labels = row.names(monde84), plabel.cex = 0.8, plot = FALSE)
-addsegment(g2, -1.25, -1.25, 1.25, 1.25, plines.col = "purple", plines.lwd = 1.5, plines.lty = 2)
+g21 <- s.label(cbind(varcanoY,varcanoX), labels = row.names(monde84), plabel.cex = 0.8, plot = FALSE)
+g22 <- addsegment(g2, -1.25, -1.25, 1.25, 1.25, plines.col = "purple", plines.lwd = 1.5, plines.lty = 2)
 }
 
 \keyword{aplot}
