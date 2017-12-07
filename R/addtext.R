@@ -56,6 +56,10 @@ setMethod(
       object[[which]] <- addtext(object[[which]], xcoord, ycoord, labels, ..., plot = FALSE)
       
     } else { # if several subgraphs are selected, each label is displayed on one subgraph; there is only one label by subgraph
+
+      if(sum(object@add) != 0)
+        stop("The 'addtext' function is not available for superposed objects.", call. = FALSE)
+      
       ## sorting parameters
       sortparameters <- sortparamADEg(...)$adepar
       params <- adegpar()
