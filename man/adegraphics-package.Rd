@@ -34,8 +34,8 @@
   \tabular{ll}{
     Package: \tab adegraphics\cr
     Type: \tab Package\cr
-    Version: \tab 1.0-8\cr
-    Date: \tab 2017-04-11\cr
+    Version: \tab 1.0-9\cr
+    Date: \tab 2017-12-15\cr
     License: \tab GPL (>=2)\cr
     Depends: \tab ade4, graphics, grid, KernSmooth, lattice, latticeExtra, methods, RColorBrewer, sp (>= 1.1-1), stats
   }
