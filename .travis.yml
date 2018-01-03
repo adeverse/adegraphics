@@ -2,8 +2,12 @@
 
 language: r
 r: devel
-warnings_are_errors: false
+cache: packages
+
+warnings_are_errors: true
 sudo: required
+
+r_check_args: "--as-cran --run-dontrun"
 
 r_packages:
   - devtools
