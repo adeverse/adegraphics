@@ -1302,10 +1302,10 @@
   
   ## default values for parameters
   params <- list()
-  params[[1]] <- list(plines.col = "red", ppoints.col = "red", p1d.horizontal = FALSE, paxes.draw = TRUE, ppoints.cex = 2, ylab = "Root Mean Square Error", ylim = lim, porigin = origin)
-  params[[2]] <- list(plines.col = "red", ppoly.col = "red", p1d.horizontal = FALSE, paxes.draw = TRUE, method = "bars")
-  params[[3]] <- list(plines.col = "blue", ppoints.col = "blue", p1d.horizontal = FALSE, paxes.draw = TRUE, ppoints.cex = 2)
-  params[[4]] <- list(plines.col = "blue", ppoly.col = "blue", p1d.horizontal = FALSE, paxes.draw = TRUE, method = "bars")
+  params[[1]] <- list(plines = list(col = "red"), ppoints = list(col = "red", cex = 2), p1d = list(horizontal = FALSE), paxes = list(draw = TRUE), ylab = "Root Mean Square Error", ylim = lim, porigin = origin)
+  params[[2]] <- list(plines = list(col = "red"), ppolygons = list(col = "red"), p1d = list(horizontal = FALSE), paxes = list(draw = TRUE), method = "bars")
+  params[[3]] <- list(plines = list(col = "blue"), ppoints = list(col = "blue", cex = 2), p1d = list(horizontal = FALSE), paxes = list(draw = TRUE))
+  params[[4]] <- list(plines = list(col = "blue"), ppolygons = list(col = "blue"), p1d = list(horizontal = FALSE), paxes = list(draw = TRUE), method = "bars")
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
@@ -1341,10 +1341,10 @@
   
   ## default values for parameters
   params <- list()
-  params[[1]] <- list(plines.col = "red", ppoints.col = "red", p1d.horizontal = FALSE, paxes.draw = TRUE, ppoints.cex = 2, ylab = "Root Mean Square Error", ylim = lim, porigin = origin)
-  params[[2]] <- list(plines.col = "red", ppoly.col = "red", p1d.horizontal = FALSE, paxes.draw = TRUE, method = "area")
-  params[[3]] <- list(plines.col = "blue", ppoints.col = "blue", p1d.horizontal = FALSE, paxes.draw = TRUE, ppoints.cex = 2)
-  params[[4]] <- list(plines.col = "blue", ppoly.col = "blue", p1d.horizontal = FALSE, paxes.draw = TRUE, method = "area")
+  params[[1]] <- list(plines = list(col = "red"), ppoints = list(col = "red", cex = 2), p1d = list(horizontal = FALSE), paxes = list(draw = TRUE), ylab = "Root Mean Square Error", ylim = lim, porigin = origin)
+  params[[2]] <- list(plines = list(col = "red"), ppolygons = list(col = "red"), p1d = list(horizontal = FALSE), paxes = list(draw = TRUE), method = "area")
+  params[[3]] <- list(plines = list(col = "blue"), ppoints = list(col = "blue", cex = 2), p1d = list(horizontal = FALSE), paxes = list(draw = TRUE))
+  params[[4]] <- list(plines = list(col = "blue"), ppolygons = list(col = "blue"), p1d = list(horizontal = FALSE), paxes = list(draw = TRUE), method = "area")
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
@@ -1380,8 +1380,8 @@
   
   ## default values for parameters
   params <- list()
-  params[[1]] <- list(p1d.horizontal = FALSE, paxes.draw = TRUE, ppoints.cex = 2, ylim = lim, porigin = origin)
-  params[[2]] <- list(p1d.horizontal = FALSE, paxes.draw = TRUE, method = "bars")
+  params[[1]] <- list(p1d = list(horizontal = FALSE), paxes = list(draw = TRUE), ppoints = list(cex = 2), ylim = lim, porigin = origin)
+  params[[2]] <- list(p1d = list(horizontal = FALSE), paxes = list(draw = TRUE), method = "bars")
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
@@ -1414,8 +1414,8 @@
   
   ## default values for parameters
   params <- list()
-  params[[1]] <- list(p1d.horizontal = FALSE, paxes.draw = TRUE, ppoints.cex = 2, ylim = lim, porigin = origin)
-  params[[2]] <- list(p1d.horizontal = FALSE, paxes.draw = TRUE, method = "bars")
+  params[[1]] <- list(p1d = list(horizontal = FALSE), paxes = list(draw = TRUE), ppoints = list(cex = 2), ylim = lim, porigin = origin)
+  params[[2]] <- list(p1d = list(horizontal = FALSE), paxes = list(draw = TRUE), method = "bars")
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
