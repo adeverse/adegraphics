@@ -1659,7 +1659,7 @@
   
   ## default values for parameters
   params <- list()
-  params[[1]] <- list(p1d = list(horizontal = TRUE), pgrid = list(draw = FALSE), paxes = list(draw = TRUE), xlim = lim, main = "Histogram of sim", xlab = "sim")
+  params[[1]] <- list(p1d = list(horizontal = TRUE), pgrid = list(draw = FALSE), paxes = list(draw = TRUE), xlim = lim, main = "Histogram of sim", xlab = "sim", ylab = "Frequency")
   params[[2]] <- list(plines = list(lwd = 1.5), ppoints = list(pch = 18, cex = 1.5))
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
