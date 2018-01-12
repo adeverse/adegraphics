@@ -1644,3 +1644,40 @@
     print(object)
   invisible(object)
 }
+
+
+"plot.randtest" <- function(x, nclass = 10, coeff = 1, pos = -1, storeData = TRUE, plot = TRUE, ...) {
+  
+  if(!inherits(x, "randtest")) 
+    stop("Object of class 'randtest' expected")
+  
+  graphsnames <- c("sim", "obs")
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
+  
+  ## compute common limits
+  lim <- range(c(x$obs, x$plot$xlim))
+  
+  ## default values for parameters
+  params <- list()
+  params[[1]] <- list(p1d = list(horizontal = TRUE), pgrid = list(draw = FALSE), paxes = list(draw = TRUE), xlim = lim, main = "Histogram of sim", xlab = "sim")
+  params[[2]] <- list(plines = list(lwd = 1.5), ppoints = list(pch = 18, cex = 1.5))
+  names(params) <- graphsnames
+  sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+  
+  ## creation of each individual ADEg
+  g1 <- do.call("s1d.hist", c(list(score = x$plot$hist, nclass = nclass, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
+  g2 <- do.call("addsegment", c(list(g1, x0 = x$obs, x1 = x$obs, y0 = 0, y1 = max(x$plot$hist$counts) / 2, 
+                                     plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
+  g3 <- do.call("addpoint", c(list(g1, xcoord = x$obs, ycoord = max(x$plot$hist$counts) / 2, 
+                                   plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
+  g4 <- g2$segmentadded + g3$pointadded
+  
+  ## ADEgS creation
+  object <- g2
+  object <- superpose(g1, g4)
+  object@Call <- match.call()
+  names(object) <- graphsnames
+  if(plot)
+    print(object)
+  invisible(object)
+}
