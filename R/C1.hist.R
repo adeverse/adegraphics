@@ -25,12 +25,20 @@ setMethod(
     on.exit(adegpar(oldparamadeg))
     adegtot <- adegpar(object@adeg.par)
     
+    ## check if the input data is an histogram or not
+    isHist <- ifelse(inherits(object@data$score, "histogram"), TRUE, FALSE)
+    
     if(object@data$storeData)
       score <- object@data$score
     else
       score <- eval(object@data$score, envir = sys.frame(object@data$frame))
     
-    score <- as.matrix(score)[, 1]  ## to manage 'score' when it is a data.frame with only one column
+    if(isHist) {
+      h <- object@data$score
+      object@data$score <- runif(100, min = object@g.args$xlim[1], max = object@g.args$xlim[2])
+    } else {
+      score <- as.matrix(score)[, 1]  ## to manage 'score' when it is a data.frame with only one column  
+    }
     
     ## change default for some parameters
     adegtot$p1d$rug$draw <- FALSE
@@ -40,7 +48,9 @@ setMethod(
     callNextMethod() ## prepare graph
     
     ## compute histogram
-    h <- hist(score, breaks = if(is.null(object@g.args$breaks)) object@g.args$nclass else object@g.args$breaks, right = object@g.args$right, plot = FALSE)
+    if(!isHist)
+      h <- hist(score, breaks = if(is.null(object@g.args$breaks)) object@g.args$nclass else object@g.args$breaks, right = object@g.args$right, plot = FALSE)
+    
     y <- switch(object@g.args$type, count = h$counts, percent = 100 * h$counts / length(score), density = h$density)
     object@stats$heights <- y
     object@stats$breaks <- h$breaks
@@ -100,15 +110,22 @@ s1d.hist <- function(score, breaks = NULL, nclass = round(log2(length(score)) + 
   
   ## facets
   if(!is.null(facets)) {
-    if(NCOL(score) == 1)
-      object <- multi.facets.C1(thecall, sortparameters$adepar, samelimits = sortparameters$g.args$samelimits)
-    else 
-      stop("Facets are not allowed with multiple scores")
+    if(!inherits(score, "histogram")) {
+      if(NCOL(score) == 1)
+        object <- multi.facets.C1(thecall, sortparameters$adepar, samelimits = sortparameters$g.args$samelimits)
+      else 
+        stop("Facets are not allowed with multiple scores")
+    } else {
+      stop("Facets are not allowed with histogram data")
+    }
   }
   
   ## multiple scores
   else if(NCOL(score) > 1) {
-    object <- multi.score.C1(thecall)
+    if(!inherits(score, "histogram"))
+      object <- multi.score.C1(thecall)
+    else
+      stop("Multiple scores are not allowed with histogram data")
   }
   
   ## simple ADEg graphic
@@ -125,7 +142,7 @@ s1d.hist <- function(score, breaks = NULL, nclass = round(log2(length(score)) + 
     object <- new(Class = "C1.hist", data = tmp_data, adeg.par = sortparameters$adepar, trellis.par = sortparameters$trellis, g.args = g.args, Call = match.call())
     
     ## preparation
-    prepare(object) 
+    prepare(object)
     setlatticecall(object)
     if(add)
       object <- add.ADEg(object)
