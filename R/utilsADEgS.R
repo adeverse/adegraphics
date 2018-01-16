@@ -34,6 +34,25 @@ plotEig <- function(eigvalue, nf, xax = 1, yax = 2, col.plot = "black", col.kept
 }
 
 
+"plotRandTest" <- function(hist, nclass, obs, pos = -1, storeData = TRUE, plot = TRUE, params) {
+  graphsnames <- c("sim", "obs")
+  sortparameters <- sortparamADEgS(params, graphsnames = graphsnames)
+  
+  ## creation of each individual ADEg
+  g1 <- do.call("s1d.hist", c(list(score = hist, nclass = nclass, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
+  g2 <- do.call("addsegment", c(list(g1, x0 = obs, x1 = obs, y0 = 0, y1 = max(hist$counts) / 2, 
+                                     plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
+  g3 <- do.call("addpoint", c(list(g1, xcoord = obs, ycoord = max(hist$counts) / 2, 
+                                   plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
+  g4 <- g2$segmentadded + g3$pointadded
+  
+  ## ADEgS creation
+  object <- superpose(g1, g4)
+  names(object) <- graphsnames
+  return(object)
+}
+
+
 ## si ADEgS contenu dans un plus petit espace;
 ## oldposition: matrice de position: nrow:number of graphs, col: x0, y0, x1, y1
 ## newposition: vector, length 4: x0, y0, x1, y1
