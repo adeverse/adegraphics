@@ -88,7 +88,7 @@
   oritab <- as.list(x$call)[[2]]
   evTab <- eval.parent(oritab)
   indica <- factor(rep(names(x$blo), x$blo))
-  ng <- length(levels(indica))   
+  ng <- length(levels(indica))
   
   ## parameter management
   graphsnames <- as.character(levels(indica))
@@ -1651,32 +1651,78 @@
   if(!inherits(x, "randtest")) 
     stop("Object of class 'randtest' expected")
   
+  # by default, in ade4, as.randtest computes the histogram with 10 class
+  # x$sim is available only if !inherits(x, "lightrandtest")
+  if(!inherits(x, "lightrandtest") & nclass != 10){
+    print("a")
+    h0 <- hist(x$sim, plot = FALSE, nclass = nclass)
+  } else {
+    print("b")
+    h0 <- x$plot$hist
+  }
+  
+  ## common limits
+  mylim <- x$plot$xlim
+  
+  print(class(x))
+  ## parameter management
   graphsnames <- c("sim", "obs")
   sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
-  
-  ## compute common limits
-  lim <- range(c(x$obs, x$plot$xlim))
-  
-  ## default values for parameters
   params <- list()
-  params[[1]] <- list(p1d = list(horizontal = TRUE), pgrid = list(draw = FALSE), paxes = list(draw = TRUE), xlim = lim, main = "Histogram of sim", xlab = "sim", ylab = "Frequency")
+  params[[1]] <- list(p1d = list(horizontal = TRUE), pgrid = list(draw = FALSE), paxes = list(draw = TRUE), xlim = mylim, main = "Histogram of sim", xlab = "sim", ylab = "Frequency")
   params[[2]] <- list(plines = list(lwd = 1.5), ppoints = list(pch = 18, cex = 1.5))
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
-  ## creation of each individual ADEg
-  g1 <- do.call("s1d.hist", c(list(score = x$plot$hist, nclass = nclass, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
-  g2 <- do.call("addsegment", c(list(g1, x0 = x$obs, x1 = x$obs, y0 = 0, y1 = max(x$plot$hist$counts) / 2, 
-                                     plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
-  g3 <- do.call("addpoint", c(list(g1, xcoord = x$obs, ycoord = max(x$plot$hist$counts) / 2, 
-                                   plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
-  g4 <- g2$segmentadded + g3$pointadded
-  
-  ## ADEgS creation
-  object <- g2
-  object <- superpose(g1, g4)
-  object@Call <- match.call()
+  ## plot creation
+  object <- plotRandTest(hist = h0, nclass = nclass, obs = x$obs, params = sortparameters)
   names(object) <- graphsnames
+  object@Call <- match.call()
+  if(plot)
+    print(object)
+  invisible(object)
+}
+
+
+"plot.krandtest" <- function (x, nclass = 10, pos = -1, storeData = TRUE, plot = TRUE, ...) {
+  
+  if (!inherits(x, "krandtest")) 
+    stop("Object of class 'krandtest' expected")
+  
+  ng <- x$ntest
+  maintitle <- x$names
+  
+  ## parameter management
+  graphsnames <- paste0("g", seq_len(ng))
+  sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
+  params <- list()
+  params <- lapply(seq_len(ng), function(i) {params[[i]] <- list(p1d = list(horizontal = TRUE), pgrid = list(draw = FALSE), paxes = list(draw = TRUE), 
+                                                                           xlim = x$plot[[i]]$xlim, main = maintitle[i], xlab = "", ylab = "",
+                                                                           plines = list(lwd = 1.5), ppoints = list(pch = 18, cex = 1.5))})
+  names(params) <- graphsnames
+  sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+  
+  
+  if(inherits(x, "lightkrandtest")) {
+    l <- list()
+    l <- sapply(seq_len(ng), function(i) {do.call("plotRandTest", c(list(hist = x$plot[[i]]$hist, nclass = nclass, obs = x$obs[i], params = sortparameters[[i]])))})
+    
+    ## ADEgS creation
+    object <- new(Class = "ADEgS", ADEglist = l, positions = layout2position(rev(.n2mfrow(ng)), ng  = ng), add = matrix(0, ncol = ng, nrow = ng), Call = match.call())
+    names(object) <- graphsnames
+    
+  } else {
+    l <- list()
+    for (k in 1:x$ntest) {
+      rd <- as.randtest(x$sim[, k], x$obs[k], output = "full")
+      l[[k]] <- do.call("plot.randtest", c(list(rd, nclass = nclass, plot = FALSE), sortparameters[[k]]))
+    }
+    ## ADEgS creation
+    object <- new(Class = "ADEgS", ADEglist = l, positions = layout2position(rev(.n2mfrow(ng)), ng  = ng), add = matrix(0, ncol = ng, nrow = ng), Call = match.call())
+    names(object) <- graphsnames
+  }
+  
+  object@Call <- match.call()
   if(plot)
     print(object)
   invisible(object)
