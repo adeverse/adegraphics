@@ -377,5 +377,5 @@ setMethod(
     
     setlatticecall(object)
     print(object)
-    invisible()   
+    invisible(object)   
   })

@@ -260,7 +260,7 @@ setMethod(
         prepare(object)
         setlatticecall(object)
         print(object)
-        invisible()
+        invisible(object)
     })
 
 
@@ -282,7 +282,7 @@ setMethod(
         prepare(object)
         setlatticecall(object)
         print(object)
-        invisible()
+        invisible(object)
     })
 
 
