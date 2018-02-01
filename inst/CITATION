@@ -1,0 +1,25 @@
+citHeader("To cite adegraphics in publications use this reference:")
+
+citEntry(entry="Article",
+	title = "{adegraphics: An S4 Lattice-Based Package for the Representation of Multivariate Data}",
+  author = personList(as.person("Aurélie Siberchicot"),
+                      as.person("Alice Julien-Laferrière"),
+                      as.person("Anne-Béatrice Dufour"),
+                      as.person("Jean Thioulouse"),
+                      as.person("Stéphane Dray")),
+	journal = "{The R Journal}",
+  year = "2017",
+	volume = "9",
+	pages = "198--212",
+	number = "2",
+	url = "https://journal.r-project.org/archive/2017/RJ-2017-042/index.html",
+  textVersion = 
+        paste("Aurélie Siberchicot, Alice Julien-Laferrière, Anne-Béatrice Dufour, Jean Thioulouse and Stéphane Dray",
+              "(2017).",
+              "adegraphics: An S4 Lattice-Based Package for the Representation of Multivariate Data.",
+              "The R Journal.",
+              "9:2. 198--212.",
+              "https://journal.r-project.org/archive/2017/RJ-2017-042/index.html")
+         )
+         
+ 
