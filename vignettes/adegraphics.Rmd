@@ -17,7 +17,7 @@ vignette: |
 <hr>
 <br>
 
-The `adegraphics` package is a complete reimplementation of the
+The `adegraphics` package [@Siberchicot2017] is a complete reimplementation of the
 graphical functionalities of the `ade4` package [@Dray2007]. The package
 has been initially designed to improve the representation of the outputs
 of multivariate analyses performed with `ade4` but as its graphical
