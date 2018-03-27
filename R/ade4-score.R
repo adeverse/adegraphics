@@ -236,7 +236,7 @@
   ## creation of each individual ADEg
   ADEglist <- list()
   for(i in which.var) {
-    typedudi <- if(type == 3) {paste0(" (r=", round(x$co[i, 1], 2), ")")} else {""}
+    typedudi <- if(type == 3) {paste0(" (r=", round(x$co[i, xax], 2), ")")} else {""}
     dfxy <- call("cbind", substitute(x$l1[, xax]), call("[", oritab, 1:NROW(evTab), i))
     
     g1 <- do.call("s.label", c(list(dfxy = dfxy, plot = FALSE, storeData = storeData, pos = pos - 2), 
