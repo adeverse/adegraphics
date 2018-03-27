@@ -222,6 +222,7 @@
   
   ## prepare
   oritab <- as.list(x$call)[[2]]
+  type <- ade4::dudi.type(x$call)
   evTab <- eval.parent(oritab)
   if(is.null(which.var))
     which.var <- 1:ncol(evTab)
@@ -235,9 +236,11 @@
   ## creation of each individual ADEg
   ADEglist <- list()
   for(i in which.var) {
+    typedudi <- if(type == 3) {paste0(" (r=", round(x$co[i, 1], 2), ")")} else {""}
     dfxy <- call("cbind", substitute(x$l1[, xax]), call("[", oritab, 1:NROW(evTab), i))
     
-    g1 <- do.call("s.label", c(list(dfxy = dfxy, plot = FALSE, storeData = storeData, pos = pos - 2), c(sortparameters$adepar, list(psub.text = colnames(evTab)[i])), sortparameters$trellis, sortparameters$g.args, sortparameters$rest))
+    g1 <- do.call("s.label", c(list(dfxy = dfxy, plot = FALSE, storeData = storeData, pos = pos - 2), 
+                               c(sortparameters$adepar, list(psub.text = paste0(colnames(evTab)[i], typedudi))), sortparameters$trellis, sortparameters$g.args, sortparameters$rest))
     g2 <- xyplot(eval(dfxy)[, 2] ~ eval(dfxy)[, 1], aspect = g1@adeg.par$paxes$aspectratio, panel = function(x, y) {panel.abline(lm(y ~ x))})
     g2$call <- call("xyplot", substitute(dfxy[, 2] ~ dfxy[, 1]), aspect = g1@adeg.par$paxes$aspectratio, panel = function(x, y) {panel.abline(lm(y ~ x))})
     ADEglist[[i]] <- superpose(g1, g2)
