@@ -1491,9 +1491,9 @@
   sortparameters$light_col$plabels$cex <- 0
   
   ## management of the data and the parameters about the rows' contribution (individuals) on axes
-  if(!is.null(x$row.abs)) {
-    inertrow <- x$row.abs[, c(xax, yax)] / 100
-    inertrowcall <- call("/", call("[", call("$", substitute(x), "row.abs"), call(":", 1, call("NROW", call("$", substitute(x), "row.abs"))), c(xax, yax)), 100)
+  if(!is.null(x$row.rel)) {
+    inertrow <- abs(x$row.rel[, c(xax, yax)]) / 100
+    inertrowcall <- call("/", call("abs", call("[", call("$", substitute(x), "row.rel"), call(":", 1, call("NROW", call("$", substitute(x), "row.rel"))), c(xax, yax))), 100)
     lightrow <- subset(evTab$li[, c(xax, yax)], inertrow[, 1] < cont & inertrow[, 2] < cont)
     lightrowcall <- call("subset", call("[", call("$", ori[[2]], "li"), call(":", 1, call("NROW", call("$", ori[[2]], "li"))), c(xax, yax)), call("&", call("<", call("[", inertrowcall, 1), cont), call("<", call("[", inertrowcall, 2), cont)))
     
@@ -1538,9 +1538,9 @@
   }
   
   ## management of the data and the parameters about the columns' contribution (variables) on axes
-  if(!is.null(x$col.abs)) {
-    inertcol <- x$col.abs[, c(xax, yax)] / 100
-    inertcolcall <- call("/", call("[", call("$", substitute(x), "col.abs"), call(":", 1, call("NROW", call("$", substitute(x), "col.abs"))), c(xax, yax)), 100)
+  if(!is.null(x$col.rel)) {
+    inertcol <- abs(x$col.rel[, c(xax, yax)]) / 100
+    inertcolcall <- call("/", call("abs", call("[", call("$", substitute(x), "col.rel"), call(":", 1, call("NROW", call("$", substitute(x), "col.rel"))), c(xax, yax))), 100)
     lightcol <- subset(evTab$co[, c(xax, yax)], inertcol[, 1] < cont & inertcol[, 2] < cont)
     lightcolcall <- call("subset", call("[", call("$", ori[[2]], "co"), call(":", 1, call("NROW", call("$", ori[[2]], "co"))), c(xax, yax)), call("&", call("<", call("[", inertcolcall, 1), cont), call("<", call("[", inertcolcall, 2), cont)))
     
@@ -1633,13 +1633,13 @@
   }
   
   ## creation of the appropriate plot according to the input data
-  if(!is.null(x$row.abs) & is.null(x$col.abs))
+  if(!is.null(x$row.rel) & is.null(x$col.rel))
     object <- f_row(posi = position, pos = pos)
-  if(!is.null(x$col.abs) & is.null(x$row.abs))
+  if(!is.null(x$col.rel) & is.null(x$row.rel))
     object <- f_col(posi = position, pos = pos)
-  if(!is.null(x$row.abs) & !is.null(x$col.abs))
+  if(!is.null(x$row.rel) & !is.null(x$col.rel))
     object <- f_both(posi = position, pos = pos)
-  if(is.null(x$row.abs) & is.null(x$col.abs))
+  if(is.null(x$row.rel) & is.null(x$col.rel))
     stop(paste("No inertia was calculated in the ", substitute(x), " object", sep = ""))
   
   object@Call <- match.call()

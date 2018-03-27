@@ -294,20 +294,20 @@
   sortparameters$light_col$plabels$cex <- 0
   
   ## management of the data and the parameters about the rows' contribution (individuals) on axes
-  if(!is.null(x$row.abs)) {
-    inertrow <- x$row.abs[, xax] / 100
-    # inertrow <- sqrt(x$row.abs[, xax]) / 100
-    inertrowcall <- call("/", call("[", call("$", substitute(x), "row.abs"), call(":", 1, call("NROW", call("$", substitute(x), "row.abs"))), xax), 100)
-    # inertrowcall <- call("/", call("sqrt", call("[", call("$", substitute(x), "row.abs"), call(":", 1, call("NROW", call("$", substitute(x), "row.abs"))), xax)), 100)
+  if(!is.null(x$row.rel)) {
+    inertrow <- abs(x$row.rel[, xax]) / 100
+    # inertrow <- sqrt(x$row.rel) / 100
+    inertrowcall <- call("/", call("abs", call("[", call("$", substitute(x), "row.rel"), call(":", 1, call("NROW", call("$", substitute(x), "row.rel"))), xax)), 100)
+    # inertrowcall <- call("/", call("sqrt", call("[", call("$", substitute(x), "row.rel"), call(":", 1, call("NROW", call("$", substitute(x), "row.rel"))), xax)), 100)
     lightrow <- subset(evTab$li[, xax], inertrow < cont)
     lightrowcall <- call("subset", call("[", call("$", ori[[2]], "li"), call(":", 1, call("NROW", call("$", ori[[2]], "li"))), xax), call("<", inertrowcall, cont))
     
     heavyrow <- subset(evTab$li[, xax], inertrow >= cont)
     heavyrowcall <- call("c", call("subset", call("[", call("$", ori[[2]], "li"), call(":", 1, call("NROW", call("$", ori[[2]], "li"))), xax), call(">=", inertrowcall, cont)), 0)
     if(length(heavyrow) == 0)
-      stop("No points to draw, try lowering 'cont' (see 'x$row.abs')")
+      stop("No points to draw, try lowering 'cont' (see 'x$row.rel')")
     heavy_inertrow <- subset(inertrow, inertrow >= cont)
-    names_heavyrow <- subset(rownames(x$row.abs), inertrow >= cont)
+    names_heavyrow <- subset(rownames(x$row.rel), inertrow >= cont)
     
     limglobal <- setlimits1D(mini = min(c(heavyrow, lightrow)), maxi = max(c(heavyrow, lightrow)), 
                              origin = adegtot$porigin$origin, includeOr = adegtot$porigin$include)
@@ -317,20 +317,20 @@
   }
   
   ## management of the data and the parameters about the columns' contribution (variables) on axes
-  if(!is.null(x$col.abs)) {
-    inertcol <- x$col.abs[, xax] / 100
-    # inertcol <- sqrt(x$col.abs[, xax]) / 100
-    inertcolcall <- call("/", call("[", call("$", substitute(x), "col.abs"), call(":", 1, call("NROW", call("$", substitute(x), "col.abs"))), xax), 100)
-    # inertcolcall <- call("/", call("sqrt", call("[", call("$", substitute(x), "col.abs"), call(":", 1, call("NROW", call("$", substitute(x), "col.abs"))), xax)), 100)
+  if(!is.null(x$col.rel)) {
+    inertcol <- abs(x$col.rel[, xax]) / 100
+    # inertcol <- sqrt(x$col.rel[, xax]) / 100
+    inertcolcall <- call("/", call("abs", call("[", call("$", substitute(x), "col.rel"), call(":", 1, call("NROW", call("$", substitute(x), "col.rel"))), xax)), 100)
+    # inertcolcall <- call("/", call("sqrt", call("[", call("$", substitute(x), "col.rel"), call(":", 1, call("NROW", call("$", substitute(x), "col.rel"))), xax)), 100)
     lightcol <- subset(evTab$co[, xax], inertcol < cont)
     lightcolcall <- call("subset", call("[", call("$", ori[[2]], "co"), call(":", 1, call("NROW", call("$", ori[[2]], "co"))), xax), call("<", inertcolcall, cont))
     
     heavycol <- subset(evTab$co[, xax], inertcol >= cont)
     heavycolcall <- call("c", call("subset", call("[", call("$", ori[[2]], "co"), call(":", 1, call("NROW", call("$", ori[[2]], "co"))), xax), call(">=", inertcolcall, cont)), 0)
     if(length(heavycol) == 0)
-      stop("No points to draw, try lowering 'cont' (see 'x$col.abs')")
+      stop("No points to draw, try lowering 'cont' (see 'x$col.rel')")
     heavy_inertcol <- subset(inertcol, inertcol >= cont)
-    names_heavycol <- subset(rownames(x$col.abs), inertcol >= cont)
+    names_heavycol <- subset(rownames(x$col.rel), inertcol >= cont)
     
     limglobal <- setlimits1D(mini = min(c(heavycol, lightcol)), maxi = max(c(heavycol, lightcol)), 
                              origin = adegtot$porigin$origin, includeOr = adegtot$porigin$include)
@@ -398,13 +398,13 @@
   }
   
   ## creation of the appropriate plot according to the input data
-  if(!is.null(x$row.abs) & is.null(x$col.abs))
+  if(!is.null(x$row.rel) & is.null(x$col.rel))
     object <- f_row(posi = position, pos = pos)
-  if(!is.null(x$col.abs) & is.null(x$row.abs))
+  if(!is.null(x$col.rel) & is.null(x$row.rel))
     object <- f_col(posi = position, pos = pos)
-  if(!is.null(x$row.abs) & !is.null(x$col.abs))
+  if(!is.null(x$row.rel) & !is.null(x$col.rel))
     object <- f_both(posi = position, pos = pos)
-  if(is.null(x$row.abs) & is.null(x$col.abs))
+  if(is.null(x$row.rel) & is.null(x$col.rel))
     stop(paste("No inertia was calculated in the ", substitute(x), " object", sep = ""))
   
   object@Call <- match.call()
