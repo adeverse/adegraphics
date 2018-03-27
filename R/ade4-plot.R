@@ -1486,6 +1486,10 @@
   params$eig <- list(pbackground = list(box = TRUE), psub = list(text = "Eigenvalues"))
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
+  # never display points under contribution threshold
+  sortparameters$light_row$plabels$cex <- 0
+  sortparameters$light_col$plabels$cex <- 0
+  
   ## management of the data and the parameters about the rows' contribution (individuals) on axes
   if(!is.null(x$row.abs)) {
     inertrow <- x$row.abs[, c(xax, yax)] / 100

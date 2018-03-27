@@ -284,11 +284,14 @@
   params <- list()
   params$light_row <- list(plabels = list(cex = 0), ppoints = list(col = "grey20", alpha = 0.45, cex = 1.2, pch = 19))
   params$light_col <- list(plabels = list(cex = 0), ppoints = list(col = "grey20", alpha = 0.45, cex = 1.2, pch = 19))
-  
   params$heavy_row <- list(plabels = list(boxes = list(draw = TRUE), col = "red", srt = "horizontal"), ppoints = list(col = "red", cex = 1.2, pch = 19))
   params$heavy_col <- list(plabels = list(boxes = list(draw = TRUE), col = "blue", srt = "horizontal"), ppoints = list(col = "blue", cex = 1.2, pch = 19))
   params$eig <- list(pbackground = list(box = TRUE), psub = list(text = "Eigenvalues"))
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+  
+  # never display points under contribution threshold
+  sortparameters$light_row$plabels$cex <- 0
+  sortparameters$light_col$plabels$cex <- 0
   
   ## management of the data and the parameters about the rows' contribution (individuals) on axes
   if(!is.null(x$row.abs)) {
