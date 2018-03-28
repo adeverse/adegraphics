@@ -46,7 +46,7 @@
         \item{\code{ellipseSize}: a positive number for ellipse size.}
         \item{\code{starSize}: a number between 0 and 1 for star size.}
         \item{\code{chullSize}: \code{NULL} or a vector of numbers between 0 and 1 for the convex hulls.}
-        \item{\code{col}: a \code{NULL} value, a color or a colors vector to color points, ellipses, labels, lines and polygons.}
+        \item{\code{col}: a logical or a vector of colors that apply to points, ellipses, labels, lines and polygons.}
     }}
     
     \item{\code{stats}}{a list of internal preliminary calculations. 
