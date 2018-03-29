@@ -47,7 +47,7 @@
       dfxy <- call("cbind", scorecall, call("as.numeric", call("[", meangroup, faccall)))
       
       ## ADEg creation
-      g1 <- do.call("s.class", c(list(dfxy = dfxy, fac = faccall, plot = FALSE, storeData = storeData, pos = pos - 2), c(sortparameters$adepar, list(psub.text = colnames(evTab)[i])), sortparameters$trellis, sortparameters$g.args, sortparameters$rest))
+      g1 <- do.call("s.class", c(list(dfxy = dfxy, fac = faccall, ellipseSize = 0, plot = FALSE, storeData = storeData, pos = pos - 2), c(sortparameters$adepar, list(psub.text = colnames(evTab)[i])), sortparameters$trellis, sortparameters$g.args, sortparameters$rest))
       xlimg1 <- g1@g.args$xlim
       ylimg1 <- g1@g.args$ylim
       g2 <- xyplot(score ~ fac, xlab = "", ylab = "", scales = list(x = list(tck = c(1, 0)), y = list(tck = c(1, 0))), xlim = xlimg1, ylim = ylimg1, 
@@ -165,7 +165,7 @@
         sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
         
         ## ADEg creation
-        g1 <- do.call("s.class", c(list(dfxy = dfxy, fac = faccall, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args, sortparameters$rest))
+        g1 <- do.call("s.class", c(list(dfxy = dfxy, fac = faccall, ellipseSize = 0, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args, sortparameters$rest))
         xlimg1 <- g1@g.args$xlim
         ylimg1 <- g1@g.args$ylim
         g2 <- xyplot(score ~ fac, xlab = "", ylab = "", xlim = xlimg1, ylim = ylimg1, 
