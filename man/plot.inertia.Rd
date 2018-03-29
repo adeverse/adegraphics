@@ -68,7 +68,7 @@
   The result is displayed if \code{plot} is \code{TRUE}.
 }
 
-\author{Clément Claustre, Anne-Béatrice Dufour, Aurelie Siberchicot 
+\author{Clément Claustre, Anne-Béatrice Dufour, Aurélie Siberchicot 
   \email{aurelie.siberchicot@univ-lyon1.fr} and Stéphane Dray
 }
 
@@ -111,7 +111,7 @@ g23 <- score(res21, xax = 2)
 
 ###### row=F / col=T
 res22 <- ade4::inertia(coa2, row = FALSE, col = TRUE)
-g24 <- plot(res22)
+g24 <- plot(res22, plabels.cex = 2)
 names(g24)
 g25 <- plot(res22, posieig = "topleft")
 names(g25)
