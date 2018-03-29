@@ -280,7 +280,7 @@ sortparamADEg <- function(...) {
   
     ## removing g.args items
     if(length(rest)) {
-      pattern.g.args <- c("xlim", "ylim", "main", "sub", "xlab", "ylab", "Sp", "nbobject", "samelimits", "scales", "key", "colorkey")
+      pattern.g.args <- c("xlim", "ylim", "main", "sub", "xlab", "ylab", "Sp", "nbobject", "samelimits", "scales", "key", "colorkey", "col")
       pmatch.g.args <- pmatch(names(rest), pattern.g.args)
       indix <- which(!is.na(pmatch.g.args))
       pmatch.g.args <- pmatch.g.args[!is.na(pmatch.g.args)]
