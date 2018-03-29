@@ -1658,17 +1658,14 @@
   # by default, in ade4, as.randtest computes the histogram with 10 class
   # x$sim is available only if !inherits(x, "lightrandtest")
   if(!inherits(x, "lightrandtest") & nclass != 10){
-    print("a")
     h0 <- hist(x$sim, plot = FALSE, nclass = nclass)
   } else {
-    print("b")
     h0 <- x$plot$hist
   }
   
   ## common limits
   mylim <- x$plot$xlim
   
-  print(class(x))
   ## parameter management
   graphsnames <- c("sim", "obs")
   sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
