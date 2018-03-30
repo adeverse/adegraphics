@@ -19,18 +19,22 @@ plotEig <- function(eigvalue, nf, xax = 1, yax = 2, col.plot = "black", col.kept
     
   	lim.val <- range(eigvalue)
   	if(lim.val[1] >= 0) {
-	    lim.val <- c(0, lim.val[2] + diff(c(lim.val[1], lim.val[2])) / 10)
-    	if(isTRUE(sortparameters$adepar$p1d$horizontal))
-	  	  params$g.args <- list(xlim = lim.val, ylim = params$g.args$ylim)
-    	else
-	      params$g.args <- list(xlim = params$g.args$xlim, ylim = lim.val)
-	  }
+  	  lim.val <- c(0, lim.val[2] + diff(c(lim.val[1], lim.val[2])) / 10)
+  	  if(isTRUE(sortparameters$adepar$p1d$horizontal))
+  	    params$g.args <- list(xlim = lim.val, ylim = params$g.args$ylim)
+  	  else
+  	    params$g.args <- list(xlim = params$g.args$xlim, ylim = lim.val)
+  	}
+  	
+  	at <- 1:length(eigvalue)
   } else {
     params$g.args <- list(xlim = NULL, ylim = NULL)
+    at <- unlist(sapply(tabulate(facets), seq_len))
   }
   
   sortparameters$g.args <- modifyList(params$g.args, sortparameters$g.args, keep.null = TRUE)
-  do.call("s1d.barchart", c(list(score = substitute(eigvalue), pos = pos - 2, plot = plot, facets = facets, storeData = storeData), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args, sortparameters$stats, sortparameters$s.misc, sortparameters$rest))
+  do.call("s1d.barchart", c(list(score = substitute(eigvalue), at = at, pos = pos - 2, plot = plot, facets = facets, storeData = storeData), 
+                            sortparameters$adepar, sortparameters$trellis, sortparameters$g.args, sortparameters$stats, sortparameters$s.misc, sortparameters$rest))
 }
 
 
