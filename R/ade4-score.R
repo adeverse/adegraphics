@@ -20,19 +20,38 @@
   
   if(type == "boxplot") {
     ## parameter management
-    params$adepar <- list(plabels = list(boxes = list(draw = FALSE)), p1d = list(rug = list(draw = TRUE)), paxes = list(draw = TRUE, y = list(draw = FALSE)), 
-      plegend = list(drawKey = FALSE), pgrid = list(text = list(cex = 0)), psub = list(position = "topleft"))
+    params$adepar <- list(plabels = list(boxes = list(draw = FALSE)), p1d = list(rug = list(draw = TRUE)), 
+                          paxes = list(draw = TRUE, y = list(draw = FALSE)), 
+                          plegend = list(drawKey = FALSE), pgrid = list(text = list(cex = 0)),
+                          psub = list(position = "topleft"))
     params$g.args <- list(samelimits = FALSE)
     sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
     
     ## ADEgS creation
+    ADEglist <- list()
+    score <- x$l1[, xax]
     scorecall <- substitute(x$l1[, xax])
-    fac <- call("[", oritab, which.var)
-    object <- do.call("s1d.boxplot", c(list(score = scorecall, fac = fac, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args, sortparameters$rest))
+    
+    for(i in which.var) {
+      ## data management
+      fac <- evTab[, i]
+      faccall <- call("[", oritab, 1:NROW(evTab), i)
+      
+      ADEglist[[i]] <- do.call("s1d.boxplot", c(list(score = scorecall, fac = faccall, plot = FALSE, storeData = storeData, pos = pos - 2), 
+                                                c(sortparameters$adepar, list(psub.text = paste0(colnames(evTab)[i], " (cr=", round(x$cr[i, xax], 2), ")"))),
+                                                sortparameters$trellis, sortparameters$g.args, sortparameters$rest))
+    }
+    ADEglist <- ADEglist[which.var]
+    
+    ## ADEgS creation
+    posmatrix <- layout2position(.n2mfrow(length(which.var)), ng = length(which.var))
+    object <- new(Class = "ADEgS", ADEglist = ADEglist, positions = posmatrix, add = matrix(0, ncol = length(which.var), nrow = length(which.var)), Call = match.call())
+    
     
   } else if(type == "points") {
     ## parameter management
-    params$adepar <- list(ppoints = list(pch = "|"), porigin = list(draw = FALSE), pgrid = list(draw = FALSE), psub = list(position = "topleft"), paxes = list(draw = TRUE), plabels = list(cex = 1.25))
+    params$adepar <- list(ppoints = list(pch = "|"), porigin = list(draw = FALSE), pgrid = list(draw = FALSE), 
+                          psub = list(position = "topleft"), paxes = list(draw = TRUE), plabels = list(cex = 1.25))
     sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
     
     ## creation of each individual ADEg
@@ -47,7 +66,9 @@
       dfxy <- call("cbind", scorecall, call("as.numeric", call("[", meangroup, faccall)))
       
       ## ADEg creation
-      g1 <- do.call("s.class", c(list(dfxy = dfxy, fac = faccall, ellipseSize = 0, plot = FALSE, storeData = storeData, pos = pos - 2), c(sortparameters$adepar, list(psub.text = colnames(evTab)[i])), sortparameters$trellis, sortparameters$g.args, sortparameters$rest))
+      g1 <- do.call("s.class", c(list(dfxy = dfxy, fac = faccall, ellipseSize = 0, plot = FALSE, storeData = storeData, pos = pos - 2), 
+                                 c(sortparameters$adepar, list(psub.text = paste0(colnames(evTab)[i], " (cr=", round(x$cr[i, xax], 2), ")"))), 
+                                 sortparameters$trellis, sortparameters$g.args, sortparameters$rest))
       xlimg1 <- g1@g.args$xlim
       ylimg1 <- g1@g.args$ylim
       g2 <- xyplot(score ~ fac, xlab = "", ylab = "", scales = list(x = list(tck = c(1, 0)), y = list(tck = c(1, 0))), xlim = xlimg1, ylim = ylimg1, 
@@ -110,7 +131,7 @@
     ## type of variable : quantitative
     if(type.var == "q") {
       ## parameters management
-      params$adepar <- list(psub = list(text = colnames(evTab)[i], position = "topleft"), paxes = list(aspectratio = "fill", draw = TRUE), porigin = list(include = FALSE), pgrid = list(draw = FALSE), plabels = list(cex = 0))
+      params$adepar <- list(psub = list(text = paste0(colnames(evTab)[i], " (r2=", round(x$cr[i, xax], 2), ")"), position = "topleft"), paxes = list(aspectratio = "fill", draw = TRUE), porigin = list(include = FALSE), pgrid = list(draw = FALSE), plabels = list(cex = 0))
       sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
       
       if(length(col.var) == 1) {
@@ -152,7 +173,8 @@
       if(type == "boxplot") {
         ## parameter management
         params$adepar <- list(plabels = list(boxes = list(draw = FALSE)), p1d = list(rug = list(draw = TRUE)), paxes = list(draw = TRUE, y = list(draw = FALSE)), 
-                              plegend = list(drawKey = FALSE), pgrid = list(text = list(cex = 0)), psub = list(position = "topleft"))
+                              plegend = list(drawKey = FALSE), pgrid = list(text = list(cex = 0)),
+                              psub = list(text = paste0(colnames(evTab)[i], " (cr=", round(x$cr[i, xax], 2), ")"), position = "topleft"))
         params$g.args <- list(samelimits = FALSE)
         sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
         
@@ -161,11 +183,14 @@
         
       } else if(type == "points") {
         ## parameter management
-        params$adepar <- list(ppoints = list(pch = "|"), porigin = list(draw = FALSE), paxes = list(aspectratio = "fill", draw = TRUE), pgrid = list(draw = FALSE), psub = list(text = colnames(evTab)[i], position = "topleft"))
+        params$adepar <- list(ppoints = list(pch = "|"), porigin = list(draw = FALSE), paxes = list(aspectratio = "fill", draw = TRUE), 
+                              pgrid = list(draw = FALSE), 
+                              psub = list(text = paste0(colnames(evTab)[i], " (cr=", round(x$cr[i, xax], 2), ")"), position = "topleft"))
         sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
         
         ## ADEg creation
-        g1 <- do.call("s.class", c(list(dfxy = dfxy, fac = faccall, ellipseSize = 0, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$adepar, sortparameters$trellis, sortparameters$g.args, sortparameters$rest))
+        g1 <- do.call("s.class", c(list(dfxy = dfxy, fac = faccall, ellipseSize = 0, plot = FALSE, storeData = storeData, pos = pos - 2), 
+                                   sortparameters$adepar, sortparameters$trellis, sortparameters$g.args, sortparameters$rest))
         xlimg1 <- g1@g.args$xlim
         ylimg1 <- g1@g.args$ylim
         g2 <- xyplot(score ~ fac, xlab = "", ylab = "", xlim = xlimg1, ylim = ylimg1, 
@@ -179,7 +204,9 @@
     ## type of variable : ordered
     else if(type.var == "o") {
       ## parameters management
-      params$adepar <- list(ppoints = list(pch = 20), paxes = list(aspectratio = "fill", draw = TRUE), porigin = list(draw = FALSE), pgrid = list(draw = FALSE), psub = list(text = colnames(evTab)[i], position = "topleft"))
+      params$adepar <- list(ppoints = list(pch = 20), paxes = list(aspectratio = "fill", draw = TRUE), 
+                            porigin = list(draw = FALSE), pgrid = list(draw = FALSE), 
+                            psub = list(text = paste0(colnames(evTab)[i], " (r2=", round(x$cr[i, xax], 2), ")"), position = "topleft"))
       sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
       
       ## data management
@@ -240,7 +267,8 @@
     dfxy <- call("cbind", substitute(x$l1[, xax]), call("[", oritab, 1:NROW(evTab), i))
     
     g1 <- do.call("s.label", c(list(dfxy = dfxy, plot = FALSE, storeData = storeData, pos = pos - 2), 
-                               c(sortparameters$adepar, list(psub.text = paste0(colnames(evTab)[i], typedudi))), sortparameters$trellis, sortparameters$g.args, sortparameters$rest))
+                               c(sortparameters$adepar, list(psub.text = paste0(colnames(evTab)[i], typedudi))), 
+                               sortparameters$trellis, sortparameters$g.args, sortparameters$rest))
     g2 <- xyplot(eval(dfxy)[, 2] ~ eval(dfxy)[, 1], aspect = g1@adeg.par$paxes$aspectratio, panel = function(x, y) {panel.abline(lm(y ~ x))})
     g2$call <- call("xyplot", substitute(dfxy[, 2] ~ dfxy[, 1]), aspect = g1@adeg.par$paxes$aspectratio, panel = function(x, y) {panel.abline(lm(y ~ x))})
     ADEglist[[i]] <- superpose(g1, g2)
