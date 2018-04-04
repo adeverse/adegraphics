@@ -9,7 +9,7 @@ Description: Graphical functionalities for the representation of multivariate da
 Depends: R (>= 3.0.2)
 License: GPL (>= 2)
 Imports: ade4, graphics, grid, KernSmooth, lattice, latticeExtra, methods, RColorBrewer, sp (>= 1.1-1), stats
-Suggests: Guerry, knitr, pixmap, rmarkdown, spdep, splancs
+Suggests: Guerry, knitr, maptools, pixmap, rmarkdown, spdep, splancs
 Collate: adeGsenv.R parameter.R utils.R
   utilstriangle.R genericMethod.R utilsclass.R panelfunctions.R ADEg.R ADEgS.R utilsADEgS.R
   ADEg.C1.R C1.barchart.R C1.curve.R C1.curves.R C1.density.R C1.gauss.R C1.dotplot.R C1.hist.R C1.interval.R
