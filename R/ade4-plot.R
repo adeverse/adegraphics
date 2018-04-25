@@ -851,7 +851,7 @@
   sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
   
   ## compute limits
-  df <- rbind(as.matrix(x$li), as.matrix(x$Tli), as.matrix(x$Tco))
+  df <- rbind(as.matrix(x$li), as.matrix(x$co), as.matrix(x$Tli), as.matrix(x$Tco))
   adegtot <- adegpar()
   lim.global <- setlimits2D(minX = min(df[, xax]), maxX = max(df[, xax]), minY = min(df[, yax]), maxY = max(df[, yax]), origin = adegtot$porigin$origin, aspect.ratio = adegtot$paxes$aspectratio, includeOr = adegtot$porigin$include)
   
