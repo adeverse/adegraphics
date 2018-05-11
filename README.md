@@ -28,18 +28,6 @@ library(devtools)
 install_github("sdray/adegraphics")
 ```
 
-If you do not wish to install the development environments Rtools (Windows) / XCode (Mac), you can download and install the pre-compiled binary packages from this repository:
-
-* **Windows**:
-```r
-install.packages("https://github.com/sdray/adegraphics/releases/download/v1.0-4/adegraphics_1.0-4.zip")
-```
-
-* **Mac**:
-```r
-install.packages("https://github.com/sdray/adegraphics/releases/download/v1.0-4/adegraphics_1.0-4.tgz")
-```
-
 The stable version can be installed from CRAN using:
 
 ```r
