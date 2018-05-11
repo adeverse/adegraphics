@@ -31,7 +31,7 @@ setlimits2D(minX, maxX, minY, maxY, origin = c(0, 0), aspect.ratio = "iso", incl
 
 \value{
   \code{setlimits1D} return a two-length vector containing the limits of the graphics window on one axis
-  \code{sortparamADEgS} return a two-length list. The first element, named \code{xlim}, is a two-length vector 
+  \code{setlimits2D} return a two-length list. The first element, named \code{xlim}, is a two-length vector 
   containing the limits of the graphics window on the first axis. The second, named \code{ylim}, is the limits on 
   the second axis.
   }
