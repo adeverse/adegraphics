@@ -13,8 +13,9 @@
 }
 
 \usage{
-\method{plot}{inertia}(x, xax = 1, yax = 2, cont = 0.1, type = c("label", 
-  "cross", "ellipse", "both"), ellipseSize = 1.5, posieig = "none", plot = TRUE, 
+\method{plot}{inertia}(x, xax = 1, yax = 2, threshold = 0.1, 
+  contrib = c("abs", "rel"), type = c("label", "cross", "ellipse", "both"), 
+  ellipseSize = 1.5, posieig = "none", plot = TRUE, 
   storeData = TRUE, pos = -1, \dots)
 \method{score}{inertia}(x, xax = 1, cont = 0.1, posieig = "none", pos = -1, 
   storeData = TRUE, plot = TRUE, \dots)
@@ -29,11 +30,17 @@
   \item{yax}{an integer indicating which column of {x} is plotted on the y-axis.
     If \code{yax} is equal to \code{xax}, a one-dimensional graph is display.}
   
-  \item{cont}{a numeric value containing the contribution threshold at which 
-    points should be drawn on the graphic. Low contribution points will be 
-    represented by a grey point and without label. When the contributions are 
-    displayed on a single axis, a dotted line describes the contribution 
-    threshold.}
+  \item{threshold}{a numeric value containing the contribution threshold 
+    (between 0 and 1) at which points should be drawn on the graphic. Low 
+    contribution points will be represented by a grey point and without label. 
+    When the contributions are displayed on a single axis, a dotted line 
+    describes the contribution threshold.}
+    
+  \item{contrib}{a character value indicating which contributions are plotted: 
+    \code{abs} for absolute contributions (rows/columns involved in the factor
+    map construction) and \code{rel} for relative contribution (quality of
+    rows/columns representation on the factor map). 
+  }
   
   \item{type}{a character value indicating which type represents contribution. 
   Labels size (\code{label}), crosses size(\code{cross}) or ellipses size 
