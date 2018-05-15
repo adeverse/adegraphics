@@ -17,8 +17,8 @@
   contrib = c("abs", "rel"), type = c("label", "cross", "ellipse", "both"), 
   ellipseSize = 1.5, posieig = "none", plot = TRUE, 
   storeData = TRUE, pos = -1, \dots)
-\method{score}{inertia}(x, xax = 1, cont = 0.1, posieig = "none", pos = -1, 
-  storeData = TRUE, plot = TRUE, \dots)
+\method{score}{inertia}(x, xax = 1, threshold = 0.1, contrib = c("abs", "rel"), 
+  posieig = "none", pos = -1, storeData = TRUE, plot = TRUE, \dots)
 }
 
 \arguments{
@@ -38,9 +38,8 @@
     
   \item{contrib}{a character value indicating which contributions are plotted: 
     \code{abs} for absolute contributions (rows/columns involved in the factor
-    map construction) and \code{rel} for relative contribution (quality of
-    rows/columns representation on the factor map). 
-  }
+    axis/map construction) and \code{rel} for relative contribution (quality of
+    rows/columns representation on the factor axis/map).}
   
   \item{type}{a character value indicating which type represents contribution. 
   Labels size (\code{label}), crosses size(\code{cross}) or ellipses size 
@@ -86,12 +85,12 @@ coa1 <- ade4::dudi.coa(bf88$S1, scannf = FALSE, nf = 2)
 
 ###### row=T / col=F
 res11 <- ade4::inertia(coa1, row = TRUE, col = FALSE, nf = 2)
-g11 <- plot(res11, cont = 0.06)
-g12 <- plot(res11, cont = 0.06, plabels.boxes.draw = TRUE, plines.lwd = 0,
+g11 <- plot(res11, threshold = 0.06)
+g12 <- plot(res11, threshold = 0.06, plabels.boxes.draw = TRUE, plines.lwd = 0,
   light_row.ppoints.cex = 0, posieig = "bottomleft")
-g13 <- score(res11, cont = 0.06)
+g13 <- score(res11, threshold = 0.06)
 names(g13)
-g14 <- score(res11, xax = 2, cont = 0.06)
+g14 <- score(res11, xax = 2, threshold = 0.06)
 
 ###### row=F / col=T
 res12 <- ade4::inertia(coa1, row = FALSE, col = TRUE, nf = 2)
@@ -100,8 +99,8 @@ idx <- which(res12$col.abs[, 1]/100 >= 0.1 | res12$col.abs[, 2]/100 >= 0.1)
 rownames(res12$col.abs[idx, ])
 coa1$co[idx, ]
 g15 <- plot(res12)
-g16 <- score(res12, cont = 0.08)
-g17 <- score(res12, cont = 0.07)
+g16 <- score(res12, threshold = 0.08)
+g17 <- score(res12, threshold = 0.07)
 
 
 ########################################

@@ -1493,19 +1493,18 @@
   ## management of the data and the parameters about the rows' contribution (individuals) on axes
   if(!is.null(x$row.rel)) {
     
+    datacontrib <- x[[ifelse(contrib == "abs", "row.abs", "row.rel")]]
+    datacontrib <- datacontrib[, c(xax, yax)]
+    
     if(type != "label") {
-      inertrow <- abs(x$row.rel[, c(xax, yax)]) / 100
-      inertrowcall <- call("/", call("abs", call("[", call("$", substitute(x), "row.rel"), call(":", 1, call("NROW", call("$", substitute(x), "row.rel"))), c(xax, yax))), 100)
-      
+      inertrow <- abs(datacontrib) / 100
       lightrow <- subset(evTab$li[, c(xax, yax)], inertrow[, 1] < threshold & inertrow[, 2] < threshold)
-      lightrowcall <- call("subset", call("[", call("$", ori[[2]], "li"), call(":", 1, call("NROW", call("$", ori[[2]], "li"))), c(xax, yax)), call("&", call("<", call("[", inertrowcall, 1), threshold), call("<", call("[", inertrowcall, 2), threshold)))
-      
       heavyrow <- subset(evTab$li[, c(xax, yax)], inertrow[, 1] >= threshold | inertrow[, 2] >= threshold)
-      heavyrowcall <- call("subset", call("[", call("$", ori[[2]], "li"), call(":", 1, call("NROW", call("$", ori[[2]], "li"))), c(xax, yax)), call("&", call(">=", call("[", inertrowcall, 1), threshold), call(">=", call("[", inertrowcall, 2), threshold)))
+
       if(nrow(heavyrow) == 0)
         stop("No points to draw, try lowering 'threshold'")
+      
       heavy_inertrow <- subset(inertrow, inertrow[, 1] >= threshold | inertrow[, 2] >= threshold)
-      # heavy_inertrowcum <- apply(heavy_inertrow, 1, sum)
       
       limglobal <- setlimits2D(minX = min(c(heavyrow[, 1], lightrow[, 1])), maxX = max(c(heavyrow[, 1], lightrow[, 1])), 
                                minY = min(c(heavyrow[, 2], lightrow[, 2])), maxY = max(c(heavyrow[, 2], lightrow[, 2])),
@@ -1527,18 +1526,18 @@
       
     } else {
       if(contrib == "abs") {
-        temp <- sweep(x$row.abs[, c(xax, yax)], 2, x$tot.inertia$inertia[c(xax, yax)], "*") / 100
+        temp <- sweep(datacontrib, 2, x$tot.inertia$inertia[c(xax, yax)], "*") / 100
         tempsum <- apply(temp, 1, sum)
         lambdasum <- sum(x$tot.inertia$inertia[c(xax, yax)])
-        cumulabs <- tempsum / lambdasum
+        inertrow_cumul <- tempsum / lambdasum
       } else {
-        temp <- abs(x$row.rel[, c(xax, yax)])
-        cumulabs <- apply(temp, 1, sum) / 100
+        inertrow <- abs(datacontrib) / 100
+        inertrow_cumul <- apply(inertrow, 1, sum)
       }
       
-      lightrow <- subset(evTab$li[, c(xax, yax)], cumulabs < threshold)
-      heavyrow <- subset(evTab$li[, c(xax, yax)], cumulabs >= threshold)
-      heavy_inertrow <- subset(cumulabs, cumulabs >= threshold)
+      lightrow <- subset(evTab$li[, c(xax, yax)], inertrow_cumul < threshold)
+      heavyrow <- subset(evTab$li[, c(xax, yax)], inertrow_cumul >= threshold)
+      heavy_inertrow <- subset(inertrow_cumul, inertrow_cumul >= threshold)
       
       if(nrow(heavyrow) == 0)
         stop("No points to draw, try lowering 'threshold'")
@@ -1561,18 +1560,19 @@
   
   ## management of the data and the parameters about the columns' contribution (variables) on axes
   if(!is.null(x$col.rel)) {
+    
+    datacontrib <- x[[ifelse(contrib == "abs", "col.abs", "col.rel")]]
+    datacontrib <- datacontrib[, c(xax, yax)]
+    
     if(type != "label") {
       
-      inertcol <- abs(x$col.rel[, c(xax, yax)]) / 100
-      inertcolcall <- call("/", call("abs", call("[", call("$", substitute(x), "col.rel"), call(":", 1, call("NROW", call("$", substitute(x), "col.rel"))), c(xax, yax))), 100)
-      
+      inertcol <- abs(datacontrib) / 100
       lightcol <- subset(evTab$co[, c(xax, yax)], inertcol[, 1] < threshold & inertcol[, 2] < threshold)
-      lightcolcall <- call("subset", call("[", call("$", ori[[2]], "co"), call(":", 1, call("NROW", call("$", ori[[2]], "co"))), c(xax, yax)), call("&", call("<", call("[", inertcolcall, 1), threshold), call("<", call("[", inertcolcall, 2), threshold)))
-      
       heavycol <- subset(evTab$co[, c(xax, yax)], inertcol[, 1] >= threshold | inertcol[, 2] >= threshold)
-      heavycolcall <- call("subset", call("[", call("$", ori[[2]], "co"), call(":", 1, call("NROW", call("$", ori[[2]], "co"))), c(xax, yax)), call("&", call(">=", call("[", inertcolcall, 1), threshold), call(">=", call("[", inertcolcall, 2), threshold)))
+
       if(nrow(heavycol) == 0)
         stop("No points to draw, try lowering 'threshold'")
+      
       heavy_inertcol <- subset(inertcol, inertcol[, 1] >= threshold | inertcol[, 2] >= threshold)
       
       limglobal <- setlimits2D(minX = min(c(heavycol[, 1], lightcol[, 1])), maxX = max(c(heavycol[, 1], lightcol[, 1])), 
@@ -1594,18 +1594,18 @@
                                origin = adegtot$porigin$origin, aspect.ratio = adegtot$paxes$aspectratio, includeOr = adegtot$porigin$include)
     } else {
       if(contrib == "abs") {
-        temp <- sweep(x$col.abs[, c(xax, yax)], 2, x$tot.inertia$inertia[c(xax, yax)], "*") / 100
+        temp <- sweep(datacontrib, 2, x$tot.inertia$inertia[c(xax, yax)], "*") / 100
         tempsum <- apply(temp, 1, sum)
         lambdasum <- sum(x$tot.inertia$inertia[c(xax, yax)])
-        cumulabs <- tempsum / lambdasum
+        inertcol_cumul <- tempsum / lambdasum
       } else {
-        temp <- abs(x$col.rel[, c(xax, yax)])
-        cumulabs <- apply(temp, 1, sum) / 100
+        inertcol <- abs(datacontrib) / 100
+        inertcol_cumul <- apply(inertcol, 1, sum)
       }
       
-      lightcol <- subset(evTab$co[, c(xax, yax)], cumulabs < threshold)
-      heavycol <- subset(evTab$co[, c(xax, yax)], cumulabs >= threshold)
-      heavy_inertcolnorm <- subset(cumulabs, cumulabs >= threshold)
+      lightcol <- subset(evTab$co[, c(xax, yax)], inertcol_cumul < threshold)
+      heavycol <- subset(evTab$co[, c(xax, yax)], inertcol_cumul >= threshold)
+      heavy_inertcolnorm <- subset(inertcol_cumul, inertcol_cumul >= threshold)
       
       if(nrow(heavycol) == 0)
         stop("No points to draw, try lowering 'threshold'")

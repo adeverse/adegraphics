@@ -286,7 +286,7 @@
 }
 
 
-"score.inertia" <- function(x, xax = 1, cont = 0.1, posieig = "none", pos = -1, storeData = TRUE, plot = TRUE, ...) { 
+"score.inertia" <- function(x, xax = 1, threshold = 0.1, contrib = c("abs", "rel"), posieig = "none", pos = -1, storeData = TRUE, plot = TRUE, ...) { 
   
   if(!inherits(x, "inertia")) 
     stop("Object of class 'inertia' expected")
@@ -302,6 +302,7 @@
   
   adegtot <- adegpar()
   position <- match.arg(posieig[1], choices = c("bottomleft", "bottomright", "topleft", "topright", "none"), several.ok = FALSE)
+  contrib <- match.arg(contrib)[1]
 
   ## sort parameters for each graph
   graphsnames <- c("light_row", "heavy_row", "light_col", "heavy_col", "eig")
@@ -323,19 +324,17 @@
   
   ## management of the data and the parameters about the rows' contribution (individuals) on axes
   if(!is.null(x$row.rel)) {
-    inertrow <- abs(x$row.rel[, xax]) / 100
-    # inertrow <- sqrt(x$row.rel) / 100
-    inertrowcall <- call("/", call("abs", call("[", call("$", substitute(x), "row.rel"), call(":", 1, call("NROW", call("$", substitute(x), "row.rel"))), xax)), 100)
-    # inertrowcall <- call("/", call("sqrt", call("[", call("$", substitute(x), "row.rel"), call(":", 1, call("NROW", call("$", substitute(x), "row.rel"))), xax)), 100)
-    lightrow <- subset(evTab$li[, xax], inertrow < cont)
-    lightrowcall <- call("subset", call("[", call("$", ori[[2]], "li"), call(":", 1, call("NROW", call("$", ori[[2]], "li"))), xax), call("<", inertrowcall, cont))
+    datacontrib <- x[[ifelse(contrib == "abs", "row.abs", "row.rel")]]
     
-    heavyrow <- subset(evTab$li[, xax], inertrow >= cont)
-    heavyrowcall <- call("c", call("subset", call("[", call("$", ori[[2]], "li"), call(":", 1, call("NROW", call("$", ori[[2]], "li"))), xax), call(">=", inertrowcall, cont)), 0)
+    inertrow <- abs(datacontrib[, xax]) / 100
+    lightrow <- subset(evTab$li[, xax], inertrow < threshold)
+    heavyrow <- subset(evTab$li[, xax], inertrow >= threshold)
+    
     if(length(heavyrow) == 0)
-      stop("No points to draw, try lowering 'cont' (see 'x$row.rel')")
-    heavy_inertrow <- subset(inertrow, inertrow >= cont)
-    names_heavyrow <- subset(rownames(x$row.rel), inertrow >= cont)
+      stop("No points to draw, try lowering 'threshold'")
+    
+    heavy_inertrow <- subset(inertrow, inertrow >= threshold)
+    names_heavyrow <- subset(rownames(datacontrib), inertrow >= threshold)
     
     limglobal <- setlimits1D(mini = min(c(heavyrow, lightrow)), maxi = max(c(heavyrow, lightrow)), 
                              origin = adegtot$porigin$origin, includeOr = adegtot$porigin$include)
@@ -346,19 +345,17 @@
   
   ## management of the data and the parameters about the columns' contribution (variables) on axes
   if(!is.null(x$col.rel)) {
-    inertcol <- abs(x$col.rel[, xax]) / 100
-    # inertcol <- sqrt(x$col.rel[, xax]) / 100
-    inertcolcall <- call("/", call("abs", call("[", call("$", substitute(x), "col.rel"), call(":", 1, call("NROW", call("$", substitute(x), "col.rel"))), xax)), 100)
-    # inertcolcall <- call("/", call("sqrt", call("[", call("$", substitute(x), "col.rel"), call(":", 1, call("NROW", call("$", substitute(x), "col.rel"))), xax)), 100)
-    lightcol <- subset(evTab$co[, xax], inertcol < cont)
-    lightcolcall <- call("subset", call("[", call("$", ori[[2]], "co"), call(":", 1, call("NROW", call("$", ori[[2]], "co"))), xax), call("<", inertcolcall, cont))
+    datacontrib <- x[[ifelse(contrib == "abs", "col.abs", "col.rel")]]
     
-    heavycol <- subset(evTab$co[, xax], inertcol >= cont)
-    heavycolcall <- call("c", call("subset", call("[", call("$", ori[[2]], "co"), call(":", 1, call("NROW", call("$", ori[[2]], "co"))), xax), call(">=", inertcolcall, cont)), 0)
+    inertcol <- abs(datacontrib[, xax]) / 100
+    lightcol <- subset(evTab$co[, xax], inertcol < threshold)
+    heavycol <- subset(evTab$co[, xax], inertcol >= threshold)
+    
     if(length(heavycol) == 0)
-      stop("No points to draw, try lowering 'cont' (see 'x$col.rel')")
-    heavy_inertcol <- subset(inertcol, inertcol >= cont)
-    names_heavycol <- subset(rownames(x$col.rel), inertcol >= cont)
+      stop("No points to draw, try lowering 'threshold'")
+    
+    heavy_inertcol <- subset(inertcol, inertcol >= threshold)
+    names_heavycol <- subset(rownames(datacontrib), inertcol >= threshold)
     
     limglobal <- setlimits1D(mini = min(c(heavycol, lightcol)), maxi = max(c(heavycol, lightcol)), 
                              origin = adegtot$porigin$origin, includeOr = adegtot$porigin$include)
@@ -385,7 +382,7 @@
       grow <- do.call("s1d.label", c(list(score = heavyrow, at = heavy_inertrow, labels = names_heavyrow, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$heavy_col))
     }
     # add an horizontal line drawinf the contribution threshold
-    gcont <- xyplot(0 ~ 0, panel = function(x, y) {panel.abline(h = cont, lty = "dotted", col = "grey")})
+    gcont <- xyplot(0 ~ 0, panel = function(x, y) {panel.abline(h = threshold, lty = "dotted", col = "grey")})
     grow <- do.call("superpose", list(grow, gcont))
     grow@Call <- call("superpose", list(grow@Call, gcont$call))
     
@@ -408,7 +405,7 @@
       gcol <- do.call("s1d.label", c(list(score = heavycol, at = heavy_inertcol, labels = names_heavycol, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$heavy_col))
     }
     # add an horizontal line drawinf the contribution threshold
-    gcont <- xyplot(0 ~ 0, panel = function(x, y) {panel.abline(h = cont, lty = "dotted", col = "grey")})
+    gcont <- xyplot(0 ~ 0, panel = function(x, y) {panel.abline(h = threshold, lty = "dotted", col = "grey")})
     gcol <- do.call("superpose", list(gcol, gcont))
     gcol@Call <- call("superpose", list(gcol@Call, gcont$call))
     
