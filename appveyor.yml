@@ -17,6 +17,7 @@ install:
 
 build_script:
   - travis-tool.sh install_deps
+  - travis-tool.sh install_github sdray/ade4
 
 test_script:
   - travis-tool.sh run_tests
@@ -42,5 +43,3 @@ artifacts:
 
   - path: '\*_*.zip'
     name: Bits
-
-r_github_packages: sdray/ade4
