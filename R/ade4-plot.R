@@ -1302,10 +1302,10 @@
   
   ## default values for parameters
   params <- list()
-  params[[1]] <- list(plines = list(col = "red"), ppoints = list(col = "red", cex = 2), p1d = list(horizontal = FALSE), paxes = list(draw = TRUE), ylab = "Root Mean Square Error", ylim = lim, porigin = origin)
-  params[[2]] <- list(plines = list(col = "red"), ppolygons = list(col = "red"), p1d = list(horizontal = FALSE), paxes = list(draw = TRUE), method = "bars")
-  params[[3]] <- list(plines = list(col = "blue"), ppoints = list(col = "blue", cex = 2), p1d = list(horizontal = FALSE), paxes = list(draw = TRUE))
-  params[[4]] <- list(plines = list(col = "blue"), ppolygons = list(col = "blue"), p1d = list(horizontal = FALSE), paxes = list(draw = TRUE), method = "bars")
+  params[[1]] <- list(plines = list(col = "red"), ppoints = list(col = "red", cex = 2), p1d = list(horizontal = FALSE), paxes = list(draw = TRUE), pgrid = list(text = list(cex = 0)), ylab = "Root Mean Square Error", ylim = lim, porigin = origin)
+  params[[2]] <- list(plines = list(col = "red"), ppolygons = list(col = "red"), p1d = list(horizontal = FALSE), paxes = list(draw = TRUE), pgrid = list(text = list(cex = 0)), method = "bars")
+  params[[3]] <- list(plines = list(col = "blue"), ppoints = list(col = "blue", cex = 2), p1d = list(horizontal = FALSE), paxes = list(draw = TRUE), pgrid = list(text = list(cex = 0)))
+  params[[4]] <- list(plines = list(col = "blue"), ppolygons = list(col = "blue"), p1d = list(horizontal = FALSE), paxes = list(draw = TRUE), pgrid = list(text = list(cex = 0)), method = "bars")
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
@@ -1341,15 +1341,15 @@
   
   ## default values for parameters
   params <- list()
-  params[[1]] <- list(plines = list(col = "red"), ppoints = list(col = "red", cex = 2), p1d = list(horizontal = FALSE), paxes = list(draw = TRUE), ylab = "Root Mean Square Error", ylim = lim, porigin = origin)
-  params[[2]] <- list(plines = list(col = "red"), ppolygons = list(col = "red"), p1d = list(horizontal = FALSE), paxes = list(draw = TRUE), method = "area")
-  params[[3]] <- list(plines = list(col = "blue"), ppoints = list(col = "blue", cex = 2), p1d = list(horizontal = FALSE), paxes = list(draw = TRUE))
-  params[[4]] <- list(plines = list(col = "blue"), ppolygons = list(col = "blue"), p1d = list(horizontal = FALSE), paxes = list(draw = TRUE), method = "area")
+  params[[1]] <- list(plines = list(col = "red"), ppoints = list(col = "red", cex = 2), p1d = list(horizontal = FALSE), paxes = list(draw = TRUE), pgrid = list(text = list(cex = 0)), ylab = "Root Mean Square Error", ylim = lim, porigin = origin)
+  params[[2]] <- list(plines = list(col = "red"), ppolygons = list(col = "red"), p1d = list(horizontal = FALSE), paxes = list(draw = TRUE), pgrid = list(text = list(cex = 0)), method = "area")
+  params[[3]] <- list(plines = list(col = "blue"), ppoints = list(col = "blue", cex = 2), p1d = list(horizontal = FALSE), paxes = list(draw = TRUE), pgrid = list(text = list(cex = 0)))
+  params[[4]] <- list(plines = list(col = "blue"), ppolygons = list(col = "blue"), p1d = list(horizontal = FALSE), paxes = list(draw = TRUE), pgrid = list(text = list(cex = 0)), method = "area")
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
   ## creation of each individual ADEg
-  g1 <- do.call("s1d.curve", c(list(score = substitute(x$statsRMSEc[, 1]), key = list(corner = c(0,1), text = list(c("RMSEc", "RMSEv"), col = c(sortparameters[[1]]$plines.col, sortparameters[[3]]$plines.col))), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
+  g1 <- do.call("s1d.curve", c(list(score = substitute(x$statsRMSEc[, 1]), key = list(corner = c(0,1), text = list(c("RMSEc", "RMSEv"), col = c(sortparameters[[1]]$plines$col, sortparameters[[3]]$plines$col))), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
   g2 <- do.call("s1d.interval", c(list(score1 = substitute(x$statsRMSEc[, 2]), score2 = substitute(x$statsRMSEc[, 3]), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
   g3 <- do.call("s1d.curve", c(list(score = substitute(x$statsRMSEv[, 1]), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[3]]))
   g4 <- do.call("s1d.interval", c(list(score1 = substitute(x$statsRMSEv[, 2]), score2 = substitute(x$statsRMSEv[, 3]), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[4]]))
@@ -1380,8 +1380,8 @@
   
   ## default values for parameters
   params <- list()
-  params[[1]] <- list(p1d = list(horizontal = FALSE), paxes = list(draw = TRUE), ppoints = list(cex = 2), ylim = lim, porigin = origin)
-  params[[2]] <- list(p1d = list(horizontal = FALSE), paxes = list(draw = TRUE), method = "bars")
+  params[[1]] <- list(p1d = list(horizontal = FALSE), paxes = list(draw = TRUE), pgrid = list(text = list(cex = 0)), ppoints = list(cex = 2), ylim = lim, porigin = origin)
+  params[[2]] <- list(p1d = list(horizontal = FALSE), paxes = list(draw = TRUE), pgrid = list(text = list(cex = 0)), method = "bars")
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
@@ -1414,13 +1414,13 @@
   
   ## default values for parameters
   params <- list()
-  params[[1]] <- list(p1d = list(horizontal = FALSE), paxes = list(draw = TRUE), ppoints = list(cex = 2), ylim = lim, porigin = origin)
-  params[[2]] <- list(p1d = list(horizontal = FALSE), paxes = list(draw = TRUE), method = "bars")
+  params[[1]] <- list(p1d = list(horizontal = FALSE), pgrid = list(text = list(cex = 0)), paxes = list(draw = TRUE), ppoints = list(cex = 2), ylim = lim, porigin = origin)
+  params[[2]] <- list(p1d = list(horizontal = FALSE), pgrid = list(text = list(cex = 0)), paxes = list(draw = TRUE), method = "bars")
   names(params) <- graphsnames
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
-  lab <- list(list(labels = rownames(x$stats), rot = 90))
-  names(lab) <- ifelse(sortparameters[[1]]$p1d.horizontal == FALSE, "x", "y")
+  lab <- list(list(labels = rownames(x$stats), at = 1:length(rownames(x$stats)), rot = 90))
+  names(lab)[1] <- ifelse(sortparameters[[1]]$p1d$horizontal == FALSE, "x", "y")
   ## creation of each individual ADEg
   g1 <- do.call("s1d.curve", c(list(score = substitute(x$obs), scales = lab, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[1]]))
   g2 <- do.call("s1d.interval", c(list(score1 = substitute(x$stats[, 1]), score2 = substitute(x$stats[, 2]), plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters[[2]]))
