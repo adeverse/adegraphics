@@ -66,8 +66,8 @@ multi.facets.S2 <- function(thecall, adepar, samelimits = TRUE) {
   
   ## same limits for all sub-graphics
   if((isTRUE(samelimits) | is.null(samelimits)) & (thecall[[1]] != "s.corcircle")) {
-    xax <- thenewcall$xax
-    yax <- thenewcall$yax
+    xax <- eval(thecall$xax, envir = sys.frame(sys.nframe() + thenewcall$pos + 2))
+    yax <- eval(thecall$yax, envir = sys.frame(sys.nframe() + thenewcall$pos + 2))
     if(is.null(thenewcall$Sp))
       lim.global <- setlimits2D(minX = min(dfxy[, xax]), maxX = max(dfxy[, xax]), minY = min(dfxy[, yax]), maxY = max(dfxy[, yax]),
         origin = adegtot$porigin$origin, aspect.ratio = adegtot$paxes$aspectratio, includeOr = adegtot$porigin$include)
