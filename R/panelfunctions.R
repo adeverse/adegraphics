@@ -11,7 +11,7 @@ adeg.panel.label <- function(x, y, labels, plabels, pos = NULL) {
 		## using .textsize funtion in utils.R
     textS <- .textsize(labels, plabels)
     srt <- textS$srt
-    if(plboxes$draw && (srt != 0) & srt != 90) 
+    if(any(plboxes$draw) && !(srt %in% c(0, 90))) 
       warning("Boxes only implemented for 0 or 90 degrees rotation", call. = FALSE)
     ldraw <- rep(draw, length.out = n)  ## draw long enough
     ldraw[which(is.na(labels[1:n]) | labels[1:n] == "")] <- FALSE ## if no labels or null string don't bother

@@ -10,9 +10,8 @@ g14 <- s1d.density(x1, col = TRUE, p1d.hori = FALSE, p1d.rev = TRUE)
 
 update(g11, ppolygons.border = "red")
 update(g11, col = FALSE, ppolygons.col = "black")
-update(g11, ppolygons.lwd = 3)
-update(g11, ppolygons.lty = 3)
-update(g11, ppolygons.alpha = 1)
+update(g11, ppolygons.lwd = 3, ppolygons.lty = 3, ppolygons.alpha = 1)
+update(g11, ylim = c(-0.04, 0.5))
 
 set.seed(50)
 x2 <- c(rnorm(1000, mean = -0.5, sd = 0.5), rnorm(1000, mean = 1))
