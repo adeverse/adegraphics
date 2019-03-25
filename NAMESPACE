@@ -63,6 +63,8 @@ S3method("score", "inertia")
 S3method("score", "mix")
 S3method("score", "pca")
 S3method("screeplot", "dudi")
+S3method("as.raster", "pixmapRGB")
+S3method("as.raster", "pixmapGrey")
 
 export(
   "adegpar",
@@ -74,8 +76,6 @@ export(
   "adeg.panel.hist",
   "adeg.panel.join",
   "layout2position",
-  "as.raster.pixmapRGB",
-  "as.raster.pixmapGrey",
   "changelatticetheme",
   "sortparamADEg",
   "sortparamADEgS",
