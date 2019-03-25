@@ -98,8 +98,8 @@ adeg.panel.nb <- function(nbobject, coords, col.edge = "black", lwd = 1, lty = 1
 ## adeg.panel.edges....
 ## col, lwd, lty etc peuvent varier selon poids des connexions
 adeg.panel.edges <- function(edges, coords, col.edge = "black", lwd = 1, lty = 1, pch = 20, cex = 1, col.node = "black", alpha = 1) {
-  panel.points(x = coords[, 1], y = coords[, 2], col = col.node, pch = pch, alpha = alpha, cex = cex)
   panel.segments(x0 = coords[edges[, 1], 1], y0 = coords[edges[, 1], 2], x1 = coords[edges[, 2], 1], y1 = coords[edges[, 2], 2], col = col.edge, lwd = lwd, lty = lty)
+  panel.points(x = coords[, 1], y = coords[, 2], col = col.node, pch = pch, alpha = alpha, cex = cex)
 }
 
 
