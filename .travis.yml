@@ -2,26 +2,18 @@ language: r
 r: devel
 cache: packages
 
+r_check_args: "--as-cran --run-dontrun"
 warnings_are_errors: false
 sudo: required
 
-r_check_args: "--as-cran --run-dontrun"
-
-r_packages:
-  - devtools
-  
-env:
- global:
-   - CRAN: http://cran.rstudio.com
-
 notifications:
-  email:
-    on_success: change
-    on_failure: change
+ email:
+  on_success: change
+  on_failure: change
     
 r_github_packages: sdray/ade4
 
 addons:
-  apt:
-    packages:
-      - libudunits2-dev
+ apt:
+  packages:
+   - libudunits2-dev
