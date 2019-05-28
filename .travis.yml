@@ -1,5 +1,3 @@
-# Sample .travis.yml for R projects
-
 language: r
 r: devel
 cache: packages
@@ -22,3 +20,8 @@ notifications:
     on_failure: change
     
 r_github_packages: sdray/ade4
+
+addons:
+  apt:
+    packages:
+      - libudunits2-dev
