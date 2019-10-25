@@ -517,25 +517,25 @@ setMethod(
     
     getxscale <- function(object) {
       ## Obtain limits for x
+      res <- c(0, 1)
       if(inherits(object, "ADEg"))
         object <- gettrellis(object)
-      if(class(object) == "trellis") {
-        res <- object$x.limits
-      } else {
-        res <- c(0, 1)
-      }
+      if(class(object) == "trellis"){
+          if (is.numeric(object$x.limits))
+            res <- object$x.limits
+      } 
       return(res)
     }
     
     getyscale <- function(object) {
       ## Obtain limits for y
-      if(inherits(object, "ADEg"))
+        res <- c(0, 1)
+        if(inherits(object, "ADEg"))
         object <- gettrellis(object)
       if(class(object) == "trellis") {
-        res <- object$y.limits
-      } else {
-        res <- c(0, 1)
-      }
+          if (is.numeric(object$y.limits))
+            res <- object$y.limits
+      } 
       return(res)
     }
     
