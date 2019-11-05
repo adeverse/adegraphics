@@ -38,6 +38,50 @@ setMethod(
     invisible(obj)
   })
 
+setMethod(
+  f = "addtext",
+  signature = "trellis",
+  definition = function(object, xcoord, ycoord, label, plot = TRUE, ...) {
+    
+    # iterate coordinates and/or labels if necessary
+    size <- max(length(xcoord), length(ycoord), length(label))
+    xcoord <- rep_len(xcoord, length.out = size)
+    ycoord <- rep_len(ycoord, length.out = size)
+    labels <- rep_len(label, length.out = size)
+    
+    # collect limits
+    xlim <- c(0,1)
+    ylim <- c(0,1)
+    if (is.numeric(object$x.limits))
+      xlim <- object$x.limits
+    if (is.numeric(object$y.limits))
+      ylim <- object$y.limits
+
+    aspect <- object$aspect.ratio
+    
+    ## sorting parameters
+    sortparameters <- sortparamADEg(...)$adepar
+    params <- adegpar()
+    sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+    params <- sortparameters$plabels
+    
+    # create the lattice object
+    textadded <- xyplot(ycoord ~ xcoord, xlim = xlim, ylim = ylim, xlab = NULL, ylab = NULL, aspect = aspect,
+      panel = function(x, y, ...) adeg.panel.label(x, y, labels, plabels = params), plot = FALSE)
+    
+    textadded$call <- call("xyplot", ycoord ~ xcoord, xlim = substitute(xlim), ylim = substitute(ylim), xlab = NULL, ylab = NULL,
+      aspect = substitute(aspect), labels = substitute(labels), 
+      panel = function(x, y, labels, ...) adeg.panel.label(x, y, labels = labels, plabels = params))
+    
+    # superposition
+    obj <- superpose(object, textadded, plot = FALSE)
+    nn <- all.names(substitute(object))
+    names(obj) <- c(ifelse(is.na(nn[2]), nn[1], nn[2]), "textadded")
+    
+    if(plot)
+      print(obj)
+    invisible(obj)
+  })
 
 setMethod(
   f = "addtext",

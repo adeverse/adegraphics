@@ -4,7 +4,7 @@
 \alias{addtext-methods}
 \alias{addtext,ADEg-method}
 \alias{addtext,ADEgS-method}
-
+\alias{addtext,trellis-method}
 \title{
   Adds labels on graphics.
 }
@@ -18,7 +18,7 @@ addtext(object, xcoord, ycoord, label, plot = TRUE, ...)
 }
 
 \arguments{
-  \item{object}{an object of class \code{ADEg} or \code{ADEgS}
+  \item{object}{an object of class \code{ADEg}, \code{trellis} or \code{ADEgS}
   }
   \item{xcoord}{an integer (or a vector) indicating where \code{label} is(are) plotted on the x-axis, 
     passed to the \code{adeg.panel.label}
