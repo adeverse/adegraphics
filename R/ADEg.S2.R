@@ -102,7 +102,7 @@ setMethod(
             
             if(object@adeg.par$paxes$draw) {
                 ## parameters to plot axes
-                scalesandlab <- list(x = object@adeg.par$paxes$x, y = object@adeg.par$paxes$y)
+                scalesandlab <- modifyList(as.list(object@g.args$scales), object@adeg.par$paxes, keep.null = TRUE)
                 if(is.null(scalesandlab$y$at)) {
                     scalesandlab$y$at <- object@s.misc$backgrid[[3L]][!is.na(object@s.misc$backgrid[[3L]])]
                     if(class(object) == "S2.corcircle")
