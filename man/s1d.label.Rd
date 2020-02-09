@@ -20,7 +20,7 @@ s1d.label(score, labels = 1:NROW(score), at = 0.5, poslabel = c("regular",
   
   \item{at}{a numeric vector used as an index}
   
-  \item{poslabel}{the label position of each class (each level of \code{fac}), it can be \code{regular} or \code{value}. 
+  \item{poslabel}{the label position, it can be \code{regular} or \code{value}. 
     If \code{regular}, labels are evenly spaced. 
     If \code{value}, labels are placed on the weighted mean of their class.}
   
