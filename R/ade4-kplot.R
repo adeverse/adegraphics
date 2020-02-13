@@ -171,7 +171,7 @@
   
   if(2 %in% which.graph) {
     facets2 <- substitute(object$TL[, 1])
-    g2 <- do.call("s.label", c(list(dfxy = substitute(object$Tli), labels = substitute(object$TL[,2]), facets = facets2, xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$rows))[which.tab]
+    g2 <- do.call("s.label", c(list(dfxy = substitute(object$Tli), labels = substitute(object$TL[,2]), facets = facets2, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$rows))[which.tab]
     names(g2) <- paste(graphsnames[2], "_", object$tab.names, sep = "")[which.tab]
     g <- c(g, g2)
     adeglist <- c(adeglist, g2@ADEglist)
@@ -247,7 +247,7 @@
   
   ## create g1
   if(!traject) 
-  	g1 <- do.call("s.label", c(list(dfxy = dfxy_row, labels = names_row, facets = facets_row, xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$row))[which.tab]
+  	g1 <- do.call("s.label", c(list(dfxy = dfxy_row, labels = names_row, facets = facets_row, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$row))[which.tab]
   else 
     g1 <- do.call("s.traject", c(list(dfxy = dfxy_row, facets = facets_row, xax = xax, yax = yax, plot = FALSE, storeData = FALSE, pos = pos - 2), sortparameters$traj))[which.tab]
   
@@ -320,8 +320,8 @@
   sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
   
   ## creation and create g1 and g2
-  g1 <- do.call("s.label", c(list(dfxy = dfxy_col, labels = names_col, facets = facets_col, xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$col))[which.tab]
-  g2 <- do.call("s.label", c(list(dfxy = dfxy_row, labels = names_row, facets = facets_row, xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$row))[which.tab]
+  g1 <- do.call("s.label", c(list(dfxy = dfxy_col, labels = names_col, facets = facets_col, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$col))[which.tab]
+  g2 <- do.call("s.label", c(list(dfxy = dfxy_row, labels = names_row, facets = facets_row, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$row))[which.tab]
   obj <- do.call("superpose", c(list(g1, g2)))
   obj@Call <- call("superpose", g1@Call, g2@Call)
   
