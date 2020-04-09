@@ -66,11 +66,11 @@ setMethod(
              color = {
                if(length(object@g.args$col) < (n - 1))
                  stop(paste("not enough colors defined for method color, at least ", (n - 1), " colors expected", sep = "") , call. = FALSE)
-               adegtot$ppoints$col <- object@g.args$col[1:(n - 1)] ## color given by the user
+               adegtot$ppoints$fill <- object@g.args$col[1:(n - 1)] ## color given by the user
              })
     } else {
       if(object@g.args$method == "color")
-        adegtot$ppoints$col <- adegtot$ppalette$quanti(n - 1)
+        adegtot$ppoints$fill <- adegtot$ppalette$quanti(n - 1)
       else if(inherits(dftab, "table") | inherits(dftab, "dist")) {
         adegtot$ppoints$col <- adegtot$ppalette$quanti(2)
       }

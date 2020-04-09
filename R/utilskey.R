@@ -112,8 +112,8 @@ setMethod(
             res$text$lab <- paste("[", breaks[l0], ";", breaks[l0 - 1], "]", sep = "")
             for(i in (l0 - 1):2)
                 res$text$lab <- c(res$text$lab, paste("]", breaks[i], ";", breaks[i - 1], "]", sep = ""))
-            res$points$fill <- object@adeg.par$ppoints$col[1:length(res$text$lab)]
-            res$points$col <- "black"
+            res$points$fill <- object@adeg.par$ppoints$fill[1:length(res$text$lab)]
+            res$points$col <- object@adeg.par$ppoints$col
         }
         res$columns <- length(res$text$lab)
         res$border <- TRUE

@@ -178,10 +178,10 @@ adeg.panel.values <- function(x, y, z, method, symbol, ppoints, breaks, centerpa
   } else if(method == "color"){
       size <- ppoints$cex[1]
       breaks <- sort(breaks)
-      colfill <- ppoints$col[as.numeric(cut(z, breaks, include.lowest = TRUE))]
+      colfill <- ppoints$fill[as.numeric(cut(z, breaks, include.lowest = TRUE))]
       if(any(is.null(colfill)) | any(is.na(colfill)))
              stop("error in the definition of color symbol", call. = FALSE)
-      colborder <- "black"
+      colborder <- ppoints$col
   }
   
   cstnormal <- 5 ## same value in createkey
