@@ -56,12 +56,12 @@ s.Spatial(spObj, col = TRUE, nclass = 5, scale = TRUE, plot = TRUE,
 
 \examples{
 data(elec88, package = "ade4")
-## mapping whithout data
+## mapping without data
 g1 <- s.Spatial(elec88$Spatial)
 
 \dontrun{
   if(require(sp, quietly = TRUE)) {
-    ## mapping whith data
+    ## mapping with data
     obj <- SpatialPolygonsDataFrame(Sr = elec88$Spatial, data = elec88$tab)
     g2 <- s.Spatial(obj)
     g3 <- s.Spatial(obj, nclass = 2, col = c("red", "blue"))
