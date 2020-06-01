@@ -2,7 +2,6 @@ Package: adegraphics
 Type: Package
 Title: An S4 Lattice-Based Package for the Representation of Multivariate Data
 Version: 1.0-15
-Date: 2018-12-18
 Author: Stéphane Dray <stephane.dray@univ-lyon1.fr> and Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>, with contributions from Jean Thioulouse. Based on earlier work by Alice Julien-Laferrière.
 Maintainer: Aurélie Siberchicot <aurelie.siberchicot@univ-lyon1.fr>
 Description: Graphical functionalities for the representation of multivariate data. It is a complete re-implementation of the functions available in the 'ade4' package.
@@ -18,7 +17,7 @@ Collate: adeGsenv.R parameter.R utils.R
   ADEg.T.R T.image.R T.value.R T.cont.R 
   ADEg.Tr.R Tr.class.R Tr.label.R Tr.match.R Tr.traject.R
   addhist.R addline.R addpoint.R addsegment.R addtext.R ade4-kplot.R ade4-scatter.R ade4-score.R ade4-plot.R multiplot.R s.Spatial.R utilskey.R
-URL: http://pbil.univ-lyon1.fr/ADE-4, Mailing list: http://listes.univ-lyon1.fr/wws/info/adelist
+URL: http://pbil.univ-lyon1.fr/ADE-4, Mailing list: https://listes.univ-lyon1.fr/sympa/info/adelist
 BugReports: https://github.com/sdray/adegraphics/issues
 Encoding: UTF-8
 VignetteBuilder: knitr

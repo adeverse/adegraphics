@@ -39,7 +39,7 @@ graphical objects, etc.) are now available and detailed in this
 vignette.
 
 The *adelist* mailing list can be used to send questions and/or comments
-on `adegraphics` (see <http://listes.univ-lyon1.fr/wws/info/adelist>)
+on `adegraphics` (see <https://listes.univ-lyon1.fr/sympa/info/adelist>)
 <br>
 
 An overview of object classes
