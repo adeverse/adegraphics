@@ -46,10 +46,10 @@ s.Spatial <- function(spObj, col = TRUE, nclass = 5, scale = TRUE, plot = TRUE, 
         ## create map
         if(points.or.poly == "points")
             object <- do.call("s.label", c(list(dfxy = xy.spObj, plot = FALSE, storeData = storeData, pos = pos - 2), 
-                sortparameters$adepar, sortparameters$trellis, sortparameters$g.args))
+                sortparameters$adepar, sortparameters$trellis, sortparameters$g.args, sortparameters$rest))
         else
             object <- do.call("s.label", c(list(dfxy = xy.spObj, Sp = substitute(spObj), plot = FALSE, storeData = storeData, pos = pos - 2), 
-                sortparameters$adepar, sortparameters$trellis, sortparameters$g.args))
+                sortparameters$adepar, sortparameters$trellis, sortparameters$g.args, sortparameters$rest))
         
     } else if(nvar > 0) {
         listGraph <- list()
@@ -63,13 +63,13 @@ s.Spatial <- function(spObj, col = TRUE, nclass = 5, scale = TRUE, plot = TRUE, 
                     colnew <- NULL ## default in s.value
                 else colnew <- col
                 listGraph <- c(listGraph, do.call("s.value", c(list(dfxy = xy.spObj, z = if(scale) scale (spObj@data[, i]) else spObj@data[, i], plot = FALSE, 
-                    col = colnew, storeData = storeData, pos = pos - 2), adepar.i, sortparameters$trellis, sortparameters$g.args)))
+                    col = colnew, storeData = storeData, pos = pos - 2), adepar.i, sortparameters$trellis, sortparameters$g.args, sortparameters$rest)))
             } else if(points.or.poly == "points" & is.factor(spObj@data[, i])) {
                 if(is.logical(col))
                     colnew <- adegtot$ppalette$quali(nlevels(as.factor(spObj@data[, i])))
                 adepar.i <- modifyList(list(ppoints = list(cex = 2)), adepar.i , keep.null = TRUE)
                 listGraph <- c(listGraph, do.call("s.class", c(list(dfxy = xy.spObj, starSize = 0, ellipseSize = 0, fac = spObj@data[, i], plot = FALSE, 
-                    col = colnew, storeData = storeData, pos = pos - 2), adepar.i, sortparameters$trellis, sortparameters$g.args)))
+                    col = colnew, storeData = storeData, pos = pos - 2), adepar.i, sortparameters$trellis, sortparameters$g.args, sortparameters$rest)))
             } else {
                 if(is.logical(col)) {
                     if(col) {
@@ -87,7 +87,7 @@ s.Spatial <- function(spObj, col = TRUE, nclass = 5, scale = TRUE, plot = TRUE, 
                 adepar.i$ppoint$cex <- 0
                 
                 ## create map
-                listGraph <- c(listGraph, do.call("s.label", c(list(dfxy = xy.spObj, Sp = substitute(spObj[,i]), plot = FALSE, storeData = storeData, pos = pos - 2), adepar.i, sortparameters$trellis, sortparameters$g.args)))
+                listGraph <- c(listGraph, do.call("s.label", c(list(dfxy = xy.spObj, Sp = substitute(spObj[,i]), plot = FALSE, storeData = storeData, pos = pos - 2), adepar.i, sortparameters$trellis, sortparameters$g.args, sortparameters$rest)))
                 
             } 
         }
