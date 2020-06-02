@@ -1456,7 +1456,7 @@
     stop("Non convenient yax")
   
   adegtot <- adegpar()
-  position <- match.arg(posieig[1], choices = c("bottomleft", "bottomright", "topleft", "topright", "none"), several.ok = FALSE)
+  position <- .getposition(posieig[1:min(2, length(posieig))])
   type <- match.arg(type)[1]
   contrib <- match.arg(contrib)[1]
   
@@ -1628,12 +1628,12 @@
   
   
   ## displaying of the eigen values
-  if(position != "none")
+  if(!is.null(position))
     geig <- do.call("plotEig", c(list(eigvalue = call("$", ori[[2]], "eig"), nf = 1:evTab$nf, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$eig))
   
   ## function to create the graphics about the row' contribution (individuals) on axes
   f_row <- function(posi = "none", pos){
-    graphnames <- c(if(length(lightrow) > 0) {"light_row"}, "heavy_row", if(posi != "none") {"eig"})
+    graphnames <- c(if(length(lightrow) > 0) {"light_row"}, "heavy_row", if(!is.null(posi)) {"eig"})
     
     g1 <- do.call("s.label", c(list(dfxy = lightrow, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$light_row))
     if(type == "label")
@@ -1643,7 +1643,7 @@
     grow <- do.call("superpose", list(g1, g2))
     grow@Call <- call("superpose", list(g1@Call, g2@Call))
     
-    if(posi != "none")
+    if(!is.null(posi))
       grow <- do.call("insert", list(geig, grow, posi = posi, plot = FALSE, ratio = 0.25))
     names(grow) <- graphnames
     return(grow)
@@ -1651,7 +1651,7 @@
   
   # function to create the graphics about the columns' contribution (variables) on axes
   f_col <- function(posi = "none", pos) {
-    graphnames <- c(if(length(lightcol) > 0) {"light_col"}, "heavy_col", if(posi != "none") {"eig"})
+    graphnames <- c(if(length(lightcol) > 0) {"light_col"}, "heavy_col", if(!is.null(posi)) {"eig"})
     
     g3 <- do.call("s.label", c(list(dfxy = lightcol, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$light_col))
     if(type == "label")
@@ -1661,7 +1661,7 @@
     gcol <- do.call("superpose", list(g3, g4))
     gcol@Call <- call("superpose", list(g3@Call, g4@Call))
     
-    if(posi != "none")
+    if(!is.null(posi))
       gcol <- do.call("insert", list(geig, gcol, posi = posi, plot = FALSE, ratio = 0.25))
     names(gcol) <- graphnames
     return(gcol)

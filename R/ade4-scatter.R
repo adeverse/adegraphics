@@ -12,7 +12,7 @@
   if(yax > x$nf)
     stop("Non convenient yax")  
   
-  position <- match.arg(posieig[1], choices = c("bottomleft", "bottomright", "topleft", "topright", "none"), several.ok = FALSE)
+  position <- .getposition(posieig[1:min(2, length(posieig))])
   
   ## sort parameters for each graph
   graphsnames <- c("row", "col", "eig")
@@ -60,7 +60,7 @@
   ## create the final ADEgS
   object <- do.call("superpose", list(g1, g2))
   object@Call <- call("superpose", g1@Call, g2@Call)
-  if(position != "none") {
+  if(!is.null(position)) {
     g3 <- do.call("plotEig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$eig))
     object <- do.call("insert", list(g3@Call, object@Call, posi = position, plot = FALSE, ratio = 0.25))
   }
@@ -89,7 +89,7 @@
   if(yax > x$nf)
     stop("Non convenient yax")
   
-  position <- match.arg(posieig[1], choices = c("bottomleft", "bottomright", "topleft", "topright", "none"), several.ok = FALSE)
+  position <- .getposition(posieig[1:min(2, length(posieig))])
   method <- method[1]
   
   ## limits management
@@ -127,7 +127,7 @@
   }  
   object <- do.call("superpose", list(g1, g2))
   object@Call <- call("superpose", g1@Call, g2@Call)
-  if(position != "none") {
+  if(!is.null(position)) {
     g3 <- do.call("plotEig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$eig))
     object <- do.call("insert", list(g3@Call, object@Call, posi = position, plot = FALSE, ratio = 0.25))
   }
@@ -156,7 +156,7 @@
   if(yax > x$nf)
     stop("Non convenient yax")
   
-  position <- match.arg(posieig[1], choices = c("bottomleft", "bottomright", "topleft", "topright", "none"), several.ok = FALSE)
+  position <- .getposition(posieig[1:min(2, length(posieig))])
   
   ## sort parameters for each graph
   graphsnames <- c("row", "eig")
@@ -171,7 +171,7 @@
   
   ## creation of each individual ADEg and of the final ADEgS
   object <- do.call("s.label", c(list(dfxy = substitute(x$li), xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$row))
-  if(position != "none") {
+  if(!is.null(position)) {
     g2 <- do.call("plotEig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$eig))
     object <- do.call("insert", list(g2@Call, object@Call, posi = position, plot = FALSE, ratio = 0.25))
     names(object) <- graphsnames[1:length(object)]
@@ -198,7 +198,7 @@
   if(yax > x$nf)
     stop("Non convenient yax")
   
-  position <- match.arg(posieig[1], choices = c("bottomleft", "bottomright", "topleft", "topright", "none"), several.ok = FALSE)
+  position <- .getposition(posieig[1:min(2, length(posieig))])
   
   ## sort parameters for each graph
   graphsnames <- c("row", "col", "eig")
@@ -224,7 +224,7 @@
   ## creation of each individual ADEg and of the final ADEgS
   object <- do.call("superpose", list(g1, g2))
   object@Call <- call("superpose", g1@Call, g2@Call)
-  if(position != "none") {
+  if(!is.null(position)) {
     g3 <- do.call("plotEig", c(list(eigvalue = substitute(x$eig), nf = 1:x$nf, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$eig))
     object <- do.call("insert", list(g3@Call, object@Call, posi = position, plot = FALSE, ratio = 0.25))
   }

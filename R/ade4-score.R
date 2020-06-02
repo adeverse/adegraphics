@@ -301,7 +301,7 @@
     stop("Non convenient xax")
   
   adegtot <- adegpar()
-  position <- match.arg(posieig[1], choices = c("bottomleft", "bottomright", "topleft", "topright", "none"), several.ok = FALSE)
+  position <- .getposition(posieig[1:min(2, length(posieig))])
   contrib <- match.arg(contrib)[1]
 
   ## sort parameters for each graph
@@ -366,12 +366,12 @@
   
   
   ## displaying of the eigen values
-  if(position != "none")
+  if(!is.null(position))
     geig <- do.call("plotEig", c(list(eigvalue = call("$", ori[[2]], "eig"), nf = 1:evTab$nf, xax = xax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$eig))
   
   ## function to create the graphics about the row' contribution (individuals) on axes
   f_row <- function(posi = "none", pos){
-    graphnames <- c(if(length(lightrow) > 0) {"light_row"}, "heavy_row", "contribution", if(posi != "none") {"eig"})
+    graphnames <- c(if(length(lightrow) > 0) {"light_row"}, "heavy_row", "contribution", if(!is.null(posi)) {"eig"})
     
     if(length(lightrow) > 0) {
       g1 <- do.call("s1d.label", c(list(score = lightrow, at = 0, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$light_row))
@@ -386,7 +386,7 @@
     grow <- do.call("superpose", list(grow, gcont))
     grow@Call <- call("superpose", list(grow@Call, gcont$call))
     
-    if(posi != "none")
+    if(!is.null(posi))
       grow <- do.call("insert", list(geig, grow, posi = posi, plot = FALSE, ratio = 0.25))
     names(grow) <- graphnames
     return(grow)
@@ -394,7 +394,7 @@
   
   # function to create the graphics about the columns' contribution (variables) on axes
   f_col <- function(posi = "none", pos) {
-    graphnames <- c(if(length(lightcol) > 0) {"light_col"}, "heavy_col", "contribution", if(posi != "none") {"eig"})
+    graphnames <- c(if(length(lightcol) > 0) {"light_col"}, "heavy_col", "contribution", if(!is.null(posi)) {"eig"})
     
     if(length(lightcol) > 0) {
       g3 <- do.call("s1d.label", c(list(score = lightcol, at = 0, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$light_col))
@@ -409,7 +409,7 @@
     gcol <- do.call("superpose", list(gcol, gcont))
     gcol@Call <- call("superpose", list(gcol@Call, gcont$call))
     
-    if(posi != "none")
+    if(!is.null(posi))
       gcol <- do.call("insert", list(geig, gcol, posi = posi, plot = FALSE, ratio = 0.25))
     names(gcol) <- graphnames
     return(gcol)
