@@ -38,7 +38,10 @@
       
     \item{\code{lattice.call}}{a list to create the \code{trellis} object.}
     
-    \item{\code{g.args}}{a list containing some method parameters linked with the created object of \code{ADEg.C1} class.}
+    \item{\code{g.args}}{a list containing some method parameters linked with the created object of \code{ADEg.C1} class.
+      The specific slot for \code{C1.barchart} objects is: \itemize{
+      \item{\code{sort}: a logical indicating if \code{score} is sorted in ascending order.}
+    }}
     
     \item{\code{stats}}{a list of internal preliminary calculations}
 

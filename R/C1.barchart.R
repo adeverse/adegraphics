@@ -22,7 +22,7 @@ setMethod(
   definition = function(object) {
     nameobj <- deparse(substitute(object))
     
-    ## pre-management of graphics parameters      
+    ## pre-management of graphics parameters
     oldparamadeg <- adegpar()
     on.exit(adegpar(oldparamadeg))
     adegtot <- adegpar(object@adeg.par)
@@ -87,10 +87,9 @@ setMethod(
         srt <- 90
     }
      
-  	## lims <- current.panel.limits(unit = "native")
-    
-    ## reorder the values
+    ## reorder values and labels
     y <- y[order(x)]
+    labels <- labels[order(x)]
     x <- sort(x)
     
     ## Starts the display
@@ -134,7 +133,7 @@ setMethod(
   })
 
 
-s1d.barchart <- function(score, labels = NULL, at = 1:NROW(score), facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
+s1d.barchart <- function(score, labels = NULL, at = 1:NROW(score), sort = FALSE, facets = NULL, plot = TRUE, storeData = TRUE, add = FALSE, pos = -1, ...) {
   
   ## evaluation of some parameters
   thecall <- .expand.call(match.call())
@@ -158,10 +157,16 @@ s1d.barchart <- function(score, labels = NULL, at = 1:NROW(score), facets = NULL
   
   ## simple ADEg graphic
   else {
+    
+    # if score is sorted
+    if(sort)
+      at <- rank(score)
+    
     if(length(sortparameters$rest))
       warning(c("Unused parameters: ", paste(unique(names(sortparameters$rest)), " ", sep = "")), call. = FALSE)
     
     ## creation of the ADEg object
+    g.args <- c(sortparameters$g.args, list(sort = sort))
     if(storeData)
     	tmp_data <- list(score = score, labels = labels, at = at, frame = sys.nframe() + pos, storeData = storeData)
     else
