@@ -22,4 +22,22 @@ citEntry(entry="Article",
               "https://journal.r-project.org/archive/2017/RJ-2017-042/index.html")
          )
          
- 
+citEntry(entry="Book",
+  title = "Multivariate Analysis of Ecological Data with {ade4}",
+  author =  personList(as.person("Jean Thioulouse"),
+                       as.person("Stéphane Dray"),
+                       as.person("Anne-Béatrice Dufour"),
+                       as.person("Aurélie Siberchicot"),
+                       as.person("Thibaut Jombart"),
+                       as.person("Sandrine Pavoine")
+                      ),
+  year = "2018",
+  publisher = "Springer",
+  doi = "10.1007/978-1-4939-8850-1",
+  textVersion = 
+        paste("Jean Thioulouse, Stéphane Dray, Anne-Béatrice Dufour, Aurélie Siberchicot, Thibaut Jombart and Sandrine Pavoine",
+              "(2018).",
+              "Multivariate Analysis of Ecological Data with ade4.",
+              "Springer.",
+              "https://doi.org/10.1007/978-1-4939-8850-1")
+)
