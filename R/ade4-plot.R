@@ -1632,7 +1632,7 @@
     geig <- do.call("plotEig", c(list(eigvalue = call("$", ori[[2]], "eig"), nf = 1:evTab$nf, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$eig))
   
   ## function to create the graphics about the row' contribution (individuals) on axes
-  f_row <- function(posi = "none", pos){
+  f_row <- function(posi = NULL, pos){
     graphnames <- c(if(length(lightrow) > 0) {"light_row"}, "heavy_row", if(!is.null(posi)) {"eig"})
     
     g1 <- do.call("s.label", c(list(dfxy = lightrow, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$light_row))
@@ -1650,7 +1650,7 @@
   }
   
   # function to create the graphics about the columns' contribution (variables) on axes
-  f_col <- function(posi = "none", pos) {
+  f_col <- function(posi = NULL, pos) {
     graphnames <- c(if(length(lightcol) > 0) {"light_col"}, "heavy_col", if(!is.null(posi)) {"eig"})
     
     g3 <- do.call("s.label", c(list(dfxy = lightcol, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$light_col))
@@ -1668,8 +1668,8 @@
   }
   
   ## function to create a layout of the graphics about the contribution of rows (individuals) and columns (variables) on axes
-  f_both <- function(posi = "none", pos) {
-    object <- do.call("cbindADEg", c(list(f_row(posi = "none", pos = pos - 1), f_col(posi = posi, pos = pos - 1))))
+  f_both <- function(posi = NULL, pos) {
+    object <- do.call("cbindADEg", c(list(f_row(posi = NULL, pos = pos - 1), f_col(posi = posi, pos = pos - 1))))
     names(object) <- c("row", "col")
     return(object)
   }

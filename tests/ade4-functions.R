@@ -89,6 +89,16 @@ score(res22, posieig = "bottomri")
 score(res22, posieig = c(0.5, 0.5))
 score(res22, posieig = c(0.5, 0.5, 1, 1))
 
+res23 <- ade4::inertia(coa2, row = TRUE, col = TRUE)
+plot(res23, posieig = "none")
+plot(res23, posieig = "bottomri")
+plot(res23, posieig = c(0.5, 0.5))
+plot(res23, posieig = c(0.5, 0.5, 1, 1))
+score(res23, posieig = "none")
+score(res23, posieig = "bottomri")
+score(res23, posieig = c(0.5, 0.5))
+score(res23, posieig = c(0.5, 0.5, 2, 2))
+
 
 ##################### plot.acm
 data(lascaux, package = "ade4")
