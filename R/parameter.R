@@ -26,7 +26,7 @@ changelatticetheme <- function(...) {
 
 
 .mergingList <- function(tomerge) {
-  ## merge elements of the list by name recurcively
+  ## merge elements of the list by name recursively
   lnames <- names(tomerge)
   counter <- 0 ## safety counter
   while(length(lnames) != length(unique(lnames))) {
