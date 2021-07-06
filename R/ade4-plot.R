@@ -1770,3 +1770,95 @@
     print(object)
   invisible(object)
 }
+
+"plot.bcaloocv" <- function (x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, ...) {
+    if (!inherits(x, "bcaloocv")) 
+        stop("Use only with 'bcaloocv' objects")
+    bca1 <- eval(x$call[[2]])
+    fac1 <- eval(bca1$call[[3]])
+    if (bca1$nf == 1) {
+        warnings("One axis only : not yet implemented")
+        return(invisible())
+    }
+	# Permutation test
+	rt1 <- ade4::randtest(bca1)
+	# Compute cross-validated coordinates
+	Oijbga <- x$Oij_bca
+	Oijxval <- x$Oij_XVal
+	dOij <- x$DeltaOij
+
+	## sort parameters for each graph
+	graphsnames <- c("BCA", "XVal")
+	sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
+
+	## default values for parameters
+	params <- list()
+	params[[1]] <- list(psub = list(text = "BCA"), pbackground = list(box = TRUE), plabels = list(cex = 1.25))
+	params[[2]] <- list(psub = list(text = "Cross-validation"), pbackground = list(box = TRUE), plabels = list(cex = 1.25))
+	names(params) <- graphsnames
+	sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+
+	# Character string: graph title, permutation test p-value and variance ratio
+	pst1 <- paste0("Permutation test p = ", rt1$pvalue, ", Expl.Var = ", round(bca1$ratio, 2), ", Oij = ", round(Oijbga,2))
+	# Draw BGA factor map
+	sc1 <- do.call("s.class", c(list(dfxy = bca1$ls[,c(xax, yax)], fac = fac1, col = TRUE, psub.text = pst1, ellipseSize = 0, chullSize = 1, plot = FALSE), storeData = storeData, pos = pos - 2, sortparameters[[1]]))
+	# Compute cross-validated coordinates
+	# Character string for graph title
+	pst2 <- paste0("Cross-validation Oij = ", round(Oijxval,2), ", dOij = ", round(dOij), "%")
+	# Cross-validated factor map
+	sc2 <- do.call("s.class", c(list(x$XValCoord[,c(xax, yax)], fac1, col = TRUE, psub.text = pst2, ellipseSize = 0, chullSize = 1, plot = FALSE), storeData = storeData, pos = pos - 2, sortparameters[[2]]))
+	# Display both factor maps side by side
+	# gtot <- ADEgS(list(sc1, sc2))
+	lay <- c(1, 2)
+	object <- new(Class = "ADEgS", ADEglist = list(sc1, sc2), positions = layout2position(lay), add = matrix(0, ncol = 2, nrow = 2), Call = match.call() )
+	names(object) <- graphsnames
+	if(plot)
+		print(object)
+	invisible(object)
+}
+
+"plot.discloocv" <- function (x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, ...) {
+    if (!inherits(x, "discloocv")) 
+        stop("Use only with 'discloocv' objects")
+    disc1 <- eval(x$call[[2]])
+    fac1 <- eval(disc1$call[[3]])
+    if (disc1$nf == 1) {
+        warnings("One axis only : not yet implemented")
+        return(invisible())
+    }
+	# Permutation test
+	rt1 <- ade4::randtest(disc1)
+	# Compute cross-validated coordinates
+	Oijdisc <- x$Oij_disc
+	Oijxval <- x$Oij_XVal
+	dOij <- x$DeltaOij
+
+	## sort parameters for each graph
+	graphsnames <- c("Discrimin", "XVal")
+	sortparameters <- sortparamADEgS(..., graphsnames = graphsnames)
+
+	## default values for parameters
+	params <- list()
+	params[[1]] <- list(psub = list(text = "Discrimin"), pbackground = list(box = TRUE), plabels = list(cex = 1.25))
+	params[[2]] <- list(psub = list(text = "Cross-validation"), pbackground = list(box = TRUE), plabels = list(cex = 1.25))
+	names(params) <- graphsnames
+	sortparameters <- modifyList(params, sortparameters, keep.null = TRUE)
+
+	# Character string: graph title, permutation test p-value and variance ratio
+	pst1 <- paste0("Permutation test p = ", rt1$pvalue, ", Oij = ", round(Oijdisc,2))
+	# Draw BGA factor map
+	sc1 <- do.call("s.class", c(list(dfxy = disc1$li[,c(xax, yax)], fac = fac1, col = TRUE, psub.text = pst1, ellipseSize = 0, chullSize = 1, plot = FALSE), storeData = storeData, pos = pos - 2, sortparameters[[1]]))
+	# Compute cross-validated coordinates
+	# Character string for graph title
+	pst2 <- paste0("Cross-validation Oij = ", round(Oijxval,2), ", dOij = ", round(dOij), "%")
+	# Cross-validated factor map
+	sc2 <- do.call("s.class", c(list(x$XValCoord[,c(xax, yax)], fac1, col = TRUE, psub.text = pst2, ellipseSize = 0, chullSize = 1, plot = FALSE), storeData = storeData, pos = pos - 2, sortparameters[[2]]))
+	# Display both factor maps side by side
+	# gtot <- ADEgS(list(sc1, sc2))
+	lay <- c(1, 2)
+	object <- new(Class = "ADEgS", ADEglist = list(sc1, sc2), positions = layout2position(lay), add = matrix(0, ncol = 2, nrow = 2), Call = match.call() )
+	names(object) <- graphsnames
+	if(plot)
+		print(object)
+	invisible(object)
+}

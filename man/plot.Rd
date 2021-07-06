@@ -40,6 +40,8 @@
 \alias{plot.witdpcoa}
 \alias{plot.within}
 \alias{plot.witrlq}
+\alias{plot.bcaloocv}
+\alias{plot.discloocv}
 \alias{scatter}
 \alias{scatter.coa}
 \alias{scatter.dudi}
@@ -111,6 +113,8 @@ TRUE, plot = TRUE, \dots)
 \method{plot}{witdpcoa}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
 \method{plot}{within}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
 \method{plot}{witrlq}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
+\method{plot}{bcaloocv}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
+\method{plot}{discloocv}(x, xax = 1, yax = 2, pos = -1, storeData = TRUE, plot = TRUE, \dots)
 
 \method{scatter}{dudi}(x, xax = 1, yax = 2, permute = FALSE, posieig = "topleft", prop = FALSE, 
   density.plot = ifelse(permute, ncol(x$tab) > 1000, nrow(x$tab) > 1000), plot = TRUE, 
