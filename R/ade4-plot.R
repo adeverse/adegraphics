@@ -1808,7 +1808,7 @@
 	# Cross-validated factor map
 	sc2 <- do.call("s.class", c(list(x$XValCoord[,c(xax, yax)], fac1, col = TRUE, psub.text = pst2, ellipseSize = 0, chullSize = 1, plot = FALSE), storeData = storeData, pos = pos - 2, sortparameters[[2]]))
 	# Display both factor maps side by side
-	# gtot <- ADEgS(list(sc1, sc2))
+	sc2 <- update(sc2, xlim = sc1@g.args$xlim, ylim = sc1@g.args$ylim)
 	lay <- c(1, 2)
 	object <- new(Class = "ADEgS", ADEglist = list(sc1, sc2), positions = layout2position(lay), add = matrix(0, ncol = 2, nrow = 2), Call = match.call() )
 	names(object) <- graphsnames
@@ -1846,7 +1846,7 @@
 
 	# Character string: graph title, permutation test p-value and variance ratio
 	pst1 <- paste0("Permutation test p = ", rt1$pvalue, ", Oij = ", round(Oijdisc,2))
-	# Draw BGA factor map
+	# Draw discrimin factor map
 	sc1 <- do.call("s.class", c(list(dfxy = disc1$li[,c(xax, yax)], fac = fac1, col = TRUE, psub.text = pst1, ellipseSize = 0, chullSize = 1, plot = FALSE), storeData = storeData, pos = pos - 2, sortparameters[[1]]))
 	# Compute cross-validated coordinates
 	# Character string for graph title
@@ -1854,7 +1854,7 @@
 	# Cross-validated factor map
 	sc2 <- do.call("s.class", c(list(x$XValCoord[,c(xax, yax)], fac1, col = TRUE, psub.text = pst2, ellipseSize = 0, chullSize = 1, plot = FALSE), storeData = storeData, pos = pos - 2, sortparameters[[2]]))
 	# Display both factor maps side by side
-	# gtot <- ADEgS(list(sc1, sc2))
+	sc2 <- update(sc2, xlim = sc1@g.args$xlim, ylim = sc1@g.args$ylim)
 	lay <- c(1, 2)
 	object <- new(Class = "ADEgS", ADEglist = list(sc1, sc2), positions = layout2position(lay), add = matrix(0, ncol = 2, nrow = 2), Call = match.call() )
 	names(object) <- graphsnames
@@ -1862,3 +1862,4 @@
 		print(object)
 	invisible(object)
 }
+
