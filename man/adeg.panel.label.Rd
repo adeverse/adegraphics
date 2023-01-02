@@ -43,7 +43,7 @@ adeg.panel.label(x, y, labels, plabels, pos = NULL)
 
 \references{
   The algorithm used for labels positions optimization is inspired by the \code{pointLabel} 
-  function of the \code{maptools} package developed by Tom Short.
+  function of the \code{car} package (since 2022-10-22, moved from the the \code{maptools} package, developed by Tom Short).
 }
 
 \author{Alice Julien-Laferriere, Aurelie Siberchicot \email{aurelie.siberchicot@univ-lyon1.fr} and Stephane Dray

@@ -296,7 +296,7 @@ sortparamADEg <- function(...) {
 
 
 ########################################################################
-###                         FROM MAPTOOLS                        #######
+###        FROM CAR >= 3.1-1 (or MAPTOOLS before 2022-10-22)     #######
 ########################################################################
 
 .pointLabel <- function(x, y = NULL, labels, width, height, limits, xyAspect, allowSmallOverlap = FALSE, trace = FALSE) {
