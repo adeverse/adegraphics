@@ -27,7 +27,7 @@ setMethod(
             dfxy <- eval(object@data$dfxy, envir = sys.frame(object@data$frame))
         
         ## axes limits
-        if(class(object) == "S2.corcircle") {
+        if(inherits(object, "S2.corcircle")) {
             object@trellis.par$panel.background$col <- "transparent"
             if(object@g.args$fullcircle) {
                 if(is.null(object@g.args$xlim) || !identical(object@s.misc$xfullcircle.update, object@g.args$fullcircle)) {
@@ -85,7 +85,7 @@ setMethod(
         if(is.null(object@g.args$ylim) || !identical(object@s.misc$yfullcircle.update, object@g.args$fullcircle))
             object@g.args$ylim <- limits$ylim
         
-        if(class(object) == "S2.corcircle") {
+        if(inherits(object, "S2.corcircle")) {
             object@s.misc$xfullcircle.update <- object@g.args$fullcircle
             object@s.misc$yfullcircle.update <- object@g.args$fullcircle
         }
@@ -93,7 +93,7 @@ setMethod(
         ## grid locations and axes 
         if(object@adeg.par$pgrid$draw || object@adeg.par$paxes$draw) {
             ## axes division
-            if(class(object) != "S2.corcircle") {
+            if(!inherits(object, "S2.corcircle")) {
                 if(object@adeg.par$porigin$include)
                     object@s.misc$backgrid <- .getgrid(xlim = object@g.args$xlim, ylim = object@g.args$ylim, object@adeg.par$pgrid$nint, rep(object@adeg.par$porigin$origin, le = 2), asp = object@adeg.par$paxes$aspectratio)
                 else
@@ -105,12 +105,12 @@ setMethod(
                 scalesandlab <- modifyList(as.list(object@g.args$scales), object@adeg.par$paxes, keep.null = TRUE)
                 if(is.null(scalesandlab$y$at)) {
                     scalesandlab$y$at <- object@s.misc$backgrid[[3L]][!is.na(object@s.misc$backgrid[[3L]])]
-                    if(class(object) == "S2.corcircle")
+                    if(inherits(object, "S2.corcircle"))
                         scalesandlab$y$at <- scalesandlab$y$at[(length(scalesandlab$y$at) / 2 + 1):length(scalesandlab$y$at)]
                 }
                 if(is.null(scalesandlab$x$at)) {
                     scalesandlab$x$at <- object@s.misc$backgrid[[1L]][!is.na(object@s.misc$backgrid[[1L]])]
-                    if(class(object) == "S2.corcircle")
+                    if(inherits(object, "S2.corcircle"))
                         scalesandlab$x$at <- scalesandlab$x$at[1:(length(scalesandlab$x$at) / 2)]
                 }
             } else 
@@ -142,7 +142,7 @@ setMethod(
         porigin <- object@adeg.par$porigin
         porigin$origin <- rep(porigin$origin, length.out = 2)
 
-        if(class(object) == "S2.corcircle") 
+        if(inherits(object, "S2.corcircle"))
             grid.circle(x = 0, y = 0, r = 1, default.units = "native", gp = gpar(col = "black", fill = object@adeg.par$pbackground$col), draw = TRUE, name = "circleGrid")
         
         if(object@adeg.par$pgrid$draw) { ## if grid to draw
@@ -159,17 +159,17 @@ setMethod(
                 text.pos <- .setposition(grid$text$pos)
                 textgrid <- textGrob(label = paste("d =", locations$d), x = text.pos$posi[1], y = text.pos$posi[2], just = text.pos$just, gp = gpar(cex = grid$text$cex, col = grid$text$col), name = "gridtext")
                 grid.rect(x = text.pos$posi[1], y = text.pos$posi[2], width = grobWidth(textgrid), height = grobHeight(textgrid),
-                          just = text.pos$just, gp = gpar(fill = ifelse(class(object) == "S2.corcircle", "transparent", object@adeg.par$pbackground$col), alpha = 1, col = "transparent"))
+                          just = text.pos$just, gp = gpar(fill = ifelse(inherits(object, "S2.corcircle"), "transparent", object@adeg.par$pbackground$col), alpha = 1, col = "transparent"))
                 grid.draw(textgrid)
             }
         }
         
-        if(porigin$draw && porigin$include & class(object) == "S2.corcircle") {
+        if(porigin$draw && porigin$include & inherits(object, "S2.corcircle")) {
             panel.segments(x0 = c(-1, porigin$origin[1]), x1 = c(1, porigin$origin[1]), y0 = c(porigin$origin[2], -1), y1 = c(porigin$origin[2], 1), col = porigin$col, lwd = porigin$lwd, lty = porigin$lty, alpha = porigin$alpha)
             ## TODO: check last parameters valididy     
         }
         
-        if(porigin$draw && porigin$include & !class(object) == "S2.corcircle") {
+        if(porigin$draw && porigin$include & !inherits(object, "S2.corcircle")) {
             panel.abline(h = porigin$origin[2], v = porigin$origin[1], col = porigin$col, lwd = porigin$lwd, lty = porigin$lty, alpha = porigin$alpha)
             ## TODO: check last parameters valididy
         }

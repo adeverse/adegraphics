@@ -60,7 +60,7 @@ s.logo <- function(dfxy, logos, xax = 1, yax = 2, facets = NULL, plot = TRUE, st
   ## evaluation of some parameters
   thecall <- .expand.call(match.call())
   df <- try(as.data.frame(eval(thecall$dfxy, envir = sys.frame(sys.nframe() + pos))), silent = TRUE)
-  if((class(df) == "try-error") | is.null(thecall$dfxy)) ## non convenient dfxy argument
+  if(inherits(df, "try-error") | is.null(thecall$dfxy)) ## non convenient dfxy argument
     stop("non convenient selection for dfxy (can not be converted to dataframe)")
   logos <- eval(thecall$logos, envir = sys.frame(sys.nframe() + pos))
   if(!is.list(logos))

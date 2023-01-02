@@ -159,7 +159,7 @@ s.distri <- function(dfxy, dfdistri, xax = 1, yax = 2, starSize = 1, ellipseSize
   ## evaluation of some parameters (required for multiplot)
   thecall <- .expand.call(match.call())
   df <- try(as.data.frame(eval(thecall$dfxy, envir = sys.frame(sys.nframe() + pos))), silent = TRUE)
-  if((class(df) == "try-error") | is.null(dfxy))
+  if(inherits(df, "try-error") | is.null(dfxy))
     stop("dfxy, can not be converted as dataframe or is NULL")
   
   ## parameters sorted

@@ -92,7 +92,7 @@ triangle.match <- function(dfxyz1, dfxyz2, labels = row.names(as.data.frame(dfxy
   data1 <- try(as.data.frame(eval(thecall$dfxyz1, envir = sys.frame(sys.nframe() + pos))), silent = TRUE)
   data2 <- try(as.data.frame(eval(thecall$dfxyz2, envir = sys.frame(sys.nframe() + pos))), silent = TRUE)
   
-  if(class(data1) == "try-error" || class(data2) == "try-error" || is.null(thecall$dfxyz1) || is.null(thecall$dfxyz2))  ## wrong conversion 
+  if(inherits(data1, "try-error") || inherits(data2, "try-error") || is.null(thecall$dfxyz1) || is.null(thecall$dfxyz2))  ## wrong conversion 
     stop("non convenient selection for dfxyz1 or dfxyz2 (can not be converted to dataframe)")
 
   sortparameters <- sortparamADEg(...)

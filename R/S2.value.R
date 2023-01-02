@@ -127,7 +127,7 @@ s.value <- function(dfxy, z, breaks = NULL, xax = 1, yax = 2, method = c("size",
   thecall$symbol <- match.arg(symbol)
   df <- try(as.data.frame(eval(thecall$dfxy, envir = sys.frame(sys.nframe() + pos))), silent = TRUE)
   z <- eval(thecall$z, envir = sys.frame(sys.nframe() + pos))
-  if((class(df) == "try-error") | is.null(thecall$dfxy)) ## non convenient dfxy argument
+  if(inherits(df, "try-error") | is.null(thecall$dfxy)) ## non convenient dfxy argument
     stop("non convenient selection for dfxy (can not be converted to dataframe)", call. = FALSE)
   if(NROW(df) != NROW(z))
     stop("dfxy and z should have the same number of rows", call. = FALSE)

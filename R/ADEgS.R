@@ -520,7 +520,7 @@ setMethod(
             res <- c(0, 1)
             if (inherits(object, "ADEg"))
                 object <- gettrellis(object)
-            if (class(object) == "trellis") {
+            if (inherits(object, "trellis")) {
                 if (is.numeric(object$x.limits))
                     res <- object$x.limits
             } 
@@ -532,7 +532,7 @@ setMethod(
             res <- c(0, 1)
             if (inherits(object, "ADEg"))
                 object <- gettrellis(object)
-            if (class(object) == "trellis") {
+            if (inherits(object, "trellis")) {
                 if (is.numeric(object$y.limits))
                     res <- object$y.limits
             } 
@@ -562,7 +562,7 @@ setMethod(
                 object <- listG[[i]]
                 seekViewport(names(listG)[i])
                 
-                if (inherits(object, "ADEg") | class(object) == "trellis") {
+                if (inherits(object, "ADEg") | inherits(object, "trellis")) {
                     if (inherits(object, "ADEg"))
                         trobject <- gettrellis(object)
                     else

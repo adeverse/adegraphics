@@ -107,7 +107,7 @@ s.density <- function(dfxy, xax = 1, yax = 2, bandwidth = NULL, gridsize = c(450
   ## evaluation of some parameters
   thecall <- .expand.call(match.call())
   df <- try(as.data.frame(eval(thecall$dfxy, envir = sys.frame(sys.nframe() + pos))), silent = TRUE)
-  if((class(df) == "try-error") | is.null(thecall$dfxy)) ## non convenient dfxy argument
+  if(inherits(df, "try-error") | is.null(thecall$dfxy)) ## non convenient dfxy argument
     stop("non convenient selection for dfxy (can not be converted to dataframe)")
 
   ## parameters sorted

@@ -244,7 +244,7 @@ sortparamADEg <- function(...) {
     dots <- list(...)
   
   classtest <- try(list(...), silent = TRUE)
-  if(class(classtest) == "try-error")
+  if(inherits(classtest, "try-error"))
     stop("wrong parameters list, error in sortparamADEg")
   
   trellis <- list()

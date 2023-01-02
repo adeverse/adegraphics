@@ -88,7 +88,7 @@ s.match <- function(dfxy1, dfxy2, xax = 1, yax = 2, labels = row.names(as.data.f
   data1 <- try(as.data.frame(eval(thecall$dfxy1, envir = sys.frame(sys.nframe() + pos))), silent = TRUE)
   data2 <- try(as.data.frame(eval(thecall$dfxy2, envir = sys.frame(sys.nframe() + pos))), silent = TRUE)
   
-  if(class(data1) == "try-error" || class(data2) == "try-error" || is.null(thecall$dfxy1) || is.null(thecall$dfxy2))  ## wrong conversion 
+  if(inherits(data1, "try-error") || inherits(data2, "try-error") || is.null(thecall$dfxy1) || is.null(thecall$dfxy2))  ## wrong conversion 
     stop("non convenient selection for dfxy1 or dfxy2 (can not be converted to dataframe)")
   if(any(is.na(pmatch(colnames(data1), colnames(data2)))))
     stop("column names should be identical")

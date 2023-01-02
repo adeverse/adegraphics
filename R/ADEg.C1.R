@@ -43,7 +43,7 @@ setMethod(
     else
       score <- as.matrix(score)[, 1]  ## to manage 'score' when it is a data.frame with only one column
     
-    if(class(object) == "C1.interval")  ## to manage only the first score in c(score1, score2)
+    if(inherits(object, "C1.interval"))  ## to manage only the first score in c(score1, score2)
       score <- score[1:(length(score) / 2)]
     
     ## limits and scale
