@@ -49,7 +49,7 @@ adeg.panel.label(x, y, labels, plabels, pos = NULL)
 \author{Alice Julien-Laferriere, Aurelie Siberchicot \email{aurelie.siberchicot@univ-lyon1.fr} and Stephane Dray
 }
 
-\seealso{\link[maptools]{pointLabel}}
+\seealso{\link[car]{pointLabel}}
 
 \note{
   For more information about the use of panel functions, please see the \code{lattice} package developed by Deepayan Sarkar.
