@@ -58,8 +58,8 @@ dfY <- cbind.data.frame(lmorta = log(monde84$morta), lanal = log(monde84$anal + 
 dfX0 <- ade4::scalewt(dfX)
 dfY0 <- ade4::scalewt(dfY)
 can1 <- cancor(dfX0, dfY0)
-varcanoX <- dfX0%*%can1$xcoef[,1]
-varcanoY <- dfY0%*%can1$ycoef[,1]
+varcanoX <- dfX0 \%*\% can1$xcoef[,1]
+varcanoY <- dfY0 \%*\% can1$ycoef[,1]
 g1 <- s.label(cbind(varcanoY,varcanoX), labels = row.names(monde84), plabel.cex = 0.8, plot = FALSE)
 addline(g1, 0, 1, plines.col = "red", plines.lwd = 0.5, plines.lty = 2)
 }
