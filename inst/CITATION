@@ -1,12 +1,8 @@
 citHeader("To cite adegraphics in publications use this reference:")
 
-citEntry(entry="Article",
+bibentry(bibtype="Article",
 	title = "{adegraphics: An S4 Lattice-Based Package for the Representation of Multivariate Data}",
-  author = personList(as.person("Aurélie Siberchicot"),
-                      as.person("Alice Julien-Laferrière"),
-                      as.person("Anne-Béatrice Dufour"),
-                      as.person("Jean Thioulouse"),
-                      as.person("Stéphane Dray")),
+  author = c("Aurélie Siberchicot", "Alice Julien-Laferrière", "Anne-Béatrice Dufour", "Jean Thioulouse", "Stéphane Dray"),
 	journal = "{The R Journal}",
   year = "2017",
 	volume = "9",
@@ -22,15 +18,9 @@ citEntry(entry="Article",
               "https://journal.r-project.org/archive/2017/RJ-2017-042/index.html")
          )
          
-citEntry(entry="Book",
+bibentry(bibtype="Book",
   title = "Multivariate Analysis of Ecological Data with {ade4}",
-  author =  personList(as.person("Jean Thioulouse"),
-                       as.person("Stéphane Dray"),
-                       as.person("Anne-Béatrice Dufour"),
-                       as.person("Aurélie Siberchicot"),
-                       as.person("Thibaut Jombart"),
-                       as.person("Sandrine Pavoine")
-                      ),
+  author =  c("Jean Thioulouse", "Stéphane Dray", "Anne-Béatrice Dufour", "Aurélie Siberchicot", "Thibaut Jombart", "Sandrine Pavoine"),
   year = "2018",
   publisher = "Springer",
   doi = "10.1007/978-1-4939-8850-1",
