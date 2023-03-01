@@ -1,5 +1,6 @@
 library(ade4)
 library(adegraphics)
+library(sp)
 library(spdep)
 library(lattice)
 
