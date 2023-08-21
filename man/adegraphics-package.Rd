@@ -31,15 +31,6 @@
 }
 
 \details{
-  \tabular{ll}{
-    Package: \tab adegraphics\cr
-    Type: \tab Package\cr
-    Version: \tab 1.0-12\cr
-    Date: \tab 2018-08-31\cr
-    License: \tab GPL (>=2)\cr
-    Depends: \tab ade4 (>= 1.7-13), graphics, grid, KernSmooth, lattice, latticeExtra, methods, RColorBrewer, sp (>= 1.1-1), stats
-  }
-  
   A lot of classes were implemented.
   Two superclass structures the architecture in class.
   Simple and complex graphics are distinguished in the former version:
@@ -60,9 +51,6 @@
   }
 }
 
-\author{Alice Julien-Laferriere, Aurelie Siberchicot \email{aurelie.siberchicot@univ-lyon1.fr} and Stephane Dray
-}
-
 \references{
   Aurélie Siberchicot, Alice Julien-Laferrière, Anne-Béatrice Dufour, Jean Thioulouse and Stéphane Dray (2017). adegraphics: An S4
   Lattice-Based Package for the Representation of Multivariate Data. The R Journal. 9:2. 198--212.
@@ -78,6 +66,6 @@
 }
 
 \examples{
-showClass("ADEg")
-showClass("ADEgS")
+  showClass("ADEg")
+  showClass("ADEgS")
 }
