@@ -1,4 +1,4 @@
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/adegraphics)](http://cran.r-project.org/package=adegraphics)
+[![CRAN_Release_Badge](http://www.r-pkg.org/badges/version-ago/adegraphics)](http://cran.r-project.org/package=adegraphics)
 [![CRAN Downloads](https://cranlogs.r-pkg.org/badges/adegraphics)](https://cran.r-project.org/package=adegraphics)
 [![R-CMD-check](https://github.com/sdray/adegraphics/workflows/R-CMD-check/badge.svg)](https://github.com/sdray/adegraphics/actions)
 
