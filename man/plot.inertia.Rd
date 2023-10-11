@@ -25,9 +25,9 @@
   \item{x}{an object of the \code{dudi} class; it must be the output of a 
     correspondance analysis (\code{coa} object).}
   
-  \item{xax}{an integer indicating which column of {x} is plotted on the x-axis}
+  \item{xax}{an integer indicating which column of \code{x} is plotted on the x-axis}
   
-  \item{yax}{an integer indicating which column of {x} is plotted on the y-axis.
+  \item{yax}{an integer indicating which column of \code{x} is plotted on the y-axis.
     If \code{yax} is equal to \code{xax}, a one-dimensional graph is display.}
   
   \item{threshold}{a numeric value containing the contribution threshold 

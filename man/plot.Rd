@@ -141,9 +141,9 @@ TRUE, plot = TRUE, \dots)
 \arguments{
   \item{object, x}{objects used to select a method}
   
-  \item{xax}{an integer (or a vector) indicating which column(s) of {object} or \code{x} is(are) plotted on the x-axis}
+  \item{xax}{an integer (or a vector) indicating which column(s) of \code{object} or \code{x} is(are) plotted on the x-axis}
   
-  \item{yax}{an integer (or a vector) indicating which column(s) of {object} or \code{x} is(are) plotted on the y-axis}
+  \item{yax}{an integer (or a vector) indicating which column(s) of \code{object} or \code{x} is(are) plotted on the y-axis}
   
   \item{which.tab}{a numeric vector (used in \code{kplot.*}) containing the numbers of the tables used for the analysis}
   
