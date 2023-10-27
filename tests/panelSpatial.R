@@ -38,14 +38,14 @@ g3 <- s.class(dfxy2, fac = fac, sp.layout = list(scale2, text12, text22, arrow2,
   porigin.include = FALSE, Sp = meuse.sr)
 
 ## ex3
-# if(require(Guerry)) {
-#   data(gfrance85)
-#   
-#   dfxy4 <- coordinates(gfrance85)
-#   region.names <- data.frame(gfrance85)[, 5]
-#   col.region <- colors()[c(149, 254, 468, 552, 26)]
-#   g4 <- s.class(dfxy4, region.names, ellip = 0, star = 0, col = col.region, Sp = gfrance85, pSp.col = col.region[region.names], porig.inclu = F)
-# }
+if(require(Guerry)) {
+  data(gfrance85)
+
+  dfxy4 <- coordinates(gfrance85)
+  region.names <- data.frame(gfrance85)[, 5]
+  col.region <- colors()[c(149, 254, 468, 552, 26)]
+  g4 <- s.class(dfxy4, region.names, ellip = 0, star = 0, col = col.region, Sp = gfrance85, pSp.col = col.region[region.names], porig.inclu = F)
+}
 
 ## ex4
 library(sp)
