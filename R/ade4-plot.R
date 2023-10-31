@@ -1635,11 +1635,11 @@
   f_row <- function(posi = NULL, pos){
     graphnames <- c(if(length(lightrow) > 0) {"light_row"}, "heavy_row", if(!is.null(posi)) {"eig"})
     
-    g1 <- do.call("s.label", c(list(dfxy = lightrow, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$light_row))
+    g1 <- do.call("s.label", c(list(dfxy = lightrow, xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$light_row))
     if(type == "label")
-      g2 <- do.call("s.label", c(list(dfxy = heavyrow, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$heavy_row))
+      g2 <- do.call("s.label", c(list(dfxy = heavyrow, xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$heavy_row))
     else
-      g2 <- do.call("s.class", c(list(dfxy = cont_row, fac = fac_row, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$heavy_row))
+      g2 <- do.call("s.class", c(list(dfxy = cont_row, fac = fac_row, xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$heavy_row))
     grow <- do.call("superpose", list(g1, g2))
     grow@Call <- call("superpose", list(g1@Call, g2@Call))
     
@@ -1653,11 +1653,11 @@
   f_col <- function(posi = NULL, pos) {
     graphnames <- c(if(length(lightcol) > 0) {"light_col"}, "heavy_col", if(!is.null(posi)) {"eig"})
     
-    g3 <- do.call("s.label", c(list(dfxy = lightcol, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$light_col))
+    g3 <- do.call("s.label", c(list(dfxy = lightcol, xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$light_col))
     if(type == "label")
-      g4 <- do.call("s.label", c(list(dfxy = heavycol, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$heavy_col))
+      g4 <- do.call("s.label", c(list(dfxy = heavycol, xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$heavy_col))
     else
-      g4 <- do.call("s.class", c(list(dfxy = cont_col, fac = fac_col, xax = xax, yax = yax, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$heavy_col))
+      g4 <- do.call("s.class", c(list(dfxy = cont_col, fac = fac_col, xax = 1, yax = 2, plot = FALSE, storeData = storeData, pos = pos - 2), sortparameters$heavy_col))
     gcol <- do.call("superpose", list(g3, g4))
     gcol@Call <- call("superpose", list(g3@Call, g4@Call))
     

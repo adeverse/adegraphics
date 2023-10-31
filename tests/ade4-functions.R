@@ -99,6 +99,12 @@ score(res23, posieig = "bottomri")
 score(res23, posieig = c(0.5, 0.5))
 score(res23, posieig = c(0.5, 0.5, 2, 2))
 
+data(doubs, package = "ade4")
+afc <- ade4::dudi.coa(doubs$fish, scannf = FALSE, nf = 5)
+ic <- ade4::inertia.dudi(afc, row.inertia=TRUE, col.inertia=TRUE)
+plot(ic, contrib = "abs", threshold = 0.1, type = "label")
+plot(ic, contrib="abs", threshold = 0.1, type = "label", xax = 3, yax = 4) 
+
 
 ##################### plot.acm
 data(lascaux, package = "ade4")

@@ -81,11 +81,12 @@
 \examples{
 # First example
 data(bf88, package = "ade4")
-coa1 <- ade4::dudi.coa(bf88$S1, scannf = FALSE, nf = 2)
+coa1 <- ade4::dudi.coa(bf88$S1, scannf = FALSE, nf = 3)
 
 ###### row=T / col=F
-res11 <- ade4::inertia(coa1, row = TRUE, col = FALSE, nf = 2)
-g11 <- plot(res11, threshold = 0.06)
+res11 <- ade4::inertia(coa1, row = TRUE, col = FALSE, nf = 3)
+g111 <- plot(res11, threshold = 0.06)
+g112 <- plot(res11, threshold = 0.06, xax = 1, yax = 3)
 g12 <- plot(res11, threshold = 0.06, plabels.boxes.draw = TRUE, plines.lwd = 0,
   light_row.ppoints.cex = 0, posieig = "bottomleft")
 g13 <- score(res11, threshold = 0.06)
