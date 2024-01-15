@@ -115,7 +115,7 @@ setMethod(
       Xlim <- object@g.args$xlim
       
       if(is.null(object@s.misc$p1dReverse.update) || object@adeg.par$p1d$reverse != object@s.misc$p1dReverse.update ||
-         is.null(object@s.misc$Xlim.update) || Xlim != object@s.misc$Xlim.update) {
+         is.null(object@s.misc$Xlim.update) || any(Xlim != object@s.misc$Xlim.update)) {
         
         if(is.null(object@g.args$xlim))
           Xlim <- c(0, max(sapply(densit, FUN = function(x) {ifelse(is.na(x$y[1]), 0, max(x$y))}) / 0.85))
