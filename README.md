@@ -1,13 +1,27 @@
+# [adegraphics](http://pbil.univ-lyon1.fr/ADE-4/)
+
 [![CRAN_Release_Badge](http://www.r-pkg.org/badges/version-ago/adegraphics)](http://cran.r-project.org/package=adegraphics)
 [![CRAN Downloads](https://cranlogs.r-pkg.org/badges/adegraphics)](https://cran.r-project.org/package=adegraphics)
-[![R-CMD-check](https://github.com/sdray/adegraphics/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/sdray/adegraphics/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/adeverse/adegraphics/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/adeverse/adegraphics/actions/workflows/R-CMD-check.yaml)
 
-
-# [adegraphics](http://pbil.univ-lyon1.fr/ADE-4/)
 An S4 Lattice-Based Package for the Representation of Multivariate Data
 
+---------------------------
 
-Read the [wiki](https://github.com/sdray/adegraphics/wiki) for more information
+**Please note! Since January 2024, this repository has belonged to the *adeverse* organization.**
+To avoid confusion, we strongly recommend updating any existing local clones to point to the new 
+repository URL. You can do this by using `git remote` on the command line:
+
+`git remote set-url origin git@github.com:adeverse/adegraphics.git`
+
+or 
+
+`git remote set-url origin https://github.com/adeverse/adegraphics.git`
+
+---------------------------
+
+
+Read the [wiki](https://github.com/adeverse/adegraphics/wiki) for more information
 
 Installing *adegraphics*
 -------------
@@ -24,7 +38,7 @@ Then:
 
 ```r
 library(devtools)
-install_github("sdray/adegraphics")
+install_github("adeverse/adegraphics")
 ```
 
 The stable version can be installed from CRAN using:
