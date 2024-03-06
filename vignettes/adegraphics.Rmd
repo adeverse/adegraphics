@@ -7,10 +7,11 @@ output:
     number_sections: yes
     toc: yes
 bibliography: adegraphics.bib
-vignette: |
+vignette: >
   %\VignetteIndexEntry{The `adegraphics` package} 
   %\VignetteEngine{knitr::rmarkdown} 
   %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
 ---
 
 <br>
