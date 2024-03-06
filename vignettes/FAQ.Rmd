@@ -1,0 +1,86 @@
+---
+title: Frequently Asked Questions
+author: Aurélie Siberchicot, Stéphane Dray, Jean Thioulouse
+date: '`r Sys.Date()`'
+output:
+  bookdown::html_document2:
+    base_format: rmarkdown::html_vignette
+    fig_caption: yes
+    toc: true
+    number_sections: yes
+link-citations: true
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Frequently Asked Questions} 
+  %!\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
+pkgdown:
+  as_is: true
+---
+
+```{r setup, echo=FALSE, message=FALSE, warning=FALSE}
+require(fitdistrplus)
+set.seed(1234)
+options(digits = 3)
+```
+
+```{r}
+library(ade4)
+library(adegraphics)
+
+set.seed(2564)
+df <- data.frame(x = rep(1:10,1), 
+                 y = rep(1:10, each = 10), 
+                 ms_li = runif(100, min = -5, max = 4))
+```
+
+
+# How to personalize plots 
+
+## How to update title axes?
+
+```{r}
+s.value(df[, 1:2], df$ms_li, 
+        paxes.draw = TRUE)
+```
+
+### Size titles on axes
+
+`xlab.cex` and `ylab.cex` manage the size titles on the `x` and `y` axes.
+```{r}
+s.value(df[, 1:2], df$ms_li, 
+        paxes.draw = TRUE,
+        xlab = "Longitude", xlab.cex = 0.5,
+        ylab = "Latitude", ylab.cex = 0.5
+        )
+```
+
+
+### Size labels on axes
+
+`scales.x.cex` and `scales.y.cex` manage the sizes labels on the `x` and `y` axes.
+
+```{r}
+s.value(df[, 1:2], df$ms_li, 
+        paxes.draw = TRUE,
+        scales.x.cex = 0.5,
+        scales.y.cex = 0.5
+        )
+```
+
+
+
+### Margin of axis
+
+`layout.heights = list(bottom.padding = 1)` manages the margin of the bottom axis.
+This enlarges the space for a larger title axis.
+
+```{r}
+s.value(df[, 1:2], df$ms_li, 
+        paxes.draw = TRUE,
+        xlab = "Longitude", xlab.cex = 2,
+        ylab = "Latitude", ylab.cex = 2,
+        layout.heights = list(bottom.padding = 2)
+        )
+```
+
