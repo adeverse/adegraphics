@@ -1,28 +1,16 @@
 ---
-title: Frequently Asked Questions
-author: Aurélie Siberchicot, Stéphane Dray, Jean Thioulouse
+title: "Frequently Asked Questions"
+author: "Aurélie Siberchicot, Stéphane Dray, Jean Thioulouse"
 date: '`r Sys.Date()`'
 output:
-  bookdown::html_document2:
-    base_format: rmarkdown::html_vignette
-    fig_caption: yes
-    toc: true
+  html_vignette:
     number_sections: yes
-link-citations: true
+    toc: yes
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteIndexEntry{Frequently Asked Questions} 
   %!\VignetteEncoding{UTF-8}
-  \usepackage[utf8]{inputenc}
-pkgdown:
-  as_is: true
 ---
-
-```{r setup, echo=FALSE, message=FALSE, warning=FALSE}
-require(fitdistrplus)
-set.seed(1234)
-options(digits = 3)
-```
 
 ```{r}
 library(ade4)
