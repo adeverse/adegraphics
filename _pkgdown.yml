@@ -1,0 +1,19 @@
+template:
+  bootstrap: 5
+
+navbar:
+  structure:
+    left:  [intro, reference, articles, tutorials, news]
+    right: [search, github]
+
+toc:
+  number_sections: yes
+  depth: 4
+  
+articles:
+- title: Articles
+  navbar: ~
+  contents:
+  - adegraphics
+  - FAQ
+  
