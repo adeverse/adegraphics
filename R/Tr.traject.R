@@ -76,7 +76,7 @@ setMethod(
     
     todrawX <- split(object@stats$coords2d[, 1], fact)
     todrawY <- split(object@stats$coords2d[, 2], fact)
-    sizelevels <- sapply(todrawX, length)
+    sizelevels <- unlist(lapply(todrawX, length))
     if(!is.null(object@g.args$order))
       orderdraw <- split(order, fact)
     else
@@ -115,7 +115,7 @@ setMethod(
     
     if(any(object@adeg.par$plabels$cex > 0)) {
       ## draws labels in the middle part of the trajectory
-      middl <- sapply(orderdraw, FUN = function(x) floor(length(x) / 2))
+      middl <- unlist(lapply(orderdraw, FUN = function(x) floor(length(x) / 2)))
       x <- y <- rep(NA, length(middl))
       for(i in 1:length(middl)) {
         if(length(todrawX[[i]]) > 1) {
