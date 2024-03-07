@@ -92,10 +92,11 @@ setMethod(
                            lty = object@adeg.par$pgrid$lty)
 
         ## draw axes
+        axis.text <- modifyList(as.list(object@trellis.par$axis.text), trellis.par.get()$axis.text, keep.null = TRUE)
         axis.text2 <- list()
-        axis.text <- trellis.par.get("axis.text")
         axis.text2[c("cex", "col")] <- object@adeg.par$pgrid$text[c("cex", "col")]
-        division <- object@s.misc$lgrid$posgrid[-c(1, length(object@s.misc$lgrid$posgrid))]
+        # never used: division <- object@s.misc$lgrid$posgrid[-c(1, length(object@s.misc$lgrid$posgrid))]
+        
         pos <- c(1, 3, 3)
         srt <- c(0, 60, -60)
 
