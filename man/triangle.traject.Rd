@@ -82,7 +82,7 @@ names(exo1) <- c("agr", "ouv", "ter")
 com <- as.factor(rep(c("Gig", "Lun", "Gan", "Mat"), c(3, 3, 3, 3)))
 rec <- as.factor(rep(c("68", "75", "82"), 4))
 row.names(exo1) <- paste(com, rec, sep = "")
-tri1 <- triangle.traject(exo1)
+tri1 <- triangle.traject(exo1, fac = com)
 }
 
 \keyword{hplot}
