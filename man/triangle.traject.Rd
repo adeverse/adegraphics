@@ -83,7 +83,7 @@ com <- as.factor(rep(c("Gig", "Lun", "Gan", "Mat"), c(3, 3, 3, 3)))
 rec <- as.factor(rep(c("68", "75", "82"), 4))
 row.names(exo1) <- paste(com, rec, sep = "")
 tri1 <- triangle.traject(exo1, fac = com, showposition=FALSE, 
- pgrid.draw = FALSE)
+ pgrid.draw = FALSE, col = TRUE)
 }
 
 \keyword{hplot}
