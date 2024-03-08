@@ -2,7 +2,7 @@ setClass(
     Class = "ADEg.Tr",
     contains = c("ADEg", "VIRTUAL"),
     slots = c(data = "list")
-    )
+)
 
 
 setMethod(
@@ -20,12 +20,12 @@ setMethod(
     signature = "ADEg.Tr",
     definition = function(object) {
         name_obj <- deparse(substitute(object))
-
+        
         if(object@data$storeData)
             df <- object@data$dfxyz
         else 
             df <- eval(object@data$dfxyz, envir = sys.frame(object@data$frame))
-
+        
         ## define limits
         if(is.null(object@g.args$xlim))
             object@g.args$xlim <- c(-0.8, 0.8)
@@ -37,9 +37,9 @@ setMethod(
             object@g.args$max3d <- .trranges(df = df, adjust = object@g.args$adjust)$maxi
         if(is.null(object@g.args$min3d))
             object@g.args$min3d <- .trranges(df = df, adjust = object@g.args$adjust)$mini
-
+        
         valuLim <- .trranges(df = df, adjust = object@g.args$adjust, min3 = object@g.args$min3d, max3 = object@g.args$max3d)
-
+        
         ## coordinates for the triangle vertices
         A <- c(-1 / sqrt(2), -1 / sqrt(6))
         B <- c(1 / sqrt(2), -1 / sqrt(6))
@@ -50,10 +50,10 @@ setMethod(
         ng <- object@adeg.par$pgrid$nint + 1 ## number of grid lines
         pts1 <- pts2 <- pts3 <- c()
         vdivision <- mapply(FUN = function(min, max) seq(min, max, length.out = ng), min = valuLim$mini, max = valuLim$maxi) ## 3 columns: one per axes    
-
+        
         ## where to draw the division
         indented <- seq(0, 1, length.out = nrow(vdivision))[-c(1, nrow(vdivision))]
-
+        
         ## axis 1 (A to B)
         pts1 <- matrix(rep(A, length(indented)), ncol = 2, byrow = TRUE) + indented * (matrix(rep(B, length(indented)), ncol = 2, byrow = TRUE) - matrix(rep(A, length(indented)), ncol = 2, byrow = TRUE)) 
         ##axis 2 (A to C)
@@ -78,7 +78,7 @@ setMethod(
         dfcorner <- rbind(object@s.misc$cornerp$A, object@s.misc$cornerp$B, object@s.misc$cornerp$C, object@s.misc$cornerp$A)
         
         panel.polygon(dfcorner, col = object@adeg.par$pbackground$col, border = if(object@adeg.par$pbackground$box) col = "#000000" else "transparent") ## not really useful (only  for arguments consistency)
-
+        
         ## size of the grid
         nn <- sapply(object@s.misc$lgrid, nrow)[-4]
         ## draw grid
@@ -90,7 +90,7 @@ setMethod(
                            lwd = object@adeg.par$pgrid$lwd,
                            col = object@adeg.par$pgrid$col,
                            lty = object@adeg.par$pgrid$lty)
-
+        
         ## draw axes
         axis.text <- modifyList(as.list(object@trellis.par$axis.text), trellis.par.get()$axis.text, keep.null = TRUE)
         axis.text2 <- list()
@@ -99,7 +99,7 @@ setMethod(
         
         pos <- c(1, 3, 3)
         srt <- c(0, 60, -60)
-
+        
         ## get axes names
         if(object@data$storeData)
             axisN <- colnames(object@data$dfxyz)[c(2, 1, 3)]
@@ -142,13 +142,13 @@ setMethod(
     signature = "ADEg.Tr",
     definition = function(object) {
         name_obj <- deparse(substitute(object))
-
+        
         ## background and box
         ## object@trellis.par$panel.background$col <- object@adeg.par$pbackground$col
         if(!object@adeg.par$pbackground$box)
-          object@trellis.par$axis.line$col <- "transparent"
+            object@trellis.par$axis.line$col <- "transparent"
         else
-          object@trellis.par$axis.line$col <- "black"
+            object@trellis.par$axis.line$col <- "black"
         
         arguments = list(
             par.settings = object@trellis.par,
