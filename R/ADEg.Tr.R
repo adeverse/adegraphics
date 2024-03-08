@@ -121,7 +121,8 @@ setMethod(
             ptlab <- object@s.misc$lgrid[[i]][1, ] + (object@s.misc$lgrid[[i]][nn[i], ] - object@s.misc$lgrid[[i]][1, ]) / 2
             
             ## axis names
-            do.call("panel.text", args = c(list(labels = axisN[i], x = ptlab[1], y = ptlab[2], srt = srt[i], pos = pos[i]), axis.text))
+            if(axis.text$cex != 0)
+                do.call("panel.text", args = c(list(labels = axisN[i], x = ptlab[1], y = ptlab[2], srt = srt[i], pos = pos[i]), axis.text))
         }
         do.call("panel.text", c(list(x = orderCplot[, 1], y = orderCplot[, 2], lab = lcorners, pos = posCplot), axis.text2))
     })
