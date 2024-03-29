@@ -23,13 +23,13 @@ or
 
 Read the [wiki](https://github.com/adeverse/adegraphics/wiki) for more information
 
-Installing *adegraphics*
+
+Installing the development version of `adegraphics`
 -------------
-To install the development version from github:
 
-1. Install the release version of `devtools` from CRAN with `install.packages("devtools")`.
+- Install the release version of `remotes` from CRAN with `install.packages("remotes")`.
 
-2. Make sure you have a working development environment.
+- Make sure you have a working development environment.
     * **Windows**: Install [Rtools](http://cran.r-project.org/bin/windows/Rtools/).
     * **Mac**: Install Xcode from the Mac App Store.
     * **Linux**: Install a compiler and various development libraries (details vary across different flavors of Linux).
@@ -37,24 +37,25 @@ To install the development version from github:
 Then:
 
 ```r
-library(devtools)
-install_github("adeverse/adegraphics")
+remotes::install_github("adeverse/adegraphics")
 ```
 
-The stable version can be installed from CRAN using:
+
+If you do not wish to install the development environments Rtools (Windows) / XCode (Mac), we can supply binary packages of the development version of `adegraphics` on request. 
+
+
+
+Installing the stable version of `adegraphics`
+-------------
 
 ```r
 install.packages("adegraphics")
 ```
 
-Once installed, the package can be loaded using:
+
+Loading `adegraphics`
+-------------
 
 ```r
 library("adegraphics")
 ```
-
-If you do not wish to install the development environments Rtools (Windows) / XCode (Mac), you can get the binary packages here:
-
-* [**Windows**](http://pbil.univ-lyon1.fr/members/thioulouse/bin/windows/)
-
-* [**macOS**](http://pbil.univ-lyon1.fr/members/thioulouse/bin/macosx/)
