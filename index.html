@@ -80,12 +80,11 @@
 <hr>
 <p>Read the <a href="https://github.com/adeverse/adegraphics/wiki" class="external-link">wiki</a> for more information</p>
 <div class="section level2">
-<h2 id="installing-adegraphics">Installing <em>adegraphics</em>
-<a class="anchor" aria-label="anchor" href="#installing-adegraphics"></a>
+<h2 id="installing-the-development-version-of-adegraphics">Installing the development version of <code>adegraphics</code>
+<a class="anchor" aria-label="anchor" href="#installing-the-development-version-of-adegraphics"></a>
 </h2>
-<p>To install the development version from github:</p>
-<ol style="list-style-type: decimal">
-<li><p>Install the release version of <code>devtools</code> from CRAN with <code>install.packages("devtools")</code>.</p></li>
+<ul>
+<li><p>Install the release version of <code>remotes</code> from CRAN with <code>install.packages("remotes")</code>.</p></li>
 <li>
 <p>Make sure you have a working development environment.</p>
 <ul>
@@ -97,22 +96,25 @@
 <strong>Linux</strong>: Install a compiler and various development libraries (details vary across different flavors of Linux).</li>
 </ul>
 </li>
-</ol>
+</ul>
 <p>Then:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span></span>
-<span><span class="fu">install_github</span><span class="op">(</span><span class="st">"adeverse/adegraphics"</span><span class="op">)</span></span></code></pre></div>
-<p>The stable version can be installed from CRAN using:</p>
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"adeverse/adegraphics"</span><span class="op">)</span></span></code></pre></div>
+<p>If you do not wish to install the development environments Rtools (Windows) / XCode (Mac), we can supply binary packages of the development version of <code>adegraphics</code> on request.</p>
+</div>
+<div class="section level2">
+<h2 id="installing-the-stable-version-of-adegraphics">Installing the stable version of <code>adegraphics</code>
+<a class="anchor" aria-label="anchor" href="#installing-the-stable-version-of-adegraphics"></a>
+</h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"adegraphics"</span><span class="op">)</span></span></code></pre></div>
-<p>Once installed, the package can be loaded using:</p>
+</div>
+<div class="section level2">
+<h2 id="loading-adegraphics">Loading <code>adegraphics</code>
+<a class="anchor" aria-label="anchor" href="#loading-adegraphics"></a>
+</h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="http://pbil.univ-lyon1.fr/ADE-4/" class="external-link">"adegraphics"</a></span><span class="op">)</span></span></code></pre></div>
-<p>If you do not wish to install the development environments Rtools (Windows) / XCode (Mac), you can get the binary packages here:</p>
-<ul>
-<li><p><a href="http://pbil.univ-lyon1.fr/members/thioulouse/bin/windows/" class="external-link"><strong>Windows</strong></a></p></li>
-<li><p><a href="http://pbil.univ-lyon1.fr/members/thioulouse/bin/macosx/" class="external-link"><strong>macOS</strong></a></p></li>
-</ul>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
