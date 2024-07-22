@@ -14,13 +14,9 @@ vignette: >
 ---
 
 ```{r}
+set.seed(2564)
 library(ade4)
 library(adegraphics)
-
-set.seed(2564)
-df <- data.frame(x = rep(1:10,1), 
-                 y = rep(1:10, each = 10), 
-                 ms_li = runif(100, min = -5, max = 4))
 ```
 
 
@@ -29,6 +25,9 @@ df <- data.frame(x = rep(1:10,1),
 ## How to update title axes?
 
 ```{r}
+df <- data.frame(x = rep(1:10,1), 
+                 y = rep(1:10, each = 10), 
+                 ms_li = runif(100, min = -5, max = 4))
 s.value(df[, 1:2], df$ms_li, 
         paxes.draw = TRUE)
 ```
@@ -71,5 +70,29 @@ s.value(df[, 1:2], df$ms_li,
         ylab = "Latitude", ylab.cex = 2,
         layout.heights = list(bottom.padding = 2)
         )
+```
+
+
+## How to update label's boxes ?
+```{r}
+x0 <- runif(50, -2, 2)
+y0 <- runif(50, -2, 2)
+s.label(data.frame(x0, y0))
+```
+
+### Remove boxes around labels
+```{r}
+s.label(data.frame(x0, y0), plabels.boxes.border = 0)
+s.label(data.frame(x0, y0), plabels.boxes.draw = FALSE, ppoints.cex = 0)
+```
+
+### Color of label's boxes
+```{r}
+s.label(data.frame(x0, y0), plabels.boxes.col = "orange")
+```
+
+### Border of label's boxes
+```{r}
+s.label(data.frame(x0, y0), plabels.boxes.border = "blue", plabels.boxes.lwd = 2)
 ```
 
