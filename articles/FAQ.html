@@ -60,7 +60,7 @@
                         <h4 data-toc-skip class="author">Aurélie
 Siberchicot, Stéphane Dray, Jean Thioulouse</h4>
             
-            <h4 data-toc-skip class="date">2024-07-19</h4>
+            <h4 data-toc-skip class="date">2024-07-22</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/adeverse/adegraphics/blob/master/vignettes/FAQ.Rmd" class="external-link"><code>vignettes/FAQ.Rmd</code></a></small>
       <div class="d-none name"><code>FAQ.Rmd</code></div>
@@ -69,7 +69,8 @@ Siberchicot, Stéphane Dray, Jean Thioulouse</h4>
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://pbil.univ-lyon1.fr/ADE-4/" class="external-link">ade4</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2564</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://pbil.univ-lyon1.fr/ADE-4/" class="external-link">ade4</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://pbil.univ-lyon1.fr/ADE-4/" class="external-link">adegraphics</a></span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Registered S3 methods overwritten by 'adegraphics':</span></span>
 <span><span class="co">##   method         from</span></span>
@@ -95,19 +96,17 @@ Siberchicot, Stéphane Dray, Jean Thioulouse</h4>
 <span><span class="co">##     kplotsepan.coa, s.arrow, s.class, s.corcircle, s.distri, s.image,</span></span>
 <span><span class="co">##     s.label, s.logo, s.match, s.traject, s.value, table.value,</span></span>
 <span><span class="co">##     triangle.class</span></span></code></pre>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2564</span><span class="op">)</span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="fl">1</span><span class="op">)</span>, </span>
-<span>                 y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, each <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>, </span>
-<span>                 ms_li <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">100</span>, min <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, max <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="how-to-personalize-plots">How to personalize plots<a class="anchor" aria-label="anchor" href="#how-to-personalize-plots"></a>
 </h2>
 <div class="section level3">
 <h3 id="how-to-update-title-axes">How to update title axes?<a class="anchor" aria-label="anchor" href="#how-to-update-title-axes"></a>
 </h3>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/s.value.html">s.value</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, <span class="va">df</span><span class="op">$</span><span class="va">ms_li</span>, </span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,<span class="fl">1</span><span class="op">)</span>, </span>
+<span>                 y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, each <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>, </span>
+<span>                 ms_li <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">100</span>, min <span class="op">=</span> <span class="op">-</span><span class="fl">5</span>, max <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/s.value.html">s.value</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, <span class="va">df</span><span class="op">$</span><span class="va">ms_li</span>, </span>
 <span>        paxes.draw <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="FAQ_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
 <div class="section level4">
@@ -115,7 +114,7 @@ Siberchicot, Stéphane Dray, Jean Thioulouse</h4>
 </h4>
 <p><code>xlab.cex</code> and <code>ylab.cex</code> manage the size
 titles on the <code>x</code> and <code>y</code> axes.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/s.value.html">s.value</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, <span class="va">df</span><span class="op">$</span><span class="va">ms_li</span>, </span>
 <span>        paxes.draw <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>        xlab <span class="op">=</span> <span class="st">"Longitude"</span>, xlab.cex <span class="op">=</span> <span class="fl">0.5</span>,</span>
@@ -128,7 +127,7 @@ titles on the <code>x</code> and <code>y</code> axes.</p>
 </h4>
 <p><code>scales.x.cex</code> and <code>scales.y.cex</code> manage the
 sizes labels on the <code>x</code> and <code>y</code> axes.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/s.value.html">s.value</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, <span class="va">df</span><span class="op">$</span><span class="va">ms_li</span>, </span>
 <span>        paxes.draw <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>        scales.x.cex <span class="op">=</span> <span class="fl">0.5</span>,</span>
@@ -142,7 +141,7 @@ sizes labels on the <code>x</code> and <code>y</code> axes.</p>
 <p><code>layout.heights = list(bottom.padding = 1)</code> manages the
 margin of the bottom axis. This enlarges the space for a larger title
 axis.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/s.value.html">s.value</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, <span class="va">df</span><span class="op">$</span><span class="va">ms_li</span>, </span>
 <span>        paxes.draw <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>        xlab <span class="op">=</span> <span class="st">"Longitude"</span>, xlab.cex <span class="op">=</span> <span class="fl">2</span>,</span>
@@ -150,6 +149,39 @@ axis.</p>
 <span>        layout.heights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>bottom.padding <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span>        <span class="op">)</span></span></code></pre></div>
 <p><img src="FAQ_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+</div>
+</div>
+<div class="section level3">
+<h3 id="how-to-update-labels-boxes">How to update label’s boxes ?<a class="anchor" aria-label="anchor" href="#how-to-update-labels-boxes"></a>
+</h3>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">x0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">50</span>, <span class="op">-</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">y0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">50</span>, <span class="op">-</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/s.label.html">s.label</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">x0</span>, <span class="va">y0</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="FAQ_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<div class="section level4">
+<h4 id="remove-boxes-around-labels">Remove boxes around labels<a class="anchor" aria-label="anchor" href="#remove-boxes-around-labels"></a>
+</h4>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/s.label.html">s.label</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">x0</span>, <span class="va">y0</span><span class="op">)</span>, plabels.boxes.border <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
+<p><img src="FAQ_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/s.label.html">s.label</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">x0</span>, <span class="va">y0</span><span class="op">)</span>, plabels.boxes.draw <span class="op">=</span> <span class="cn">FALSE</span>, ppoints.cex <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
+<p><img src="FAQ_files/figure-html/unnamed-chunk-7-2.png" width="700"></p>
+</div>
+<div class="section level4">
+<h4 id="color-of-labels-boxes">Color of label’s boxes<a class="anchor" aria-label="anchor" href="#color-of-labels-boxes"></a>
+</h4>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/s.label.html">s.label</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">x0</span>, <span class="va">y0</span><span class="op">)</span>, plabels.boxes.col <span class="op">=</span> <span class="st">"orange"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="FAQ_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+</div>
+<div class="section level4">
+<h4 id="border-of-labels-boxes">Border of label’s boxes<a class="anchor" aria-label="anchor" href="#border-of-labels-boxes"></a>
+</h4>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/s.label.html">s.label</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">x0</span>, <span class="va">y0</span><span class="op">)</span>, plabels.boxes.border <span class="op">=</span> <span class="st">"blue"</span>, plabels.boxes.lwd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<p><img src="FAQ_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
 </div>
 </div>
 </div>
