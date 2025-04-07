@@ -21,7 +21,7 @@ Collate: adeGsenv.R parameter.R utils.R
   ADEg.T.R T.image.R T.value.R T.cont.R 
   ADEg.Tr.R Tr.class.R Tr.label.R Tr.match.R Tr.traject.R
   addhist.R addline.R addpoint.R addsegment.R addtext.R ade4-kplot.R ade4-scatter.R ade4-score.R ade4-plot.R multiplot.R s.Spatial.R utilskey.R
-URL: http://pbil.univ-lyon1.fr/ADE-4/, Mailing list: https://listes.univ-lyon1.fr/sympa/info/adelist
+URL: http://pbil.univ-lyon1.fr/ADE-4/
 BugReports: https://github.com/adeverse/adegraphics/issues
 Encoding: UTF-8
 VignetteBuilder: knitr
