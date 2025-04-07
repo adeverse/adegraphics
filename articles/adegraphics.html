@@ -8,8 +8,8 @@
 <title>The `adegraphics` package • adegraphics</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="The `adegraphics` package">
 </head>
 <body>
@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">adegraphics</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0-22</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0-23</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,7 +60,7 @@
                         <h4 data-toc-skip class="author">Alice
 Julien-Laferrière, Aurélie Siberchicot and Stéphane Dray</h4>
             
-            <h4 data-toc-skip class="date">2024-07-22</h4>
+            <h4 data-toc-skip class="date">2025-04-07</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/adeverse/adegraphics/blob/master/vignettes/adegraphics.Rmd" class="external-link"><code>vignettes/adegraphics.Rmd</code></a></small>
       <div class="d-none name"><code>adegraphics.Rmd</code></div>
@@ -427,7 +427,7 @@ function (argument &lt;code&gt;chullSize&lt;/code&gt;.)&lt;/p&gt;"><sup>2</sup><
 <p>The list of arguments of a function are given by the
 <code>args</code> function.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://pbil.univ-lyon1.fr/ADE-4/" class="external-link">ade4</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://adeverse.github.io/ade4/" class="external-link">ade4</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://pbil.univ-lyon1.fr/ADE-4/" class="external-link">adegraphics</a></span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Registered S3 methods overwritten by 'adegraphics':</span></span>
 <span><span class="co">##   method         from</span></span>
@@ -508,7 +508,7 @@ package. A principal component analysis (PCA) is applied on the
 participating athletes at the 1988 summer olympic games:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">olympic</span><span class="op">)</span></span>
-<span><span class="va">pca1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ade4/man/dudi.pca.html" class="external-link">dudi.pca</a></span><span class="op">(</span><span class="va">olympic</span><span class="op">$</span><span class="va">tab</span>, scannf <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">pca1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://adeverse.github.io/ade4/reference/dudi.pca.html" class="external-link">dudi.pca</a></span><span class="op">(</span><span class="va">olympic</span><span class="op">$</span><span class="va">tab</span>, scannf <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>The barplot of eigenvalues is then drawn and stored in
 <code>g1</code>:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -588,7 +588,7 @@ operator:</p>
 <span><span class="co">##  [1]  1  2  3  4  5  6  7  8  9 10</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $frame</span></span>
-<span><span class="co">## [1] 33</span></span>
+<span><span class="co">## [1] 39</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $storeData</span></span>
 <span><span class="co">## [1] TRUE</span></span></code></pre>
@@ -990,7 +990,7 @@ the geomorphology of 92 sites. A PCA can be performed on this data
 set:</p>
 <div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">jv73</span><span class="op">)</span></span>
-<span><span class="va">pca2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ade4/man/dudi.pca.html" class="external-link">dudi.pca</a></span><span class="op">(</span><span class="va">jv73</span><span class="op">$</span><span class="va">morpho</span>, scannf <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">pca2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://adeverse.github.io/ade4/reference/dudi.pca.html" class="external-link">dudi.pca</a></span><span class="op">(</span><span class="va">jv73</span><span class="op">$</span><span class="va">morpho</span>, scannf <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/s.label.html">s.label</a></span><span class="op">(</span><span class="va">pca2</span><span class="op">$</span><span class="va">li</span><span class="op">)</span></span></code></pre></div>
 <p><img src="adegraphics_files/figure-html/plot17-1.png" width="384"></p>
 <p>The sites are located on 12 rivers (<code>jv73$fac.riv</code>) and it
@@ -1029,7 +1029,7 @@ as <code>xax</code> and/or <code>yax</code> arguments to obtain multiple
 graphs. Here, we represent the different correlation circles associated
 to the first four PCA axes of the olympic data set:</p>
 <div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">pca1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ade4/man/dudi.pca.html" class="external-link">dudi.pca</a></span><span class="op">(</span><span class="va">olympic</span><span class="op">$</span><span class="va">tab</span>, scannf <span class="op">=</span> <span class="cn">FALSE</span>, nf <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">pca1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://adeverse.github.io/ade4/reference/dudi.pca.html" class="external-link">dudi.pca</a></span><span class="op">(</span><span class="va">olympic</span><span class="op">$</span><span class="va">tab</span>, scannf <span class="op">=</span> <span class="cn">FALSE</span>, nf <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="va">g9</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/s.corcircle.html">s.corcircle</a></span><span class="op">(</span><span class="va">pca1</span><span class="op">$</span><span class="va">co</span>, xax <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, yax <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span></span></code></pre></div>
 <p><img src="adegraphics_files/figure-html/plot20-1.png" width="576"></p>
 <div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
@@ -1095,9 +1095,9 @@ multivariate analysis. The functions <code>ade4::plot.*</code>,
 very easy to represent or modify these graphical outputs:</p>
 <div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">meaudret</span><span class="op">)</span></span>
-<span><span class="va">pca3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ade4/man/dudi.pca.html" class="external-link">dudi.pca</a></span><span class="op">(</span><span class="va">meaudret</span><span class="op">$</span><span class="va">env</span>, scannf <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="va">pca4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ade4/man/dudi.pca.html" class="external-link">dudi.pca</a></span><span class="op">(</span><span class="va">meaudret</span><span class="op">$</span><span class="va">spe</span>, scale <span class="op">=</span> <span class="cn">FALSE</span>, scannf <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="va">coi1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ade4/man/coinertia.html" class="external-link">coinertia</a></span><span class="op">(</span><span class="va">pca3</span>, <span class="va">pca4</span>, scannf <span class="op">=</span> <span class="cn">FALSE</span>, nf <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">pca3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://adeverse.github.io/ade4/reference/dudi.pca.html" class="external-link">dudi.pca</a></span><span class="op">(</span><span class="va">meaudret</span><span class="op">$</span><span class="va">env</span>, scannf <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">pca4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://adeverse.github.io/ade4/reference/dudi.pca.html" class="external-link">dudi.pca</a></span><span class="op">(</span><span class="va">meaudret</span><span class="op">$</span><span class="va">spe</span>, scale <span class="op">=</span> <span class="cn">FALSE</span>, scannf <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">coi1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://adeverse.github.io/ade4/reference/coinertia.html" class="external-link">coinertia</a></span><span class="op">(</span><span class="va">pca3</span>, <span class="va">pca4</span>, scannf <span class="op">=</span> <span class="cn">FALSE</span>, nf <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="va">g10</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot.html">plot</a></span><span class="op">(</span><span class="va">coi1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="adegraphics_files/figure-html/plot23-1.png" width="576"></p>
 <div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
@@ -1623,7 +1623,7 @@ a new <code>ADEgS</code> object and possibly plotted.<br></p>
 </h3>
 <div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">rpjdl</span><span class="op">)</span></span>
-<span><span class="va">coa2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ade4/man/dudi.coa.html" class="external-link">dudi.coa</a></span><span class="op">(</span><span class="va">rpjdl</span><span class="op">$</span><span class="va">fau</span>, scannf <span class="op">=</span> <span class="cn">FALSE</span>, nf <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">coa2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://adeverse.github.io/ade4/reference/dudi.coa.html" class="external-link">dudi.coa</a></span><span class="op">(</span><span class="va">rpjdl</span><span class="op">$</span><span class="va">fau</span>, scannf <span class="op">=</span> <span class="cn">FALSE</span>, nf <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="va">g22</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/s.value.html">s.value</a></span><span class="op">(</span><span class="va">coa2</span><span class="op">$</span><span class="va">li</span>, <span class="va">coa2</span><span class="op">$</span><span class="va">li</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">g23</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/s.value.html">s.value</a></span><span class="op">(</span><span class="va">coa2</span><span class="op">$</span><span class="va">li</span>, <span class="va">coa2</span><span class="op">$</span><span class="va">li</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span>, method <span class="op">=</span> <span class="st">"color"</span>, ppoints.cex <span class="op">=</span> <span class="fl">0.8</span>, </span>
 <span>  plegend.size<span class="op">=</span> <span class="fl">0.8</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
@@ -2306,7 +2306,7 @@ Journal</span></em> 9 (2): 198–212. <a href="https://journal.r-project.org/arc
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>
